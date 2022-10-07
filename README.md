@@ -1,0 +1,214 @@
+# kinde/oauth2
+
+Provides endpoints to manage your Kinde Businesses
+
+For more information, please visit [https://kinde.com/docs](https://kinde.com/docs).
+
+## Installation
+
+### Requirements
+
+##### [PHP 7.4 and later.](https://www.php.net/manual/en/install.php) Should also work with PHP 8.0.
+
+##### [Composer](https://getcomposer.org/download/)
+
+### Composer
+
+To install the bindings via [Composer](https://getcomposer.org/), add the following to `composer.json`:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    }
+  ],
+  "require": {
+    "GIT_USER_ID/GIT_REPO_ID": "*@dev"
+  }
+}
+```
+
+Then run `composer install`
+
+### Manual Installation
+
+In your project, please add these lines in the `composer.json`:
+
+```php
+<?php
+{
+  ...
+  repositories: [
+    ...
+
+    {
+      "type": "path",
+      "url": "path/to/kinde-sdk"
+    }
+    ...
+  ]
+  ...
+}
+```
+
+## Getting Started
+
+
+
+##### The SDK provides 3 methods authentication:
+ - Client Credentials
+ - Authorization Code Flow
+ - Authorization Code Flow with PKCE
+
+First thing, you need import SDK and configuration in construct function:
+
+```
+...
+
+use Kinde\KindeSDK\KindeClientSDK;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\Sdk\Enums\GrantType;
+...
+
+private $kindeClient;
+
+private $kindeConfig;
+
+public function __construct()
+{
+    $this->kindeClient = new KindeClientSDK('YOUR_KINDE_HOST', 'YOUR_KINDE_REDIRECT_URI', 'YOUR_KINDE_CLIENT_ID', 'YOUR_KINDE_CLIENT_SECRET', 'THE_LOGIN_METHOD_YOU_PREFER');
+    $this->kindeConfig = new Configuration();
+    $this->kindeConfig->setHost('YOUR_KINDE_HOST');
+}
+
+```
+
+### How to authentication & get access token
+
+#### 1. Client Credentials
+
+```
+
+public function login(
+    ServerRequestInterface $request,
+    ResponseInterface $response
+) {
+    $response = $this->kindeClient->login();
+    return $response; // Token in here
+}
+
+```
+
+#### 2. Authorization Code Flow & PKCE
+
+The SDK provides 2 functions: login and getToken. The login function will redirect to Kinde login, the getToken function will request to the token endpoint with the code received as params (and code_verifier if the login method is PKCE), then return the token instance.
+
+```
+
+public function login(
+    ServerRequestInterface $request,
+    ResponseInterface $response
+) {
+    $this->kindeClient->login();
+    $response->getBody()->write('redirecting...');
+    return $response;
+}
+
+// Once authorized, it will come to this function, then you will get a token instance from there.
+public function callback(
+    ServerRequestInterface $request,
+    ResponseInterface $response
+) {
+    $response = $this->kindeClient->getToken();
+    return $response; // Token in here
+}
+
+```
+
+You can also get or set access token through Configuration class. See more at: Kinde\KindeSDK\Configuration;
+
+
+#### How to call API resources endpoint:
+
+***Note warning:*** Before you call the API, please make sure that you have already authenticated. If not, errors will appear there
+
+```php
+<?php
+
+$apiInstance = new Kinde\KindeSDK\Api\UserApi($this->kindeConfig); // You have already defined `$this->kindeConfig` in the construction function
+
+try {
+    $result = $apiInstance->getUserProfile();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UserApi->getUserProfile: ', $e->getMessage(), PHP_EOL;
+}
+
+```
+
+## API Endpoints
+
+All URIs are relative to *https://test.kinde.com*
+
+Class | Method | HTTP request | Description
+------------ | ------------- | ------------- | -------------
+*UserApi* | [**getUserProfile**](docs/Api/UserApi.md#getuserprofile) | **GET** /oauth2/user_profile | Returns current user profile
+
+## Models
+
+- [User](docs/Model/User.md)
+- [UserProfile](docs/Model/UserProfile.md)
+- [Users](docs/Model/Users.md)
+
+## Authorization
+
+### oauth
+- **Type**: `OAuth`
+- **Flow**: `accessCode`
+- **Authorization URL**: `/oauth2/auth`
+- **Token URL**: `/oauth2/token`
+- **Scopes**: 
+    - **offline**: offline
+    - **openid**: openid
+
+## Tests
+
+### PHPUnit
+
+This package uses PHPUnit 8 or 9(depends from your PHP version) for unit testing.
+[Test folder](tests) contains templates which you can fill with real test assertions.
+How to write tests read at [2. Writing Tests for PHPUnit - PHPUnit 8.5 Manual](https://phpunit.readthedocs.io/en/8.5/writing-tests-for-phpunit.html).
+
+
+### Run
+
+##### Before you run the test, please make sure you have run `composer install`, then using your kind config in the `phpunit.xml.dist`
+
+```
+...
+  <env name="KINDE_HOST" value="YOUR_KINDE_HOST"/>
+  <env name="KINDE_REDIRECT_URI" value="YOUR_KINDE_REDIRECT_URI"/>
+  <env name="KINDE_CLIENT_ID" value="YOUR_KINDE_CLIENT_ID"/>
+  <env name="KINDE_CLIENT_SECRET" value="YOUR_KINDE_CLIENT_SECRET"/>
+...
+```
+
+#### Run
+
+Command | Target
+---- | ----
+`$ composer test` | All tests
+`$ composer test-sdk` | SDK tests
+
+## Author
+
+support@kinde.com
+
+## About this package
+
+This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
+
+- API version: `0.0.1`
+- Build package: `com.kinde.codegen.KindePhpGenerator`
