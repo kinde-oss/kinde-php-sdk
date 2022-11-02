@@ -1,22 +1,19 @@
 {
-    "name": "kinde/oauth2",
+    "name": "kinde-oss/kinde-auth-php",
     "version": "0.0.1",
-    "description": "Provides endpoints to manage your Kinde Businesses",
+    "description": "Kinde PHP SDK for authentication",
     "keywords": [
-        "openapitools",
-        "openapi-generator",
-        "openapi",
         "php",
         "sdk",
-        "rest",
-        "api"
+        "auth",
+        "authentication",
+        "kinde"
     ],
-    "homepage": "https://openapi-generator.tech",
-    "license": "unlicense",
+    "homepage": "https://kinde.com",
     "authors": [
         {
-            "name": "OpenAPI-Generator contributors",
-            "homepage": "https://openapi-generator.tech"
+            "name": "Kinde Engineering",
+            "homepage": "https://kinde.com"
         }
     ],
     "require": {
