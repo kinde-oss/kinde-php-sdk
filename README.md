@@ -1,214 +1,201 @@
-# kinde/oauth2
+# Kinde PHP SDK
 
-Provides endpoints to manage your Kinde Businesses
+The Kinde PHP SDK allows developers to integrate with Composable Commerce APIs using PHP native interfaces, models and helpers instead of manually using the HTTP and JSON API.
 
-For more information, please visit [https://kinde.com/docs](https://kinde.com/docs).
+## Register for Kinde
 
-## Installation
+If you haven’t already got a Kinde account, [register for free here](http://app.kinde.com/register) (no credit card required).
 
-### Requirements
+You need a Kinde domain to get started, e.g. `yourapp.kinde.com`.
 
-##### [PHP 7.4 and later.](https://www.php.net/manual/en/install.php) Should also work with PHP 8.0.
+## Install
 
-##### [Composer](https://getcomposer.org/download/)
+Install [Composer](https://getcomposer.org/) and then execute the following command:
 
-### Composer
+```bash
+php composer.phar require kinde-oss/kinde-auth-php
+```
 
-To install the bindings via [Composer](https://getcomposer.org/), add the following to `composer.json`:
+Or add the following to your composer.json file:
 
 ```json
 {
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/kinde-oss/kinde-auth-php"
+        }
+    ],
+    "require": {
+        "kinde-oss/kinde-auth-php": "*@dev",
+        "php": "^7.4 || ^8.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^7.3",
+        "guzzlehttp/psr7": "^1.7 || ^2.0"
+    },
+    "autoload": {
+        "psr-4": {"Kinde\\KindeSDK\\": "lib/"}
     }
-  ],
-  "require": {
-    "GIT_USER_ID/GIT_REPO_ID": "*@dev"
-  }
 }
 ```
 
-Then run `composer install`
+## Set callback URLs
 
-### Manual Installation
+1. In Kinde, go to **Settings** > **App keys**.
+2. Add your callback URLs in the relevant fields. For example:
 
-In your project, please add these lines in the `composer.json`:
+    - Allowed callback URLs - for example, `https://localhost:6789/home/callback`
+    - Allowed logout redirect URLs - for example, `https://localhost:6789`
+
+3. Select **Save**.
+
+## Add environments
+
+Kinde comes with a production environment, but you can set up other environments if you want to. Note that each environment needs to be set up independently, so you need to use the Environment subdomain in the code block above for those new environments.
+
+## Configure your app
+
+**Environment variables**
+
+The following variables need to be replaced in the code snippets below.
+
+-   `KINDE_HOST` - your Kinde domain - e.g. `https://your_kinde_domain.kinde.com`
+-   `KINDE_REDIRECT_URL` - your callback url, make sure this URL is under your allowed callback redirect URLs. - e.g. `http://localhost:3000/callback`
+-   `KINDE_CLIENT_ID` - you can find this on the **App keys** page - e.g. `your_kinde_client_id`
+-   `KINDE_CLIENT_SECRET` - you can find this on the **App keys** page - e.g. `your_kinde_client_secret`
+-   `KINDE_GRANT_TYPE` - the authorisation method - options: `client_credentials`, `authorization_code`, `PKCE`
+
+## Integrate with your app
+
+Add the composer autoloader to your app.
 
 ```php
-<?php
-{
-  ...
-  repositories: [
-    ...
+...
 
-    {
-      "type": "path",
-      "url": "path/to/kinde-sdk"
-    }
-    ...
-  ]
-  ...
-}
-```
-
-## Getting Started
-
-
-
-##### The SDK provides 3 methods authentication:
- - Client Credentials
- - Authorization Code Flow
- - Authorization Code Flow with PKCE
-
-First thing, you need import SDK and configuration in construct function:
+require_once(__DIR__ . '/vendor/autoload.php');
 
 ```
+
+Create a new instance of the Kinde Auth client object before you initialize your app.
+
+```php
 ...
 
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\Configuration;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+
 ...
 
 private $kindeClient;
-
 private $kindeConfig;
+
+
 
 public function __construct()
 {
-    $this->kindeClient = new KindeClientSDK('YOUR_KINDE_HOST', 'YOUR_KINDE_REDIRECT_URI', 'YOUR_KINDE_CLIENT_ID', 'YOUR_KINDE_CLIENT_SECRET', 'THE_LOGIN_METHOD_YOU_PREFER');
+    $this->kindeClient = new KindeClientSDK('KINDE_HOST', 'KINDE_REDIRECT_URL', 'KINDE_CLIENT_ID', 'KINDE_CLIENT_SECRET', 'KINDE_GRANT_TYPE');
     $this->kindeConfig = new Configuration();
-    $this->kindeConfig->setHost('YOUR_KINDE_HOST');
+    $this->kindeConfig->setHost(' KINDE_HOST');
 }
-
 ```
 
-### How to authentication & get access token
+## Login and registration
 
-#### 1. Client Credentials
+The Kinde client provides methods for easy to implement login / registration.
 
+You can add buttons in your HTML as follows:
+
+```html
+<div class="navigation">
+    <a href="/login" type="button">Login</a>
+    <a href="/register" type="button">Register</a>
+</div>
 ```
 
-public function login(
-    ServerRequestInterface $request,
-    ResponseInterface $response
-) {
-    $response = $this->kindeClient->login();
-    return $response; // Token in here
-}
-
-```
-
-#### 2. Authorization Code Flow & PKCE
-
-The SDK provides 2 functions: login and getToken. The login function will redirect to Kinde login, the getToken function will request to the token endpoint with the code received as params (and code_verifier if the login method is PKCE), then return the token instance.
-
-```
-
-public function login(
-    ServerRequestInterface $request,
-    ResponseInterface $response
-) {
-    $this->kindeClient->login();
-    $response->getBody()->write('redirecting...');
-    return $response;
-}
-
-// Once authorized, it will come to this function, then you will get a token instance from there.
-public function callback(
-    ServerRequestInterface $request,
-    ResponseInterface $response
-) {
-    $response = $this->kindeClient->getToken();
-    return $response; // Token in here
-}
-
-```
-
-You can also get or set access token through Configuration class. See more at: Kinde\KindeSDK\Configuration;
-
-
-#### How to call API resources endpoint:
-
-***Note warning:*** Before you call the API, please make sure that you have already authenticated. If not, errors will appear there
+You will then need to route /login and /register to functions that call the SDK methods, for example:
 
 ```php
-<?php
-
-$apiInstance = new Kinde\KindeSDK\Api\UserApi($this->kindeConfig); // You have already defined `$this->kindeConfig` in the construction function
-
-try {
-    $result = $apiInstance->getUserProfile();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling UserApi->getUserProfile: ', $e->getMessage(), PHP_EOL;
+public function login()
+{
+    $this->kindeClient->login();
 }
 
+public function register()
+{
+    $this->kindeClient->register();
+}
 ```
 
-## API Endpoints
+## Manage redirects
 
-All URIs are relative to *https://test.kinde.com*
+When the user is redirected back to your site from Kinde, this will call your callback URL defined in the `KINDE_REDIRECT_URL` variable. You will need to route `/callback` to call a function to handle this.
 
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*UserApi* | [**getUserProfile**](docs/Api/UserApi.md#getuserprofile) | **GET** /oauth2/user_profile | Returns current user profile
-
-## Models
-
-- [User](docs/Model/User.md)
-- [UserProfile](docs/Model/UserProfile.md)
-- [Users](docs/Model/Users.md)
-
-## Authorization
-
-### oauth
-- **Type**: `OAuth`
-- **Flow**: `accessCode`
-- **Authorization URL**: `/oauth2/auth`
-- **Token URL**: `/oauth2/token`
-- **Scopes**: 
-    - **offline**: offline
-    - **openid**: openid
-
-## Tests
-
-### PHPUnit
-
-This package uses PHPUnit 8 or 9(depends from your PHP version) for unit testing.
-[Test folder](tests) contains templates which you can fill with real test assertions.
-How to write tests read at [2. Writing Tests for PHPUnit - PHPUnit 8.5 Manual](https://phpunit.readthedocs.io/en/8.5/writing-tests-for-phpunit.html).
-
-
-### Run
-
-##### Before you run the test, please make sure you have run `composer install`, then using your kind config in the `phpunit.xml.dist`
-
+```php
+public function callback()
+{
+    $token = $this->kindeClient->getToken();
+    $this->kindeConfig->setAccessToken($token->access_token);
+    print_r($token);
+}
 ```
+
+## Logout
+
+The Kinde SPA client comes with a logout method.
+
+```php
+$this->kindeClient->logout();
+```
+
+## Get user information
+
+You need to have already authenticated before you call the API, otherwise an error will occur.
+
+Use the `Kinde\KindeSDK\Api\UserApi` class, then call the getUserProfile method.
+
+```php
 ...
-  <env name="KINDE_HOST" value="YOUR_KINDE_HOST"/>
-  <env name="KINDE_REDIRECT_URI" value="YOUR_KINDE_REDIRECT_URI"/>
-  <env name="KINDE_CLIENT_ID" value="YOUR_KINDE_CLIENT_ID"/>
-  <env name="KINDE_CLIENT_SECRET" value="YOUR_KINDE_CLIENT_SECRET"/>
+
+use Kinde\KindeSDK\Api\UserApi;
+
 ...
+
+public function getProfile()
+{
+
+    $apiInstance = new UserApi($this->kindeConfig); // You have already defined `$this->kindeConfig` in the construction function
+
+    try {
+        $result = $apiInstance->getUserProfile();
+        print_r($result);
+    } catch (Exception $e) {
+        echo 'Exception when calling UserApi->getUserProfile: ', $e->getMessage(), PHP_EOL;
+    }
+}
 ```
 
-#### Run
+### View users in Kinde
 
-Command | Target
----- | ----
-`$ composer test` | All tests
-`$ composer test-sdk` | SDK tests
+Go to the **Users** page in Kinde to see who has registered.
 
-## Author
+### User Permissions
 
-support@kinde.com
+After a user signs in and they are verified, the token return includes permissions for that user. [User permissions are set in Kinde](https://kinde.com/docs/user-management/user-permissions), but you must also configure your application to unlock these functions.
 
-## About this package
+```php
+"permissions" => [
+    "create:todos",
+    "update:todos",
+    "read:todos",
+    "delete:todos",
+    "create:tasks",
+    "update:tasks",
+    "read:tasks",
+    "delete:tasks",
+];
+```
 
-This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
-
-- API version: `0.0.1`
-- Build package: `com.kinde.codegen.KindePhpGenerator`
+If you need help connecting to Kinde, please contact us at [support@kinde.com](mailto:support@kinde.com).
