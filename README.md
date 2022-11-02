@@ -96,13 +96,9 @@ private $kindeConfig;
 
 public function __construct()
 {
-...
-
     $this->kindeClient = new KindeClientSDK('KINDE_HOST', 'KINDE_REDIRECT_URL', 'KINDE_CLIENT_ID', 'KINDE_CLIENT_SECRET', 'KINDE_GRANT_TYPE');
     $this->kindeConfig = new Configuration();
     $this->kindeConfig->setHost(' KINDE_HOST');
-
-...
 }
 ```
 
