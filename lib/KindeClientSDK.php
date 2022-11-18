@@ -8,6 +8,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 
 use Exception;
 use GuzzleHttp\Client;
+use Kinde\KindeSDK\Sdk\Enums\AuthStatus;
 use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
@@ -19,49 +20,55 @@ class KindeClientSDK
     /**
      * @var string A variable that is used to store the domain of the API.
      */
-    public $domain;
+    public string $domain;
 
     /**
      * @var string This is the redirect URI that you provided when you registered your application.
      */
-    public $redirectUri;
+    public string $redirectUri;
+
+    /**
+     * @var string This is the logout redirect URI that you provided when you registered your application.
+     */
+    public string $logoutRedirectUri;
 
     /**
      * @var string A variable that is used to store the client ID of the application.
      */
-    public $clientId;
+    public string $clientId;
 
     /**
      * @var string This is the client secret of your application.
      */
-    public $clientSecret;
+    public string $clientSecret;
 
     /**
      * @var string This is the authorization endpoint of the API.
      */
-    public $authorizationEndpoint;
+    public string $authorizationEndpoint;
 
     /**
      * @var string This is the token endpoint of the API.
      */
-    public $tokenEndpoint;
+    public string $tokenEndpoint;
 
     /** 
      * @var string Used to store the logout endpoint of the API. 
      */
-    public $logoutEndpoint;
+    public string $logoutEndpoint;
 
-    /** 
-     * @var string Used to store the login method.
-     */
-    public $grantType;
+    /* A variable that is used to store the grant type that you want to use. */
+    public string $grantType;
 
     /**
      * @var string This is a variable that is used to store the scopes that you want to request.
      */
-    public $scopes;
+    public string $scopes;
 
-    function __construct(string $domain, string $redirectUri, string $clientId, string $clientSecret, string $grantType = '')
+    /* This is a variable that is used to store the status of the authorization. */
+    public string $authStatus;
+
+    function __construct(string $domain, string $redirectUri, string $clientId, string $clientSecret, string $grantType, string $logoutRedirectUri)
     {
         if (empty($domain)) {
             throw new Exception("Please provide domain");
@@ -89,23 +96,37 @@ class KindeClientSDK
         }
         $this->clientId = $clientId;
 
+        if (empty($grantType)) {
+            throw new Exception("Please provide grant_type");
+        }
         $this->grantType = $grantType;
+
+        if (empty($logoutRedirectUri)) {
+            throw new Exception("Please provide logout_redirect_uri");
+        }
+        if (!Utils::validationURL($logoutRedirectUri)) {
+            throw new Exception("Please provide valid logout_redirect_uri");
+        }
+        $this->logoutRedirectUri = $logoutRedirectUri;
+
+        // Other endpoints
         $this->authorizationEndpoint = $this->domain . '/oauth2/auth';
         $this->tokenEndpoint = $this->domain . '/oauth2/token';
         $this->logoutEndpoint = $this->domain . '/logout';
+        $this->authStatus = AuthStatus::UNAUTHENTICATED;
     }
 
     /**
-      * A function that is used to login to the API.
-      * 
-      * @param string grantType The type of grant you want to use.
-      * @param string state This is an optional parameter that you can use to pass a value to the
-      * authorization server. The authorization server will return this value back to you in the
-      * response.
-      * @param string scopes The scopes you want to request.
-      * 
-      * @return array The login method returns an array with the following keys:
-      */
+     * A function that is used to login to the API.
+     * 
+     * @param string grantType The type of grant you want to use.
+     * @param string state This is an optional parameter that you can use to pass a value to the
+     * authorization server. The authorization server will return this value back to you in the
+     * response.
+     * @param string scopes The scopes you want to request.
+     * 
+     * @return array The login method returns an array with the following keys:
+     */
     public function login(string $grantType = '', string $state = '', string $scopes = 'openid offline')
     {
         $this->cleanSession();
@@ -119,6 +140,7 @@ class KindeClientSDK
             if (!empty($grantType)) {
                 $this->grantType = $grantType;
             }
+            $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
             switch ($this->grantType) {
                 case GrantType::clientCredentials:
                     $auth = new ClientCredentials();
@@ -130,10 +152,12 @@ class KindeClientSDK
                     $auth = new PKCE();
                     return $auth->login($this);
                 default:
+                    $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
                     throw new Exception("Please provide correct grant_type");
                     break;
             }
         } catch (\Throwable $th) {
+            $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
             throw $th;
         }
     }
@@ -144,19 +168,20 @@ class KindeClientSDK
      */
     public function register()
     {
+        $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
         $this->grantType = 'authorization_code';
         $auth = new PKCE();
         return $auth->login($this, 'registration');
     }
 
-   /**
-    * It takes the grant type as parameter, and returns the token
-    * 
-    * @param string grantType The type of grant you want to use.
-    * 
-    * @return object The response is a JSON object containing the access token, the refresh token, the token
-    * type, and the expiration time.
-    */
+    /**
+     * It takes the grant type as parameter, and returns the token
+     * 
+     * @param string grantType The type of grant you want to use.
+     * 
+     * @return object The response is a JSON object containing the access token, the refresh token, the token
+     * type, and the expiration time.
+     */
     public function getToken()
     {
         $newGrantType = $this->getGrantType($this->grantType);
@@ -195,6 +220,7 @@ class KindeClientSDK
         $token = $response->getBody()->getContents();
         $_SESSION['token'] = $token;
         $tokenDecode = json_decode($token);
+        $this->updateAuthStatus(AuthStatus::AUTHENTICATED);
         return $tokenDecode;
     }
 
@@ -203,12 +229,12 @@ class KindeClientSDK
      */
     public function logout()
     {
-
-        unset($_SESSION['token']);
-        
-        // Just left empty, we will implement later
-        $searchParams = [];
-        header('Location: '. $this->logoutEndpoint . '?' . http_build_query($searchParams));
+        $this->cleanSession();
+        $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
+        $searchParams = [
+            'redirect' => $this->logoutRedirectUri
+        ];
+        header('Location: ' . $this->logoutEndpoint . '?' . http_build_query($searchParams));
         exit();
     }
 
@@ -221,7 +247,7 @@ class KindeClientSDK
      */
     public function getGrantType(string $grantType)
     {
-        switch($grantType) {
+        switch ($grantType) {
             case GrantType::authorizationCode:
             case GrantType::PKCE:
                 return 'authorization_code';
@@ -230,12 +256,24 @@ class KindeClientSDK
             default:
                 throw new Exception("Please provide correct grant_type");
                 break;
-            
         }
+    }
+
+    public function getAuthStatus()
+    {
+        return $_SESSION['auth_status'];
+    }
+
+    private function updateAuthStatus(string $_authStatus)
+    {
+        $_SESSION['auth_status'] = $_authStatus;
+        $this->authStatus = $_authStatus;
     }
 
     private function cleanSession()
     {
+        unset($_SESSION['token']);
+        unset($_SESSION['auth_status']);
         unset($_SESSION['oauthState']);
         unset($_SESSION['oauthCodeVerifier']);
     }

@@ -46,8 +46,8 @@ Or add the following to your composer.json file:
 1. In Kinde, go to **Settings** > **App keys**.
 2. Add your callback URLs in the relevant fields. For example:
 
-    - Allowed callback URLs - for example, `https://localhost:6789/home/callback`
-    - Allowed logout redirect URLs - for example, `https://localhost:6789`
+    - Allowed callback URLs - for example, `https://localhost:8000/callback`
+    - Allowed logout redirect URLs - for example, `https://localhost:8000`
 
 3. Select **Save**.
 
@@ -62,10 +62,10 @@ Kinde comes with a production environment, but you can set up other environments
 The following variables need to be replaced in the code snippets below.
 
 -   `KINDE_HOST` - your Kinde domain - e.g. `https://your_kinde_domain.kinde.com`
--   `KINDE_REDIRECT_URL` - your callback url, make sure this URL is under your allowed callback redirect URLs. - e.g. `http://localhost:3000/callback`
+-   `KINDE_REDIRECT_URL` - your callback url, make sure this URL is under your allowed callback redirect URLs. - e.g. `http://localhost:8000/callback`
+-   `KINDE_POST_LOGOUT_REDIRECT_URL` - where you want users to be redirected to after logging out, make sure this URL is under your allowed logout redirect URLs. - e.g. `http://localhost:8000`
 -   `KINDE_CLIENT_ID` - you can find this on the **App keys** page - e.g. `your_kinde_client_id`
 -   `KINDE_CLIENT_SECRET` - you can find this on the **App keys** page - e.g. `your_kinde_client_secret`
--   `KINDE_GRANT_TYPE` - the authorisation method - options: `client_credentials`, `authorization_code`, `PKCE`
 
 ## Integrate with your app
 
@@ -96,7 +96,7 @@ private $kindeConfig;
 
 public function __construct()
 {
-    $this->kindeClient = new KindeClientSDK('KINDE_HOST', 'KINDE_REDIRECT_URL', 'KINDE_CLIENT_ID', 'KINDE_CLIENT_SECRET', 'KINDE_GRANT_TYPE');
+    $this->kindeClient = new KindeClientSDK('KINDE_HOST', 'KINDE_REDIRECT_URL', 'KINDE_CLIENT_ID', 'KINDE_CLIENT_SECRET', 'KINDE_GRANT_TYPE', 'KINDE_POST_LOGOUT_REDIRECT_URL');
     $this->kindeConfig = new Configuration();
     $this->kindeConfig->setHost(' KINDE_HOST');
 }
@@ -141,6 +141,23 @@ public function callback()
     print_r($token);
 }
 ```
+
+You can also get the current authentication status with `AuthStatus`:
+```php
+...
+use Kinde\KindeSDK\Sdk\Enums\AuthStatus;
+...
+
+public function callback()
+{
+    if ($this->kindeClient->getAuthStatus() != AuthStatus::UNAUTHENTICATED) {
+        $token = $this->kindeClient->getToken();
+        $this->kindeConfig->setAccessToken($token->access_token);
+        print_r($token);
+    }
+}
+```
+For more information, please check out `Kinde\KindeSDK\Sdk\Enums\AuthStatus`
 
 ## Logout
 
