@@ -3,7 +3,6 @@
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\KindeClientSDK;
 use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Exception\ClientException;
 
 class OAuth2PKCETest extends TestCase
 {
@@ -12,6 +11,8 @@ class OAuth2PKCETest extends TestCase
     private $domain;
 
     private $redirectUri;
+
+    private $logoutRedirectUri;
 
     private $clientId;
 
@@ -27,6 +28,8 @@ class OAuth2PKCETest extends TestCase
         $this->clientId = $_ENV['KINDE_CLIENT_ID'];
 
         $this->clientSecret = $_ENV['KINDE_CLIENT_SECRET'];
+
+        $this->logoutRedirectUri = $_ENV['KINDE_POST_LOGOUT_REDIRECT_URL'];
     }
 
     /**
@@ -35,7 +38,7 @@ class OAuth2PKCETest extends TestCase
      */
     public function test_login_type_pkce(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
         $this->client->login();
         $this->assertTrue(headers_sent());
     }

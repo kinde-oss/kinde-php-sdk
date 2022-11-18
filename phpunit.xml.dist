@@ -18,5 +18,6 @@
     <env name="KINDE_REDIRECT_URI" value="YOUR_KINDE_REDIRECT_URI"/>
     <env name="KINDE_CLIENT_ID" value="YOUR_KINDE_CLIENT_ID"/>
     <env name="KINDE_CLIENT_SECRET" value="YOUR_KINDE_CLIENT_SECRET"/>
+    <env name="KINDE_POST_LOGOUT_REDIRECT_URL" value="YOUR_KINDE_POST_LOGOUT_REDIRECT_URL"/>
   </php>
 </phpunit>

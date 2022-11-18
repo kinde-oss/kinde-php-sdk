@@ -3,7 +3,6 @@
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\KindeClientSDK;
 use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Exception\ClientException;
 
 class OAuth2ClientCredentialTest extends TestCase
 {
@@ -12,6 +11,8 @@ class OAuth2ClientCredentialTest extends TestCase
     private $domain;
 
     private $redirectUri;
+
+    private $logoutRedirectUri;
 
     private $clientId;
 
@@ -27,6 +28,8 @@ class OAuth2ClientCredentialTest extends TestCase
         $this->clientId = $_ENV['KINDE_CLIENT_ID'];
 
         $this->clientSecret = $_ENV['KINDE_CLIENT_SECRET'];
+
+        $this->logoutRedirectUri = $_ENV['KINDE_POST_LOGOUT_REDIRECT_URL'];
     }
 
     /**
@@ -34,7 +37,7 @@ class OAuth2ClientCredentialTest extends TestCase
      */
     public function test_login_type_client_credential(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri);
         $response = $this->client->login();
         $this->assertObjectHasAttribute('access_token', $response);
         $this->assertObjectHasAttribute('expires_in', $response);

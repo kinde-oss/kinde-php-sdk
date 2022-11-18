@@ -3,7 +3,6 @@
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\KindeClientSDK;
 use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Exception\ClientException;
 
 
 class OAuth2AuthorizationCodeFlowTest extends TestCase
@@ -13,6 +12,8 @@ class OAuth2AuthorizationCodeFlowTest extends TestCase
     private $domain;
 
     private $redirectUri;
+
+    private $logoutRedirectUri;
 
     private $clientId;
 
@@ -28,6 +29,8 @@ class OAuth2AuthorizationCodeFlowTest extends TestCase
         $this->clientId = $_ENV['KINDE_CLIENT_ID'];
 
         $this->clientSecret = $_ENV['KINDE_CLIENT_SECRET'];
+
+        $this->logoutRedirectUri = $_ENV['KINDE_POST_LOGOUT_REDIRECT_URL'];
     }
 
     /**
@@ -35,7 +38,7 @@ class OAuth2AuthorizationCodeFlowTest extends TestCase
      */
     public function test_login_type_authorization_code_flow(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::authorizationCode);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::authorizationCode, $this->logoutRedirectUri);
         $this->client->login();
         $this->assertTrue(headers_sent());
     }
