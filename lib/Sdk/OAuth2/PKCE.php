@@ -37,6 +37,9 @@ class PKCE
             'state' => !empty($state) ? $state : $challenge['state'],
             'start_page' => $startPage
         ];
+        if (!empty($clientSDK->additional)) {
+            $searchParams = array_merge($searchParams, $clientSDK->additional);
+        }
         $_SESSION['oauthCodeVerifier'] =  $challenge['codeVerifier'];
 
         if (!headers_sent()) {

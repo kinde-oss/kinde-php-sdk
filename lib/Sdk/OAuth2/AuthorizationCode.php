@@ -26,6 +26,9 @@ class AuthorizationCode
                 'state' => $state,
                 'start_page' => 'login'
             ];
+            if (!empty($clientSDK->additional)) {
+                $searchParams = array_merge($searchParams, $clientSDK->additional);
+            }
             if (!headers_sent()) {
                 exit(header('Location: '. $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
             }

@@ -99,7 +99,7 @@ class KindeClientSDKTest extends TestCase
     {
         $this->expectExceptionMessage("Please provide correct grant_type");
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
-        $this->client->login('test');
+        $this->client->login([], 'test');
     }
 
     public function test_get_grant_type_empty(): void
@@ -114,5 +114,69 @@ class KindeClientSDKTest extends TestCase
         $this->expectExceptionMessage("Please provide correct grant_type");
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
         $this->client->getGrantType('test123');
+    }
+
+    public function test_initial_valid_audience(): void
+    {
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->assertInstanceOf(KindeClientSDK::class, $this->client);
+    }
+
+    public function test_initial_invalid_audience(): void
+    {
+        $this->expectExceptionMessage("Please supply a valid audience");
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => 1233]);
+    }
+
+    public function test_get_is_authenticated(): void
+    {
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $isAuthenticated = $this->client->isAuthenticated();
+        $this->assertIsBool($isAuthenticated);
+        $this->assertEmpty($isAuthenticated);
+    }
+
+    public function test_login_invalid_org_code(): void
+    {
+        $this->expectExceptionMessage("Please supply a valid org_code");
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
+        $additional = [
+            'org_code' => 123,
+            'org_name' => 'My Application',
+        ];
+        $this->client->login($additional);
+    }
+
+    public function test_login_invalid_org_name(): void
+    {
+        $this->expectExceptionMessage("Please supply a valid org_name");
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
+        $additional = [
+            'org_code' => '123',
+            'org_name' => 123
+        ];
+        $this->client->login($additional);
+    }
+
+    public function test_login_invalid_additional_org_name(): void
+    {
+        $this->expectExceptionMessage("Please provide correct additional, org_name_test");
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
+        $additional = [
+            'org_code' => '123',
+            'org_name_test' => '123'
+        ];
+        $this->client->login($additional);
+    }
+
+    public function test_login_invalid_additional_org_code(): void
+    {
+        $this->expectExceptionMessage("Please provide correct additional, org_code_test");
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri);
+        $additional = [
+            'org_code_test' => '123',
+            'org_name' => '123'
+        ];
+        $this->client->login($additional);
     }
 }

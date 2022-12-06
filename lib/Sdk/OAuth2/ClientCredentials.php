@@ -12,14 +12,18 @@ class ClientCredentials
     {
         try {
             $client = new Client();
+            $formData = [
+                'client_id' => $clientSDK->clientId,
+                'client_secret' => $clientSDK->clientSecret,
+                'grant_type' => GrantType::clientCredentials,
+                'scope' => $clientSDK->scopes
+            ];
+            if (!empty($clientSDK->additional)) {
+                $formData = array_merge($formData, $clientSDK->additional);
+            }
             $response =
                 $client->request('POST', $clientSDK->tokenEndpoint, [
-                    'form_params' => [
-                        'client_id' => $clientSDK->clientId,
-                        'client_secret' => $clientSDK->clientSecret,
-                        'grant_type' => GrantType::clientCredentials,
-                        'scope' => $clientSDK->scopes
-                    ]
+                    'form_params' => $formData
                 ]);
             $token = $response->getBody()->getContents();
             $_SESSION['token'] = $token;

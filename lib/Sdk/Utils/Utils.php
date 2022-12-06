@@ -72,4 +72,16 @@ class Utils
         $pattern = "/https?:\/\/(?:w{1,3}\.)?[^\s.]+(?:\.[a-z]+)*(?::\d+)?(?![^<]*(?:<\/\w+>|\/?>))/";
         return preg_match($pattern, $url);
     }
+
+    /**
+     * It parse payload jwt
+     *
+     * @param string token jwt
+     *
+     * @return object A object value.
+     */
+    static public function parseJWT(string $token)
+    {
+        return json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $token)[1]))));
+    }
 }
