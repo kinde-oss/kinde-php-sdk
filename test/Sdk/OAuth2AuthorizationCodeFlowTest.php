@@ -66,4 +66,18 @@ class OAuth2AuthorizationCodeFlowTest extends TestCase
         $this->client->login($additional);
         $this->assertTrue(headers_sent());
     }
+
+    /**
+     * It tests the login function with the authorization code grant type with additional.
+     */
+    public function test_login_type_authorization_code_flow_with_state(): void
+    {
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::authorizationCode, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $additional = [
+            'org_code' => 'org_123',
+            'org_name' => 'My Application',
+        ];
+        $this->client->login($additional, '', 'state_test');
+        $this->assertTrue(headers_sent());
+    }
 }

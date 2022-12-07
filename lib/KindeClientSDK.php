@@ -72,6 +72,9 @@ class KindeClientSDK
     /* This is a additional data. */
     public array $additional;
 
+    /*This is an optional parameter that you can use to pass a value to the authorization server. */
+    public string $state;
+
     function __construct(
         string $domain,
         string $redirectUri,
@@ -155,7 +158,7 @@ class KindeClientSDK
         try {
             $this->mergeAdditional($additional);
             $this->scopes = $scopes;
-            $this->$state = $state;
+            $this->state = $state;
             if (empty($grantType) && empty($this->grantType)) {
                 throw new Exception("Please provide grant_type");
             }
@@ -213,13 +216,15 @@ class KindeClientSDK
     /**
      * It takes the grant type as parameter, and returns the token
      * 
-     * @param string grantType The type of grant you want to use.
+     * @param array authServerParams The call back params from auth server.
      * 
      * @return object The response is a JSON object containing the access token, the refresh token, the token
      * type, and the expiration time.
      */
-    public function getToken()
+    public function getToken(array $authServerParams)
     {
+        $stateServer = $authServerParams['state'] ?? null;
+        $this->checkStateAuthentication($stateServer);
         $newGrantType = $this->getGrantType($this->grantType);
         $formParams = [
             'client_id' => $this->clientId,
@@ -376,6 +381,13 @@ class KindeClientSDK
             if (gettype($val) != $config[$key]) {
                 throw new Exception("Please supply a valid $key");
             }
+        }
+    }
+
+    private function checkStateAuthentication(string $stateServer)
+    {
+        if (empty($_SESSION['oauthState']) || $stateServer != $_SESSION['oauthState']) {
+            throw new Exception("Authentication failed.");
         }
     }
 
