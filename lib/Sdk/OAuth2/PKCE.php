@@ -26,7 +26,7 @@ class PKCE
     {
         $_SESSION['oauthCodeVerifier'] = '';
         $challenge = Utils::generateChallenge();
-        $state = empty($clientSDK->state) ? $challenge['state'] : $clientSDK->state;
+        $state = $challenge['state'];
         $_SESSION['oauthState'] = $state;
         $searchParams = [
             'redirect_uri' => $clientSDK->redirectUri,

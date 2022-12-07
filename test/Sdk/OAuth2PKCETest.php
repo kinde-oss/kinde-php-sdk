@@ -104,18 +104,4 @@ class OAuth2PKCETest extends TestCase
         $this->client->createOrg($additional);
         $this->assertTrue(headers_sent());
     }
-
-    /**
-     * It tests the login function with the client credential grant type with state.
-     */
-    public function test_login_type_client_credential_flow_with_state(): void
-    {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
-        $additional = [
-            'org_code' => 'org_123',
-            'org_name' => 'My Application',
-        ];
-        $this->client->login($additional, '', 'state_test');
-        $this->assertTrue(headers_sent());
-    }
 }

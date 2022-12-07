@@ -12,7 +12,7 @@ class AuthorizationCode
     {
         unset($_SESSION['oauthState']);
         try {
-            $state = empty($clientSDK->state) ? Utils::randomString() : $clientSDK->state;
+            $state = Utils::randomString();
             $_SESSION['oauthState'] = $state;
             $searchParams = [
                 'client_id' => $clientSDK->clientId,
