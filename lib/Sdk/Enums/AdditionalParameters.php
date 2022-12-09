@@ -2,9 +2,9 @@
 
 namespace Kinde\KindeSDK\Sdk\Enums;
 
-class Additional
+class AdditionalParameters
 {
-    const ADDITIONAL = [
+    const ADDITIONAL_PARAMETER = [
         'audience' => 'string',
         'org_code' => 'string',
         'org_name' => 'string',

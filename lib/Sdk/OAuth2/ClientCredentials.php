@@ -5,10 +5,11 @@ namespace Kinde\KindeSDK\Sdk\OAuth2;
 use GuzzleHttp\Client;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\KindeClientSDK;
+use Kinde\KindeSDK\Sdk\Utils\Utils;
 
 class ClientCredentials
 {
-    public function login(KindeClientSDK $clientSDK)
+    public function login(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         try {
             $client = new Client();
@@ -20,6 +21,10 @@ class ClientCredentials
             ];
             if (!empty($clientSDK->additional)) {
                 $formData = array_merge($formData, $clientSDK->additional);
+            }
+            if (!empty($additionalParameters)) {
+                $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+                $formData = array_merge($formData, $mergedAdditionalParameters);
             }
             $response =
                 $client->request('POST', $clientSDK->tokenEndpoint, [

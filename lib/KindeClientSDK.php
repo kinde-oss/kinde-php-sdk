@@ -6,9 +6,9 @@ if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
 
+use Exception;
 use InvalidArgumentException;
 use GuzzleHttp\Client;
-use Kinde\KindeSDK\Sdk\Enums\Additional;
 use Kinde\KindeSDK\Sdk\Enums\AuthStatus;
 use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
@@ -64,15 +64,13 @@ class KindeClientSDK
     /* This is a variable that is used to store the status of the authorization. */
     public string $authStatus;
 
-    /* This is a additional data. */
-    public array $additional;
+    /* This is a additionalParameters data. */
+    public array $additionalParameters;
 
     /**
      * @var string This is a variable that is used to store the scopes that you want to request.
      */
     public string $scopes;
-
-    private string $isAuthenticated;
 
     function __construct(
         string $domain,
@@ -81,8 +79,8 @@ class KindeClientSDK
         string $clientSecret,
         string $grantType,
         string $logoutRedirectUri,
-        array $additional = [],
-        string $scopes = 'openid offline'
+        string $scopes = 'openid offline',
+        array $additionalParameters = []
     ) {
         if (empty($domain)) {
             throw new InvalidArgumentException("Please provide domain");
@@ -122,10 +120,7 @@ class KindeClientSDK
             throw new InvalidArgumentException("Please provide valid logout_redirect_uri");
         }
 
-        if (!empty($additional)) {
-            $this->validateWithConfig($additional);
-        }
-        $this->additional = $additional;
+        $this->additionalParameters = Utils::checkAdditionalParameters($additionalParameters);
 
         $this->logoutRedirectUri = $logoutRedirectUri;
         $this->scopes = $scopes;
@@ -155,24 +150,21 @@ class KindeClientSDK
      * @return array The login method returns an array with the following keys:
      */
     public function login(
-        array $additional = [],
-        string $scopes = 'openid profile email offline'
+        array $additionalParameters = []
     ) {
         $this->cleanSession();
         try {
-            $this->mergeAdditional($additional);
-            $this->scopes = $scopes;
             $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
             switch ($this->grantType) {
                 case GrantType::clientCredentials:
                     $auth = new ClientCredentials();
-                    return $auth->login($this);
+                    return $auth->login($this, $additionalParameters);
                 case GrantType::authorizationCode:
                     $auth = new AuthorizationCode();
-                    return $auth->login($this);
+                    return $auth->login($this, $additionalParameters);
                 case GrantType::PKCE:
                     $auth = new PKCE();
-                    return $auth->login($this);
+                    return $auth->login($this, 'login', $additionalParameters);
                 default:
                     $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
                     throw new InvalidArgumentException("Please provide correct grant_type");
@@ -190,13 +182,12 @@ class KindeClientSDK
      *
      * @param array additional The array includes params to pass api.
      */
-    public function register(array $additional = [])
+    public function register(array $additionalParameters = [])
     {
-        $this->mergeAdditional($additional);
         $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
         $this->grantType = 'authorization_code';
         $auth = new PKCE();
-        return $auth->login($this, 'registration');
+        return $auth->login($this, 'registration', $additionalParameters);
     }
 
     /**
@@ -205,10 +196,10 @@ class KindeClientSDK
      *
      *  @param array additional The array includes params to pass api.
      */
-    public function createOrg(array $additional = [])
+    public function createOrg(array $additionalParameters = [])
     {
-        $additional['is_create_org'] = 'true';
-        return $this->register($additional);
+        $additionalParameters['is_create_org'] = 'true';
+        return $this->register($additionalParameters);
     }
 
     /**
@@ -256,16 +247,18 @@ class KindeClientSDK
         $token = $response->getBody()->getContents();
         $_SESSION['token'] = $token;
         $tokenDecode = json_decode($token);
-        $this->setDataToSession($tokenDecode);
+        $this->saveDataToSession($tokenDecode);
         $this->updateAuthStatus(AuthStatus::AUTHENTICATED);
         return $tokenDecode;
     }
 
-    private function setDataToSession($data)
+    private function saveDataToSession($token)
     {
         $_SESSION['login_time_stamp'] = time();
-        $_SESSION['expires_in'] = $data->expires_in ?? 0;
-        $payload = Utils::parseJWT($data->id_token??'');
+        $_SESSION['accessToken'] = $token->access_token ?? '';
+        $_SESSION['id_token'] = $token->id_token ?? '';
+        $_SESSION['expires_in'] = $token->expires_in ?? 0;
+        $payload = Utils::parseJWT($token->id_token ?? '');
         $user = [
             'id' => $payload->sub,
             'given_name' => $payload->given_name,
@@ -320,6 +313,70 @@ class KindeClientSDK
         }
     }
 
+    /**
+     * It checks user is logged.
+     *
+     * @return bool The response is a bool, which check user logged or not
+     */
+    public function isAuthenticated()
+    {
+        if (empty($_SESSION["login_time_stamp"]) || empty($_SESSION["expires_in"])) {
+            return false;
+        }
+        return time() - $_SESSION["login_time_stamp"] < $_SESSION["expires_in"];
+    }
+
+    public function getClaims(string $tokenType = 'accessToken')
+    {
+        if (!in_array($tokenType, ['accessToken', 'id_token'])) {
+            throw new InvalidArgumentException('tokenType');
+        }
+        $token = $_SESSION[$tokenType] ?? '';
+        if (empty($token)) {
+            throw new Exception('Request is missing required authentication credential');
+        }
+        return Utils::parseJWT($token);
+    }
+
+    public function getClaim(string $keyName, string $tokenType = 'accessToken')
+    {
+        $data = (array) self::getClaims($tokenType);
+        return $data[$keyName] ?? '';
+    }
+
+    public function getPermissions()
+    {
+        $claims = self::getClaims();
+        return [
+            'orgCode' => $claims->org_code,
+            'permissions' => $claims->permissions
+        ];
+    }
+
+    public function getPermission(string $permission)
+    {
+        $allClaims = self::getClaims();
+        $permissions = (array) $allClaims->permissions;
+        return [
+            'orgCode' => $allClaims->org_code,
+            'isGranted' => empty($permissions) ? false : $permissions[$permission]
+        ];
+    }
+
+    public function getOrganization()
+    {
+        return [
+            'orgCode' => self::getClaim('org_code')
+        ];
+    }
+
+    public function getUserOrganizations()
+    {
+        return [
+            'orgCodes' => self::getClaim('org_codes', 'id_token')
+        ];
+    }
+
     public function getAuthStatus()
     {
         return $_SESSION['auth_status'];
@@ -329,19 +386,6 @@ class KindeClientSDK
     {
         $_SESSION['auth_status'] = $_authStatus;
         $this->authStatus = $_authStatus;
-    }
-
-    /**
-     * It checks user is logged.
-     *
-     * @return bool The response is a bool, which check user logged or not
-     */
-    private function isAuthenticated()
-    {
-        if (empty($_SESSION["login_time_stamp"]) || empty($_SESSION["expires_in"])) {
-            return false;
-        }
-        return time() - $_SESSION["login_time_stamp"] < $_SESSION["expires_in"];
     }
 
     private function cleanSession()
@@ -355,39 +399,10 @@ class KindeClientSDK
         unset($_SESSION['user']);
     }
 
-    /**
-     * It checks if the data pass the config
-     *
-     * @param array data need validate.
-     *
-     */
-    private function validateWithConfig(array $data)
-    {
-        $config = Additional::ADDITIONAL;
-        $keysAvailable = array_keys($config);
-        foreach ($data as $key => $val) {
-            if (!in_array($key, $keysAvailable)) {
-                throw new InvalidArgumentException("Please provide correct additional, $key");
-            }
-            if (gettype($val) != $config[$key]) {
-                throw new InvalidArgumentException("Please supply a valid $key, expect which is a $config[$key]");
-            }
-        }
-    }
-
     private function checkStateAuthentication(string $stateServer)
     {
         if (empty($_SESSION['oauthState']) || $stateServer != $_SESSION['oauthState']) {
             throw new OAuthException("Authentication failed because it tries to validate state");
         }
-    }
-
-    private function mergeAdditional(array $additional)
-    {
-        if (empty($additional)) {
-            return;
-        }
-        $this->validateWithConfig($additional);
-        $this->additional = array_merge($this->additional, $additional);
     }
 }

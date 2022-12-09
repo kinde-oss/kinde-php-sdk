@@ -22,7 +22,7 @@ class PKCE
      * @return A redirect to the authorization endpoint with the parameters needed to start the
      * authorization process.
      */
-    public function login(KindeClientSDK $clientSDK, string $startPage = 'login')
+    public function login(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
     {
         $_SESSION['oauthCodeVerifier'] = '';
         $challenge = Utils::generateChallenge();
@@ -39,13 +39,14 @@ class PKCE
             'state' => $state,
             'start_page' => $startPage
         ];
-        if (!empty($clientSDK->additional)) {
-            $searchParams = array_merge($searchParams, $clientSDK->additional);
+        if (!empty($additionalParameters)) {
+            $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+            $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         }
         $_SESSION['oauthCodeVerifier'] =  $challenge['codeVerifier'];
 
         if (!headers_sent()) {
-            exit(header('Location: '. $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
+            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
         }
     }
 }
