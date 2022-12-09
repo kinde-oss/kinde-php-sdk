@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfileTest
+ * CreateUserRequestIdentitiesInnerDetailsTest
  *
  * PHP version 7.4
  *
@@ -32,15 +32,15 @@ namespace Kinde\KindeSDK\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserProfileTest Class Doc Comment
+ * CreateUserRequestIdentitiesInnerDetailsTest Class Doc Comment
  *
  * @category    Class
- * @description UserProfile
+ * @description CreateUserRequestIdentitiesInnerDetails
  * @package     Kinde\KindeSDK
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class UserProfileTest extends TestCase
+class CreateUserRequestIdentitiesInnerDetailsTest extends TestCase
 {
 
     /**
@@ -72,54 +72,18 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test "UserProfile"
+     * Test "CreateUserRequestIdentitiesInnerDetails"
      */
-    public function testUserProfile()
+    public function testCreateUserRequestIdentitiesInnerDetails()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "id"
+     * Test attribute "email"
      */
-    public function testPropertyId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "preferred_email"
-     */
-    public function testPropertyPreferredEmail()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "provided_id"
-     */
-    public function testPropertyProvidedId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "last_name"
-     */
-    public function testPropertyLastName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "first_name"
-     */
-    public function testPropertyFirstName()
+    public function testPropertyEmail()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

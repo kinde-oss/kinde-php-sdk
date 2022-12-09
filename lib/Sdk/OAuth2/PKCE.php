@@ -39,10 +39,8 @@ class PKCE
             'state' => $state,
             'start_page' => $startPage
         ];
-        if (!empty($additionalParameters)) {
-            $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
-            $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
-        }
+        $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         $_SESSION['oauthCodeVerifier'] =  $challenge['codeVerifier'];
 
         if (!headers_sent()) {

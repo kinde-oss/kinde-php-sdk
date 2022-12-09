@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfileTest
+ * UserIdentityResultTest
  *
  * PHP version 7.4
  *
@@ -32,15 +32,15 @@ namespace Kinde\KindeSDK\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserProfileTest Class Doc Comment
+ * UserIdentityResultTest Class Doc Comment
  *
  * @category    Class
- * @description UserProfile
+ * @description UserIdentityResult
  * @package     Kinde\KindeSDK
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class UserProfileTest extends TestCase
+class UserIdentityResultTest extends TestCase
 {
 
     /**
@@ -72,54 +72,27 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test "UserProfile"
+     * Test "UserIdentityResult"
      */
-    public function testUserProfile()
+    public function testUserIdentityResult()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "id"
+     * Test attribute "created"
      */
-    public function testPropertyId()
+    public function testPropertyCreated()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "preferred_email"
+     * Test attribute "identity_id"
      */
-    public function testPropertyPreferredEmail()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "provided_id"
-     */
-    public function testPropertyProvidedId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "last_name"
-     */
-    public function testPropertyLastName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "first_name"
-     */
-    public function testPropertyFirstName()
+    public function testPropertyIdentityId()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

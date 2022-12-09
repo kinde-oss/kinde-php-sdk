@@ -22,11 +22,8 @@ class AuthorizationCode
             'state' => $state,
             'start_page' => 'login'
         ];
-
-        if (!empty($additionalParameters)) {
-            $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
-            $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
-        }
+        $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         if (!headers_sent()) {
             exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
         }

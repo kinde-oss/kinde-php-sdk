@@ -94,7 +94,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://test.kinde.com';
+    protected $host = 'https://test.kinde.com/api/v1';
 
     /**
      * User agent of the HTTP request, set to "OpenAPI-Generator/{version}/PHP" by default
@@ -473,7 +473,7 @@ class Configuration
     {
         return [
             [
-                "url" => "https://{businessName}.kinde.com",
+                "url" => "https://{businessName}.kinde.com/api/v1",
                 "description" => "No description provided",
                 "variables" => [
                     "businessName" => [

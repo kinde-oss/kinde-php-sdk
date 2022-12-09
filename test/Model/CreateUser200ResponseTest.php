@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfileTest
+ * CreateUser200ResponseTest
  *
  * PHP version 7.4
  *
@@ -32,15 +32,15 @@ namespace Kinde\KindeSDK\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserProfileTest Class Doc Comment
+ * CreateUser200ResponseTest Class Doc Comment
  *
  * @category    Class
- * @description UserProfile
+ * @description CreateUser200Response
  * @package     Kinde\KindeSDK
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class UserProfileTest extends TestCase
+class CreateUser200ResponseTest extends TestCase
 {
 
     /**
@@ -72,9 +72,9 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test "UserProfile"
+     * Test "CreateUser200Response"
      */
-    public function testUserProfile()
+    public function testCreateUser200Response()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -90,36 +90,18 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test attribute "preferred_email"
+     * Test attribute "created"
      */
-    public function testPropertyPreferredEmail()
+    public function testPropertyCreated()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "provided_id"
+     * Test attribute "identities"
      */
-    public function testPropertyProvidedId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "last_name"
-     */
-    public function testPropertyLastName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "first_name"
-     */
-    public function testPropertyFirstName()
+    public function testPropertyIdentities()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfile
+ * UserProfileV2
  *
  * PHP version 7.4
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * UserProfile Class Doc Comment
+ * UserProfileV2 Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
+class UserProfileV2 implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'user_profile';
+    protected static $openAPIModelName = 'user_profile_v2';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -59,10 +59,11 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'id' => 'string',
-        'preferred_email' => 'string',
         'provided_id' => 'string',
-        'last_name' => 'string',
-        'first_name' => 'string'
+        'name' => 'string',
+        'given_name' => 'string',
+        'family_name' => 'string',
+        'updated_at' => 'string'
     ];
 
     /**
@@ -74,10 +75,11 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'id' => null,
-        'preferred_email' => null,
         'provided_id' => null,
-        'last_name' => null,
-        'first_name' => null
+        'name' => null,
+        'given_name' => null,
+        'family_name' => null,
+        'updated_at' => null
     ];
 
     /**
@@ -108,10 +110,11 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'id' => 'id',
-        'preferred_email' => 'preferred_email',
         'provided_id' => 'provided_id',
-        'last_name' => 'last_name',
-        'first_name' => 'first_name'
+        'name' => 'name',
+        'given_name' => 'given_name',
+        'family_name' => 'family_name',
+        'updated_at' => 'updated_at'
     ];
 
     /**
@@ -121,10 +124,11 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'id' => 'setId',
-        'preferred_email' => 'setPreferredEmail',
         'provided_id' => 'setProvidedId',
-        'last_name' => 'setLastName',
-        'first_name' => 'setFirstName'
+        'name' => 'setName',
+        'given_name' => 'setGivenName',
+        'family_name' => 'setFamilyName',
+        'updated_at' => 'setUpdatedAt'
     ];
 
     /**
@@ -134,10 +138,11 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'id' => 'getId',
-        'preferred_email' => 'getPreferredEmail',
         'provided_id' => 'getProvidedId',
-        'last_name' => 'getLastName',
-        'first_name' => 'getFirstName'
+        'name' => 'getName',
+        'given_name' => 'getGivenName',
+        'family_name' => 'getFamilyName',
+        'updated_at' => 'getUpdatedAt'
     ];
 
     /**
@@ -198,10 +203,11 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
     public function __construct(array $data = null)
     {
         $this->container['id'] = $data['id'] ?? null;
-        $this->container['preferred_email'] = $data['preferred_email'] ?? null;
         $this->container['provided_id'] = $data['provided_id'] ?? null;
-        $this->container['last_name'] = $data['last_name'] ?? null;
-        $this->container['first_name'] = $data['first_name'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['given_name'] = $data['given_name'] ?? null;
+        $this->container['family_name'] = $data['family_name'] ?? null;
+        $this->container['updated_at'] = $data['updated_at'] ?? null;
     }
 
     /**
@@ -253,30 +259,6 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets preferred_email
-     *
-     * @return string|null
-     */
-    public function getPreferredEmail()
-    {
-        return $this->container['preferred_email'];
-    }
-
-    /**
-     * Sets preferred_email
-     *
-     * @param string|null $preferred_email preferred_email
-     *
-     * @return self
-     */
-    public function setPreferredEmail($preferred_email)
-    {
-        $this->container['preferred_email'] = $preferred_email;
-
-        return $this;
-    }
-
-    /**
      * Gets provided_id
      *
      * @return string|null
@@ -301,49 +283,97 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets last_name
+     * Gets name
      *
      * @return string|null
      */
-    public function getLastName()
+    public function getName()
     {
-        return $this->container['last_name'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets last_name
+     * Sets name
      *
-     * @param string|null $last_name last_name
+     * @param string|null $name name
      *
      * @return self
      */
-    public function setLastName($last_name)
+    public function setName($name)
     {
-        $this->container['last_name'] = $last_name;
+        $this->container['name'] = $name;
 
         return $this;
     }
 
     /**
-     * Gets first_name
+     * Gets given_name
      *
      * @return string|null
      */
-    public function getFirstName()
+    public function getGivenName()
     {
-        return $this->container['first_name'];
+        return $this->container['given_name'];
     }
 
     /**
-     * Sets first_name
+     * Sets given_name
      *
-     * @param string|null $first_name first_name
+     * @param string|null $given_name given_name
      *
      * @return self
      */
-    public function setFirstName($first_name)
+    public function setGivenName($given_name)
     {
-        $this->container['first_name'] = $first_name;
+        $this->container['given_name'] = $given_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets family_name
+     *
+     * @return string|null
+     */
+    public function getFamilyName()
+    {
+        return $this->container['family_name'];
+    }
+
+    /**
+     * Sets family_name
+     *
+     * @param string|null $family_name family_name
+     *
+     * @return self
+     */
+    public function setFamilyName($family_name)
+    {
+        $this->container['family_name'] = $family_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets updated_at
+     *
+     * @return string|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->container['updated_at'];
+    }
+
+    /**
+     * Sets updated_at
+     *
+     * @param string|null $updated_at updated_at
+     *
+     * @return self
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        $this->container['updated_at'] = $updated_at;
 
         return $this;
     }

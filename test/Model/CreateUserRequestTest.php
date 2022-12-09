@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfileTest
+ * CreateUserRequestTest
  *
  * PHP version 7.4
  *
@@ -32,15 +32,15 @@ namespace Kinde\KindeSDK\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserProfileTest Class Doc Comment
+ * CreateUserRequestTest Class Doc Comment
  *
  * @category    Class
- * @description UserProfile
+ * @description CreateUserRequest
  * @package     Kinde\KindeSDK
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class UserProfileTest extends TestCase
+class CreateUserRequestTest extends TestCase
 {
 
     /**
@@ -72,54 +72,27 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test "UserProfile"
+     * Test "CreateUserRequest"
      */
-    public function testUserProfile()
+    public function testCreateUserRequest()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "id"
+     * Test attribute "profile"
      */
-    public function testPropertyId()
+    public function testPropertyProfile()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "preferred_email"
+     * Test attribute "identities"
      */
-    public function testPropertyPreferredEmail()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "provided_id"
-     */
-    public function testPropertyProvidedId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "last_name"
-     */
-    public function testPropertyLastName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "first_name"
-     */
-    public function testPropertyFirstName()
+    public function testPropertyIdentities()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

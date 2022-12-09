@@ -19,10 +19,9 @@ class ClientCredentials
                 'grant_type' => GrantType::clientCredentials,
                 'scope' => $clientSDK->scopes
             ];
-            if (!empty($additionalParameters)) {
-                $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
-                $formData = array_merge($formData, $mergedAdditionalParameters);
-            }
+            $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+            $formData = array_merge($formData, $mergedAdditionalParameters);
+
             $response =
                 $client->request('POST', $clientSDK->tokenEndpoint, [
                     'form_params' => $formData

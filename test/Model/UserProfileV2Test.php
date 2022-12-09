@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfileTest
+ * UserProfileV2Test
  *
  * PHP version 7.4
  *
@@ -32,15 +32,15 @@ namespace Kinde\KindeSDK\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserProfileTest Class Doc Comment
+ * UserProfileV2Test Class Doc Comment
  *
  * @category    Class
- * @description UserProfile
+ * @description UserProfileV2
  * @package     Kinde\KindeSDK
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class UserProfileTest extends TestCase
+class UserProfileV2Test extends TestCase
 {
 
     /**
@@ -72,9 +72,9 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test "UserProfile"
+     * Test "UserProfileV2"
      */
-    public function testUserProfile()
+    public function testUserProfileV2()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -90,15 +90,6 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test attribute "preferred_email"
-     */
-    public function testPropertyPreferredEmail()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test attribute "provided_id"
      */
     public function testPropertyProvidedId()
@@ -108,18 +99,36 @@ class UserProfileTest extends TestCase
     }
 
     /**
-     * Test attribute "last_name"
+     * Test attribute "name"
      */
-    public function testPropertyLastName()
+    public function testPropertyName()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "first_name"
+     * Test attribute "given_name"
      */
-    public function testPropertyFirstName()
+    public function testPropertyGivenName()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "family_name"
+     */
+    public function testPropertyFamilyName()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "updated_at"
+     */
+    public function testPropertyUpdatedAt()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

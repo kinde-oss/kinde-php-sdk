@@ -1,6 +1,6 @@
 <?php
 /**
- * Users
+ * CreateUser200Response
  *
  * PHP version 7.4
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * Users Class Doc Comment
+ * CreateUser200Response Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class Users implements ModelInterface, ArrayAccess, \JsonSerializable
+class CreateUser200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'users';
+    protected static $openAPIModelName = 'createUser_200_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,8 +58,9 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'users' => '\Kinde\KindeSDK\Model\User[]',
-        'next_token' => 'string'
+        'id' => 'string',
+        'created' => 'bool',
+        'identities' => '\Kinde\KindeSDK\Model\UserIdentity[]'
     ];
 
     /**
@@ -70,8 +71,9 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'users' => null,
-        'next_token' => null
+        'id' => null,
+        'created' => null,
+        'identities' => null
     ];
 
     /**
@@ -101,8 +103,9 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'users' => 'users',
-        'next_token' => 'next_token'
+        'id' => 'id',
+        'created' => 'created',
+        'identities' => 'identities'
     ];
 
     /**
@@ -111,8 +114,9 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'users' => 'setUsers',
-        'next_token' => 'setNextToken'
+        'id' => 'setId',
+        'created' => 'setCreated',
+        'identities' => 'setIdentities'
     ];
 
     /**
@@ -121,8 +125,9 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'users' => 'getUsers',
-        'next_token' => 'getNextToken'
+        'id' => 'getId',
+        'created' => 'getCreated',
+        'identities' => 'getIdentities'
     ];
 
     /**
@@ -182,8 +187,9 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['users'] = $data['users'] ?? null;
-        $this->container['next_token'] = $data['next_token'] ?? null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['created'] = $data['created'] ?? null;
+        $this->container['identities'] = $data['identities'] ?? null;
     }
 
     /**
@@ -211,49 +217,73 @@ class Users implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets users
+     * Gets id
      *
-     * @return \Kinde\KindeSDK\Model\User[]|null
+     * @return string|null
      */
-    public function getUsers()
+    public function getId()
     {
-        return $this->container['users'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets users
+     * Sets id
      *
-     * @param \Kinde\KindeSDK\Model\User[]|null $users users
+     * @param string|null $id id
      *
      * @return self
      */
-    public function setUsers($users)
+    public function setId($id)
     {
-        $this->container['users'] = $users;
+        $this->container['id'] = $id;
 
         return $this;
     }
 
     /**
-     * Gets next_token
+     * Gets created
      *
-     * @return string|null
+     * @return bool|null
      */
-    public function getNextToken()
+    public function getCreated()
     {
-        return $this->container['next_token'];
+        return $this->container['created'];
     }
 
     /**
-     * Sets next_token
+     * Sets created
      *
-     * @param string|null $next_token next_token
+     * @param bool|null $created created
      *
      * @return self
      */
-    public function setNextToken($next_token)
+    public function setCreated($created)
     {
-        $this->container['next_token'] = $next_token;
+        $this->container['created'] = $created;
+
+        return $this;
+    }
+
+    /**
+     * Gets identities
+     *
+     * @return \Kinde\KindeSDK\Model\UserIdentity[]|null
+     */
+    public function getIdentities()
+    {
+        return $this->container['identities'];
+    }
+
+    /**
+     * Sets identities
+     *
+     * @param \Kinde\KindeSDK\Model\UserIdentity[]|null $identities identities
+     *
+     * @return self
+     */
+    public function setIdentities($identities)
+    {
+        $this->container['identities'] = $identities;
 
         return $this;
     }
