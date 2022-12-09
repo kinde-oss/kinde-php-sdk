@@ -48,7 +48,7 @@ class OAuth2PKCETest extends TestCase
      */
     public function test_login_type_client_credential_flow_with_audience(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $this->client->login();
         $this->assertTrue(headers_sent());
     }
@@ -58,7 +58,7 @@ class OAuth2PKCETest extends TestCase
      */
     public function test_login_type_client_credential_flow_with_org_code(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $additional = [
             'org_code' => 'org_123',
             'org_name' => 'My Application',
@@ -72,7 +72,7 @@ class OAuth2PKCETest extends TestCase
      */
     public function test_register_type_client_credential_flow_with_additional(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $additional = [
             'org_code' => 'org_123',
             'org_name' => 'My Application',
@@ -86,7 +86,7 @@ class OAuth2PKCETest extends TestCase
      */
     public function test_create_org_type_client_credential_flow(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $this->client->createOrg();
         $this->assertTrue(headers_sent());
     }
@@ -96,7 +96,7 @@ class OAuth2PKCETest extends TestCase
      */
     public function test_create_org_type_client_credential_flow_with_additional(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::PKCE, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $additional = [
             'org_code' => 'org_123',
             'org_name' => 'My Application',

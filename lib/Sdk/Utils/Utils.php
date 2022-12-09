@@ -4,6 +4,7 @@ namespace Kinde\KindeSDK\Sdk\Utils;
 
 use InvalidArgumentException;
 use Kinde\KindeSDK\Sdk\Enums\AdditionalParameters;
+use Exception;
 
 class Utils
 {
@@ -81,11 +82,15 @@ class Utils
      *
      * @param string token jwt
      *
-     * @return object A object value.
+     * @return array A array value.
      */
     static public function parseJWT(string $token)
     {
-        return json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))));
+        try {
+            return json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))), true);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     static public function checkAdditionalParameters(array $additionalParameters)

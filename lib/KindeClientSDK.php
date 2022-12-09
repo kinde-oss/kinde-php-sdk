@@ -79,7 +79,7 @@ class KindeClientSDK
         string $clientSecret,
         string $grantType,
         string $logoutRedirectUri,
-        string $scopes = 'openid offline',
+        string $scopes = 'openid profile email offline',
         array $additionalParameters = []
     ) {
         if (empty($domain)) {
@@ -133,18 +133,16 @@ class KindeClientSDK
 
     public function __get($key)
     {
-        if (property_exists($this, $key)) {
-            if ($key === 'isAuthenticated') {
-                return $this->isAuthenticated();
-            }
-            return $this->$key;
+        if (!property_exists($this, $key) && $key === 'isAuthenticated') {
+            return $this->isAuthenticated();
         }
+        return $this->$key;
     }
 
     /**
      * A function that is used to login to the API.
      *
-     * @param array additional The array includes params to pass api.
+     * @param array additionalParameters The array includes params to pass api.
      * @param string scopes The scopes you want to request.
      * 
      * @return array The login method returns an array with the following keys:
@@ -180,7 +178,7 @@ class KindeClientSDK
      * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
      * state, and the start page set to registration
      *
-     * @param array additional The array includes params to pass api.
+     * @param array additionalParameters The array includes params to pass api.
      */
     public function register(array $additionalParameters = [])
     {
@@ -194,7 +192,7 @@ class KindeClientSDK
      * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
      * state, and the start page set to registration and allow an organization to be created
      *
-     *  @param array additional The array includes params to pass api.
+     *  @param array additionalParameters The array includes params to pass api.
      */
     public function createOrg(array $additionalParameters = [])
     {
@@ -255,17 +253,19 @@ class KindeClientSDK
     private function saveDataToSession($token)
     {
         $_SESSION['login_time_stamp'] = time();
-        $_SESSION['accessToken'] = $token->access_token ?? '';
+        $_SESSION['access_token'] = $token->access_token ?? '';
         $_SESSION['id_token'] = $token->id_token ?? '';
         $_SESSION['expires_in'] = $token->expires_in ?? 0;
-        $payload = Utils::parseJWT($token->id_token ?? '');
-        $user = [
-            'id' => $payload->sub,
-            'given_name' => $payload->given_name,
-            'family_name' => $payload->family_name,
-            'email' => $payload->email
-        ];
-        $_SESSION['user'] = json_encode($user);
+        $payload = Utils::parseJWT($token->id_token);
+        if ($payload) {
+            $user = [
+                'id' => $payload['sub'] ?? '',
+                'given_name' => $payload['given_name'] ?? '',
+                'family_name' => $payload['family_name'] ?? '',
+                'email' => $payload['email'] ?? ''
+            ];
+            $_SESSION['user'] = json_encode($user);
+        }
     }
 
     /**
@@ -275,7 +275,7 @@ class KindeClientSDK
      */
     public function getUserDetails()
     {
-        return json_decode($_SESSION['user'] ?? [], true);
+        return json_decode($_SESSION['user'] ?? '', true);
     }
 
     /**
@@ -326,10 +326,10 @@ class KindeClientSDK
         return time() - $_SESSION["login_time_stamp"] < $_SESSION["expires_in"];
     }
 
-    public function getClaims(string $tokenType = 'accessToken')
+    private function getClaims(string $tokenType = 'access_token')
     {
-        if (!in_array($tokenType, ['accessToken', 'id_token'])) {
-            throw new InvalidArgumentException('tokenType');
+        if (!in_array($tokenType, ['access_token', 'id_token'])) {
+            throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
         }
         $token = $_SESSION[$tokenType] ?? '';
         if (empty($token)) {
@@ -338,38 +338,68 @@ class KindeClientSDK
         return Utils::parseJWT($token);
     }
 
-    public function getClaim(string $keyName, string $tokenType = 'accessToken')
+    /**
+     * Accept a key for a token and returns the claim value.
+     * Optional argument to define which token to check - defaults to Access token  - e.g.
+     *
+     * @param string keyName Accept a key for a token.
+     * @param string tokenType Optional argument to define which token to check.
+     *
+     * @return any The response is a data in token.
+     */
+    public function getClaim(string $keyName, string $tokenType = 'access_token')
     {
-        $data = (array) self::getClaims($tokenType);
-        return $data[$keyName] ?? '';
+        $data = self::getClaims($tokenType);
+        return $data[$keyName] ?? null;
     }
 
+    /**
+     * Get an array of permissions (from the permissions claim in access token)
+     * And also the relevant org code (org_code claim in access token). e.g
+     *
+     * @return array The response includes orgCode and permissions.
+     */
     public function getPermissions()
     {
         $claims = self::getClaims();
         return [
-            'orgCode' => $claims->org_code,
-            'permissions' => $claims->permissions
+            'orgCode' => $claims['org_code'],
+            'permissions' => $claims['permissions']
         ];
     }
 
+    /**
+     * Given a permission value, returns if it is granted or not (checks if permission key exists in the permissions claim array)
+     * And relevant org code (checking against claim org_code) e.g
+     *
+     * @return array The response includes orgCode and isGranted.
+     */
     public function getPermission(string $permission)
     {
         $allClaims = self::getClaims();
-        $permissions = (array) $allClaims->permissions;
+        $permissions = $allClaims['permissions'];
         return [
-            'orgCode' => $allClaims->org_code,
-            'isGranted' => empty($permissions) ? false : $permissions[$permission]
+            'orgCode' => $allClaims['org_code'],
+            'isGranted' => in_array($permission, $permissions)
         ];
     }
 
+    /**
+     * Gets the org code (and later other org info) (checking against claim org_code)
+     *
+     * @return array The response is a orgCode.
+     */
     public function getOrganization()
     {
         return [
             'orgCode' => self::getClaim('org_code')
         ];
     }
-
+    /**
+     * Gets all org code
+     *
+     * @return array The response is a orgCodes.
+     */
     public function getUserOrganizations()
     {
         return [
@@ -391,6 +421,8 @@ class KindeClientSDK
     private function cleanSession()
     {
         unset($_SESSION['token']);
+        unset($_SESSION['access_token']);
+        unset($_SESSION['id_token']);
         unset($_SESSION['auth_status']);
         unset($_SESSION['oauthState']);
         unset($_SESSION['oauthCodeVerifier']);

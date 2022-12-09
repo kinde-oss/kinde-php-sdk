@@ -47,7 +47,7 @@ class OAuth2ClientCredentialTest extends TestCase
      */
     public function test_login_type_client_credential_flow_with_audience(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $response = $this->client->login();
         $this->assertResponse($response);
     }
@@ -57,7 +57,7 @@ class OAuth2ClientCredentialTest extends TestCase
      */
     public function test_login_type_client_credential_flow_with_org_code(): void
     {
-        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri, ['audience' => $this->domain . '/api']);
+        $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
         $additional = [
             'org_code' => 'org_123',
             'org_name' => 'My Application',
