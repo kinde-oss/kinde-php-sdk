@@ -256,7 +256,7 @@ class KindeClientSDK
         $_SESSION['access_token'] = $token->access_token ?? '';
         $_SESSION['id_token'] = $token->id_token ?? '';
         $_SESSION['expires_in'] = $token->expires_in ?? 0;
-        $payload = Utils::parseJWT($token->id_token);
+        $payload = Utils::parseJWT($token->id_token ?? '');
         if ($payload) {
             $user = [
                 'id' => $payload['sub'] ?? '',

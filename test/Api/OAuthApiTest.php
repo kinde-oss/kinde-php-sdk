@@ -1,6 +1,6 @@
 <?php
 /**
- * UserApiTest
+ * OAuthApiTest
  * PHP version 7.4
  *
  * @category Class
@@ -34,14 +34,14 @@ use \Kinde\KindeSDK\ObjectSerializer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserApiTest Class Doc Comment
+ * OAuthApiTest Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class UserApiTest extends TestCase
+class OAuthApiTest extends TestCase
 {
 
     /**
@@ -73,12 +73,24 @@ class UserApiTest extends TestCase
     }
 
     /**
-     * Test case for getUserProfile
+     * Test case for getUser
      *
-     * Returns current user profile.
+     * Returns the details of the currently logged in user.
      *
      */
-    public function testGetUserProfile()
+    public function testGetUser()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getUserProfileV2
+     *
+     * Returns the details of the currently logged in user.
+     *
+     */
+    public function testGetUserProfileV2()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

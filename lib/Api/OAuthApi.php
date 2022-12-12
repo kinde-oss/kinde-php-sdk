@@ -122,7 +122,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response
@@ -141,7 +141,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response
@@ -242,7 +242,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \InvalidArgumentException
@@ -264,7 +264,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \InvalidArgumentException
@@ -315,7 +315,7 @@ class OAuthApi
      * Create request for operation 'getUser'
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \InvalidArgumentException
@@ -375,11 +375,11 @@ class OAuthApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         } else {
-					$token = json_decode($_SESSION['token']);
-					if (!empty($token) && !empty($token->access_token)) {
-						$headers['Authorization'] = 'Bearer ' . $token->access_token;
-					}
-				}
+            $token = json_decode($_SESSION['token']);
+            if (!empty($token) && !empty($token->access_token)) {
+                $headers['Authorization'] = 'Bearer ' . $token->access_token;
+            }
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -392,16 +392,10 @@ class OAuthApi
             $headers
         );
 
-        $operationHosts = ["https://abcdef.kinde.com"];
-        if ($this->hostIndex < 0 || $this->hostIndex >= sizeof($operationHosts)) {
-            throw new \InvalidArgumentException("Invalid index {$this->hostIndex} when selecting the host. Must be less than ".sizeof($operationHosts));
-        }
-        $operationHost = $operationHosts[$this->hostIndex];
-
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
@@ -413,7 +407,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response
@@ -432,7 +426,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response
@@ -533,7 +527,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \InvalidArgumentException
@@ -555,7 +549,7 @@ class OAuthApi
      * Returns the details of the currently logged in user
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \InvalidArgumentException
@@ -606,7 +600,7 @@ class OAuthApi
      * Create request for operation 'getUserProfileV2'
      *
      * This operation contains host(s) defined in the OpenAP spec. Use 'hostIndex' to select the host.
-     * URL: https://abcdef.kinde.com
+     * URL: https://{businessName}.kinde.com
      *
      *
      * @throws \InvalidArgumentException
@@ -666,11 +660,11 @@ class OAuthApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         } else {
-					$token = json_decode($_SESSION['token']);
-					if (!empty($token) && !empty($token->access_token)) {
-						$headers['Authorization'] = 'Bearer ' . $token->access_token;
-					}
-				}
+            $token = json_decode($_SESSION['token']);
+            if (!empty($token) && !empty($token->access_token)) {
+                $headers['Authorization'] = 'Bearer ' . $token->access_token;
+            }
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -683,16 +677,10 @@ class OAuthApi
             $headers
         );
 
-        $operationHosts = ["https://abcdef.kinde.com"];
-        if ($this->hostIndex < 0 || $this->hostIndex >= sizeof($operationHosts)) {
-            throw new \InvalidArgumentException("Invalid index {$this->hostIndex} when selecting the host. Must be less than ".sizeof($operationHosts));
-        }
-        $operationHost = $operationHosts[$this->hostIndex];
-
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );

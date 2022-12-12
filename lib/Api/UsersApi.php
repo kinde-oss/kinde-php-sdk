@@ -371,11 +371,11 @@ class UsersApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         } else {
-					$token = json_decode($_SESSION['token']);
-					if (!empty($token) && !empty($token->access_token)) {
-						$headers['Authorization'] = 'Bearer ' . $token->access_token;
-					}
-				}
+            $token = json_decode($_SESSION['token']);
+            if (!empty($token) && !empty($token->access_token)) {
+                $headers['Authorization'] = 'Bearer ' . $token->access_token;
+            }
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -409,7 +409,7 @@ class UsersApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Model\User[]
+     * @return \Kinde\KindeSDK\Model\GetUsers200Response
      */
     public function getUsers($sort = null, $page_size = null, $user_id = null, $next_token = null)
     {
@@ -429,7 +429,7 @@ class UsersApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Model\User[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetUsers200Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUsersWithHttpInfo($sort = null, $page_size = null, $user_id = null, $next_token = null)
     {
@@ -472,22 +472,23 @@ class UsersApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\Kinde\KindeSDK\Model\User[]' === '\SplFileObject') {
+                    if ('\Kinde\KindeSDK\Model\GetUsers200Response' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
-                        if ('\Kinde\KindeSDK\Model\User[]' !== 'string') {
+                        if ('\Kinde\KindeSDK\Model\GetUsers200Response' !== 'string') {
                             $content = json_decode($content);
                         }
                     }
+
                     return [
-                        ObjectSerializer::deserialize($content, '\Kinde\KindeSDK\Model\User[]', []),
+                        ObjectSerializer::deserialize($content, '\Kinde\KindeSDK\Model\GetUsers200Response', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Kinde\KindeSDK\Model\User[]';
+            $returnType = '\Kinde\KindeSDK\Model\GetUsers200Response';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -508,7 +509,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\User[]',
+                        '\Kinde\KindeSDK\Model\GetUsers200Response',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -556,7 +557,7 @@ class UsersApi
      */
     public function getUsersAsyncWithHttpInfo($sort = null, $page_size = null, $user_id = null, $next_token = null)
     {
-        $returnType = '\Kinde\KindeSDK\Model\User[]';
+        $returnType = '\Kinde\KindeSDK\Model\GetUsers200Response';
         $request = $this->getUsersRequest($sort, $page_size, $user_id, $next_token);
 
         return $this->client
@@ -712,7 +713,7 @@ class UsersApi
             $headerParams,
             $headers
         );
-        $headers['Accept'] = 'application/json';
+
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',

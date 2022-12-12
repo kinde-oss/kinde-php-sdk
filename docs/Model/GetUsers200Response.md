@@ -1,13 +1,10 @@
-# # UserProfile
+# # GetUsers200Response
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **string** |  | [optional]
-**preferred_email** | **string** |  | [optional]
-**provided_id** | **string** |  | [optional]
-**last_name** | **string** |  | [optional]
-**first_name** | **string** |  | [optional]
+**users** | **array[]** |  | [optional]
+**next_token** | **string** |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
