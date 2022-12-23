@@ -1,6 +1,6 @@
 # Kinde\KindeSDK\UsersApi
 
-All URIs are relative to https://app.kinde.com/api/v1.
+All URIs are relative to https://your_kinde_domain.kinde.com/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

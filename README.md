@@ -171,28 +171,29 @@ $this->kindeClient->logout();
 
 You need to have already authenticated before you call the API, otherwise an error will occur.
 
-Use the `Kinde\KindeSDK\Api\UserApi` class, then call the getUserProfile method.
+Use the `Kinde\KindeSDK\Api\OAuthApi` class, then call the `getUser` method.
 
 ```php
 ...
 
-use Kinde\KindeSDK\Api\UserApi;
+use Kinde\KindeSDK\Api\OAuthApi;
 
 ...
 
 public function getProfile()
 {
 
-    $apiInstance = new UserApi($this->kindeConfig); // You have already defined `$this->kindeConfig` in the construction function
+    $apiInstance = new OAuthApi($this->kindeConfig); // You have already defined `$this->kindeConfig` in the construction function
 
     try {
-        $result = $apiInstance->getUserProfile();
+        $result = $apiInstance->getUser();
         print_r($result);
     } catch (Exception $e) {
-        echo 'Exception when calling UserApi->getUserProfile: ', $e->getMessage(), PHP_EOL;
+        echo 'Exception when calling UserApi->getUser: ', $e->getMessage(), PHP_EOL;
     }
 }
 ```
+
 
 ### View users in Kinde
 
