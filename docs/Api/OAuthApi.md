@@ -26,12 +26,18 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 
-$apiInstance = new Kinde\KindeSDK\Api\OAuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
+
+...
+use Kinde\KindeSDK\Configuration;
+...
+
+$config = new Configuration();
+$config->setHost(YOUR_KINDE_HOST);
+
+// You can also set `access_token` via $config;
+$config->setAccessToken(`kinde_access_token`);
+
+$apiInstance = new Kinde\KindeSDK\Api\OAuthApi($config);
 
 try {
     $result = $apiInstance->getUser();
@@ -80,12 +86,18 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 
 
-$apiInstance = new Kinde\KindeSDK\Api\OAuthApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
+
+...
+use Kinde\KindeSDK\Configuration;
+...
+
+$config = new Configuration();
+$config->setHost(YOUR_KINDE_HOST);
+
+// You can also set `access_token` via $config;
+$config->setAccessToken(`kinde_access_token`);
+
+$apiInstance = new Kinde\KindeSDK\Api\OAuthApi($config);
 
 try {
     $result = $apiInstance->getUserProfileV2();

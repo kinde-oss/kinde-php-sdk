@@ -1,5 +1,4 @@
 <?php
-
 /**
  * OAuthApi
  * PHP version 7.4
@@ -221,6 +220,7 @@ class OAuthApi
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
@@ -361,8 +361,10 @@ class OAuthApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
+
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -503,6 +505,7 @@ class OAuthApi
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
+
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
@@ -643,8 +646,10 @@ class OAuthApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
+
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
+
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
