@@ -145,7 +145,7 @@ class KindeClientSDK
      * @param array additionalParameters The array includes params to pass api.
      * @param string scopes The scopes you want to request.
      * 
-     * @return array The login method returns an array with the following keys:
+     * @return The login method returns an array with the following keys:
      */
     public function login(
         array $additionalParameters = []
@@ -231,7 +231,7 @@ class KindeClientSDK
             throw new InvalidArgumentException('Not found code param');
         }
         $formParams['code'] = $authorizationCode;
-        $codeVerifier = $_SESSION['oauthCodeVerifier'] ?? "";
+        $codeVerifier = $_SESSION['kinde']['oauthCodeVerifier'] ?? "";
         if (!empty($codeVerifier)) {
             $formParams['code_verifier'] = $codeVerifier;
         } else if ($this->grantType == GrantType::PKCE) {
@@ -243,7 +243,7 @@ class KindeClientSDK
                 'form_params' => $formParams
             ]);
         $token = $response->getBody()->getContents();
-        $_SESSION['token'] = $token;
+        $_SESSION['kinde']['token'] = $token;
         $tokenDecode = json_decode($token);
         $this->saveDataToSession($tokenDecode);
         $this->updateAuthStatus(AuthStatus::AUTHENTICATED);
@@ -252,10 +252,10 @@ class KindeClientSDK
 
     private function saveDataToSession($token)
     {
-        $_SESSION['login_time_stamp'] = time();
-        $_SESSION['access_token'] = $token->access_token ?? '';
-        $_SESSION['id_token'] = $token->id_token ?? '';
-        $_SESSION['expires_in'] = $token->expires_in ?? 0;
+        $_SESSION['kinde']['login_time_stamp'] = time();
+        $_SESSION['kinde']['access_token'] = $token->access_token ?? '';
+        $_SESSION['kinde']['id_token'] = $token->id_token ?? '';
+        $_SESSION['kinde']['expires_in'] = $token->expires_in ?? 0;
         $payload = Utils::parseJWT($token->id_token ?? '');
         if ($payload) {
             $user = [
@@ -264,7 +264,7 @@ class KindeClientSDK
                 'family_name' => $payload['family_name'] ?? '',
                 'email' => $payload['email'] ?? ''
             ];
-            $_SESSION['user'] = json_encode($user);
+            $_SESSION['kinde']['user'] = json_encode($user);
         }
     }
 
@@ -275,7 +275,7 @@ class KindeClientSDK
      */
     public function getUserDetails()
     {
-        return json_decode($_SESSION['user'] ?? '', true);
+        return json_decode($_SESSION['kinde']['user'] ?? '', true);
     }
 
     /**
@@ -320,10 +320,10 @@ class KindeClientSDK
      */
     public function isAuthenticated()
     {
-        if (empty($_SESSION["login_time_stamp"]) || empty($_SESSION["expires_in"])) {
+        if (empty($_SESSION['kinde']["login_time_stamp"]) || empty($_SESSION['kinde']["expires_in"])) {
             return false;
         }
-        return time() - $_SESSION["login_time_stamp"] < $_SESSION["expires_in"];
+        return time() - $_SESSION['kinde']["login_time_stamp"] < $_SESSION['kinde']["expires_in"];
     }
 
     private function getClaims(string $tokenType = 'access_token')
@@ -331,7 +331,7 @@ class KindeClientSDK
         if (!in_array($tokenType, ['access_token', 'id_token'])) {
             throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
         }
-        $token = $_SESSION[$tokenType] ?? '';
+        $token = $_SESSION['kinde'][$tokenType] ?? '';
         if (empty($token)) {
             throw new Exception('Request is missing required authentication credential');
         }
@@ -409,31 +409,31 @@ class KindeClientSDK
 
     public function getAuthStatus()
     {
-        return $_SESSION['auth_status'];
+        return $_SESSION['kinde']['auth_status'];
     }
 
     private function updateAuthStatus(string $_authStatus)
     {
-        $_SESSION['auth_status'] = $_authStatus;
+        $_SESSION['kinde']['auth_status'] = $_authStatus;
         $this->authStatus = $_authStatus;
     }
 
     private function cleanSession()
     {
-        unset($_SESSION['token']);
-        unset($_SESSION['access_token']);
-        unset($_SESSION['id_token']);
-        unset($_SESSION['auth_status']);
-        unset($_SESSION['oauthState']);
-        unset($_SESSION['oauthCodeVerifier']);
-        unset($_SESSION['expires_in']);
-        unset($_SESSION['login_time_stamp']);
-        unset($_SESSION['user']);
+        unset($_SESSION['kinde']['token']);
+        unset($_SESSION['kinde']['access_token']);
+        unset($_SESSION['kinde']['id_token']);
+        unset($_SESSION['kinde']['auth_status']);
+        unset($_SESSION['kinde']['oauthState']);
+        unset($_SESSION['kinde']['oauthCodeVerifier']);
+        unset($_SESSION['kinde']['expires_in']);
+        unset($_SESSION['kinde']['login_time_stamp']);
+        unset($_SESSION['kinde']['user']);
     }
 
     private function checkStateAuthentication(string $stateServer)
     {
-        if (empty($_SESSION['oauthState']) || $stateServer != $_SESSION['oauthState']) {
+        if (empty($_SESSION['kinde']['oauthState']) || $stateServer != $_SESSION['kinde']['oauthState']) {
             throw new OAuthException("Authentication failed because it tries to validate state");
         }
     }

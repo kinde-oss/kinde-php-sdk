@@ -11,7 +11,7 @@ class AuthorizationCode
     public function login(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         $state = Utils::randomString();
-        $_SESSION['oauthState'] = $state;
+        $_SESSION['kinde']['oauthState'] = $state;
         $searchParams = [
             'client_id' => $clientSDK->clientId,
             'client_secret' => $clientSDK->clientSecret,

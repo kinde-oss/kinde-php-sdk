@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UsersApi
  * PHP version 7.4
@@ -183,7 +184,7 @@ class UsersApi
                 );
             }
 
-            switch($statusCode) {
+            switch ($statusCode) {
                 case 200:
                     if ('\Kinde\KindeSDK\Model\CreateUser200Response' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -216,7 +217,6 @@ class UsersApi
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
-
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
@@ -357,10 +357,8 @@ class UsersApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
-
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -371,7 +369,7 @@ class UsersApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         } else {
-            $token = json_decode($_SESSION['token']);
+            $token = json_decode($_SESSION['kinde']['token']);
             if (!empty($token) && !empty($token->access_token)) {
                 $headers['Authorization'] = 'Bearer ' . $token->access_token;
             }
@@ -470,7 +468,7 @@ class UsersApi
                 );
             }
 
-            switch($statusCode) {
+            switch ($statusCode) {
                 case 200:
                     if ('\Kinde\KindeSDK\Model\GetUsers200Response' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
@@ -503,7 +501,6 @@ class UsersApi
                 $response->getStatusCode(),
                 $response->getHeaders()
             ];
-
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
@@ -683,10 +680,8 @@ class UsersApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif ($headers['Content-Type'] === 'application/json') {
                 $httpBody = \GuzzleHttp\json_encode($formParams);
-
             } else {
                 // for HTTP post (form)
                 $httpBody = ObjectSerializer::buildQuery($formParams);
@@ -697,7 +692,7 @@ class UsersApi
         if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         } else {
-            $token = json_decode($_SESSION['token']);
+            $token = json_decode($_SESSION['kinde']['token']);
             if (!empty($token) && !empty($token->access_token)) {
                 $headers['Authorization'] = 'Bearer ' . $token->access_token;
             }

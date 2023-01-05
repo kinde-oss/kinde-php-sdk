@@ -24,10 +24,10 @@ class PKCE
      */
     public function login(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
     {
-        $_SESSION['oauthCodeVerifier'] = '';
+        $_SESSION['kinde']['oauthCodeVerifier'] = '';
         $challenge = Utils::generateChallenge();
         $state = $challenge['state'];
-        $_SESSION['oauthState'] = $state;
+        $_SESSION['kinde']['oauthState'] = $state;
         $searchParams = [
             'redirect_uri' => $clientSDK->redirectUri,
             'client_id' => $clientSDK->clientId,
@@ -41,7 +41,7 @@ class PKCE
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
-        $_SESSION['oauthCodeVerifier'] =  $challenge['codeVerifier'];
+        $_SESSION['kinde']['oauthCodeVerifier'] =  $challenge['codeVerifier'];
 
         if (!headers_sent()) {
             exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));

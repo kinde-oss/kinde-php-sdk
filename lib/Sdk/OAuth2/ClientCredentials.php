@@ -27,7 +27,7 @@ class ClientCredentials
                     'form_params' => $formData
                 ]);
             $token = $response->getBody()->getContents();
-            $_SESSION['token'] = $token;
+            $_SESSION['kinde']['token'] = $token;
             return json_decode($token);
         } catch (\Throwable $th) {
             throw $th;
