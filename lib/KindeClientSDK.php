@@ -7,6 +7,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 }
 
 use Exception;
+use InvalidArgumentException;
 use GuzzleHttp\Client;
 use Kinde\KindeSDK\Sdk\Enums\AuthStatus;
 use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
@@ -60,55 +61,69 @@ class KindeClientSDK
     /* A variable that is used to store the grant type that you want to use. */
     public string $grantType;
 
+    /* This is a variable that is used to store the status of the authorization. */
+    public string $authStatus;
+
+    /* This is a additionalParameters data. */
+    public array $additionalParameters;
+
     /**
      * @var string This is a variable that is used to store the scopes that you want to request.
      */
     public string $scopes;
 
-    /* This is a variable that is used to store the status of the authorization. */
-    public string $authStatus;
-
-    function __construct(string $domain, string $redirectUri, string $clientId, string $clientSecret, string $grantType, string $logoutRedirectUri)
-    {
+    function __construct(
+        string $domain,
+        string $redirectUri,
+        string $clientId,
+        string $clientSecret,
+        string $grantType,
+        string $logoutRedirectUri,
+        string $scopes = 'openid profile email offline',
+        array $additionalParameters = []
+    ) {
         if (empty($domain)) {
-            throw new Exception("Please provide domain");
+            throw new InvalidArgumentException("Please provide domain");
         }
         if (!Utils::validationURL($domain)) {
-            throw new Exception("Please provide valid domain");
+            throw new InvalidArgumentException("Please provide valid domain");
         }
         $this->domain = $domain;
 
         if (empty($redirectUri)) {
-            throw new Exception("Please provide redirect_uri");
+            throw new InvalidArgumentException("Please provide redirect_uri");
         }
         if (!Utils::validationURL($redirectUri)) {
-            throw new Exception("Please provide valid redirect_uri");
+            throw new InvalidArgumentException("Please provide valid redirect_uri");
         }
         $this->redirectUri = $redirectUri;
 
         if (empty($clientSecret)) {
-            throw new Exception("Please provide client_secret");
+            throw new InvalidArgumentException("Please provide client_secret");
         }
         $this->clientSecret = $clientSecret;
 
         if (empty($clientId)) {
-            throw new Exception("Please provide client_id");
+            throw new InvalidArgumentException("Please provide client_id");
         }
         $this->clientId = $clientId;
 
         if (empty($grantType)) {
-            throw new Exception("Please provide grant_type");
+            throw new InvalidArgumentException("Please provide grant_type");
         }
         $this->grantType = $grantType;
 
         if (empty($logoutRedirectUri)) {
-            throw new Exception("Please provide logout_redirect_uri");
+            throw new InvalidArgumentException("Please provide logout_redirect_uri");
         }
         if (!Utils::validationURL($logoutRedirectUri)) {
-            throw new Exception("Please provide valid logout_redirect_uri");
+            throw new InvalidArgumentException("Please provide valid logout_redirect_uri");
         }
-        $this->logoutRedirectUri = $logoutRedirectUri;
 
+        $this->additionalParameters = Utils::checkAdditionalParameters($additionalParameters);
+
+        $this->logoutRedirectUri = $logoutRedirectUri;
+        $this->scopes = $scopes;
         // Other endpoints
         $this->authorizationEndpoint = $this->domain . '/oauth2/auth';
         $this->tokenEndpoint = $this->domain . '/oauth2/token';
@@ -116,44 +131,41 @@ class KindeClientSDK
         $this->authStatus = AuthStatus::UNAUTHENTICATED;
     }
 
+    public function __get($key)
+    {
+        if (!property_exists($this, $key) && $key === 'isAuthenticated') {
+            return $this->isAuthenticated();
+        }
+        return $this->$key;
+    }
+
     /**
      * A function that is used to login to the API.
-     * 
-     * @param string grantType The type of grant you want to use.
-     * @param string state This is an optional parameter that you can use to pass a value to the
-     * authorization server. The authorization server will return this value back to you in the
-     * response.
+     *
+     * @param array additionalParameters The array includes params to pass api.
      * @param string scopes The scopes you want to request.
      * 
-     * @return array The login method returns an array with the following keys:
+     * @return The login method returns an array with the following keys:
      */
-    public function login(string $grantType = '', string $state = '', string $scopes = 'openid offline')
-    {
+    public function login(
+        array $additionalParameters = []
+    ) {
         $this->cleanSession();
         try {
-            $this->scopes = $scopes;
-            $this->$state = $state;
-            if (empty($grantType) && empty($this->grantType)) {
-                throw new Exception("Please provide grant_type");
-            }
-
-            if (!empty($grantType)) {
-                $this->grantType = $grantType;
-            }
             $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
             switch ($this->grantType) {
                 case GrantType::clientCredentials:
                     $auth = new ClientCredentials();
-                    return $auth->login($this);
+                    return $auth->login($this, $additionalParameters);
                 case GrantType::authorizationCode:
                     $auth = new AuthorizationCode();
-                    return $auth->login($this);
+                    return $auth->login($this, $additionalParameters);
                 case GrantType::PKCE:
                     $auth = new PKCE();
-                    return $auth->login($this);
+                    return $auth->login($this, 'login', $additionalParameters);
                 default:
                     $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
-                    throw new Exception("Please provide correct grant_type");
+                    throw new InvalidArgumentException("Please provide correct grant_type");
                     break;
             }
         } catch (\Throwable $th) {
@@ -165,22 +177,33 @@ class KindeClientSDK
     /**
      * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
      * state, and the start page set to registration
+     *
+     * @param array additionalParameters The array includes params to pass api.
      */
-    public function register()
+    public function register(array $additionalParameters = [])
     {
         $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
         $this->grantType = 'authorization_code';
         $auth = new PKCE();
-        return $auth->login($this, 'registration');
+        return $auth->login($this, 'registration', $additionalParameters);
+    }
+
+    /**
+     * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
+     * state, and the start page set to registration and allow an organization to be created
+     *
+     *  @param array additionalParameters The array includes params to pass api.
+     */
+    public function createOrg(array $additionalParameters = [])
+    {
+        $additionalParameters['is_create_org'] = 'true';
+        return $this->register($additionalParameters);
     }
 
     /**
      * It takes the grant type as parameter, and returns the token
      * 
-     * @param string grantType The type of grant you want to use.
-     * 
-     * @return object The response is a JSON object containing the access token, the refresh token, the token
-     * type, and the expiration time.
+     * @param array authServerParams The call back params from auth server.
      */
     public function getToken()
     {
@@ -195,22 +218,24 @@ class KindeClientSDK
         $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $urlComponents = parse_url($url);
         parse_str($urlComponents['query'] ?? "", $params);
+        $stateServer = $params['state'] ?? null;
+        $this->checkStateAuthentication($stateServer);
         $error = $params['error'] ?? '';
         if (!empty($error)) {
             $errorDescription = $params['error_description'] ?? '';
             $msg = !empty($errorDescription) ? $errorDescription : $error;
-            throw new Exception($msg);
+            throw new OAuthException($msg);
         }
         $authorizationCode = $params['code'] ?? '';
         if (empty($authorizationCode)) {
-            throw new Exception('Not found code param');
+            throw new InvalidArgumentException('Not found code param');
         }
         $formParams['code'] = $authorizationCode;
-        $codeVerifier = $_SESSION['oauthCodeVerifier'] ?? "";
+        $codeVerifier = $_SESSION['kinde']['oauthCodeVerifier'] ?? "";
         if (!empty($codeVerifier)) {
             $formParams['code_verifier'] = $codeVerifier;
         } else if ($this->grantType == GrantType::PKCE) {
-            throw new Exception('Not found code_verifier');
+            throw new InvalidArgumentException('Not found code_verifier');
         }
         $client = new Client();
         $response =
@@ -218,10 +243,39 @@ class KindeClientSDK
                 'form_params' => $formParams
             ]);
         $token = $response->getBody()->getContents();
-        $_SESSION['token'] = $token;
+        $_SESSION['kinde']['token'] = $token;
         $tokenDecode = json_decode($token);
+        $this->saveDataToSession($tokenDecode);
         $this->updateAuthStatus(AuthStatus::AUTHENTICATED);
         return $tokenDecode;
+    }
+
+    private function saveDataToSession($token)
+    {
+        $_SESSION['kinde']['login_time_stamp'] = time();
+        $_SESSION['kinde']['access_token'] = $token->access_token ?? '';
+        $_SESSION['kinde']['id_token'] = $token->id_token ?? '';
+        $_SESSION['kinde']['expires_in'] = $token->expires_in ?? 0;
+        $payload = Utils::parseJWT($token->id_token ?? '');
+        if ($payload) {
+            $user = [
+                'id' => $payload['sub'] ?? '',
+                'given_name' => $payload['given_name'] ?? '',
+                'family_name' => $payload['family_name'] ?? '',
+                'email' => $payload['email'] ?? ''
+            ];
+            $_SESSION['kinde']['user'] = json_encode($user);
+        }
+    }
+
+    /**
+     * It returns user's information after successful authentication
+     *
+     * @return array The response is a array containing id, given_name, family_name and email.
+     */
+    public function getUserDetails()
+    {
+        return json_decode($_SESSION['kinde']['user'] ?? '', true);
     }
 
     /**
@@ -254,27 +308,133 @@ class KindeClientSDK
             case GrantType::clientCredentials:
                 return 'client_credentials';
             default:
-                throw new Exception("Please provide correct grant_type");
+                throw new InvalidArgumentException("Please provide correct grant_type");
                 break;
         }
     }
 
+    /**
+     * It checks user is logged.
+     *
+     * @return bool The response is a bool, which check user logged or not
+     */
+    public function isAuthenticated()
+    {
+        if (empty($_SESSION['kinde']["login_time_stamp"]) || empty($_SESSION['kinde']["expires_in"])) {
+            return false;
+        }
+        return time() - $_SESSION['kinde']["login_time_stamp"] < $_SESSION['kinde']["expires_in"];
+    }
+
+    private function getClaims(string $tokenType = 'access_token')
+    {
+        if (!in_array($tokenType, ['access_token', 'id_token'])) {
+            throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
+        }
+        $token = $_SESSION['kinde'][$tokenType] ?? '';
+        if (empty($token)) {
+            throw new Exception('Request is missing required authentication credential');
+        }
+        return Utils::parseJWT($token);
+    }
+
+    /**
+     * Accept a key for a token and returns the claim value.
+     * Optional argument to define which token to check - defaults to Access token  - e.g.
+     *
+     * @param string keyName Accept a key for a token.
+     * @param string tokenType Optional argument to define which token to check.
+     *
+     * @return any The response is a data in token.
+     */
+    public function getClaim(string $keyName, string $tokenType = 'access_token')
+    {
+        $data = self::getClaims($tokenType);
+        return $data[$keyName] ?? null;
+    }
+
+    /**
+     * Get an array of permissions (from the permissions claim in access token)
+     * And also the relevant org code (org_code claim in access token). e.g
+     *
+     * @return array The response includes orgCode and permissions.
+     */
+    public function getPermissions()
+    {
+        $claims = self::getClaims();
+        return [
+            'orgCode' => $claims['org_code'],
+            'permissions' => $claims['permissions']
+        ];
+    }
+
+    /**
+     * Given a permission value, returns if it is granted or not (checks if permission key exists in the permissions claim array)
+     * And relevant org code (checking against claim org_code) e.g
+     *
+     * @return array The response includes orgCode and isGranted.
+     */
+    public function getPermission(string $permission)
+    {
+        $allClaims = self::getClaims();
+        $permissions = $allClaims['permissions'];
+        return [
+            'orgCode' => $allClaims['org_code'],
+            'isGranted' => in_array($permission, $permissions)
+        ];
+    }
+
+    /**
+     * Gets the org code (and later other org info) (checking against claim org_code)
+     *
+     * @return array The response is a orgCode.
+     */
+    public function getOrganization()
+    {
+        return [
+            'orgCode' => self::getClaim('org_code')
+        ];
+    }
+    /**
+     * Gets all org code
+     *
+     * @return array The response is a orgCodes.
+     */
+    public function getUserOrganizations()
+    {
+        return [
+            'orgCodes' => self::getClaim('org_codes', 'id_token')
+        ];
+    }
+
     public function getAuthStatus()
     {
-        return $_SESSION['auth_status'];
+        return $_SESSION['kinde']['auth_status'];
     }
 
     private function updateAuthStatus(string $_authStatus)
     {
-        $_SESSION['auth_status'] = $_authStatus;
+        $_SESSION['kinde']['auth_status'] = $_authStatus;
         $this->authStatus = $_authStatus;
     }
 
     private function cleanSession()
     {
-        unset($_SESSION['token']);
-        unset($_SESSION['auth_status']);
-        unset($_SESSION['oauthState']);
-        unset($_SESSION['oauthCodeVerifier']);
+        unset($_SESSION['kinde']['token']);
+        unset($_SESSION['kinde']['access_token']);
+        unset($_SESSION['kinde']['id_token']);
+        unset($_SESSION['kinde']['auth_status']);
+        unset($_SESSION['kinde']['oauthState']);
+        unset($_SESSION['kinde']['oauthCodeVerifier']);
+        unset($_SESSION['kinde']['expires_in']);
+        unset($_SESSION['kinde']['login_time_stamp']);
+        unset($_SESSION['kinde']['user']);
+    }
+
+    private function checkStateAuthentication(string $stateServer)
+    {
+        if (empty($_SESSION['kinde']['oauthState']) || $stateServer != $_SESSION['kinde']['oauthState']) {
+            throw new OAuthException("Authentication failed because it tries to validate state");
+        }
     }
 }

@@ -2,6 +2,10 @@
 
 namespace Kinde\KindeSDK\Sdk\Utils;
 
+use InvalidArgumentException;
+use Kinde\KindeSDK\Sdk\Enums\AdditionalParameters;
+use Exception;
+
 class Utils
 {
     /**
@@ -59,7 +63,7 @@ class Utils
             'codeChallenge' => $codeChallenge
         ];
     }
-    
+
     /**
      * It checks if the string is a valid URL
      * 
@@ -71,5 +75,49 @@ class Utils
     {
         $pattern = "/https?:\/\/(?:w{1,3}\.)?[^\s.]+(?:\.[a-z]+)*(?::\d+)?(?![^<]*(?:<\/\w+>|\/?>))/";
         return preg_match($pattern, $url);
+    }
+
+    /**
+     * It parse payload jwt
+     *
+     * @param string token jwt
+     *
+     * @return array A array value.
+     */
+    static public function parseJWT(string $token)
+    {
+        try {
+            return json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))), true);
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    static public function checkAdditionalParameters(array $additionalParameters)
+    {
+        $keyExists = array_keys($additionalParameters);
+        if (empty($keyExists)) {
+            return [];
+        }
+        $additionalParametersValid = AdditionalParameters::ADDITIONAL_PARAMETER;
+        $keysAvailable = array_keys($additionalParametersValid);
+        foreach ($keyExists as $key) {
+            if (!in_array($key, $keysAvailable)) {
+                throw new InvalidArgumentException("Please provide correct additional, $key");
+            }
+            if (gettype($additionalParameters[$key]) != $additionalParametersValid[$key]) {
+                throw new InvalidArgumentException("Please supply a valid $key. Expected: $additionalParametersValid[$key]");
+            }
+        }
+        return $additionalParameters;
+    }
+
+    static public function addAdditionalParameters(array $target, array $additionalParameters)
+    {
+        $newAdditionalParameters = self::checkAdditionalParameters($additionalParameters);
+        if (!empty($newAdditionalParameters)) {
+            $target = array_merge($target, $newAdditionalParameters);
+        }
+        return $target;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * UserTest
+ * CreateUserRequestIdentitiesInnerDetailsTest
  *
  * PHP version 7.4
  *
@@ -32,15 +32,15 @@ namespace Kinde\KindeSDK\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * UserTest Class Doc Comment
+ * CreateUserRequestIdentitiesInnerDetailsTest Class Doc Comment
  *
  * @category    Class
- * @description User
+ * @description CreateUserRequestIdentitiesInnerDetails
  * @package     Kinde\KindeSDK
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class UserTest extends TestCase
+class CreateUserRequestIdentitiesInnerDetailsTest extends TestCase
 {
 
     /**
@@ -72,18 +72,9 @@ class UserTest extends TestCase
     }
 
     /**
-     * Test "User"
+     * Test "CreateUserRequestIdentitiesInnerDetails"
      */
-    public function testUser()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "id"
-     */
-    public function testPropertyId()
+    public function testCreateUserRequestIdentitiesInnerDetails()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -93,42 +84,6 @@ class UserTest extends TestCase
      * Test attribute "email"
      */
     public function testPropertyEmail()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "full_name"
-     */
-    public function testPropertyFullName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "last_name"
-     */
-    public function testPropertyLastName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "first_name"
-     */
-    public function testPropertyFirstName()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "is_suspended"
-     */
-    public function testPropertyIsSuspended()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

@@ -22,10 +22,12 @@ class PKCE
      * @return A redirect to the authorization endpoint with the parameters needed to start the
      * authorization process.
      */
-    public function login(KindeClientSDK $clientSDK, string $startPage = 'login')
+    public function login(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
     {
-        $_SESSION['oauthCodeVerifier'] = '';
+        $_SESSION['kinde']['oauthCodeVerifier'] = '';
         $challenge = Utils::generateChallenge();
+        $state = $challenge['state'];
+        $_SESSION['kinde']['oauthState'] = $state;
         $searchParams = [
             'redirect_uri' => $clientSDK->redirectUri,
             'client_id' => $clientSDK->clientId,
@@ -34,13 +36,15 @@ class PKCE
             'scope' => $clientSDK->scopes,
             'code_challenge' => $challenge['codeChallenge'],
             'code_challenge_method' => 'S256',
-            'state' => !empty($state) ? $state : $challenge['state'],
+            'state' => $state,
             'start_page' => $startPage
         ];
-        $_SESSION['oauthCodeVerifier'] =  $challenge['codeVerifier'];
+        $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
+        $_SESSION['kinde']['oauthCodeVerifier'] =  $challenge['codeVerifier'];
 
         if (!headers_sent()) {
-            exit(header('Location: '. $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
+            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
         }
     }
 }

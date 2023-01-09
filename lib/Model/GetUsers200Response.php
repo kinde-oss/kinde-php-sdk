@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfile
+ * GetUsers200Response
  *
  * PHP version 7.4
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * UserProfile Class Doc Comment
+ * GetUsers200Response Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetUsers200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'user_profile';
+    protected static $openAPIModelName = 'getUsers_200_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,11 +58,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'id' => 'string',
-        'preferred_email' => 'string',
-        'provided_id' => 'string',
-        'last_name' => 'string',
-        'first_name' => 'string'
+        'users' => 'array[]',
+        'next_token' => 'string'
     ];
 
     /**
@@ -73,11 +70,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'id' => null,
-        'preferred_email' => null,
-        'provided_id' => null,
-        'last_name' => null,
-        'first_name' => null
+        'users' => null,
+        'next_token' => null
     ];
 
     /**
@@ -107,11 +101,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'preferred_email' => 'preferred_email',
-        'provided_id' => 'provided_id',
-        'last_name' => 'last_name',
-        'first_name' => 'first_name'
+        'users' => 'users',
+        'next_token' => 'next_token'
     ];
 
     /**
@@ -120,11 +111,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'preferred_email' => 'setPreferredEmail',
-        'provided_id' => 'setProvidedId',
-        'last_name' => 'setLastName',
-        'first_name' => 'setFirstName'
+        'users' => 'setUsers',
+        'next_token' => 'setNextToken'
     ];
 
     /**
@@ -133,11 +121,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'preferred_email' => 'getPreferredEmail',
-        'provided_id' => 'getProvidedId',
-        'last_name' => 'getLastName',
-        'first_name' => 'getFirstName'
+        'users' => 'getUsers',
+        'next_token' => 'getNextToken'
     ];
 
     /**
@@ -197,11 +182,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = $data['id'] ?? null;
-        $this->container['preferred_email'] = $data['preferred_email'] ?? null;
-        $this->container['provided_id'] = $data['provided_id'] ?? null;
-        $this->container['last_name'] = $data['last_name'] ?? null;
-        $this->container['first_name'] = $data['first_name'] ?? null;
+        $this->container['users'] = $data['users'] ?? null;
+        $this->container['next_token'] = $data['next_token'] ?? null;
     }
 
     /**
@@ -229,121 +211,49 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets id
+     * Gets users
      *
-     * @return string|null
+     * @return array[]|null
      */
-    public function getId()
+    public function getUsers()
     {
-        return $this->container['id'];
+        return $this->container['users'];
     }
 
     /**
-     * Sets id
+     * Sets users
      *
-     * @param string|null $id id
+     * @param array[]|null $users users
      *
      * @return self
      */
-    public function setId($id)
+    public function setUsers($users)
     {
-        $this->container['id'] = $id;
+        $this->container['users'] = $users;
 
         return $this;
     }
 
     /**
-     * Gets preferred_email
+     * Gets next_token
      *
      * @return string|null
      */
-    public function getPreferredEmail()
+    public function getNextToken()
     {
-        return $this->container['preferred_email'];
+        return $this->container['next_token'];
     }
 
     /**
-     * Sets preferred_email
+     * Sets next_token
      *
-     * @param string|null $preferred_email preferred_email
+     * @param string|null $next_token next_token
      *
      * @return self
      */
-    public function setPreferredEmail($preferred_email)
+    public function setNextToken($next_token)
     {
-        $this->container['preferred_email'] = $preferred_email;
-
-        return $this;
-    }
-
-    /**
-     * Gets provided_id
-     *
-     * @return string|null
-     */
-    public function getProvidedId()
-    {
-        return $this->container['provided_id'];
-    }
-
-    /**
-     * Sets provided_id
-     *
-     * @param string|null $provided_id provided_id
-     *
-     * @return self
-     */
-    public function setProvidedId($provided_id)
-    {
-        $this->container['provided_id'] = $provided_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets last_name
-     *
-     * @return string|null
-     */
-    public function getLastName()
-    {
-        return $this->container['last_name'];
-    }
-
-    /**
-     * Sets last_name
-     *
-     * @param string|null $last_name last_name
-     *
-     * @return self
-     */
-    public function setLastName($last_name)
-    {
-        $this->container['last_name'] = $last_name;
-
-        return $this;
-    }
-
-    /**
-     * Gets first_name
-     *
-     * @return string|null
-     */
-    public function getFirstName()
-    {
-        return $this->container['first_name'];
-    }
-
-    /**
-     * Sets first_name
-     *
-     * @param string|null $first_name first_name
-     *
-     * @return self
-     */
-    public function setFirstName($first_name)
-    {
-        $this->container['first_name'] = $first_name;
+        $this->container['next_token'] = $next_token;
 
         return $this;
     }

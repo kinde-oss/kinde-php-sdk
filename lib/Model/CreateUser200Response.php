@@ -1,6 +1,6 @@
 <?php
 /**
- * UserProfile
+ * CreateUser200Response
  *
  * PHP version 7.4
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * UserProfile Class Doc Comment
+ * CreateUser200Response Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
+class CreateUser200Response implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'user_profile';
+    protected static $openAPIModelName = 'createUser_200_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -59,10 +59,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'id' => 'string',
-        'preferred_email' => 'string',
-        'provided_id' => 'string',
-        'last_name' => 'string',
-        'first_name' => 'string'
+        'created' => 'bool',
+        'identities' => '\Kinde\KindeSDK\Model\UserIdentity[]'
     ];
 
     /**
@@ -74,10 +72,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPIFormats = [
         'id' => null,
-        'preferred_email' => null,
-        'provided_id' => null,
-        'last_name' => null,
-        'first_name' => null
+        'created' => null,
+        'identities' => null
     ];
 
     /**
@@ -108,10 +104,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'id' => 'id',
-        'preferred_email' => 'preferred_email',
-        'provided_id' => 'provided_id',
-        'last_name' => 'last_name',
-        'first_name' => 'first_name'
+        'created' => 'created',
+        'identities' => 'identities'
     ];
 
     /**
@@ -121,10 +115,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'id' => 'setId',
-        'preferred_email' => 'setPreferredEmail',
-        'provided_id' => 'setProvidedId',
-        'last_name' => 'setLastName',
-        'first_name' => 'setFirstName'
+        'created' => 'setCreated',
+        'identities' => 'setIdentities'
     ];
 
     /**
@@ -134,10 +126,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'id' => 'getId',
-        'preferred_email' => 'getPreferredEmail',
-        'provided_id' => 'getProvidedId',
-        'last_name' => 'getLastName',
-        'first_name' => 'getFirstName'
+        'created' => 'getCreated',
+        'identities' => 'getIdentities'
     ];
 
     /**
@@ -198,10 +188,8 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
     public function __construct(array $data = null)
     {
         $this->container['id'] = $data['id'] ?? null;
-        $this->container['preferred_email'] = $data['preferred_email'] ?? null;
-        $this->container['provided_id'] = $data['provided_id'] ?? null;
-        $this->container['last_name'] = $data['last_name'] ?? null;
-        $this->container['first_name'] = $data['first_name'] ?? null;
+        $this->container['created'] = $data['created'] ?? null;
+        $this->container['identities'] = $data['identities'] ?? null;
     }
 
     /**
@@ -253,97 +241,49 @@ class UserProfile implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets preferred_email
+     * Gets created
      *
-     * @return string|null
+     * @return bool|null
      */
-    public function getPreferredEmail()
+    public function getCreated()
     {
-        return $this->container['preferred_email'];
+        return $this->container['created'];
     }
 
     /**
-     * Sets preferred_email
+     * Sets created
      *
-     * @param string|null $preferred_email preferred_email
+     * @param bool|null $created created
      *
      * @return self
      */
-    public function setPreferredEmail($preferred_email)
+    public function setCreated($created)
     {
-        $this->container['preferred_email'] = $preferred_email;
+        $this->container['created'] = $created;
 
         return $this;
     }
 
     /**
-     * Gets provided_id
+     * Gets identities
      *
-     * @return string|null
+     * @return \Kinde\KindeSDK\Model\UserIdentity[]|null
      */
-    public function getProvidedId()
+    public function getIdentities()
     {
-        return $this->container['provided_id'];
+        return $this->container['identities'];
     }
 
     /**
-     * Sets provided_id
+     * Sets identities
      *
-     * @param string|null $provided_id provided_id
+     * @param \Kinde\KindeSDK\Model\UserIdentity[]|null $identities identities
      *
      * @return self
      */
-    public function setProvidedId($provided_id)
+    public function setIdentities($identities)
     {
-        $this->container['provided_id'] = $provided_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets last_name
-     *
-     * @return string|null
-     */
-    public function getLastName()
-    {
-        return $this->container['last_name'];
-    }
-
-    /**
-     * Sets last_name
-     *
-     * @param string|null $last_name last_name
-     *
-     * @return self
-     */
-    public function setLastName($last_name)
-    {
-        $this->container['last_name'] = $last_name;
-
-        return $this;
-    }
-
-    /**
-     * Gets first_name
-     *
-     * @return string|null
-     */
-    public function getFirstName()
-    {
-        return $this->container['first_name'];
-    }
-
-    /**
-     * Sets first_name
-     *
-     * @param string|null $first_name first_name
-     *
-     * @return self
-     */
-    public function setFirstName($first_name)
-    {
-        $this->container['first_name'] = $first_name;
+        $this->container['identities'] = $identities;
 
         return $this;
     }
