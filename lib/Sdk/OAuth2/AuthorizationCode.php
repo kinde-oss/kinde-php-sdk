@@ -14,7 +14,6 @@ class AuthorizationCode
         $_SESSION['kinde']['oauthState'] = $state;
         $searchParams = [
             'client_id' => $clientSDK->clientId,
-            'client_secret' => $clientSDK->clientSecret,
             'grant_type' => GrantType::authorizationCode,
             'redirect_uri' => $clientSDK->redirectUri,
             'response_type' => 'code',
