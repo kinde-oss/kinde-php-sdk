@@ -355,16 +355,17 @@ $this->kindeClient->getUserOrganizations();
 
 ## SDK API Reference
 
-| Property                        | Type   | Is required | Default                      | Description                                                                         |
-| ------------------------------- | ------ | ----------- | ---------------------------- | ----------------------------------------------------------------------------------- |
-| host                            | string | Yes         |                              | Either your Kinde instance url or your custom domain. e.g https://yourapp.kinde.com |
-| redirectUri                     | string | Yes         |                              | The url that the user will be returned to after authentication                      |
-| clientId                        | string | Yes         |                              | The id of your application - get this from the Kinde admin area                     |
-| clientSecret                    | string | Yes         |                              | The id secret of your application - get this from the Kinde admin area              |
-| logoutRedirectUri               | string | Yes         |                              | Where your user will be redirected upon logout                                      |
-| scope                           | string | No          | openid profile email offline | The scopes to be requested from Kinde                                               |
-| additionalParameters            | array  | No          | \[\]                         | Additional parameters that will be passed in the authorization request              |
-| additionalParameters - audience | string | No          |                              | The audience claim for the JWT                                                      |
+| Property                        | Type   | Is required | Default                      | Description                                                                                                                                     |
+| ------------------------------- | ------ | ----------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| host                            | string | Yes         |                              | Either your Kinde instance url or your custom domain. e.g: https://yourapp.kinde.com |
+| redirectUri                     | string | Yes         |                              | The url that the user will be returned to after authentication                                                                                  |
+| clientId                        | string | Yes         |                              | The id of your application - get this from the Kinde admin area                                                                                 |
+| clientSecret                    | string | Yes         |                              | The id secret of your application - get this from the Kinde admin area                                                                          |
+| logoutRedirectUri               | string | Yes         |                              | Where your user will be redirected upon logout                                                                                                  |
+| scope                           | string | No          | openid profile email offline | The scopes to be requested from Kinde                                                                                                           |
+| additionalParameters            | array  | No          | []                           | Additional parameters that will be passed in the authorization request                                                                          |
+| additionalParameters - audience | string | No          |                              | The audience claim for the JWT                                                                                                                  |
+| protocol                        | string | No          |                              | A variable that is used to store the protocol that you want to use when the SDK requests to get a token                                         |
 
 ## KindeSDK methods
 

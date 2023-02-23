@@ -72,6 +72,9 @@ class KindeClientSDK
      */
     public string $scopes;
 
+    /* A variable that is used to store the protocol that you want to use when the SDK requests to get a token */
+    public string $protocol;
+
     function __construct(
         string $domain,
         string $redirectUri,
@@ -80,7 +83,8 @@ class KindeClientSDK
         string $grantType,
         string $logoutRedirectUri,
         string $scopes = 'openid profile email offline',
-        array $additionalParameters = []
+        array $additionalParameters = [],
+        string $protocol = null
     ) {
         if (empty($domain)) {
             throw new InvalidArgumentException("Please provide domain");
@@ -124,6 +128,7 @@ class KindeClientSDK
 
         $this->logoutRedirectUri = $logoutRedirectUri;
         $this->scopes = $scopes;
+        $this->protocol = $protocol;
         // Other endpoints
         $this->authorizationEndpoint = $this->domain . '/oauth2/auth';
         $this->tokenEndpoint = $this->domain . '/oauth2/token';
@@ -215,7 +220,7 @@ class KindeClientSDK
             'redirect_uri' => $this->redirectUri,
             'response_type' => 'code'
         ];
-        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $url = $this->getProtocol() . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $urlComponents = parse_url($url);
         parse_str($urlComponents['query'] ?? "", $params);
         $stateServer = $params['state'] ?? null;
@@ -429,6 +434,14 @@ class KindeClientSDK
         unset($_SESSION['kinde']['expires_in']);
         unset($_SESSION['kinde']['login_time_stamp']);
         unset($_SESSION['kinde']['user']);
+    }
+
+    private function getProtocol()
+    {
+        if (!empty($this->protocol)) {
+            return $this->protocol;
+        }
+        return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
     }
 
     private function checkStateAuthentication(string $stateServer)
