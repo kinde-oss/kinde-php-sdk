@@ -31,7 +31,6 @@ class PKCE
         $searchParams = [
             'redirect_uri' => $clientSDK->redirectUri,
             'client_id' => $clientSDK->clientId,
-            'client_secret' => $clientSDK->clientSecret,
             'response_type' => 'code',
             'scope' => $clientSDK->scopes,
             'code_challenge' => $challenge['codeChallenge'],
