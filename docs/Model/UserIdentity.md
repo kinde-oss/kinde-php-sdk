@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **string** |  | [optional]
+**type** | **string** | The type of identity object created. | [optional]
 **result** | [**\Kinde\KindeSDK\Model\UserIdentityResult**](UserIdentityResult.md) |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

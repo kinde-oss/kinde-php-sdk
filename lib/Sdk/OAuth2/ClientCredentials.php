@@ -5,10 +5,21 @@ namespace Kinde\KindeSDK\Sdk\OAuth2;
 use GuzzleHttp\Client;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\KindeClientSDK;
+use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 
 class ClientCredentials
 {
+    /**
+     * @var Storage
+     */
+    protected $storage;
+
+    function __construct()
+    {
+        $this->storage = Storage::getInstance();
+    }
+
     public function login(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         try {
@@ -27,7 +38,7 @@ class ClientCredentials
                     'form_params' => $formData
                 ]);
             $token = $response->getBody()->getContents();
-            $_SESSION['kinde']['token'] = $token;
+            $this->storage->setToken($token);
             return json_decode($token);
         } catch (\Throwable $th) {
             throw $th;

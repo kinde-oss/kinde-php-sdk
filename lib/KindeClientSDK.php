@@ -12,9 +12,12 @@ use GuzzleHttp\Client;
 use Kinde\KindeSDK\Sdk\Enums\AuthStatus;
 use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Sdk\Enums\TokenType;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Sdk\Storage\Storage;
 
 class KindeClientSDK
 {
@@ -75,6 +78,8 @@ class KindeClientSDK
     /* A variable that is used to store the protocol that you want to use when the SDK requests to get a token */
     public string $protocol;
 
+    public $storage;
+
     function __construct(
         string $domain,
         string $redirectUri,
@@ -84,7 +89,7 @@ class KindeClientSDK
         string $logoutRedirectUri,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
-        string $protocol = null
+        string $protocol = ""
     ) {
         if (empty($domain)) {
             throw new InvalidArgumentException("Please provide domain");
@@ -134,6 +139,8 @@ class KindeClientSDK
         $this->tokenEndpoint = $this->domain . '/oauth2/token';
         $this->logoutEndpoint = $this->domain . '/logout';
         $this->authStatus = AuthStatus::UNAUTHENTICATED;
+
+        $this->storage = Storage::getInstance();
     }
 
     public function __get($key)
@@ -155,7 +162,7 @@ class KindeClientSDK
     public function login(
         array $additionalParameters = []
     ) {
-        $this->cleanSession();
+        $this->cleanStorage();
         try {
             $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
             switch ($this->grantType) {
@@ -212,6 +219,33 @@ class KindeClientSDK
      */
     public function getToken()
     {
+        if ($this->grantType == GrantType::clientCredentials) {
+            return $this->login();
+        }
+        // Check authenticated
+        if ($this->isAuthenticated) {
+            $token = $this->storage->getToken();
+            if (!empty($token)) {
+                return $token;
+            }
+        }
+
+        try {
+            $refreshToken = $this->storage->getRefreshToken();
+            if (!empty($refreshToken)) {
+                $formParams = [
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $refreshToken
+                ];
+                return $this->fetchToken($formParams);
+            }
+        } catch (\Throwable $th) {
+            // Refresh token is invalid, continue fetch token
+            // throw $th;
+        }
+
         $newGrantType = $this->getGrantType($this->grantType);
         $formParams = [
             'client_id' => $this->clientId,
@@ -236,41 +270,31 @@ class KindeClientSDK
             throw new InvalidArgumentException('Not found code param');
         }
         $formParams['code'] = $authorizationCode;
-        $codeVerifier = $_SESSION['kinde']['oauthCodeVerifier'] ?? "";
+        $codeVerifier = $this->storage->getCodeVerifier();
         if (!empty($codeVerifier)) {
             $formParams['code_verifier'] = $codeVerifier;
         } else if ($this->grantType == GrantType::PKCE) {
             throw new InvalidArgumentException('Not found code_verifier');
         }
+        return $this->fetchToken($formParams);
+    }
+
+    private function fetchToken($formParams)
+    {
         $client = new Client();
         $response =
             $client->request('POST', $this->tokenEndpoint, [
                 'form_params' => $formParams
             ]);
         $token = $response->getBody()->getContents();
-        $_SESSION['kinde']['token'] = $token;
+        $this->storage->setToken($token);
         $tokenDecode = json_decode($token);
-        $this->saveDataToSession($tokenDecode);
         $this->updateAuthStatus(AuthStatus::AUTHENTICATED);
-        return $tokenDecode;
-    }
 
-    private function saveDataToSession($token)
-    {
-        $_SESSION['kinde']['login_time_stamp'] = time();
-        $_SESSION['kinde']['access_token'] = $token->access_token ?? '';
-        $_SESSION['kinde']['id_token'] = $token->id_token ?? '';
-        $_SESSION['kinde']['expires_in'] = $token->expires_in ?? 0;
-        $payload = Utils::parseJWT($token->id_token ?? '');
-        if ($payload) {
-            $user = [
-                'id' => $payload['sub'] ?? '',
-                'given_name' => $payload['given_name'] ?? '',
-                'family_name' => $payload['family_name'] ?? '',
-                'email' => $payload['email'] ?? ''
-            ];
-            $_SESSION['kinde']['user'] = json_encode($user);
-        }
+        // Cleaning
+        $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
+        $this->storage->removeItem(StorageEnums::STATE);
+        return $tokenDecode;
     }
 
     /**
@@ -280,15 +304,15 @@ class KindeClientSDK
      */
     public function getUserDetails()
     {
-        return json_decode($_SESSION['kinde']['user'] ?? '', true);
+        return $this->storage->getUserProfile();
     }
 
     /**
-     * It unset's the token from the session and redirects the user to the logout endpoint
+     * It unset's the token from the storage and redirects the user to the logout endpoint
      */
     public function logout()
     {
-        $this->cleanSession();
+        $this->cleanStorage();
         $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
         $searchParams = [
             'redirect' => $this->logoutRedirectUri
@@ -325,18 +349,19 @@ class KindeClientSDK
      */
     public function isAuthenticated()
     {
-        if (empty($_SESSION['kinde']["login_time_stamp"]) || empty($_SESSION['kinde']["expires_in"])) {
+        $timeExpired = $this->storage->getExpiredAt();
+        if (empty($timeExpired)) {
             return false;
         }
-        return time() - $_SESSION['kinde']["login_time_stamp"] < $_SESSION['kinde']["expires_in"];
+        return $timeExpired > time();
     }
 
-    private function getClaims(string $tokenType = 'access_token')
+    private function getClaims(string $tokenType = TokenType::ACCESS_TOKEN)
     {
-        if (!in_array($tokenType, ['access_token', 'id_token'])) {
+        if (!in_array($tokenType, [TokenType::ACCESS_TOKEN, TokenType::ID_TOKEN])) {
             throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
         }
-        $token = $_SESSION['kinde'][$tokenType] ?? '';
+        $token = $this->storage->getItem($tokenType);
         if (empty($token)) {
             throw new Exception('Request is missing required authentication credential');
         }
@@ -352,7 +377,7 @@ class KindeClientSDK
      *
      * @return any The response is a data in token.
      */
-    public function getClaim(string $keyName, string $tokenType = 'access_token')
+    public function getClaim(string $keyName, string $tokenType = TokenType::ACCESS_TOKEN)
     {
         $data = self::getClaims($tokenType);
         return $data[$keyName] ?? null;
@@ -408,32 +433,24 @@ class KindeClientSDK
     public function getUserOrganizations()
     {
         return [
-            'orgCodes' => self::getClaim('org_codes', 'id_token')
+            'orgCodes' => self::getClaim('org_codes', TokenType::ID_TOKEN)
         ];
     }
 
     public function getAuthStatus()
     {
-        return $_SESSION['kinde']['auth_status'];
+        return $this->storage->getAuthStatus();
     }
 
     private function updateAuthStatus(string $_authStatus)
     {
-        $_SESSION['kinde']['auth_status'] = $_authStatus;
+        $this->storage->setAuthStatus($_authStatus);
         $this->authStatus = $_authStatus;
     }
 
-    private function cleanSession()
+    private function cleanStorage()
     {
-        unset($_SESSION['kinde']['token']);
-        unset($_SESSION['kinde']['access_token']);
-        unset($_SESSION['kinde']['id_token']);
-        unset($_SESSION['kinde']['auth_status']);
-        unset($_SESSION['kinde']['oauthState']);
-        unset($_SESSION['kinde']['oauthCodeVerifier']);
-        unset($_SESSION['kinde']['expires_in']);
-        unset($_SESSION['kinde']['login_time_stamp']);
-        unset($_SESSION['kinde']['user']);
+        $this->storage->clear();
     }
 
     private function getProtocol()
@@ -446,7 +463,8 @@ class KindeClientSDK
 
     private function checkStateAuthentication(string $stateServer)
     {
-        if (empty($_SESSION['kinde']['oauthState']) || $stateServer != $_SESSION['kinde']['oauthState']) {
+        $storageOAuthState = $this->storage->getState();
+        if (empty($storageOAuthState) || $stateServer != $storageOAuthState) {
             throw new OAuthException("Authentication failed because it tries to validate state");
         }
     }
