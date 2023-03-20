@@ -24,16 +24,16 @@ class BaseStorage
 
     public static function setItem(
         string $key,
-        $value,
-        $expires_or_options = 0,
-        $path = null,
-        $domain = null,
-        $secure = true,
-        $httpOnly = false
+        string $value,
+        int $expires_or_options = 0,
+        string $path = "",
+        string $domain = "",
+        bool $secure = true,
+        bool $httpOnly = false
     ) {
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
-        setcookie($newKey, $value ?? "", $expires_or_options, $path, $domain, $secure, $httpOnly);
+        setcookie($newKey, $value, $expires_or_options, $path, $domain, $secure, $httpOnly);
     }
 
     public static function removeItem(string $key)
@@ -41,8 +41,9 @@ class BaseStorage
         $newKey = self::getKey($key);
         if (isset($_COOKIE[$newKey])) {
             unset($_COOKIE[$newKey]);
-            self::setItem($key, null, -1);
+            self::setItem($key, "", -1);
         }
+        self::setItem($key, "", -1);
     }
 
     public static function clear()
