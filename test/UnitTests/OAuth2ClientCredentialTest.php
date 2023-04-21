@@ -1,7 +1,7 @@
 <?php
 
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
-use Kinde\KindeSDK\KindeClientSDK;
+use Kinde\KindeSDK\Test\Sdk\KindeClientSDK;
 use PHPUnit\Framework\TestCase;
 
 class OAuth2ClientCredentialTest extends TestCase
@@ -32,9 +32,6 @@ class OAuth2ClientCredentialTest extends TestCase
         $this->logoutRedirectUri = $_ENV['KINDE_POST_LOGOUT_REDIRECT_URL'];
     }
 
-    /**
-     * It tests the login function with the client credentials grant type.
-     */
     public function test_login_type_client_credential(): void
     {
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri);
@@ -42,9 +39,6 @@ class OAuth2ClientCredentialTest extends TestCase
         $this->assertResponse($response);
     }
 
-    /**
-     * It tests the login function with the client credential grant type with audience.
-     */
     public function test_login_type_client_credential_flow_with_audience(): void
     {
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
@@ -52,9 +46,6 @@ class OAuth2ClientCredentialTest extends TestCase
         $this->assertResponse($response);
     }
 
-    /**
-     * It tests the login function with the client credential grant type with additional.
-     */
     public function test_login_type_client_credential_flow_with_org_code(): void
     {
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::clientCredentials, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
@@ -68,9 +59,10 @@ class OAuth2ClientCredentialTest extends TestCase
 
     private function assertResponse($response): void
     {
-        $this->assertObjectHasAttribute('access_token', $response);
-        $this->assertObjectHasAttribute('expires_in', $response);
-        $this->assertObjectHasAttribute('scope', $response);
-        $this->assertObjectHasAttribute('token_type', $response);
+        $this->assertIsObject($response);
+        $this->assertTrue(property_exists($response, 'access_token'));
+        $this->assertTrue(property_exists($response, 'expires_in'));
+        $this->assertTrue(property_exists($response, 'scope'));
+        $this->assertTrue(property_exists($response, 'token_type'));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
 use PHPUnit\Framework\TestCase;
 
 class UtilsTest extends TestCase

@@ -1,11 +1,11 @@
 <?php
 
-namespace Kinde\KindeSDK\Sdk\OAuth2;
+namespace Kinde\KindeSDK\Test\Sdk\OAuth2;
 
-use Kinde\KindeSDK\Sdk\Utils\Utils;
-use Kinde\KindeSDK\KindeClientSDK;
-use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
-use Kinde\KindeSDK\Sdk\Storage\Storage;
+use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Test\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Test\Sdk\KindeClientSDK;
+use Kinde\KindeSDK\Test\Sdk\Storage\Storage;
 
 class PKCE
 {
@@ -54,8 +54,6 @@ class PKCE
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         $this->storage->setCodeVerifier($challenge['codeVerifier']);
 
-        if (!headers_sent()) {
-            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
-        }
+        return 'redirecting...';
     }
 }

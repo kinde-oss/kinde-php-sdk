@@ -1,9 +1,9 @@
 <?php
 
-namespace Kinde\KindeSDK\Sdk\Utils;
+namespace Kinde\KindeSDK\Test\Sdk\Utils;
 
 use InvalidArgumentException;
-use Kinde\KindeSDK\Sdk\Enums\AdditionalParameters;
+use Kinde\KindeSDK\Test\Sdk\Enums\AdditionalParameters;
 use Exception;
 
 class Utils

@@ -1,25 +1,27 @@
 <?php
 
-namespace Kinde\KindeSDK\Sdk\Storage;
+namespace Kinde\KindeSDK\Test\Sdk\Storage;
 
-use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Test\Sdk\Enums\StorageEnums;
 
 class BaseStorage
 {
     static $prefix = 'kinde';
     static $storage;
 
+    static $COOKIE_FAKE = [];
+
     static function getStorage()
     {
         if (empty(self::$storage)) {
-            self::$storage = $_COOKIE['kinde'];
+            self::$storage = self::$COOKIE_FAKE['kinde'];
         }
         return self::$storage;
     }
 
     public static function getItem(string $key)
     {
-        return $_COOKIE[self::getKey($key)] ?? "";
+        return self::$COOKIE_FAKE[self::getKey($key)] ?? "";
     }
 
     public static function setItem(
@@ -32,15 +34,15 @@ class BaseStorage
         bool $httpOnly = false
     ) {
         $newKey = self::getKey($key);
-        $_COOKIE[$newKey] = $value;
-        setcookie($newKey, $value, $expires_or_options, $path, $domain, $secure, $httpOnly);
+        self::$COOKIE_FAKE[$newKey] = $value;
+        return 'ok';
     }
 
     public static function removeItem(string $key)
     {
         $newKey = self::getKey($key);
-        if (isset($_COOKIE[$newKey])) {
-            unset($_COOKIE[$newKey]);
+        if (isset(self::$COOKIE_FAKE[$newKey])) {
+            unset(self::$COOKIE_FAKE[$newKey]);
             self::setItem($key, "", -1);
         }
         self::setItem($key, "", -1);

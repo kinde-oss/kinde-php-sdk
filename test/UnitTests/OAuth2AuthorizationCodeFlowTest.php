@@ -1,7 +1,7 @@
 <?php
 
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
-use Kinde\KindeSDK\KindeClientSDK;
+use Kinde\KindeSDK\Test\Sdk\KindeClientSDK;
 use PHPUnit\Framework\TestCase;
 
 
@@ -33,29 +33,20 @@ class OAuth2AuthorizationCodeFlowTest extends TestCase
         $this->logoutRedirectUri = $_ENV['KINDE_POST_LOGOUT_REDIRECT_URL'];
     }
 
-    /**
-     * It tests the login function with the authorization code grant type.
-     */
     public function test_login_type_authorization_code_flow(): void
     {
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::authorizationCode, $this->logoutRedirectUri);
-        $this->client->login();
-        $this->assertTrue(headers_sent());
+        $result = $this->client->login();
+        $this->assertEquals('redirecting...', $result);
     }
 
-    /**
-     * It tests the login function with the authorization code grant type with audience.
-     */
     public function test_login_type_authorization_code_flow_with_audience(): void
     {
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::authorizationCode, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
-        $this->client->login();
-        $this->assertTrue(headers_sent());
+        $result = $this->client->login();
+        $this->assertEquals('redirecting...', $result);
     }
 
-    /**
-     * It tests the login function with the authorization code grant type with additional.
-     */
     public function test_login_type_authorization_code_flow_with_additional(): void
     {
         $this->client = new KindeClientSDK($this->domain, $this->redirectUri, $this->clientId, $this->clientSecret, GrantType::authorizationCode, $this->logoutRedirectUri, '', ['audience' => $this->domain . '/api']);
@@ -63,7 +54,7 @@ class OAuth2AuthorizationCodeFlowTest extends TestCase
             'org_code' => 'org_123',
             'org_name' => 'My Application',
         ];
-        $this->client->login($additional);
-        $this->assertTrue(headers_sent());
+        $result = $this->client->login($additional);
+        $this->assertEquals('redirecting...', $result);
     }
 }

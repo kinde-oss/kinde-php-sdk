@@ -1,22 +1,18 @@
 <?php
 
-namespace Kinde\KindeSDK;
-
-if (session_status() != PHP_SESSION_ACTIVE) {
-    session_start();
-}
+namespace Kinde\KindeSDK\Test\Sdk;
 
 use Exception;
 use InvalidArgumentException;
 use GuzzleHttp\Client;
-use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
-use Kinde\KindeSDK\Sdk\Enums\GrantType;
-use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
-use Kinde\KindeSDK\Sdk\Enums\TokenType;
-use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
-use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
-use Kinde\KindeSDK\Sdk\Utils\Utils;
-use Kinde\KindeSDK\Sdk\Storage\Storage;
+use Kinde\KindeSDK\Test\Sdk\OAuth2\PKCE;
+use Kinde\KindeSDK\Test\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Test\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Test\Sdk\Enums\TokenType;
+use Kinde\KindeSDK\Test\Sdk\OAuth2\AuthorizationCode;
+use Kinde\KindeSDK\Test\Sdk\OAuth2\ClientCredentials;
+use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Test\Sdk\Storage\Storage;
 use UnexpectedValueException;
 
 class KindeClientSDK
@@ -294,7 +290,7 @@ class KindeClientSDK
         $data = self::getClaims($tokenType);
 
         return [
-            [$keyName] => $keyName,
+            'name' => $keyName,
             'value' => $data[$keyName] ?? null
         ];
     }
@@ -355,69 +351,21 @@ class KindeClientSDK
         ];
     }
 
-    /**
-     * This PHP function returns a boolean flag value based on the provided flag name and default
-     * value.
-     * 
-     * @param string flagName A string representing the name of the boolean flag to retrieve.
-     * @param defaultValue The default value to be returned if the flag is not found or if its value is
-     * null.
-     * 
-     * @return The `getBooleanFlag` function is being returned. It takes in a string `flagName` and an
-     * optional `defaultValue` parameter. It then calls the `getFlag` function with the `flagName`,
-     * an array with a `defaultValue` key set to the `null` parameter, and a flag type of
-     * `'b'`. The `getFlag` function returns the value of the flag
-     */
     public function getBooleanFlag(string $flagName, $defaultValue = null) // Let's use original default value, do not add type to here
     {
         return self::getFlag($flagName, ['defaultValue' => $defaultValue], 'b');
     }
 
-    /**
-     * This PHP function returns a string flag value with an optional default value.
-     * 
-     * @param string flagName A string representing the name of the flag to retrieve.
-     * @param defaultValue The default value to be returned if the flag is not found or is null.
-     * 
-     * @return the value of the flag with the given name as a string. If the flag is not set, it will
-     * return the default value provided as the second argument. The flag is retrieved using the
-     * `getFlag()` function with the flag name, an array containing the default value, and the flag
-     * type 's' as arguments.
-     */
     public function getStringFlag(string $flagName, $defaultValue = null)
     {
         return self::getFlag($flagName, ['defaultValue' => $defaultValue], 's');
     }
 
-    /**
-     * This function retrieves an integer flag value with an optional default value.
-     * 
-     * @param string flagName A string representing the name of the flag to retrieve.
-     * @param defaultValue The default value to be returned if the flag is not set or cannot be
-     * converted to an integer.
-     * 
-     * @return The function `getIntegerFlag` is returning the value of the flag with the given name as
-     * an integer. If the flag is not set, it will return the default value provided as the second
-     * argument.
-     */
     public function getIntegerFlag(string $flagName, $defaultValue = null)
     {
         return self::getFlag($flagName, ['defaultValue' => $defaultValue], 'i');
     }
 
-    /**
-     * This function retrieves a feature flag's value and type, with the option to provide a default
-     * value if the flag is not found.
-     * 
-     * @param string flagName A string representing the name of the feature flag to retrieve.
-     * @param array options An optional array of options that can include a default value for the flag.
-     * If the flag is not found, the default value will be used.
-     * @param string flagType The data type of the feature flag value. It is an optional parameter and
-     * can be null if not specified.
-     * 
-     * @return An array containing the code, type, value, and a boolean indicating whether the default
-     * value was used or not.
-     */
     public function getFlag(string $flagName, array $options = [], string $flagType = null)
     {
         $isUsedDefault = false;
@@ -458,41 +406,17 @@ class KindeClientSDK
         return $this->$key;
     }
 
-    /**
-     * This function retrieves feature flags and returns either all flags or a specific flag if a name
-     * is provided.
-     * 
-     * @param string name  is an optional parameter of type string that represents the name of a
-     * specific feature flag. If provided, the function will return the value of that feature flag. If
-     * not provided, the function will return an array of all feature flags.
-     * 
-     * @return If the `` parameter is provided and the `` array is not empty, then the value
-     * of the feature flag with the given name is returned. Otherwise, the entire `` array is
-     * returned.
-     */
     private function getFeatureFlags(string $name = null)
     {
         $flags = self::getClaim('feature_flags')['value'];
 
         if (isset($name) && !empty($flags)) {
-            return $flags[$name];
+            return $flags[$name] ?? null;
         }
 
         return $flags;
     }
 
-    /**
-     * This function fetches a token from a specified endpoint using form parameters and stores it in a
-     * storage object.
-     * 
-     * @param formParams The form parameters are the data that will be sent in the body of the POST
-     * request to the token endpoint. These parameters typically include information such as the client
-     * ID, client secret, grant type, and authorization code or refresh token.
-     * 
-     * @return the decoded token obtained from the API response after making a POST request to the
-     * token endpoint. The token is also stored in the storage for future use. The function also
-     * removes the code verifier and state from the storage.
-     */
     private function fetchToken($formParams)
     {
         $client = new Client();
@@ -533,17 +457,7 @@ class KindeClientSDK
         try {
             $refreshToken = $this->storage->getRefreshToken();
             if (!empty($refreshToken)) {
-                $formParams = [
-                    'client_id' => $this->clientId,
-                    'client_secret' => $this->clientSecret,
-                    'grant_type' => 'refresh_token',
-                    'refresh_token' => $refreshToken
-                ];
-
-                $token = $this->fetchToken($formParams);
-                if (!empty($token) && $token->expires_in > 0) {
-                    return true;
-                }
+                return true;
             }
         } catch (\Throwable $th) {
         }
@@ -551,21 +465,12 @@ class KindeClientSDK
         return false;
     }
 
-    /**
-     * This function retrieves and parses a JWT token from storage based on the token type provided.
-     * 
-     * @param string tokenType A string parameter that specifies the type of token to retrieve the
-     * claims from. It can be either "access_token" or "id_token".
-     * 
-     * @return the claims (decoded data) from either the access token or the ID token, depending on the
-     * value of the `` parameter. If the parameter is not valid or the token is missing, the
-     * function throws an exception.
-     */
     private function getClaims(string $tokenType = TokenType::ACCESS_TOKEN)
     {
         if (!in_array($tokenType, [TokenType::ACCESS_TOKEN, TokenType::ID_TOKEN])) {
             throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
         }
+
 
         $token = $tokenType === TokenType::ACCESS_TOKEN ? $this->storage->getAccessToken() : $this->storage->getIdToken();
         if (empty($token)) {

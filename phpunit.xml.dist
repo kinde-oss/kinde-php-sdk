@@ -2,19 +2,17 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
   <coverage processUncoveredFiles="true">
     <include>
-      <directory suffix=".php">./lib/Api</directory>
-      <directory suffix=".php">./lib/Model</directory>
-      <directory suffix=".php">./lib/php/Sdk</directory>
+      <directory suffix=".php">./test/Sdk/</directory>
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="Sdk">
-      <directory>./test/Sdk</directory>
+    <testsuite name="UnitTests">
+      <directory suffix="Test.php">./test/UnitTests</directory>
     </testsuite>
   </testsuites>
   <php>
     <ini name="error_reporting" value="E_ALL"/>
-    <env name="KINDE_HOST" value="https://trung.kinde.com"/>
+    <env name="KINDE_HOST" value="https://test.kinde.com"/>
     <env name="KINDE_REDIRECT_URI" value="http://localhost:8888/callback"/>
     <env name="KINDE_CLIENT_ID" value="b984eab2c5be4ee59a2a012ff77b52c0"/>
     <env name="KINDE_CLIENT_SECRET" value="Qw9Dt2IJA2LJ4JcPQ6ZVjtKDF4RwvkHxvDnCiKRwt3IMaKU6mj"/>

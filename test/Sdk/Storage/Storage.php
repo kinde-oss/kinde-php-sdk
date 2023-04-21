@@ -1,9 +1,9 @@
 <?php
 
-namespace Kinde\KindeSDK\Sdk\Storage;
+namespace Kinde\KindeSDK\Test\Sdk\Storage;
 
-use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
-use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Test\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
 
 class Storage extends BaseStorage
 {
@@ -20,7 +20,6 @@ class Storage extends BaseStorage
     static function getToken()
     {
         $token = self::getItem(StorageEnums::TOKEN);
-
         return empty($token) ? null : json_decode($token, true);
     }
 

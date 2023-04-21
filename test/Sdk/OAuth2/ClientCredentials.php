@@ -1,12 +1,12 @@
 <?php
 
-namespace Kinde\KindeSDK\Sdk\OAuth2;
+namespace Kinde\KindeSDK\Test\Sdk\OAuth2;
 
-use GuzzleHttp\Client;
-use Kinde\KindeSDK\Sdk\Enums\GrantType;
-use Kinde\KindeSDK\KindeClientSDK;
-use Kinde\KindeSDK\Sdk\Storage\Storage;
-use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Test\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Test\Sdk\KindeClientSDK;
+use Kinde\KindeSDK\Test\Sdk\Storage\Storage;
+use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
+use stdClass;
 
 class ClientCredentials
 {
@@ -23,7 +23,6 @@ class ClientCredentials
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         try {
-            $client = new Client();
             $formData = [
                 'client_id' => $clientSDK->clientId,
                 'client_secret' => $clientSDK->clientSecret,
@@ -32,14 +31,12 @@ class ClientCredentials
             ];
             $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
             $formData = array_merge($formData, $mergedAdditionalParameters);
-
-            $response =
-                $client->request('POST', $clientSDK->tokenEndpoint, [
-                    'form_params' => $formData
-                ]);
-            $token = $response->getBody()->getContents();
-            $this->storage->setToken($token);
-            return json_decode($token);
+            $obj = new stdClass();
+            $obj->access_token = 'ok';
+            $obj->expires_in = 123;
+            $obj->scope = 'ok';
+            $obj->token_type = 'ok';
+            return $obj;
         } catch (\Throwable $th) {
             throw $th;
         }

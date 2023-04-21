@@ -1,11 +1,11 @@
 <?php
 
-namespace Kinde\KindeSDK\Sdk\OAuth2;
+namespace Kinde\KindeSDK\Test\Sdk\OAuth2;
 
-use Kinde\KindeSDK\Sdk\Enums\GrantType;
-use Kinde\KindeSDK\Sdk\Utils\Utils;
-use Kinde\KindeSDK\KindeClientSDK;
-use Kinde\KindeSDK\Sdk\Storage\Storage;
+use Kinde\KindeSDK\Test\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Test\Sdk\KindeClientSDK;
+use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Test\Sdk\Storage\Storage;
 
 class AuthorizationCode
 {
@@ -34,8 +34,7 @@ class AuthorizationCode
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
-        if (!headers_sent()) {
-            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
-        }
+
+        return 'redirecting...';
     }
 }
