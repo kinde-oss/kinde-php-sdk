@@ -17,7 +17,7 @@ Method | HTTP request | Description
 ## `addOrganizationUsers()`
 
 ```php
-addOrganizationUsers($code, $add_organization_users_request): \Kinde\KindeSDK\Model\AddOrganizationUsers200Response
+addOrganizationUsers($code, $add_organization_users_request): \Kinde\KindeSDK\Model\AddOrganizationUsersResponse
 ```
 
 Assign Users to an Organization
@@ -64,7 +64,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\AddOrganizationUsers200Response**](../Model/AddOrganizationUsers200Response.md)
+[**\Kinde\KindeSDK\Model\AddOrganizationUsersResponse**](../Model/AddOrganizationUsersResponse.md)
 
 ### Authorization
 
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -82,7 +82,7 @@ Name | Type | Description  | Notes
 ## `createUser()`
 
 ```php
-createUser($create_user_request): \Kinde\KindeSDK\Model\CreateUser200Response
+createUser($create_user_request): \Kinde\KindeSDK\Model\CreateUserResponse
 ```
 
 Create User
@@ -127,7 +127,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\CreateUser200Response**](../Model/CreateUser200Response.md)
+[**\Kinde\KindeSDK\Model\CreateUserResponse**](../Model/CreateUserResponse.md)
 
 ### Authorization
 
@@ -136,7 +136,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -199,7 +199,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
 ## `getOrganizationUsers()`
 
 ```php
-getOrganizationUsers($sort, $page_size, $next_token, $code): \Kinde\KindeSDK\Model\GetOrganizationUsers200Response
+getOrganizationUsers($sort, $page_size, $next_token, $code, $permissions): \Kinde\KindeSDK\Model\GetOrganizationsUsersResponse
 ```
 
 List Organization Users
@@ -239,9 +239,10 @@ $sort = 'sort_example'; // string | Field and order to sort the result by.
 $page_size = 56; // int | Number of results per page. Defaults to 10 if parameter not sent.
 $next_token = 'next_token_example'; // string | A string to get the next page of results if there are more results.
 $code = 'code_example'; // string | The organization's code.
+$permissions = 'permissions_example'; // string | Filter by user permissions
 
 try {
-    $result = $apiInstance->getOrganizationUsers($sort, $page_size, $next_token, $code);
+    $result = $apiInstance->getOrganizationUsers($sort, $page_size, $next_token, $code, $permissions);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersApi->getOrganizationUsers: ', $e->getMessage(), PHP_EOL;
@@ -256,10 +257,11 @@ Name | Type | Description  | Notes
  **page_size** | **int**| Number of results per page. Defaults to 10 if parameter not sent. | [optional]
  **next_token** | **string**| A string to get the next page of results if there are more results. | [optional]
  **code** | **string**| The organization&#39;s code. | [optional]
+ **permissions** | **string**| Filter by user permissions | [optional]
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\GetOrganizationUsers200Response**](../Model/GetOrganizationUsers200Response.md)
+[**\Kinde\KindeSDK\Model\GetOrganizationsUsersResponse**](../Model/GetOrganizationsUsersResponse.md)
 
 ### Authorization
 
@@ -268,7 +270,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -331,7 +333,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -340,7 +342,7 @@ Name | Type | Description  | Notes
 ## `getUsers()`
 
 ```php
-getUsers($sort, $page_size, $user_id, $next_token): \Kinde\KindeSDK\Model\GetUsers200Response
+getUsers($sort, $page_size, $user_id, $next_token): \Kinde\KindeSDK\Model\UsersResponse
 ```
 
 List Users
@@ -391,7 +393,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\GetUsers200Response**](../Model/GetUsers200Response.md)
+[**\Kinde\KindeSDK\Model\UsersResponse**](../Model/UsersResponse.md)
 
 ### Authorization
 
@@ -400,7 +402,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -409,7 +411,7 @@ Name | Type | Description  | Notes
 ## `removeOrganizationUsers()`
 
 ```php
-removeOrganizationUsers($code, $remove_organization_users_request): \Kinde\KindeSDK\Model\RemoveOrganizationUsers200Response
+removeOrganizationUsers($code, $remove_organization_users_request): \Kinde\KindeSDK\Model\RemoveOrganizationUsersResponse
 ```
 
 Remove Users from an Organization
@@ -456,7 +458,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\RemoveOrganizationUsers200Response**](../Model/RemoveOrganizationUsers200Response.md)
+[**\Kinde\KindeSDK\Model\RemoveOrganizationUsersResponse**](../Model/RemoveOrganizationUsersResponse.md)
 
 ### Authorization
 
@@ -465,7 +467,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -530,7 +532,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)

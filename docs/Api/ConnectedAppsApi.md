@@ -40,7 +40,7 @@ $config->setAccessToken(`kinde_access_token`);
 
 $apiInstance = new Kinde\KindeSDK\Api\ConnectedAppsApi($config);
 $key_code_ref = 'key_code_ref_example'; // string | The unique key code reference of the connected app to authenticate against.
-$user_id = 56; // int | The id of the user that needs to authenticate to the third-party connected app.
+$user_id = 'user_id_example'; // string | The id of the user that needs to authenticate to the third-party connected app.
 
 try {
     $result = $apiInstance->getConnectedAppAuthUrl($key_code_ref, $user_id);
@@ -55,7 +55,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key_code_ref** | **string**| The unique key code reference of the connected app to authenticate against. |
- **user_id** | **int**| The id of the user that needs to authenticate to the third-party connected app. |
+ **user_id** | **string**| The id of the user that needs to authenticate to the third-party connected app. |
 
 ### Return type
 
@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -131,7 +131,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -140,7 +140,7 @@ Name | Type | Description  | Notes
 ## `revokeConnectedAppToken()`
 
 ```php
-revokeConnectedAppToken($session_id): \Kinde\KindeSDK\Model\ApiResult
+revokeConnectedAppToken($session_id): \Kinde\KindeSDK\Model\SuccessResponse
 ```
 
 Revoke Connected App Token
@@ -185,7 +185,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\ApiResult**](../Model/ApiResult.md)
+[**\Kinde\KindeSDK\Model\SuccessResponse**](../Model/SuccessResponse.md)
 
 ### Authorization
 
@@ -194,7 +194,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)

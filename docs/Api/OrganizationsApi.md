@@ -8,9 +8,9 @@ Method | HTTP request | Description
 [**createOrganization()**](OrganizationsApi.md#createOrganization) | **POST** /api/v1/organization | Create Organization
 [**deleteOrganizationFeatureFlagOverride()**](OrganizationsApi.md#deleteOrganizationFeatureFlagOverride) | **DELETE** /api/v1/organizations/{org_code}/feature_flags/{feature_flag_key} | Delete organization feature flag override
 [**deleteOrganizationFeatureFlagOverrides()**](OrganizationsApi.md#deleteOrganizationFeatureFlagOverrides) | **DELETE** /api/v1/organizations/{org_code}/feature_flags | Delete all organization feature flag overrides
-[**getOrgainzations()**](OrganizationsApi.md#getOrgainzations) | **GET** /api/v1/organizations | List Organizations
 [**getOrganization()**](OrganizationsApi.md#getOrganization) | **GET** /api/v1/organization | Get Organization
 [**getOrganizationUsers()**](OrganizationsApi.md#getOrganizationUsers) | **GET** /api/v1/organization/users | List Organization Users
+[**getOrganizations()**](OrganizationsApi.md#getOrganizations) | **GET** /api/v1/organizations | List Organizations
 [**removeOrganizationUsers()**](OrganizationsApi.md#removeOrganizationUsers) | **PATCH** /api/v1/organization/users | Remove Users from an Organization
 [**updateOrganizationFeatureFlagOverride()**](OrganizationsApi.md#updateOrganizationFeatureFlagOverride) | **PATCH** /api/v1/organizations/{org_code}/feature_flags/{feature_flag_key} | Update organization feature flag override
 
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 ## `addOrganizationUsers()`
 
 ```php
-addOrganizationUsers($code, $add_organization_users_request): \Kinde\KindeSDK\Model\AddOrganizationUsers200Response
+addOrganizationUsers($code, $add_organization_users_request): \Kinde\KindeSDK\Model\AddOrganizationUsersResponse
 ```
 
 Assign Users to an Organization
@@ -65,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\AddOrganizationUsers200Response**](../Model/AddOrganizationUsers200Response.md)
+[**\Kinde\KindeSDK\Model\AddOrganizationUsersResponse**](../Model/AddOrganizationUsersResponse.md)
 
 ### Authorization
 
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -136,7 +136,7 @@ void (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -201,7 +201,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -264,74 +264,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `getOrgainzations()`
-
-```php
-getOrgainzations($sort, $page_size, $next_token): \Kinde\KindeSDK\Model\GetOrgainzations200Response
-```
-
-List Organizations
-
-Get a list of organizations.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-
-...
-use Kinde\KindeSDK\Configuration;
-...
-
-$config = new Configuration();
-$config->setHost(YOUR_KINDE_HOST);
-
-// You can also set `access_token` via $config;
-$config->setAccessToken(`kinde_access_token`);
-
-$apiInstance = new Kinde\KindeSDK\Api\OrganizationsApi($config);
-$sort = 'sort_example'; // string | Field and order to sort the result by.
-$page_size = 56; // int | Number of results per page. Defaults to 10 if parameter not sent.
-$next_token = 'next_token_example'; // string | A string to get the next page of results if there are more results.
-
-try {
-    $result = $apiInstance->getOrgainzations($sort, $page_size, $next_token);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling OrganizationsApi->getOrgainzations: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sort** | **string**| Field and order to sort the result by. | [optional]
- **page_size** | **int**| Number of results per page. Defaults to 10 if parameter not sent. | [optional]
- **next_token** | **string**| A string to get the next page of results if there are more results. | [optional]
-
-### Return type
-
-[**\Kinde\KindeSDK\Model\GetOrgainzations200Response**](../Model/GetOrgainzations200Response.md)
-
-### Authorization
-
-[kindeBearerAuth](../../README.md#kindeBearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -394,7 +327,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -403,7 +336,7 @@ Name | Type | Description  | Notes
 ## `getOrganizationUsers()`
 
 ```php
-getOrganizationUsers($sort, $page_size, $next_token, $code): \Kinde\KindeSDK\Model\GetOrganizationUsers200Response
+getOrganizationUsers($sort, $page_size, $next_token, $code, $permissions): \Kinde\KindeSDK\Model\GetOrganizationsUsersResponse
 ```
 
 List Organization Users
@@ -434,9 +367,10 @@ $sort = 'sort_example'; // string | Field and order to sort the result by.
 $page_size = 56; // int | Number of results per page. Defaults to 10 if parameter not sent.
 $next_token = 'next_token_example'; // string | A string to get the next page of results if there are more results.
 $code = 'code_example'; // string | The organization's code.
+$permissions = 'permissions_example'; // string | Filter by user permissions
 
 try {
-    $result = $apiInstance->getOrganizationUsers($sort, $page_size, $next_token, $code);
+    $result = $apiInstance->getOrganizationUsers($sort, $page_size, $next_token, $code, $permissions);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrganizationsApi->getOrganizationUsers: ', $e->getMessage(), PHP_EOL;
@@ -451,10 +385,11 @@ Name | Type | Description  | Notes
  **page_size** | **int**| Number of results per page. Defaults to 10 if parameter not sent. | [optional]
  **next_token** | **string**| A string to get the next page of results if there are more results. | [optional]
  **code** | **string**| The organization&#39;s code. | [optional]
+ **permissions** | **string**| Filter by user permissions | [optional]
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\GetOrganizationUsers200Response**](../Model/GetOrganizationUsers200Response.md)
+[**\Kinde\KindeSDK\Model\GetOrganizationsUsersResponse**](../Model/GetOrganizationsUsersResponse.md)
 
 ### Authorization
 
@@ -463,7 +398,74 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `getOrganizations()`
+
+```php
+getOrganizations($sort, $page_size, $next_token): \Kinde\KindeSDK\Model\GetOrganizationsResponse
+```
+
+List Organizations
+
+Get a list of organizations.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+
+...
+use Kinde\KindeSDK\Configuration;
+...
+
+$config = new Configuration();
+$config->setHost(YOUR_KINDE_HOST);
+
+// You can also set `access_token` via $config;
+$config->setAccessToken(`kinde_access_token`);
+
+$apiInstance = new Kinde\KindeSDK\Api\OrganizationsApi($config);
+$sort = 'sort_example'; // string | Field and order to sort the result by.
+$page_size = 56; // int | Number of results per page. Defaults to 10 if parameter not sent.
+$next_token = 'next_token_example'; // string | A string to get the next page of results if there are more results.
+
+try {
+    $result = $apiInstance->getOrganizations($sort, $page_size, $next_token);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrganizationsApi->getOrganizations: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sort** | **string**| Field and order to sort the result by. | [optional]
+ **page_size** | **int**| Number of results per page. Defaults to 10 if parameter not sent. | [optional]
+ **next_token** | **string**| A string to get the next page of results if there are more results. | [optional]
+
+### Return type
+
+[**\Kinde\KindeSDK\Model\GetOrganizationsResponse**](../Model/GetOrganizationsResponse.md)
+
+### Authorization
+
+[kindeBearerAuth](../../README.md#kindeBearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -472,7 +474,7 @@ Name | Type | Description  | Notes
 ## `removeOrganizationUsers()`
 
 ```php
-removeOrganizationUsers($code, $remove_organization_users_request): \Kinde\KindeSDK\Model\RemoveOrganizationUsers200Response
+removeOrganizationUsers($code, $remove_organization_users_request): \Kinde\KindeSDK\Model\RemoveOrganizationUsersResponse
 ```
 
 Remove Users from an Organization
@@ -519,7 +521,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\RemoveOrganizationUsers200Response**](../Model/RemoveOrganizationUsers200Response.md)
+[**\Kinde\KindeSDK\Model\RemoveOrganizationUsersResponse**](../Model/RemoveOrganizationUsersResponse.md)
 
 ### Authorization
 
@@ -528,7 +530,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -595,7 +597,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)

@@ -1,4 +1,4 @@
-# # CreateUser200Response
+# # CreateUserResponse
 
 ## Properties
 

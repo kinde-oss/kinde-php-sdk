@@ -1,4 +1,4 @@
-# # RemoveOrganizationUsers200Response
+# # RemoveOrganizationUsersResponse
 
 ## Properties
 
