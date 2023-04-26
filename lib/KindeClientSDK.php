@@ -294,7 +294,7 @@ class KindeClientSDK
         $data = self::getClaims($tokenType);
 
         return [
-            [$keyName] => $keyName,
+            'name' => $keyName,
             'value' => $data[$keyName] ?? null
         ];
     }
@@ -501,7 +501,7 @@ class KindeClientSDK
             $client->request('POST', $this->tokenEndpoint, [
                 'form_params' => $formParams,
                 'headers' => [
-                    'Kinde-SDK' => 'PHP' . '1.2' // current SDK version
+                    'Kinde-SDK' => 'PHP/1.2' // current SDK version
                 ]
             ]);
 
