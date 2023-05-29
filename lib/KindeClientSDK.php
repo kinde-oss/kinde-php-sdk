@@ -9,12 +9,15 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 use Exception;
 use InvalidArgumentException;
 use GuzzleHttp\Client;
-use Kinde\KindeSDK\Sdk\Enums\AuthStatus;
 use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Sdk\Enums\TokenType;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Sdk\Storage\Storage;
+use UnexpectedValueException;
 
 class KindeClientSDK
 {
@@ -61,9 +64,6 @@ class KindeClientSDK
     /* A variable that is used to store the grant type that you want to use. */
     public string $grantType;
 
-    /* This is a variable that is used to store the status of the authorization. */
-    public string $authStatus;
-
     /* This is a additionalParameters data. */
     public array $additionalParameters;
 
@@ -75,6 +75,8 @@ class KindeClientSDK
     /* A variable that is used to store the protocol that you want to use when the SDK requests to get a token */
     public string $protocol;
 
+    public $storage;
+
     function __construct(
         string $domain,
         string $redirectUri,
@@ -84,7 +86,7 @@ class KindeClientSDK
         string $logoutRedirectUri,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
-        string $protocol = null
+        string $protocol = ""
     ) {
         if (empty($domain)) {
             throw new InvalidArgumentException("Please provide domain");
@@ -129,19 +131,13 @@ class KindeClientSDK
         $this->logoutRedirectUri = $logoutRedirectUri;
         $this->scopes = $scopes;
         $this->protocol = $protocol;
+
         // Other endpoints
         $this->authorizationEndpoint = $this->domain . '/oauth2/auth';
         $this->tokenEndpoint = $this->domain . '/oauth2/token';
         $this->logoutEndpoint = $this->domain . '/logout';
-        $this->authStatus = AuthStatus::UNAUTHENTICATED;
-    }
 
-    public function __get($key)
-    {
-        if (!property_exists($this, $key) && $key === 'isAuthenticated') {
-            return $this->isAuthenticated();
-        }
-        return $this->$key;
+        $this->storage = Storage::getInstance();
     }
 
     /**
@@ -155,26 +151,23 @@ class KindeClientSDK
     public function login(
         array $additionalParameters = []
     ) {
-        $this->cleanSession();
+        $this->cleanStorage();
         try {
-            $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
             switch ($this->grantType) {
                 case GrantType::clientCredentials:
                     $auth = new ClientCredentials();
-                    return $auth->login($this, $additionalParameters);
+                    return $auth->authenticate($this, $additionalParameters);
                 case GrantType::authorizationCode:
                     $auth = new AuthorizationCode();
-                    return $auth->login($this, $additionalParameters);
+                    return $auth->authenticate($this, $additionalParameters);
                 case GrantType::PKCE:
                     $auth = new PKCE();
-                    return $auth->login($this, 'login', $additionalParameters);
+                    return $auth->authenticate($this, 'login', $additionalParameters);
                 default:
-                    $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
                     throw new InvalidArgumentException("Please provide correct grant_type");
                     break;
             }
         } catch (\Throwable $th) {
-            $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
             throw $th;
         }
     }
@@ -187,10 +180,10 @@ class KindeClientSDK
      */
     public function register(array $additionalParameters = [])
     {
-        $this->updateAuthStatus(AuthStatus::AUTHENTICATING);
         $this->grantType = 'authorization_code';
+
         $auth = new PKCE();
-        return $auth->login($this, 'registration', $additionalParameters);
+        return $auth->authenticate($this, 'registration', $additionalParameters);
     }
 
     /**
@@ -206,12 +199,37 @@ class KindeClientSDK
     }
 
     /**
+     * It unset's the token from the storage and redirects the user to the logout endpoint
+     */
+    public function logout()
+    {
+        $this->cleanStorage();
+
+        $searchParams = [
+            'redirect' => $this->logoutRedirectUri
+        ];
+        header('Location: ' . $this->logoutEndpoint . '?' . http_build_query($searchParams));
+        exit();
+    }
+
+    /**
      * It takes the grant type as parameter, and returns the token
      * 
      * @param array authServerParams The call back params from auth server.
      */
     public function getToken()
     {
+        if ($this->grantType == GrantType::clientCredentials) {
+            return $this->login();
+        }
+        // Check authenticated
+        if ($this->isAuthenticated) {
+            $token = $this->storage->getToken();
+            if (!empty($token)) {
+                return $token;
+            }
+        }
+
         $newGrantType = $this->getGrantType($this->grantType);
         $formParams = [
             'client_id' => $this->clientId,
@@ -220,57 +238,36 @@ class KindeClientSDK
             'redirect_uri' => $this->redirectUri,
             'response_type' => 'code'
         ];
+
         $url = $this->getProtocol() . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $urlComponents = parse_url($url);
         parse_str($urlComponents['query'] ?? "", $params);
         $stateServer = $params['state'] ?? null;
+
         $this->checkStateAuthentication($stateServer);
+
         $error = $params['error'] ?? '';
         if (!empty($error)) {
             $errorDescription = $params['error_description'] ?? '';
             $msg = !empty($errorDescription) ? $errorDescription : $error;
             throw new OAuthException($msg);
         }
+
         $authorizationCode = $params['code'] ?? '';
         if (empty($authorizationCode)) {
             throw new InvalidArgumentException('Not found code param');
         }
+
         $formParams['code'] = $authorizationCode;
-        $codeVerifier = $_SESSION['kinde']['oauthCodeVerifier'] ?? "";
+        $codeVerifier = $this->storage->getCodeVerifier();
+
         if (!empty($codeVerifier)) {
             $formParams['code_verifier'] = $codeVerifier;
         } else if ($this->grantType == GrantType::PKCE) {
             throw new InvalidArgumentException('Not found code_verifier');
         }
-        $client = new Client();
-        $response =
-            $client->request('POST', $this->tokenEndpoint, [
-                'form_params' => $formParams
-            ]);
-        $token = $response->getBody()->getContents();
-        $_SESSION['kinde']['token'] = $token;
-        $tokenDecode = json_decode($token);
-        $this->saveDataToSession($tokenDecode);
-        $this->updateAuthStatus(AuthStatus::AUTHENTICATED);
-        return $tokenDecode;
-    }
 
-    private function saveDataToSession($token)
-    {
-        $_SESSION['kinde']['login_time_stamp'] = time();
-        $_SESSION['kinde']['access_token'] = $token->access_token ?? '';
-        $_SESSION['kinde']['id_token'] = $token->id_token ?? '';
-        $_SESSION['kinde']['expires_in'] = $token->expires_in ?? 0;
-        $payload = Utils::parseJWT($token->id_token ?? '');
-        if ($payload) {
-            $user = [
-                'id' => $payload['sub'] ?? '',
-                'given_name' => $payload['given_name'] ?? '',
-                'family_name' => $payload['family_name'] ?? '',
-                'email' => $payload['email'] ?? ''
-            ];
-            $_SESSION['kinde']['user'] = json_encode($user);
-        }
+        return $this->fetchToken($formParams);
     }
 
     /**
@@ -280,67 +277,7 @@ class KindeClientSDK
      */
     public function getUserDetails()
     {
-        return json_decode($_SESSION['kinde']['user'] ?? '', true);
-    }
-
-    /**
-     * It unset's the token from the session and redirects the user to the logout endpoint
-     */
-    public function logout()
-    {
-        $this->cleanSession();
-        $this->updateAuthStatus(AuthStatus::UNAUTHENTICATED);
-        $searchParams = [
-            'redirect' => $this->logoutRedirectUri
-        ];
-        header('Location: ' . $this->logoutEndpoint . '?' . http_build_query($searchParams));
-        exit();
-    }
-
-    /**
-     * This function takes a grant type and returns the grant type in the format that the API expects
-     * 
-     * @param string grantType The type of grant you want to use.
-     * 
-     * @return The grant type is being returned.
-     */
-    public function getGrantType(string $grantType)
-    {
-        switch ($grantType) {
-            case GrantType::authorizationCode:
-            case GrantType::PKCE:
-                return 'authorization_code';
-            case GrantType::clientCredentials:
-                return 'client_credentials';
-            default:
-                throw new InvalidArgumentException("Please provide correct grant_type");
-                break;
-        }
-    }
-
-    /**
-     * It checks user is logged.
-     *
-     * @return bool The response is a bool, which check user logged or not
-     */
-    public function isAuthenticated()
-    {
-        if (empty($_SESSION['kinde']["login_time_stamp"]) || empty($_SESSION['kinde']["expires_in"])) {
-            return false;
-        }
-        return time() - $_SESSION['kinde']["login_time_stamp"] < $_SESSION['kinde']["expires_in"];
-    }
-
-    private function getClaims(string $tokenType = 'access_token')
-    {
-        if (!in_array($tokenType, ['access_token', 'id_token'])) {
-            throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
-        }
-        $token = $_SESSION['kinde'][$tokenType] ?? '';
-        if (empty($token)) {
-            throw new Exception('Request is missing required authentication credential');
-        }
-        return Utils::parseJWT($token);
+        return $this->storage->getUserProfile();
     }
 
     /**
@@ -352,10 +289,14 @@ class KindeClientSDK
      *
      * @return any The response is a data in token.
      */
-    public function getClaim(string $keyName, string $tokenType = 'access_token')
+    public function getClaim(string $keyName, string $tokenType = TokenType::ACCESS_TOKEN)
     {
         $data = self::getClaims($tokenType);
-        return $data[$keyName] ?? null;
+
+        return [
+            'name' => $keyName,
+            'value' => $data[$keyName] ?? null
+        ];
     }
 
     /**
@@ -367,6 +308,7 @@ class KindeClientSDK
     public function getPermissions()
     {
         $claims = self::getClaims();
+
         return [
             'orgCode' => $claims['org_code'],
             'permissions' => $claims['permissions']
@@ -383,6 +325,7 @@ class KindeClientSDK
     {
         $allClaims = self::getClaims();
         $permissions = $allClaims['permissions'];
+
         return [
             'orgCode' => $allClaims['org_code'],
             'isGranted' => in_array($permission, $permissions)
@@ -397,7 +340,7 @@ class KindeClientSDK
     public function getOrganization()
     {
         return [
-            'orgCode' => self::getClaim('org_code')
+            'orgCode' => self::getClaim('org_code')['value']
         ];
     }
     /**
@@ -408,32 +351,233 @@ class KindeClientSDK
     public function getUserOrganizations()
     {
         return [
-            'orgCodes' => self::getClaim('org_codes', 'id_token')
+            'orgCodes' => self::getClaim('org_codes', TokenType::ID_TOKEN)['value']
         ];
     }
 
-    public function getAuthStatus()
+    /**
+     * This PHP function returns a boolean flag value based on the provided flag name and default
+     * value.
+     * 
+     * @param string flagName A string representing the name of the boolean flag to retrieve.
+     * @param defaultValue The default value to be returned if the flag is not found or if its value is
+     * null.
+     * 
+     * @return The `getBooleanFlag` function is being returned. It takes in a string `flagName` and an
+     * optional `defaultValue` parameter. It then calls the `getFlag` function with the `flagName`,
+     * an array with a `defaultValue` key set to the `null` parameter, and a flag type of
+     * `'b'`. The `getFlag` function returns the value of the flag
+     */
+    public function getBooleanFlag(string $flagName, $defaultValue = null) // Let's use original default value, do not add type to here
     {
-        return $_SESSION['kinde']['auth_status'];
+        return self::getFlag($flagName, ['defaultValue' => $defaultValue], 'b');
     }
 
-    private function updateAuthStatus(string $_authStatus)
+    /**
+     * This PHP function returns a string flag value with an optional default value.
+     * 
+     * @param string flagName A string representing the name of the flag to retrieve.
+     * @param defaultValue The default value to be returned if the flag is not found or is null.
+     * 
+     * @return the value of the flag with the given name as a string. If the flag is not set, it will
+     * return the default value provided as the second argument. The flag is retrieved using the
+     * `getFlag()` function with the flag name, an array containing the default value, and the flag
+     * type 's' as arguments.
+     */
+    public function getStringFlag(string $flagName, $defaultValue = null)
     {
-        $_SESSION['kinde']['auth_status'] = $_authStatus;
-        $this->authStatus = $_authStatus;
+        return self::getFlag($flagName, ['defaultValue' => $defaultValue], 's');
     }
 
-    private function cleanSession()
+    /**
+     * This function retrieves an integer flag value with an optional default value.
+     * 
+     * @param string flagName A string representing the name of the flag to retrieve.
+     * @param defaultValue The default value to be returned if the flag is not set or cannot be
+     * converted to an integer.
+     * 
+     * @return The function `getIntegerFlag` is returning the value of the flag with the given name as
+     * an integer. If the flag is not set, it will return the default value provided as the second
+     * argument.
+     */
+    public function getIntegerFlag(string $flagName, $defaultValue = null)
     {
-        unset($_SESSION['kinde']['token']);
-        unset($_SESSION['kinde']['access_token']);
-        unset($_SESSION['kinde']['id_token']);
-        unset($_SESSION['kinde']['auth_status']);
-        unset($_SESSION['kinde']['oauthState']);
-        unset($_SESSION['kinde']['oauthCodeVerifier']);
-        unset($_SESSION['kinde']['expires_in']);
-        unset($_SESSION['kinde']['login_time_stamp']);
-        unset($_SESSION['kinde']['user']);
+        return self::getFlag($flagName, ['defaultValue' => $defaultValue], 'i');
+    }
+
+    /**
+     * This function retrieves a feature flag's value and type, with the option to provide a default
+     * value if the flag is not found.
+     * 
+     * @param string flagName A string representing the name of the feature flag to retrieve.
+     * @param array options An optional array of options that can include a default value for the flag.
+     * If the flag is not found, the default value will be used.
+     * @param string flagType The data type of the feature flag value. It is an optional parameter and
+     * can be null if not specified.
+     * 
+     * @return An array containing the code, type, value, and a boolean indicating whether the default
+     * value was used or not.
+     */
+    public function getFlag(string $flagName, array $options = [], string $flagType = null)
+    {
+        $isUsedDefault = false;
+        $flag = self::getFeatureFlags($flagName);
+        if (!isset($flag)) {
+            $isUsedDefault = true;
+            $flag = [
+                'v' => $options['defaultValue'],
+                't' => $flagType
+            ];
+        }
+
+        if (!isset($flag['v'])) {
+            throw new UnexpectedValueException("This flag '{$flagName}' was not found, and no default value has been provided");
+        }
+
+        $flagTypeParsed = Utils::$listType[$flag['t']];
+
+        $requestType = Utils::$listType[$flagType];
+        if (isset($requestType) && $flagTypeParsed != $requestType) {
+            throw new UnexpectedValueException("Flag '{$flagName}' is type {$flagTypeParsed} - requested type {$requestType}");
+        }
+
+        return [
+            "code" => $flagName,
+            "type" => $flagTypeParsed,
+            "value" => $flag['v'],
+            "is_default" => $isUsedDefault
+        ];
+    }
+
+    public function __get($key)
+    {
+        if (!property_exists($this, $key) && $key === 'isAuthenticated') {
+            return $this->isAuthenticated();
+        }
+
+        return $this->$key;
+    }
+
+    /**
+     * This function retrieves feature flags and returns either all flags or a specific flag if a name
+     * is provided.
+     * 
+     * @param string name  is an optional parameter of type string that represents the name of a
+     * specific feature flag. If provided, the function will return the value of that feature flag. If
+     * not provided, the function will return an array of all feature flags.
+     * 
+     * @return If the `` parameter is provided and the `` array is not empty, then the value
+     * of the feature flag with the given name is returned. Otherwise, the entire `` array is
+     * returned.
+     */
+    private function getFeatureFlags(string $name = null)
+    {
+        $flags = self::getClaim('feature_flags')['value'];
+
+        if (isset($name) && !empty($flags)) {
+            return $flags[$name];
+        }
+
+        return $flags;
+    }
+
+    /**
+     * This function fetches a token from a specified endpoint using form parameters and stores it in a
+     * storage object.
+     * 
+     * @param formParams The form parameters are the data that will be sent in the body of the POST
+     * request to the token endpoint. These parameters typically include information such as the client
+     * ID, client secret, grant type, and authorization code or refresh token.
+     * 
+     * @return the decoded token obtained from the API response after making a POST request to the
+     * token endpoint. The token is also stored in the storage for future use. The function also
+     * removes the code verifier and state from the storage.
+     */
+    private function fetchToken($formParams)
+    {
+        $client = new Client();
+
+        $response =
+            $client->request('POST', $this->tokenEndpoint, [
+                'form_params' => $formParams,
+                'headers' => [
+                    'Kinde-SDK' => 'PHP/1.2' // current SDK version
+                ]
+            ]);
+
+        $token = $response->getBody()->getContents();
+        $this->storage->setToken($token);
+        $tokenDecode = json_decode($token);
+
+        // Cleaning
+        $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
+        $this->storage->removeItem(StorageEnums::STATE);
+        return $tokenDecode;
+    }
+
+    /**
+     * It checks user is logged.
+     *
+     * @return bool The response is a bool, which check user logged or not
+     */
+    private function isAuthenticated()
+    {
+        $timeExpired = $this->storage->getExpiredAt();
+        $authenticated = $timeExpired > time();
+
+        if ($authenticated) {
+            return true;
+        }
+
+        // Using refresh token to get new access token
+        try {
+            $refreshToken = $this->storage->getRefreshToken();
+            if (!empty($refreshToken)) {
+                $formParams = [
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'grant_type' => 'refresh_token',
+                    'refresh_token' => $refreshToken
+                ];
+
+                $token = $this->fetchToken($formParams);
+                if (!empty($token) && $token->expires_in > 0) {
+                    return true;
+                }
+            }
+        } catch (\Throwable $th) {
+        }
+
+        return false;
+    }
+
+    /**
+     * This function retrieves and parses a JWT token from storage based on the token type provided.
+     * 
+     * @param string tokenType A string parameter that specifies the type of token to retrieve the
+     * claims from. It can be either "access_token" or "id_token".
+     * 
+     * @return the claims (decoded data) from either the access token or the ID token, depending on the
+     * value of the `` parameter. If the parameter is not valid or the token is missing, the
+     * function throws an exception.
+     */
+    private function getClaims(string $tokenType = TokenType::ACCESS_TOKEN)
+    {
+        if (!in_array($tokenType, [TokenType::ACCESS_TOKEN, TokenType::ID_TOKEN])) {
+            throw new InvalidArgumentException('Please provide valid token (access_token or id_token) to get claim');
+        }
+
+        $token = $tokenType === TokenType::ACCESS_TOKEN ? $this->storage->getAccessToken() : $this->storage->getIdToken();
+        if (empty($token)) {
+            throw new Exception('Request is missing required authentication credential');
+        }
+
+        return Utils::parseJWT($token);
+    }
+
+    private function cleanStorage()
+    {
+        $this->storage->clear();
     }
 
     private function getProtocol()
@@ -441,13 +585,37 @@ class KindeClientSDK
         if (!empty($this->protocol)) {
             return $this->protocol;
         }
+
         return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
     }
 
     private function checkStateAuthentication(string $stateServer)
     {
-        if (empty($_SESSION['kinde']['oauthState']) || $stateServer != $_SESSION['kinde']['oauthState']) {
+        $storageOAuthState = $this->storage->getState();
+
+        if (empty($storageOAuthState) || $stateServer != $storageOAuthState) {
             throw new OAuthException("Authentication failed because it tries to validate state");
+        }
+    }
+
+    /**
+     * This function takes a grant type and returns the grant type in the format that the API expects
+     * 
+     * @param string grantType The type of grant you want to use.
+     * 
+     * @return The grant type is being returned.
+     */
+    private function getGrantType(string $grantType)
+    {
+        switch ($grantType) {
+            case GrantType::authorizationCode:
+            case GrantType::PKCE:
+                return 'authorization_code';
+            case GrantType::clientCredentials:
+                return 'client_credentials';
+            default:
+                throw new InvalidArgumentException("Please provide correct grant_type");
+                break;
         }
     }
 }

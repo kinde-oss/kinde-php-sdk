@@ -8,6 +8,11 @@ use Exception;
 
 class Utils
 {
+    static public $listType = [
+        's' => 'string',
+        'i' => 'integer',
+        'b' => 'boolean'
+    ];
     /**
      * It converts a string to base64url format.
      * 

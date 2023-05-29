@@ -1,44 +1,47 @@
 {
-    "name": "kinde-oss/kinde-auth-php",
-    "version": "0.0.3",
-    "description": "Kinde PHP SDK for authentication",
-    "license": "MIT",
-    "keywords": [
-        "php",
-        "sdk",
-        "auth",
-        "authentication",
-        "kinde"
-    ],
-    "homepage": "https://kinde.com",
-    "authors": [
-        {
-            "name": "Kinde Engineering",
-            "homepage": "https://kinde.com"
-        }
-    ],
-    "require": {
-        "php": "^7.4 || ^8.0",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^7.3",
-        "guzzlehttp/psr7": "^1.7 || ^2.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.0 || ^9.0",
-        "friendsofphp/php-cs-fixer": "^3.5"
-    },
-    "autoload": {
-        "psr-4": { "Kinde\\KindeSDK\\" : "lib/" }
-    },
-    "autoload-dev": {
-        "psr-4": { "Kinde\\KindeSDK\\Test\\" : "test/" }
-    },
-    "scripts": {
-        "test": [
-            "./vendor/bin/phpunit --bootstrap test/bootstrap.php"
-        ],
-        "test-sdk": "./vendor/bin/phpunit --bootstrap test/bootstrap.php --testsuite Sdk"
+  "name": "kinde-oss/kinde-auth-php",
+  "version": "1",
+  "description": "Kinde PHP SDK for authentication",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "sdk",
+    "auth",
+    "authentication",
+    "kinde"
+  ],
+  "homepage": "https://kinde.com",
+  "authors": [
+    {
+      "name": "Kinde Engineering",
+      "homepage": "https://kinde.com"
     }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "guzzlehttp/guzzle": "^7.3",
+    "guzzlehttp/psr7": "^1.7 || ^2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0 || ^9.0",
+    "friendsofphp/php-cs-fixer": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Kinde\\KindeSDK\\": "lib/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Kinde\\KindeSDK\\Test\\": "test/"
+    }
+  },
+  "scripts": {
+    "test": [
+      "./vendor/bin/phpunit"
+    ]
+  }
 }

@@ -4,9 +4,21 @@ namespace Kinde\KindeSDK\Sdk\OAuth2;
 
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 use Kinde\KindeSDK\KindeClientSDK;
+use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
+use Kinde\KindeSDK\Sdk\Storage\Storage;
 
 class PKCE
 {
+    /**
+     * @var Storage
+     */
+    protected $storage;
+
+    function __construct()
+    {
+        $this->storage = Storage::getInstance();
+    }
+
     /**
      * It generates a code challenge and code verifier, stores the code verifier in the cache, and
      * redirects the user to the authorization endpoint with the code challenge and other parameters
@@ -22,12 +34,12 @@ class PKCE
      * @return A redirect to the authorization endpoint with the parameters needed to start the
      * authorization process.
      */
-    public function login(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
+    public function authenticate(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
     {
-        $_SESSION['kinde']['oauthCodeVerifier'] = '';
+        $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
         $challenge = Utils::generateChallenge();
         $state = $challenge['state'];
-        $_SESSION['kinde']['oauthState'] = $state;
+        $this->storage->setState($state);
         $searchParams = [
             'redirect_uri' => $clientSDK->redirectUri,
             'client_id' => $clientSDK->clientId,
@@ -40,7 +52,7 @@ class PKCE
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
-        $_SESSION['kinde']['oauthCodeVerifier'] =  $challenge['codeVerifier'];
+        $this->storage->setCodeVerifier($challenge['codeVerifier']);
 
         if (!headers_sent()) {
             exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));

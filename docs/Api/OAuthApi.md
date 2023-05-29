@@ -1,6 +1,6 @@
 # Kinde\KindeSDK\OAuthApi
 
-All URIs are relative to https://your_kinde_domain.kinde.com
+All URIs are relative to https://your_kinde_domain.kinde.com/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -16,7 +16,7 @@ getUser(): \Kinde\KindeSDK\Model\UserProfile
 
 Returns the details of the currently logged in user
 
-Contains the id, names and email of the currently logged in user
+Contains the id, names and email of the currently logged in user.
 
 ### Example
 
@@ -76,7 +76,7 @@ getUserProfileV2(): \Kinde\KindeSDK\Model\UserProfileV2
 
 Returns the details of the currently logged in user
 
-Contains the id, names and email of the currently logged in user
+Contains the id, names, profile picture URL and email of the currently logged in user.
 
 ### Example
 
