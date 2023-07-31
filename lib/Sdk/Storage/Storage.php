@@ -9,6 +9,8 @@ class Storage extends BaseStorage
 {
     public static $instance;
 
+    private static $tokenTimeToLive;
+
     public static function getInstance()
     {
         if (empty(self::$instance) || !(self::$instance instanceof Storage)) {
@@ -26,7 +28,7 @@ class Storage extends BaseStorage
 
     static function setToken($token)
     {
-        return self::setItem(StorageEnums::TOKEN, gettype($token) == 'string' ? $token : json_encode($token));
+        return self::setItem(StorageEnums::TOKEN, gettype($token) == 'string' ? $token : json_encode($token), self::getTokenTimeToLive());
     }
 
     static function getAccessToken()
@@ -51,6 +53,16 @@ class Storage extends BaseStorage
     {
         $accessToken = self::getAccessToken();
         return empty($accessToken) ? 0 : Utils::parseJWT($accessToken)['exp'];
+    }
+
+    static function getTokenTimeToLive()
+    {
+        return !empty(self::$tokenTimeToLive) ? self::$tokenTimeToLive : time() + 3600 * 24 * 15; // Live in 15 days
+    }
+
+    static function setTokenTimeToLive($tokenTimeToLive)
+    {
+        self::$tokenTimeToLive = $tokenTimeToLive;
     }
 
     static function getState()

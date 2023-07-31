@@ -447,6 +447,27 @@ $this->kindeClient->getIntegerFlag('competitions_limit', 1);
 // [--- Integer ---]
 ```
 
+## Token Storage
+Once the user has successfully authenticated, you'll have a JWT and a refresh token and that has been stored securely. E.g. using the `getAccessToken` method of the `Storage` class to get an access token.
+
+```php
+...
+use Kinde\KindeSDK\Sdk\Storage\Storage;
+...
+
+$storage = Storage::getInstance();
+
+$accessToken = $storage->getAccessToken();
+
+print_r($accessToken);
+```
+
+The token will be stored in the cookie. To specify the expiration time, you can use the `setTokenTimeToLive` method.
+
+```php
+$storage->setTokenTimeToLive(time() + 3600) // Live in 1 hour
+```
+
 ## How to run test
 
 The simplest way to run the PHP test suite is by using the following command at the root of your PHP checkout:
