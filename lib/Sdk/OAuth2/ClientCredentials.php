@@ -19,7 +19,17 @@ class ClientCredentials
     {
         $this->storage = Storage::getInstance();
     }
-
+    
+    /**
+     * Authenticates the Kinde client SDK using the client credentials grant type.
+     *
+     * @param KindeClientSDK $clientSDK           The Kinde client SDK instance.
+     * @param array          $additionalParameters An associative array of additional parameters (optional).
+     *
+     * @return stdClass The decoded token response.
+     *
+     * @throws Throwable If an error occurs during the authentication process.
+     */
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         try {

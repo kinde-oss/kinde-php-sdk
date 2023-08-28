@@ -13,12 +13,13 @@ class Utils
         'i' => 'integer',
         'b' => 'boolean'
     ];
+    
     /**
-     * It converts a string to base64url format.
-     * 
-     * @param string str The string to be encoded.
-     * 
-     * @return The base64url encoded string.
+     * Encodes a string using Base64 URL encoding.
+     *
+     * @param string $str The string to be encoded.
+     *
+     * @return string The Base64 URL encoded string.
      */
     static public function base64UrlEncode(string $str)
     {
@@ -29,11 +30,11 @@ class Utils
     }
 
     /**
-     * It returns the SHA256 hash of the input string.
-     * 
-     * @param str The string to be hashed.
-     * 
-     * @return hash The hash of the string.
+     * Calculates the SHA-256 hash of a string.
+     *
+     * @param string $str The string to calculate the hash for.
+     *
+     * @return string The SHA-256 hash of the string.
      */
     static public function sha256($str)
     {
@@ -41,11 +42,11 @@ class Utils
     }
 
     /**
-     * It generates a random string of a given length.
-     * 
-     * @param int length The length of the string to be generated.
-     * 
-     * @return string A random string of 32 characters.
+     * Generates a random string of the specified length.
+     *
+     * @param int $length The length of the random string. Default is 32.
+     *
+     * @return string The randomly generated string.
      */
     static public function randomString(int $length = 32)
     {
@@ -53,9 +54,10 @@ class Utils
     }
 
     /**
-     * It generates a random string, hashes it, and then encodes it
-     * 
-     * @return array An array with the state, codeVerifier, and codeChallenge.
+     * Generates a challenge for OAuth 2.0 PKCE (Proof Key for Code Exchange).
+     *
+     * @return array An associative array containing the generated state, code verifier, and code challenge.
+     *               The array structure is ['state' => $state, 'codeVerifier' => $codeVerifier, 'codeChallenge' => $codeChallenge].
      */
     static public function generateChallenge()
     {
@@ -70,11 +72,11 @@ class Utils
     }
 
     /**
-     * It checks if the string is a valid URL
-     * 
-     * @param string url The URL to validate.
-     * 
-     * @return boolean A boolean value.
+     * Validates a URL using a regular expression pattern.
+     *
+     * @param string $url The URL to validate.
+     *
+     * @return bool Returns true if the URL is valid, false otherwise.
      */
     static public function validationURL(string $url)
     {
@@ -83,11 +85,11 @@ class Utils
     }
 
     /**
-     * It parse payload jwt
+     * Parses a JSON Web Token (JWT) and returns the decoded payload.
      *
-     * @param string token jwt
+     * @param string $token The JWT to parse.
      *
-     * @return array A array value.
+     * @return array|null The decoded payload as an associative array, or null if the token is invalid.
      */
     static public function parseJWT(string $token)
     {
@@ -98,6 +100,15 @@ class Utils
         }
     }
 
+    /**
+     * Checks and validates additional parameters provided as an associative array.
+     *
+     * @param array $additionalParameters An associative array of additional parameters to check.
+     *
+     * @return array The validated additional parameters.
+     *
+     * @throws InvalidArgumentException If any additional parameter is incorrect or has an invalid type.
+     */
     static public function checkAdditionalParameters(array $additionalParameters)
     {
         $keyExists = array_keys($additionalParameters);
@@ -116,7 +127,17 @@ class Utils
         }
         return $additionalParameters;
     }
-
+    
+    /**
+     * Adds additional parameters to a target array after validating them.
+     *
+     * @param array $target              The target array to which additional parameters will be added.
+     * @param array $additionalParameters An associative array of additional parameters to add.
+     *
+     * @return array The updated target array with the added additional parameters.
+     *
+     * @throws InvalidArgumentException If any additional parameter is incorrect or has an invalid type.
+     */
     static public function addAdditionalParameters(array $target, array $additionalParameters)
     {
         $newAdditionalParameters = self::checkAdditionalParameters($additionalParameters);
