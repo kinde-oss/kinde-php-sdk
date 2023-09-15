@@ -310,8 +310,8 @@ class KindeClientSDK
         $claims = self::getClaims();
 
         return [
-            'orgCode' => $claims['org_code'],
-            'permissions' => $claims['permissions']
+            'orgCode' => $claims['org_code'] ?? null,
+            'permissions' => $claims['permissions'] ?? []
         ];
     }
 
@@ -323,11 +323,11 @@ class KindeClientSDK
      */
     public function getPermission(string $permission)
     {
-        $allClaims = self::getClaims();
-        $permissions = $allClaims['permissions'];
+        $claims = self::getClaims();
+        $permissions = $claims['permissions'] ?? [];
 
         return [
-            'orgCode' => $allClaims['org_code'],
+            'orgCode' => $claims['org_code'] ?? null,
             'isGranted' => in_array($permission, $permissions)
         ];
     }
