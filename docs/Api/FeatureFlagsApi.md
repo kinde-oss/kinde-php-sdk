@@ -4,18 +4,18 @@ All URIs are relative to https://your_kinde_domain.kinde.com/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createFeatureFlag()**](FeatureFlagsApi.md#createFeatureFlag) | **POST** /api/v1/feature_flags | Create a new feature flag
-[**deleteFeatureFlag()**](FeatureFlagsApi.md#deleteFeatureFlag) | **DELETE** /api/v1/feature_flags/{feature_flag_key} | Delete a feature flag
-[**updateFeatureFlag()**](FeatureFlagsApi.md#updateFeatureFlag) | **PUT** /api/v1/feature_flags/{feature_flag_key} | Update a feature flag
+[**createFeatureFlag()**](FeatureFlagsApi.md#createFeatureFlag) | **POST** /api/v1/feature_flags | Create Feature Flag
+[**deleteFeatureFlag()**](FeatureFlagsApi.md#deleteFeatureFlag) | **DELETE** /api/v1/feature_flags/{feature_flag_key} | Delete Feature Flag
+[**updateFeatureFlag()**](FeatureFlagsApi.md#updateFeatureFlag) | **PUT** /api/v1/feature_flags/{feature_flag_key} | Replace Feature Flag
 
 
 ## `createFeatureFlag()`
 
 ```php
-createFeatureFlag($name, $description, $key, $type, $allow_override_level, $default_value): \Kinde\KindeSDK\Model\SuccessResponse
+createFeatureFlag($create_feature_flag_request): \Kinde\KindeSDK\Model\SuccessResponse
 ```
 
-Create a new feature flag
+Create Feature Flag
 
 Create feature flag.
 
@@ -39,15 +39,10 @@ $config->setHost(YOUR_KINDE_HOST);
 $config->setAccessToken(`kinde_access_token`);
 
 $apiInstance = new Kinde\KindeSDK\Api\FeatureFlagsApi($config);
-$name = 'name_example'; // string | The name of the flag.
-$description = 'description_example'; // string | Description of the flag purpose.
-$key = 'key_example'; // string | The flag identifier to use in code.
-$type = 'type_example'; // string | The variable type.
-$allow_override_level = 'allow_override_level_example'; // string | Allow the flag to be overridden at a different level.
-$default_value = 'default_value_example'; // string | Default value for the flag used by environments and organizations.
+$create_feature_flag_request = new \Kinde\KindeSDK\Model\CreateFeatureFlagRequest(); // \Kinde\KindeSDK\Model\CreateFeatureFlagRequest | Flag details.
 
 try {
-    $result = $apiInstance->createFeatureFlag($name, $description, $key, $type, $allow_override_level, $default_value);
+    $result = $apiInstance->createFeatureFlag($create_feature_flag_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling FeatureFlagsApi->createFeatureFlag: ', $e->getMessage(), PHP_EOL;
@@ -58,12 +53,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **string**| The name of the flag. |
- **description** | **string**| Description of the flag purpose. |
- **key** | **string**| The flag identifier to use in code. |
- **type** | **string**| The variable type. |
- **allow_override_level** | **string**| Allow the flag to be overridden at a different level. |
- **default_value** | **string**| Default value for the flag used by environments and organizations. |
+ **create_feature_flag_request** | [**\Kinde\KindeSDK\Model\CreateFeatureFlagRequest**](../Model/CreateFeatureFlagRequest.md)| Flag details. |
 
 ### Return type
 
@@ -75,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -88,7 +78,7 @@ Name | Type | Description  | Notes
 deleteFeatureFlag($feature_flag_key): \Kinde\KindeSDK\Model\SuccessResponse
 ```
 
-Delete a feature flag
+Delete Feature Flag
 
 Delete feature flag
 
@@ -148,10 +138,10 @@ Name | Type | Description  | Notes
 ## `updateFeatureFlag()`
 
 ```php
-updateFeatureFlag($feature_flag_key, $name, $description, $key, $type, $allow_override_level, $default_value): \Kinde\KindeSDK\Model\SuccessResponse
+updateFeatureFlag($feature_flag_key, $name, $description, $type, $allow_override_level, $default_value): \Kinde\KindeSDK\Model\SuccessResponse
 ```
 
-Update a feature flag
+Replace Feature Flag
 
 Update feature flag.
 
@@ -175,16 +165,15 @@ $config->setHost(YOUR_KINDE_HOST);
 $config->setAccessToken(`kinde_access_token`);
 
 $apiInstance = new Kinde\KindeSDK\Api\FeatureFlagsApi($config);
-$feature_flag_key = 'feature_flag_key_example'; // string | The identifier for the feature flag.
+$feature_flag_key = 'feature_flag_key_example'; // string | The key identifier for the feature flag.
 $name = 'name_example'; // string | The name of the flag.
 $description = 'description_example'; // string | Description of the flag purpose.
-$key = 'key_example'; // string | The flag identifier to use in code.
 $type = 'type_example'; // string | The variable type
 $allow_override_level = 'allow_override_level_example'; // string | Allow the flag to be overridden at a different level.
 $default_value = 'default_value_example'; // string | Default value for the flag used by environments and organizations.
 
 try {
-    $result = $apiInstance->updateFeatureFlag($feature_flag_key, $name, $description, $key, $type, $allow_override_level, $default_value);
+    $result = $apiInstance->updateFeatureFlag($feature_flag_key, $name, $description, $type, $allow_override_level, $default_value);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling FeatureFlagsApi->updateFeatureFlag: ', $e->getMessage(), PHP_EOL;
@@ -195,10 +184,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **feature_flag_key** | **string**| The identifier for the feature flag. |
+ **feature_flag_key** | **string**| The key identifier for the feature flag. |
  **name** | **string**| The name of the flag. |
  **description** | **string**| Description of the flag purpose. |
- **key** | **string**| The flag identifier to use in code. |
  **type** | **string**| The variable type |
  **allow_override_level** | **string**| Allow the flag to be overridden at a different level. |
  **default_value** | **string**| Default value for the flag used by environments and organizations. |
