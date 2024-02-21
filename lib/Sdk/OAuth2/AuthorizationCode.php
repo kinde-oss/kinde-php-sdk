@@ -18,7 +18,15 @@ class AuthorizationCode
     {
         $this->storage = Storage::getInstance();
     }
-
+    
+    /**
+     * Initiates the authentication process for the Kinde client SDK using the authorization code grant type.
+     *
+     * @param KindeClientSDK $clientSDK           The Kinde client SDK instance.
+     * @param array          $additionalParameters An associative array of additional parameters (optional).
+     *
+     * @return void
+     */
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         $state = Utils::randomString();
