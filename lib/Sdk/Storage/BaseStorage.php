@@ -33,7 +33,15 @@ class BaseStorage
     ) {
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
-        setcookie($newKey, $value, $expires_or_options, $path, $domain, $secure, $httpOnly);
+        setcookie($newKey, $value, [
+            'expires' => time()+(7*24*3600,
+            'path' => $path,
+            'domain' => $domain,
+            'samesite' => 'lax',
+            'secure' => $secure,
+            'httponly' => $httpOnly
+          ]);
+);
     }
 
     public static function removeItem(string $key)
