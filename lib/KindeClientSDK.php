@@ -505,7 +505,7 @@ class KindeClientSDK
 
         $token = $response->getBody()->getContents();
         $this->storage->setToken($token);
-        $tokenDecode = json_decode($token);
+        $tokenDecode = json_decode($token, true);
 
         // Cleaning
         $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
