@@ -4,6 +4,9 @@ namespace Kinde\KindeSDK\Sdk\Utils;
 
 use InvalidArgumentException;
 use Kinde\KindeSDK\Sdk\Enums\AdditionalParameters;
+use Kinde\KindeSDK\Sdk\Storage\Storage;
+use Firebase\JWT\JWK;
+use Firebase\JWT\JWT;
 use Exception;
 
 class Utils
@@ -94,7 +97,11 @@ class Utils
     static public function parseJWT(string $token)
     {
         try {
-            return json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))), true);
+            $jwks_url = Storage::getInstance()->getJwksUrl();
+            $jwks_json = file_get_contents($jwks_url);
+            $jwks = json_decode($jwks_json, true);
+
+            return (array) JWT::decode($token, JWK::parseKeySet($jwks));
         } catch (Exception $e) {
             return null;
         }
