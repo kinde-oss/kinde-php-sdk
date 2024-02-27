@@ -26,7 +26,7 @@ class BaseStorage
         string $key,
         string $value,
         int $expires_or_options = 0,
-        string $path = "",
+        string $path = "/",
         string $domain = "",
         bool $secure = true,
         bool $httpOnly = false
