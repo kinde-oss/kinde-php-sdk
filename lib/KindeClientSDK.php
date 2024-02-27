@@ -433,13 +433,16 @@ class KindeClientSDK
                 'v' => $options['defaultValue'],
                 't' => $flagType
             ];
+        } else {
+            # this read the value from the existing flag
+            $flagType = $flag['t'];
         }
 
         if (!isset($flag['v'])) {
             throw new UnexpectedValueException("This flag '{$flagName}' was not found, and no default value has been provided");
         }
 
-        $flagTypeParsed = Utils::$listType[$flag['t']];
+        $flagTypeParsed = Utils::$listType[$flagType];
 
         $requestType = Utils::$listType[$flagType];
         if (isset($requestType) && $flagTypeParsed != $requestType) {
