@@ -8,6 +8,8 @@ class BaseStorage
 {
     static $prefix = 'kinde';
     static $storage;
+    private static $cookiePath = "";
+    private static $cookieDomain = "";
 
     static function getStorage()
     {
@@ -26,14 +28,14 @@ class BaseStorage
         string $key,
         string $value,
         int $expires_or_options = 0,
-        string $path = "",
-        string $domain = "",
+        string $path = null,
+        string $domain = null,
         bool $secure = true,
         bool $httpOnly = false
     ) {
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
-        setcookie($newKey, $value, $expires_or_options, $path, $domain, $secure, $httpOnly);
+        setcookie($newKey, $value, $expires_or_options, $path ?? self::$cookiePath, $domain ?? self::$cookieDomain, $secure, $httpOnly);
     }
 
     public static function removeItem(string $key)
@@ -57,5 +59,15 @@ class BaseStorage
     private static function getKey($key)
     {
         return self::$prefix . '_' . $key;
+    }
+
+    public static function setCookiePath($cookiePath)
+    {
+        self::$cookiePath = $cookiePath;
+    }
+
+    public static function setCookieDomain($cookieDomain)
+    {
+        self::$cookieDomain = $cookieDomain;
     }
 }
