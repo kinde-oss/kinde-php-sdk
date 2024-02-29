@@ -8,6 +8,7 @@ class AdditionalParameters
         'audience' => 'string',
         'org_code' => 'string',
         'org_name' => 'string',
-        'is_create_org' => 'string'
+        'is_create_org' => 'string',
+        'login_hint' => 'string'
     ];
 }
