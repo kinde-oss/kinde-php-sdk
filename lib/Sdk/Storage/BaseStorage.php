@@ -8,7 +8,7 @@ class BaseStorage
 {
     static $prefix = 'kinde';
     static $storage;
-    private static $cookieHttpOnly = false;
+    private static $cookieHttpOnly = true;
     private static $cookiePath = "/";
     private static $cookieDomain = "";
 
