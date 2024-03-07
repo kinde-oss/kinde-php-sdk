@@ -62,7 +62,7 @@ class BaseStorage
         return self::$prefix . '_' . $key;
     }
 
-    public static function setCookieHttpOnly($httpOnly)
+    public static function setCookieHttpOnly(bool $httpOnly)
     {
         self::$cookieHttpOnly = $httpOnly;
     }
