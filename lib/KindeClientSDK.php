@@ -29,12 +29,12 @@ class KindeClientSDK
     /**
      * @var string This is the redirect URI that you provided when you registered your application.
      */
-    public string $redirectUri;
+    public ?string $redirectUri;
 
     /**
      * @var string This is the logout redirect URI that you provided when you registered your application.
      */
-    public string $logoutRedirectUri;
+    public ?string $logoutRedirectUri;
 
     /**
      * @var string A variable that is used to store the client ID of the application.
@@ -79,11 +79,11 @@ class KindeClientSDK
 
     function __construct(
         string $domain,
-        string $redirectUri,
+        ?string $redirectUri,
         string $clientId,
         string $clientSecret,
         string $grantType,
-        string $logoutRedirectUri,
+        ?string $logoutRedirectUri,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
         string $protocol = ""
