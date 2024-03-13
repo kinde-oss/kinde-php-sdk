@@ -12,5 +12,6 @@ Name | Type | Description | Notes
 **family_name** | **string** | User&#39;s last name. | [optional]
 **updated_at** | **int** | Date the user was last updated at (In Unix time). | [optional]
 **email** | **string** | User&#39;s email address if available. | [optional]
+**picture** | **string** | URL that point&#39;s to the user&#39;s picture or avatar | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
