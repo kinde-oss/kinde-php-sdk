@@ -28,15 +28,23 @@ class BaseStorage
     public static function setItem(
         string $key,
         string $value,
-        int $expires_or_options = 0,
+        int $expires = 0,
         string $path = null,
         string $domain = null,
         bool $secure = true,
         bool $httpOnly = null
     ) {
+
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
-        setcookie($newKey, $value, $expires_or_options, $path ?? self::$cookiePath, $domain ?? self::$cookieDomain, $secure, $httpOnly ?? self::$cookieHttpOnly);
+        setcookie($newKey, $value, [
+            'expires' => $expires,
+            'path' => $path ?? self::$cookiePath,
+            'domain' => $domain ?? self::$cookieDomain,
+            'samesite' => 'Lax',
+            'secure' => $secure,
+            'httponly' => $httpOnly ?? self::$cookieHttpOnly
+          ]);
     }
 
     public static function removeItem(string $key)
