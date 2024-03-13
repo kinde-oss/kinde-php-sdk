@@ -140,15 +140,18 @@ class KindeClientSDK
         $this->logoutEndpoint = $this->domain . '/logout';
 
         $this->storage = Storage::getInstance();
+        $this->storage->setJwksUrl($this->domain . '/.well-known/jwks.json');
     }
 
     /**
-     * A function that is used to login to the API.
+     * Performs user login and returns the authentication result.
      *
-     * @param array additionalParameters The array includes params to pass api.
-     * @param string scopes The scopes you want to request.
-     * 
-     * @return The login method returns an array with the following keys:
+     * @param array $additionalParameters Additional parameters for authentication (optional).
+     *
+     * @return AuthenticationResult The authentication result.
+     *
+     * @throws InvalidArgumentException When an incorrect grant_type is provided.
+     * @throws Throwable                  When an error occurs during authentication.
      */
     public function login(
         array $additionalParameters = []
@@ -175,10 +178,11 @@ class KindeClientSDK
     }
 
     /**
-     * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
-     * state, and the start page set to registration
+     * Registers the user and returns the authentication result.
      *
-     * @param array additionalParameters The array includes params to pass api.
+     * @param array $additionalParameters Additional parameters for registration (optional).
+     *
+     * @return AuthenticationResult The authentication result.
      */
     public function register(array $additionalParameters = [])
     {
@@ -189,10 +193,11 @@ class KindeClientSDK
     }
 
     /**
-     * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
-     * state, and the start page set to registration and allow an organization to be created
+     * Creates an organization and returns the authentication result.
      *
-     *  @param array additionalParameters The array includes params to pass api.
+     * @param array $additionalParameters Additional parameters for organization creation (optional).
+     *
+     * @return AuthenticationResult The authentication result.
      */
     public function createOrg(array $additionalParameters = [])
     {
@@ -201,7 +206,9 @@ class KindeClientSDK
     }
 
     /**
-     * It unset's the token from the storage and redirects the user to the logout endpoint
+     * Logs out the user and redirects to the logout endpoint.
+     *
+     * @return void
      */
     public function logout()
     {
@@ -215,9 +222,12 @@ class KindeClientSDK
     }
 
     /**
-     * It takes the grant type as parameter, and returns the token
-     * 
-     * @param array authServerParams The call back params from auth server.
+     * Retrieves the access token for authentication.
+     *
+     * @return AccessToken|null The access token or null if not available.
+     *
+     * @throws OAuthException        When an OAuth-related error occurs.
+     * @throws InvalidArgumentException When required parameters are missing or invalid.
      */
     public function getToken()
     {
@@ -273,9 +283,9 @@ class KindeClientSDK
     }
 
     /**
-     * It returns user's information after successful authentication
+     * Retrieves the user details from the storage.
      *
-     * @return array The response is a array containing id, given_name, family_name and email.
+     * @return UserProfile The user profile or null if not available.
      */
     public function getUserDetails()
     {
@@ -283,61 +293,63 @@ class KindeClientSDK
     }
 
     /**
-     * Accept a key for a token and returns the claim value.
-     * Optional argument to define which token to check - defaults to Access token  - e.g.
+     * Retrieves a specific claim from the token.
      *
-     * @param string keyName Accept a key for a token.
-     * @param string tokenType Optional argument to define which token to check.
+     * @param string $keyName   The name of the claim to retrieve.
+     * @param string $tokenType The type of token to retrieve the claim from (optional, defaults to TokenType::ACCESS_TOKEN).
      *
-     * @return any The response is a data in token.
+     * @return array An associative array containing the name and value of the claim, or null if the claim doesn't exist.
      */
     public function getClaim(string $keyName, string $tokenType = TokenType::ACCESS_TOKEN)
     {
-        $data = self::getClaims($tokenType);
+        $claims = self::getClaims($tokenType);
 
+        if (!array_key_exists($keyName, $claims)) {
+            error_log("The value of '{$keyName}' claimed does not exist in your token");
+        }
         return [
             'name' => $keyName,
-            'value' => $data[$keyName] ?? null
+            'value' => $claims[$keyName] ?? null
         ];
     }
 
     /**
-     * Get an array of permissions (from the permissions claim in access token)
-     * And also the relevant org code (org_code claim in access token). e.g
+     * Retrieves the organization code and permissions from the claims.
      *
-     * @return array The response includes orgCode and permissions.
+     * @return array An associative array containing the organization code and permissions.
      */
     public function getPermissions()
     {
         $claims = self::getClaims();
 
         return [
-            'orgCode' => $claims['org_code'],
-            'permissions' => $claims['permissions']
+            'orgCode' => $claims['org_code'] ?? null,
+            'permissions' => $claims['permissions'] ?? []
         ];
     }
 
     /**
-     * Given a permission value, returns if it is granted or not (checks if permission key exists in the permissions claim array)
-     * And relevant org code (checking against claim org_code) e.g
+     * Checks if a specific permission is granted.
      *
-     * @return array The response includes orgCode and isGranted.
+     * @param string $permission The permission to check.
+     *
+     * @return array An associative array containing the organization code and a boolean indicating if the permission is granted.
      */
     public function getPermission(string $permission)
     {
-        $allClaims = self::getClaims();
-        $permissions = $allClaims['permissions'];
+        $claims = self::getClaims();
+        $permissions = $claims['permissions'] ?? [];
 
         return [
-            'orgCode' => $allClaims['org_code'],
+            'orgCode' => $claims['org_code'] ?? null,
             'isGranted' => in_array($permission, $permissions)
         ];
     }
 
     /**
-     * Gets the org code (and later other org info) (checking against claim org_code)
+     * Retrieves the organization code from the token.
      *
-     * @return array The response is a orgCode.
+     * @return array An associative array containing the organization code.
      */
     public function getOrganization()
     {
@@ -345,10 +357,11 @@ class KindeClientSDK
             'orgCode' => self::getClaim('org_code')['value']
         ];
     }
+    
     /**
-     * Gets all org code
+     * Retrieves the organization codes associated with the user from the token.
      *
-     * @return array The response is a orgCodes.
+     * @return array An associative array containing the organization codes.
      */
     public function getUserOrganizations()
     {
@@ -358,17 +371,14 @@ class KindeClientSDK
     }
 
     /**
-     * This PHP function returns a boolean flag value based on the provided flag name and default
-     * value.
-     * 
-     * @param string flagName A string representing the name of the boolean flag to retrieve.
-     * @param defaultValue The default value to be returned if the flag is not found or if its value is
-     * null.
-     * 
-     * @return The `getBooleanFlag` function is being returned. It takes in a string `flagName` and an
-     * optional `defaultValue` parameter. It then calls the `getFlag` function with the `flagName`,
-     * an array with a `defaultValue` key set to the `null` parameter, and a flag type of
-     * `'b'`. The `getFlag` function returns the value of the flag
+     * Retrieves a boolean feature flag value based on the flag name.
+     *
+     * @param string $flagName      The name of the feature flag to retrieve.
+     * @param mixed  $defaultValue  The default value for the flag (optional).
+     *
+     * @throws UnexpectedValueException If the flag is not found and no default value is provided, or if the requested type doesn't match the flag's type.
+     *
+     * @return array An associative array containing the flag code, type, value, and a boolean indicating if the default value was used.
      */
     public function getBooleanFlag(string $flagName, $defaultValue = null) // Let's use original default value, do not add type to here
     {
@@ -376,15 +386,14 @@ class KindeClientSDK
     }
 
     /**
-     * This PHP function returns a string flag value with an optional default value.
-     * 
-     * @param string flagName A string representing the name of the flag to retrieve.
-     * @param defaultValue The default value to be returned if the flag is not found or is null.
-     * 
-     * @return the value of the flag with the given name as a string. If the flag is not set, it will
-     * return the default value provided as the second argument. The flag is retrieved using the
-     * `getFlag()` function with the flag name, an array containing the default value, and the flag
-     * type 's' as arguments.
+     * Retrieves a string feature flag value based on the flag name.
+     *
+     * @param string $flagName      The name of the feature flag to retrieve.
+     * @param mixed  $defaultValue  The default value for the flag (optional).
+     *
+     * @throws UnexpectedValueException If the flag is not found and no default value is provided, or if the requested type doesn't match the flag's type.
+     *
+     * @return array An associative array containing the flag code, type, value, and a boolean indicating if the default value was used.
      */
     public function getStringFlag(string $flagName, $defaultValue = null)
     {
@@ -392,15 +401,14 @@ class KindeClientSDK
     }
 
     /**
-     * This function retrieves an integer flag value with an optional default value.
-     * 
-     * @param string flagName A string representing the name of the flag to retrieve.
-     * @param defaultValue The default value to be returned if the flag is not set or cannot be
-     * converted to an integer.
-     * 
-     * @return The function `getIntegerFlag` is returning the value of the flag with the given name as
-     * an integer. If the flag is not set, it will return the default value provided as the second
-     * argument.
+     * Retrieves an integer feature flag value based on the flag name.
+     *
+     * @param string $flagName      The name of the feature flag to retrieve.
+     * @param mixed  $defaultValue  The default value for the flag (optional).
+     *
+     * @throws UnexpectedValueException If the flag is not found and no default value is provided, or if the requested type doesn't match the flag's type.
+     *
+     * @return array An associative array containing the flag code, type, value, and a boolean indicating if the default value was used.
      */
     public function getIntegerFlag(string $flagName, $defaultValue = null)
     {
@@ -408,17 +416,15 @@ class KindeClientSDK
     }
 
     /**
-     * This function retrieves a feature flag's value and type, with the option to provide a default
-     * value if the flag is not found.
-     * 
-     * @param string flagName A string representing the name of the feature flag to retrieve.
-     * @param array options An optional array of options that can include a default value for the flag.
-     * If the flag is not found, the default value will be used.
-     * @param string flagType The data type of the feature flag value. It is an optional parameter and
-     * can be null if not specified.
-     * 
-     * @return An array containing the code, type, value, and a boolean indicating whether the default
-     * value was used or not.
+     * Retrieves a feature flag value based on the flag name.
+     *
+     * @param string $flagName   The name of the feature flag to retrieve.
+     * @param array  $options    Additional options for handling the flag (optional).
+     * @param string $flagType   The expected type of the flag (optional).
+     *
+     * @throws UnexpectedValueException If the flag is not found and no default value is provided, or if the requested type doesn't match the flag's type.
+     *
+     * @return array An associative array containing the flag code, type, value, and a boolean indicating if the default value was used.
      */
     public function getFlag(string $flagName, array $options = [], string $flagType = null)
     {
@@ -461,16 +467,11 @@ class KindeClientSDK
     }
 
     /**
-     * This function retrieves feature flags and returns either all flags or a specific flag if a name
-     * is provided.
-     * 
-     * @param string name  is an optional parameter of type string that represents the name of a
-     * specific feature flag. If provided, the function will return the value of that feature flag. If
-     * not provided, the function will return an array of all feature flags.
-     * 
-     * @return If the `` parameter is provided and the `` array is not empty, then the value
-     * of the feature flag with the given name is returned. Otherwise, the entire `` array is
-     * returned.
+     * Retrieves the feature flags or a specific feature flag value based on the flag name.
+     *
+     * @param string|null $name The name of the feature flag to retrieve (optional).
+     *
+     * @return mixed|array|null The feature flags or a specific feature flag value.
      */
     private function getFeatureFlags(string $name = null)
     {
@@ -484,16 +485,13 @@ class KindeClientSDK
     }
 
     /**
-     * This function fetches a token from a specified endpoint using form parameters and stores it in a
-     * storage object.
-     * 
-     * @param formParams The form parameters are the data that will be sent in the body of the POST
-     * request to the token endpoint. These parameters typically include information such as the client
-     * ID, client secret, grant type, and authorization code or refresh token.
-     * 
-     * @return the decoded token obtained from the API response after making a POST request to the
-     * token endpoint. The token is also stored in the storage for future use. The function also
-     * removes the code verifier and state from the storage.
+     * Fetches a token from the token endpoint using the provided form parameters.
+     *
+     * @param array $formParams The form parameters to be sent in the request.
+     *
+     * @throws GuzzleException If an error occurs during the HTTP request.
+     *
+     * @return mixed The decoded token response.
      */
     private function fetchToken($formParams)
     {
@@ -518,9 +516,9 @@ class KindeClientSDK
     }
 
     /**
-     * It checks user is logged.
+     * Checks if the user is authenticated by verifying the expiration time of the token.
      *
-     * @return bool The response is a bool, which check user logged or not
+     * @return bool Returns true if the user is authenticated, false otherwise.
      */
     private function isAuthenticated()
     {
@@ -553,15 +551,16 @@ class KindeClientSDK
         return false;
     }
 
+    
     /**
-     * This function retrieves and parses a JWT token from storage based on the token type provided.
-     * 
-     * @param string tokenType A string parameter that specifies the type of token to retrieve the
-     * claims from. It can be either "access_token" or "id_token".
-     * 
-     * @return the claims (decoded data) from either the access token or the ID token, depending on the
-     * value of the `` parameter. If the parameter is not valid or the token is missing, the
-     * function throws an exception.
+     * Retrieves the claims from the specified token type.
+     *
+     * @param string $tokenType The type of token to retrieve claims from (access_token or id_token).
+     *
+     * @throws InvalidArgumentException If an invalid token type is provided.
+     * @throws Exception If the token is empty or missing authentication credentials.
+     *
+     * @return mixed The parsed claims from the token.
      */
     private function getClaims(string $tokenType = TokenType::ACCESS_TOKEN)
     {
@@ -590,7 +589,14 @@ class KindeClientSDK
 
         return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
     }
-
+    
+    /**
+     * Checks the authentication state against the provided state from the server.
+     *
+     * @param string $stateServer The state received from the server.
+     *
+     * @throws OAuthException If the authentication state is empty or does not match the provided state.
+     */
     private function checkStateAuthentication(string $stateServer)
     {
         $storageOAuthState = $this->storage->getState();
@@ -601,11 +607,13 @@ class KindeClientSDK
     }
 
     /**
-     * This function takes a grant type and returns the grant type in the format that the API expects
-     * 
-     * @param string grantType The type of grant you want to use.
-     * 
-     * @return The grant type is being returned.
+     * Retrieves the corresponding grant type value based on the provided grant type.
+     *
+     * @param string $grantType The grant type.
+     *
+     * @throws InvalidArgumentException If an invalid grant type is provided.
+     *
+     * @return string The corresponding grant type value.
      */
     private function getGrantType(string $grantType)
     {

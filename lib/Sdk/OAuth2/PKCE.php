@@ -20,19 +20,13 @@ class PKCE
     }
 
     /**
-     * It generates a code challenge and code verifier, stores the code verifier in the cache, and
-     * redirects the user to the authorization endpoint with the code challenge and other parameters
-     * 
-     * @param string clientId The client ID of your application.
-     * @param string clientSecret The client secret of your application.
-     * @param string redirectUri The redirect URI that you specified in the app settings.
-     * @param string authorizationEndpoint The URL of the authorization endpoint.
-     * @param string scopes The scopes you want to request.
-     * @param string state This is an optional parameter that you can use to pass a value to the
-     * authorization server. The authorization server will return this value to you in the response.
-     * 
-     * @return A redirect to the authorization endpoint with the parameters needed to start the
-     * authorization process.
+     * Initiates the authentication process for the Kinde client SDK.
+     *
+     * @param KindeClientSDK $clientSDK           The Kinde client SDK instance.
+     * @param string         $startPage           The start page for the authentication process (default: 'login').
+     * @param array          $additionalParameters An associative array of additional parameters (optional).
+     *
+     * @return void
      */
     public function authenticate(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
     {

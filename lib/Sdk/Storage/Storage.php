@@ -97,4 +97,14 @@ class Storage extends BaseStorage
             'picture' => $payload['picture'] ?? '',
         ];
     }
+
+    static function getJwksUrl()
+    {
+        return self::getItem(StorageEnums::JWKS_URL);
+    }
+
+    static function setJwksUrl($jwksUrl)
+    {
+        return self::setItem(StorageEnums::JWKS_URL, $jwksUrl);
+    }
 }
