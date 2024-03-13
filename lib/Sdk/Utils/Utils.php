@@ -101,7 +101,7 @@ class Utils
             $jwks_json = file_get_contents($jwks_url);
             $jwks = json_decode($jwks_json, true);
 
-            return (array) JWT::decode($token, JWK::parseKeySet($jwks));
+            return json_decode(json_encode(JWT::decode($token, JWK::parseKeySet($jwks))), true);
         } catch (Exception $e) {
             return null;
         }
