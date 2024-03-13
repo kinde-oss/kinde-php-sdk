@@ -17,10 +17,10 @@ class Storage extends BaseStorage
         return self::$instance;
     }
 
-    static function getToken($associative = true)
+    static function getToken()
     {
         $token = self::getItem(StorageEnums::TOKEN);
-        return empty($token) ? null : json_decode($token, $associative);
+        return empty($token) ? null : json_decode($token, true);
     }
 
     static function setToken($token)

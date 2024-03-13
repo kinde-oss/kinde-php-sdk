@@ -84,8 +84,6 @@ class KindeClientSDK
         array $additionalParameters = [],
         string $protocol = ""
     ) {
-        $isNotCCGrantType = $grantType !== GrantType::clientCredentials;
-
         if (empty($domain)) {
             throw new InvalidArgumentException("Please provide domain");
         }
@@ -94,10 +92,10 @@ class KindeClientSDK
         }
         $this->domain = $domain;
 
-        if ($isNotCCGrantType && empty($redirectUri)) {
+        if (empty($redirectUri)) {
             throw new InvalidArgumentException("Please provide redirect_uri");
         }
-        if ($isNotCCGrantType && !Utils::validationURL($redirectUri)) {
+        if (!Utils::validationURL($redirectUri)) {
             throw new InvalidArgumentException("Please provide valid redirect_uri");
         }
         $this->redirectUri = $redirectUri;
@@ -117,10 +115,10 @@ class KindeClientSDK
         }
         $this->grantType = $grantType;
 
-        if ($isNotCCGrantType && empty($logoutRedirectUri)) {
+        if (empty($logoutRedirectUri)) {
             throw new InvalidArgumentException("Please provide logout_redirect_uri");
         }
-        if ($isNotCCGrantType && !Utils::validationURL($logoutRedirectUri)) {
+        if (!Utils::validationURL($logoutRedirectUri)) {
             throw new InvalidArgumentException("Please provide valid logout_redirect_uri");
         }
 
@@ -222,7 +220,7 @@ class KindeClientSDK
         }
         // Check authenticated
         if ($this->isAuthenticated) {
-            $token = $this->storage->getToken(false);
+            $token = $this->storage->getToken();
             if (!empty($token)) {
                 return $token;
             }
@@ -433,7 +431,7 @@ class KindeClientSDK
 
         $token = $response->getBody()->getContents();
         $this->storage->setToken($token);
-        $tokenDecode = json_decode($token, false);
+        $tokenDecode = json_decode($token);
 
         // Cleaning
         $this->storage->removeItem(StorageEnums::CODE_VERIFIER);

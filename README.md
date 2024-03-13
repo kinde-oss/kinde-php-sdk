@@ -19,5 +19,5 @@ The core team handles publishing.
 Please refer to Kinde’s [contributing guidelines](https://github.com/kinde-oss/.github/blob/489e2ca9c3307c2b2e098a885e22f2239116394a/CONTRIBUTING.md).
 
 ## License
-If you need help connecting to Kinde, please contact us at [support@kinde.com](mailto:support@kinde.com).
+
 By contributing to Kinde, you agree that your contributions will be licensed under its MIT License.
