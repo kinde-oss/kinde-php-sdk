@@ -138,6 +138,7 @@ class KindeClientSDK
         $this->logoutEndpoint = $this->domain . '/logout';
 
         $this->storage = Storage::getInstance();
+        $this->storage->setJwksUrl($this->domain . '/.well-known/jwks.json');
     }
 
     /**

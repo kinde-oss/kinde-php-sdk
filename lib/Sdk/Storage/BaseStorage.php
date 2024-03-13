@@ -8,6 +8,9 @@ class BaseStorage
 {
     static $prefix = 'kinde';
     static $storage;
+    private static $cookieHttpOnly = true;
+    private static $cookiePath = "/";
+    private static $cookieDomain = "";
 
     static function getStorage()
     {
@@ -26,20 +29,21 @@ class BaseStorage
         string $key,
         string $value,
         int $expires_or_options = 0,
-        string $path = "",
-        string $domain = "",
+        string $path = null,
+        string $domain = null,
         bool $secure = true,
-        bool $httpOnly = false
+        bool $httpOnly = null
     ) {
+
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
         setcookie($newKey, $value, [
-            'expires' => time()+(7*24*3600),
-            'path' => $path,
-            'domain' => $domain,
-            'samesite' => 'lax',
+            'expires' => $expires_or_options,
+            'path' => $path ?? self::$cookiePath,
+            'domain' => $domain ?? self::$cookieDomain,
+            'samesite' => 'Lax',
             'secure' => $secure,
-            'httponly' => $httpOnly
+            'httponly' => $httpOnly ?? self::$cookieHttpOnly
           ]);
     }
 
@@ -64,5 +68,20 @@ class BaseStorage
     private static function getKey($key)
     {
         return self::$prefix . '_' . $key;
+    }
+
+    public static function setCookieHttpOnly(bool $httpOnly)
+    {
+        self::$cookieHttpOnly = $httpOnly;
+    }
+
+    public static function setCookiePath($cookiePath)
+    {
+        self::$cookiePath = $cookiePath;
+    }
+
+    public static function setCookieDomain($cookieDomain)
+    {
+        self::$cookieDomain = $cookieDomain;
     }
 }
