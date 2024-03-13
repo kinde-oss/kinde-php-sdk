@@ -28,7 +28,7 @@ class BaseStorage
     public static function setItem(
         string $key,
         string $value,
-        int $expires_or_options = 0,
+        int $expires = 0,
         string $path = null,
         string $domain = null,
         bool $secure = true,
@@ -38,7 +38,7 @@ class BaseStorage
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
         setcookie($newKey, $value, [
-            'expires' => $expires_or_options,
+            'expires' => $expires,
             'path' => $path ?? self::$cookiePath,
             'domain' => $domain ?? self::$cookieDomain,
             'samesite' => 'Lax',
