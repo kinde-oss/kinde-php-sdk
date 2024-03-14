@@ -471,11 +471,16 @@ class KindeClientSDK
      *
      * @param string|null $name The name of the feature flag to retrieve (optional).
      *
+     * @throws InvalidArgumentException If the feature flag is not found.
      * @return mixed|array|null The feature flags or a specific feature flag value.
      */
     private function getFeatureFlags(string $name = null)
     {
         $flags = self::getClaim('feature_flags')['value'];
+
+        if (isset($name) && ! array_key_exists($name, $flags)) {
+            throw new InvalidArgumentException("The feature flag '{$name}' was not found");
+        }
 
         if (isset($name) && !empty($flags)) {
             return $flags[$name];
