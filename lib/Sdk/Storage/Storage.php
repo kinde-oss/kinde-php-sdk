@@ -98,6 +98,20 @@ class Storage extends BaseStorage
         ];
     }
 
+    static function getDecodedIdToken()
+    {
+        $token = self::getToken();
+        $payload = Utils::parseJWT($token['id_token'] ?? '');
+        return $payload;
+    }
+
+    static function getDecodedAccessToken()
+    {
+        $token = self::getToken();
+        $payload = Utils::parseJWT($token['access_token'] ?? '');
+        return $payload;
+    }
+
     static function getJwksUrl()
     {
         return self::getItem(StorageEnums::JWKS_URL);
