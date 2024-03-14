@@ -430,6 +430,7 @@ class KindeClientSDK
     {
         $isUsedDefault = false;
         $flag = self::getFeatureFlags($flagName);
+        
         if (!isset($flag)) {
             $isUsedDefault = true;
             $flag = [
@@ -441,10 +442,9 @@ class KindeClientSDK
         if (!isset($flag['v'])) {
             throw new UnexpectedValueException("This flag '{$flagName}' was not found, and no default value has been provided");
         }
-
         $flagTypeParsed = Utils::$listType[$flag['t']];
 
-        $requestType = Utils::$listType[$flagType];
+        $requestType = $flagType ? Utils::$listType[$flagType] : null;
         if (isset($requestType) && $flagTypeParsed != $requestType) {
             throw new UnexpectedValueException("Flag '{$flagName}' is type {$flagTypeParsed} - requested type {$requestType}");
         }
