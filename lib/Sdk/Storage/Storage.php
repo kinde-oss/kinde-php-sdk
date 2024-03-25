@@ -52,7 +52,9 @@ class Storage extends BaseStorage
     static function getExpiredAt()
     {
         $accessToken = self::getAccessToken();
-        return empty($accessToken) ? 0 : Utils::parseJWT($accessToken)['exp'];
+        if (empty($accessToken)) return 0;
+        $parsedToken = Utils::parseJWT($accessToken);
+        return empty($parsedToken) ? 0 : $parsedToken['exp'];
     }
 
     static function getTokenTimeToLive()
