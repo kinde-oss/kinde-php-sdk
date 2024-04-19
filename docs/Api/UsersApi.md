@@ -4,80 +4,14 @@ All URIs are relative to https://your_kinde_domain.kinde.com/api/v1
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addOrganizationUsers()**](UsersApi.md#addOrganizationUsers) | **POST** /api/v1/organization/users | Assign Users to an Organization
 [**createUser()**](UsersApi.md#createUser) | **POST** /api/v1/user | Create User
-[**deleteuser()**](UsersApi.md#deleteuser) | **DELETE** /api/v1/user | Delete User
-[**getOrganizationUsers()**](UsersApi.md#getOrganizationUsers) | **GET** /api/v1/organization/users | List Organization Users
+[**deleteUser()**](UsersApi.md#deleteUser) | **DELETE** /api/v1/user | Delete User
 [**getUserData()**](UsersApi.md#getUserData) | **GET** /api/v1/user | Get User
 [**getUsers()**](UsersApi.md#getUsers) | **GET** /api/v1/users | List Users
-[**removeOrganizationUsers()**](UsersApi.md#removeOrganizationUsers) | **PATCH** /api/v1/organization/users | Remove Users from an Organization
+[**refreshUserClaims()**](UsersApi.md#refreshUserClaims) | **POST** /api/v1/users/{user_id}/refresh_claims | Refresh User Claims and Invalidate Cache
 [**updateUser()**](UsersApi.md#updateUser) | **PATCH** /api/v1/user | Update User
+[**updateUserFeatureFlagOverride()**](UsersApi.md#updateUserFeatureFlagOverride) | **PATCH** /api/v1/users/{user_id}/feature_flags/{feature_flag_key} | Update User Feature Flag Override
 
-
-## `addOrganizationUsers()`
-
-```php
-addOrganizationUsers($code, $add_organization_users_request): \Kinde\KindeSDK\Model\AddOrganizationUsersResponse
-```
-
-Assign Users to an Organization
-
-Add existing users to an organization.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-
-...
-use Kinde\KindeSDK\Configuration;
-...
-
-$config = new Configuration();
-$config->setHost(YOUR_KINDE_HOST);
-
-// You can also set `access_token` via $config;
-$config->setAccessToken(`kinde_access_token`);
-
-$apiInstance = new Kinde\KindeSDK\Api\UsersApi($config);
-$code = 'code_example'; // string | The organization's code.
-$add_organization_users_request = new \Kinde\KindeSDK\Model\AddOrganizationUsersRequest(); // \Kinde\KindeSDK\Model\AddOrganizationUsersRequest
-
-try {
-    $result = $apiInstance->addOrganizationUsers($code, $add_organization_users_request);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling UsersApi->addOrganizationUsers: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **code** | **string**| The organization&#39;s code. | [optional]
- **add_organization_users_request** | [**\Kinde\KindeSDK\Model\AddOrganizationUsersRequest**](../Model/AddOrganizationUsersRequest.md)|  | [optional]
-
-### Return type
-
-[**\Kinde\KindeSDK\Model\AddOrganizationUsersResponse**](../Model/AddOrganizationUsersResponse.md)
-
-### Authorization
-
-[kindeBearerAuth](../../README.md#kindeBearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/json; charset=utf-8`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
 
 ## `createUser()`
 
@@ -142,10 +76,10 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `deleteuser()`
+## `deleteUser()`
 
 ```php
-deleteuser($id): \Kinde\KindeSDK\Model\SuccessResponse
+deleteUser($id, $is_delete_profile): \Kinde\KindeSDK\Model\SuccessResponse
 ```
 
 Delete User
@@ -173,12 +107,13 @@ $config->setAccessToken(`kinde_access_token`);
 
 $apiInstance = new Kinde\KindeSDK\Api\UsersApi($config);
 $id = 'id_example'; // string | The user's id.
+$is_delete_profile = True; // bool | Delete all data and remove the user's profile from all of Kinde, including the subscriber list
 
 try {
-    $result = $apiInstance->deleteuser($id);
+    $result = $apiInstance->deleteUser($id, $is_delete_profile);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling UsersApi->deleteuser: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling UsersApi->deleteUser: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -186,7 +121,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| The user&#39;s id. | [optional]
+ **id** | **string**| The user&#39;s id. |
+ **is_delete_profile** | **bool**| Delete all data and remove the user&#39;s profile from all of Kinde, including the subscriber list | [optional]
 
 ### Return type
 
@@ -205,81 +141,10 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `getOrganizationUsers()`
-
-```php
-getOrganizationUsers($sort, $page_size, $next_token, $code, $permissions): \Kinde\KindeSDK\Model\GetOrganizationsUsersResponse
-```
-
-List Organization Users
-
-Get users in an organization.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-
-
-...
-use Kinde\KindeSDK\Configuration;
-...
-
-$config = new Configuration();
-$config->setHost(YOUR_KINDE_HOST);
-
-// You can also set `access_token` via $config;
-$config->setAccessToken(`kinde_access_token`);
-
-$apiInstance = new Kinde\KindeSDK\Api\UsersApi($config);
-$sort = 'sort_example'; // string | Field and order to sort the result by.
-$page_size = 56; // int | Number of results per page. Defaults to 10 if parameter not sent.
-$next_token = 'next_token_example'; // string | A string to get the next page of results if there are more results.
-$code = 'code_example'; // string | The organization's code.
-$permissions = 'permissions_example'; // string | Filter by user permissions
-
-try {
-    $result = $apiInstance->getOrganizationUsers($sort, $page_size, $next_token, $code, $permissions);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling UsersApi->getOrganizationUsers: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sort** | **string**| Field and order to sort the result by. | [optional]
- **page_size** | **int**| Number of results per page. Defaults to 10 if parameter not sent. | [optional]
- **next_token** | **string**| A string to get the next page of results if there are more results. | [optional]
- **code** | **string**| The organization&#39;s code. | [optional]
- **permissions** | **string**| Filter by user permissions | [optional]
-
-### Return type
-
-[**\Kinde\KindeSDK\Model\GetOrganizationsUsersResponse**](../Model/GetOrganizationsUsersResponse.md)
-
-### Authorization
-
-[kindeBearerAuth](../../README.md#kindeBearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`, `application/json; charset=utf-8`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
 ## `getUserData()`
 
 ```php
-getUserData($id): \Kinde\KindeSDK\Model\User
+getUserData($id, $expand): \Kinde\KindeSDK\Model\User
 ```
 
 Get User
@@ -307,9 +172,10 @@ $config->setAccessToken(`kinde_access_token`);
 
 $apiInstance = new Kinde\KindeSDK\Api\UsersApi($config);
 $id = 'id_example'; // string | The user's id.
+$expand = 'expand_example'; // string | Specify additional data to retrieve. Use \"organizations\" and/or \"identities\".
 
 try {
-    $result = $apiInstance->getUserData($id);
+    $result = $apiInstance->getUserData($id, $expand);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersApi->getUserData: ', $e->getMessage(), PHP_EOL;
@@ -320,7 +186,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| The user&#39;s id. | [optional]
+ **id** | **string**| The user&#39;s id. |
+ **expand** | **string**| Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. | [optional]
 
 ### Return type
 
@@ -342,7 +209,7 @@ Name | Type | Description  | Notes
 ## `getUsers()`
 
 ```php
-getUsers($sort, $page_size, $user_id, $next_token): \Kinde\KindeSDK\Model\UsersResponse
+getUsers($sort, $page_size, $user_id, $next_token, $email, $expand): \Kinde\KindeSDK\Model\UsersResponse
 ```
 
 List Users
@@ -373,9 +240,11 @@ $sort = 'sort_example'; // string | Field and order to sort the result by.
 $page_size = 56; // int | Number of results per page. Defaults to 10 if parameter not sent.
 $user_id = 'user_id_example'; // string | ID of the user to filter by.
 $next_token = 'next_token_example'; // string | A string to get the next page of results if there are more results.
+$email = 'email_example'; // string | Filter the results by email address. The query string should be comma separated and url encoded.
+$expand = 'expand_example'; // string | Specify additional data to retrieve. Use \"organizations\" and/or \"identities\".
 
 try {
-    $result = $apiInstance->getUsers($sort, $page_size, $user_id, $next_token);
+    $result = $apiInstance->getUsers($sort, $page_size, $user_id, $next_token, $email, $expand);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling UsersApi->getUsers: ', $e->getMessage(), PHP_EOL;
@@ -390,6 +259,8 @@ Name | Type | Description  | Notes
  **page_size** | **int**| Number of results per page. Defaults to 10 if parameter not sent. | [optional]
  **user_id** | **string**| ID of the user to filter by. | [optional]
  **next_token** | **string**| A string to get the next page of results if there are more results. | [optional]
+ **email** | **string**| Filter the results by email address. The query string should be comma separated and url encoded. | [optional]
+ **expand** | **string**| Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. | [optional]
 
 ### Return type
 
@@ -408,15 +279,15 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `removeOrganizationUsers()`
+## `refreshUserClaims()`
 
 ```php
-removeOrganizationUsers($code, $remove_organization_users_request): \Kinde\KindeSDK\Model\RemoveOrganizationUsersResponse
+refreshUserClaims($user_id): \Kinde\KindeSDK\Model\SuccessResponse
 ```
 
-Remove Users from an Organization
+Refresh User Claims and Invalidate Cache
 
-Remove existing users from an organization.
+Refreshes the user's claims and invalidates the current cache.
 
 ### Example
 
@@ -438,14 +309,13 @@ $config->setHost(YOUR_KINDE_HOST);
 $config->setAccessToken(`kinde_access_token`);
 
 $apiInstance = new Kinde\KindeSDK\Api\UsersApi($config);
-$code = 'code_example'; // string | The organization's code.
-$remove_organization_users_request = new \Kinde\KindeSDK\Model\RemoveOrganizationUsersRequest(); // \Kinde\KindeSDK\Model\RemoveOrganizationUsersRequest
+$user_id = 'user_id_example'; // string | The id of the user whose claims needs to be updated.
 
 try {
-    $result = $apiInstance->removeOrganizationUsers($code, $remove_organization_users_request);
+    $result = $apiInstance->refreshUserClaims($user_id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling UsersApi->removeOrganizationUsers: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling UsersApi->refreshUserClaims: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -453,12 +323,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **code** | **string**| The organization&#39;s code. | [optional]
- **remove_organization_users_request** | [**\Kinde\KindeSDK\Model\RemoveOrganizationUsersRequest**](../Model/RemoveOrganizationUsersRequest.md)|  | [optional]
+ **user_id** | **string**| The id of the user whose claims needs to be updated. |
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\RemoveOrganizationUsersResponse**](../Model/RemoveOrganizationUsersResponse.md)
+[**\Kinde\KindeSDK\Model\SuccessResponse**](../Model/SuccessResponse.md)
 
 ### Authorization
 
@@ -466,8 +335,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`
-- **Accept**: `application/json`, `application/json; charset=utf-8`
+- **Content-Type**: Not defined
+- **Accept**: `application/json; charset=utf-8`, `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -476,7 +345,7 @@ Name | Type | Description  | Notes
 ## `updateUser()`
 
 ```php
-updateUser($update_user_request, $id): \Kinde\KindeSDK\Model\User
+updateUser($update_user_request, $id): \Kinde\KindeSDK\Model\UpdateUserResponse
 ```
 
 Update User
@@ -523,7 +392,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Kinde\KindeSDK\Model\User**](../Model/User.md)
+[**\Kinde\KindeSDK\Model\UpdateUserResponse**](../Model/UpdateUserResponse.md)
 
 ### Authorization
 
@@ -532,6 +401,73 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`, `application/json; charset=utf-8`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `updateUserFeatureFlagOverride()`
+
+```php
+updateUserFeatureFlagOverride($user_id, $feature_flag_key, $value): \Kinde\KindeSDK\Model\SuccessResponse
+```
+
+Update User Feature Flag Override
+
+Update user feature flag override.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+
+
+...
+use Kinde\KindeSDK\Configuration;
+...
+
+$config = new Configuration();
+$config->setHost(YOUR_KINDE_HOST);
+
+// You can also set `access_token` via $config;
+$config->setAccessToken(`kinde_access_token`);
+
+$apiInstance = new Kinde\KindeSDK\Api\UsersApi($config);
+$user_id = 'user_id_example'; // string | The identifier for the user
+$feature_flag_key = 'feature_flag_key_example'; // string | The identifier for the feature flag
+$value = 'value_example'; // string | Override value
+
+try {
+    $result = $apiInstance->updateUserFeatureFlagOverride($user_id, $feature_flag_key, $value);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UsersApi->updateUserFeatureFlagOverride: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user_id** | **string**| The identifier for the user |
+ **feature_flag_key** | **string**| The identifier for the feature flag |
+ **value** | **string**| Override value |
+
+### Return type
+
+[**\Kinde\KindeSDK\Model\SuccessResponse**](../Model/SuccessResponse.md)
+
+### Authorization
+
+[kindeBearerAuth](../../README.md#kindeBearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`, `application/json; charset=utf-8`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)

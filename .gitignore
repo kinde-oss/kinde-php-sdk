@@ -15,3 +15,5 @@ composer.phar
 .phpunit.result.cache
 
 .openapi-generator-ignore
+
+.DS_Store

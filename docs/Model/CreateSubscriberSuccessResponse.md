@@ -1,0 +1,9 @@
+# # CreateSubscriberSuccessResponse
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**subscriber** | [**\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponseSubscriber**](CreateSubscriberSuccessResponseSubscriber.md) |  | [optional]
+
+[[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
