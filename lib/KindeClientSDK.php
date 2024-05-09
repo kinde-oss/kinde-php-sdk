@@ -2,10 +2,6 @@
 
 namespace Kinde\KindeSDK;
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-    session_start();
-}
-
 use Exception;
 use InvalidArgumentException;
 use GuzzleHttp\Client;
