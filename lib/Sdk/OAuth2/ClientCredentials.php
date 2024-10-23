@@ -48,7 +48,6 @@ class ClientCredentials
                     'form_params' => $formData
                 ]);
             $token = $response->getBody()->getContents();
-            $this->storage->setToken($token);
             return json_decode($token);
         } catch (\Throwable $th) {
             throw $th;
