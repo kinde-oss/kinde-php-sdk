@@ -9,8 +9,8 @@ class Storage extends BaseStorage
 {
     public static $instance;
 
-    private static $tokenTimeToLive;
-
+    private $tokenTimeToLive;
+    
     public static function getInstance()
     {
         if (empty(self::$instance) || !(self::$instance instanceof Storage)) {
@@ -19,39 +19,39 @@ class Storage extends BaseStorage
         return self::$instance;
     }
 
-    static function getToken($associative = true)
+    public function getToken($associative = true)
     {
-        $token = self::getItem(StorageEnums::TOKEN);
+        $token = $this->getItem(StorageEnums::TOKEN);
 
         return empty($token) ? null : json_decode($token, $associative);
     }
 
-    static function setToken($token)
+    public function setToken($token): void
     {
-        return self::setItem(StorageEnums::TOKEN, gettype($token) == 'string' ? $token : json_encode($token), self::getTokenTimeToLive());
+        $this->setItem(StorageEnums::TOKEN, gettype($token) == 'string' ? $token : json_encode($token), $this->getTokenTimeToLive());
     }
 
-    static function getAccessToken()
+    public function getAccessToken()
     {
-        $token = self::getToken();
+        $token = $this->getToken();
         return empty($token) ? null : $token['access_token'];
     }
 
-    static function getIdToken()
+    public function getIdToken()
     {
-        $token = self::getToken();
+        $token = $this->getToken();
         return empty($token) ? null : $token['id_token'];
     }
 
-    static function getRefreshToken()
+    public function getRefreshToken()
     {
-        $token = self::getToken();
+        $token = $this->getToken();
         return empty($token) ? null : $token['refresh_token'];
     }
 
-    static function getExpiredAt()
+    public function getExpiredAt()
     {
-        $accessToken = self::getAccessToken();
+        $accessToken = $this->getAccessToken();
 
         if (empty($accessToken)) {
             return 0;
@@ -65,39 +65,39 @@ class Storage extends BaseStorage
         }
     }
 
-    static function getTokenTimeToLive()
+    public function getTokenTimeToLive()
     {
-        return !empty(self::$tokenTimeToLive) ? self::$tokenTimeToLive : time() + 3600 * 24 * 15; // Live in 15 days
+        return !empty($this->tokenTimeToLive) ? $this->tokenTimeToLive : time() + 3600 * 24 * 15; // Live in 15 days
     }
 
-    static function setTokenTimeToLive($tokenTimeToLive)
+    public function setTokenTimeToLive($tokenTimeToLive)
     {
-        self::$tokenTimeToLive = $tokenTimeToLive;
+        $this->$tokenTimeToLive = $tokenTimeToLive;
     }
 
-    static function getState()
+    public function getState()
     {
-        return self::getItem(StorageEnums::STATE);
+        return $this->getItem(StorageEnums::STATE);
     }
 
-    static function setState($newState)
+    public function setState($newState)
     {
-        return self::setItem(StorageEnums::STATE, $newState, time() + 3600 * 2); // expired in 2hrs
+        $this->setItem(StorageEnums::STATE, $newState, time() + 3600 * 2); // expired in 2hrs
     }
 
-    static function getCodeVerifier()
+    public function getCodeVerifier()
     {
-        return self::getItem(StorageEnums::CODE_VERIFIER);
+        return $this->getItem(StorageEnums::CODE_VERIFIER);
     }
 
-    static function setCodeVerifier($newCodeVerifier)
+    public function setCodeVerifier($newCodeVerifier)
     {
-        return self::setItem(StorageEnums::CODE_VERIFIER, $newCodeVerifier, time() + 3600 * 2); // expired in 2hrs);
+        $this->setItem(StorageEnums::CODE_VERIFIER, $newCodeVerifier, time() + 3600 * 2); // expired in 2hrs);
     }
 
-    static function getUserProfile()
+    public function getUserProfile()
     {
-        $token = self::getToken();
+        $token = $this->getToken();
         $payload = Utils::parseJWT($token['id_token'] ?? '');
         return [
             'id' => $payload['sub'] ?? '',
@@ -108,27 +108,27 @@ class Storage extends BaseStorage
         ];
     }
 
-    static function getDecodedIdToken()
+    public function getDecodedIdToken()
     {
-        $token = self::getToken();
+        $token = $this->getToken();
         $payload = Utils::parseJWT($token['id_token'] ?? '');
         return $payload;
     }
 
-    static function getDecodedAccessToken()
+    public function getDecodedAccessToken()
     {
-        $token = self::getToken();
+        $token = $this->getToken();
         $payload = Utils::parseJWT($token['access_token'] ?? '');
         return $payload;
     }
 
-    static function getJwksUrl()
+    public function getJwksUrl()
     {
-        return self::getItem(StorageEnums::JWKS_URL);
+        return $this->getItem(StorageEnums::JWKS_URL);
     }
 
-    static function setJwksUrl($jwksUrl)
+    public function setJwksUrl($jwksUrl)
     {
-        return self::setItem(StorageEnums::JWKS_URL, $jwksUrl);
+        $this->setItem(StorageEnums::JWKS_URL, $jwksUrl);
     }
 }

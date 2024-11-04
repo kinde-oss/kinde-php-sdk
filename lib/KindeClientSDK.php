@@ -82,7 +82,8 @@ class KindeClientSDK
         ?string $logoutRedirectUri,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
-        string $protocol = ""
+        string $protocol = "",
+        ?Storage $storage = null,
     ) {
         $isNotCCGrantType = $grantType !== GrantType::clientCredentials;
 
@@ -135,7 +136,7 @@ class KindeClientSDK
         $this->tokenEndpoint = $this->domain . '/oauth2/token';
         $this->logoutEndpoint = $this->domain . '/logout';
 
-        $this->storage = Storage::getInstance();
+        $this->storage = $storage ?? Storage::getInstance();
         $this->storage->setJwksUrl($this->domain . '/.well-known/jwks.json');
     }
 

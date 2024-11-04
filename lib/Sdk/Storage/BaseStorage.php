@@ -6,12 +6,17 @@ use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 
 class BaseStorage
 {
-    static $prefix = 'kinde';
     static $storage;
-    private static $cookieHttpOnly = true;
-    private static $cookiePath = "/";
-    private static $cookieDomain = "";
-
+    public static StorageInterface|null $innerStorage = null;
+    
+    protected function __construct()
+    {
+        if (self::$innerStorage === null) {
+            self::$innerStorage = new CookieStorage();
+        }
+    }
+    
+    // @deprecated not used in sdk, low level storage, should be removed
     static function getStorage()
     {
         if (empty(self::$storage)) {
@@ -20,44 +25,26 @@ class BaseStorage
         return self::$storage;
     }
 
-    public static function getItem(string $key)
+    public function getItem(string $key): string
     {
-        return $_COOKIE[self::getKey($key)] ?? "";
+        return self::$innerStorage->getItem($key);
     }
 
-    public static function setItem(
+    public function setItem(
         string $key,
         string $value,
         int $expires = 0,
-        string $path = null,
-        string $domain = null,
-        bool $secure = true,
-        bool $httpOnly = null
-    ) {
-
-        $newKey = self::getKey($key);
-        $_COOKIE[$newKey] = $value;
-        setcookie($newKey, $value, [
-            'expires' => $expires,
-            'path' => $path ?? self::$cookiePath,
-            'domain' => $domain ?? self::$cookieDomain,
-            'samesite' => 'Lax',
-            'secure' => $secure,
-            'httponly' => $httpOnly ?? self::$cookieHttpOnly
-          ]);
-    }
-
-    public static function removeItem(string $key)
+    ): void
     {
-        $newKey = self::getKey($key);
-        if (isset($_COOKIE[$newKey])) {
-            unset($_COOKIE[$newKey]);
-            self::setItem($key, "", -1);
-        }
-        self::setItem($key, "", -1);
+        self::$innerStorage->setItem($key, $value, $expires);
     }
 
-    public static function clear()
+    public function removeItem(string $key): void
+    {
+        self::$innerStorage->removeItem($key);
+    }
+
+    public function clear()
     {
         self::removeItem(StorageEnums::TOKEN);
         self::removeItem(StorageEnums::STATE);
@@ -65,23 +52,24 @@ class BaseStorage
         self::removeItem(StorageEnums::USER_PROFILE);
     }
 
-    private static function getKey($key)
+    public function setCookieHttpOnly(bool $httpOnly)
     {
-        return self::$prefix . '_' . $key;
+        if (self::$innerStorage instanceof CookieStorage) {
+            self::$innerStorage::$cookieHttpOnly = $httpOnly;
+        }
     }
 
-    public static function setCookieHttpOnly(bool $httpOnly)
+    public function setCookiePath($cookiePath)
     {
-        self::$cookieHttpOnly = $httpOnly;
+        if (self::$innerStorage instanceof CookieStorage) {
+            self::$innerStorage::$cookiePath = $cookiePath;
+        }
     }
 
-    public static function setCookiePath($cookiePath)
+    public function setCookieDomain($cookieDomain)
     {
-        self::$cookiePath = $cookiePath;
-    }
-
-    public static function setCookieDomain($cookieDomain)
-    {
-        self::$cookieDomain = $cookieDomain;
+        if (self::$innerStorage instanceof CookieStorage) {
+            self::$innerStorage::$cookieDomain = $cookieDomain;
+        }
     }
 }
