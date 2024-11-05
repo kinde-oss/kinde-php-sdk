@@ -8,7 +8,7 @@ use Kinde\KindeSDK\Sdk\Utils\Utils;
 class Storage extends BaseStorage
 {
     public static $instance;
-
+    private static $jwksUrl;
     private static $tokenTimeToLive;
 
     public static function getInstance()
@@ -124,11 +124,15 @@ class Storage extends BaseStorage
 
     static function getJwksUrl()
     {
-        return self::getItem(StorageEnums::JWKS_URL);
+        if (!self::$jwksUrl) {
+          throw new \LogicException('No jwks url has been specified');
+        };
+
+        return self::$jwksUrl;
     }
 
     static function setJwksUrl($jwksUrl)
     {
-        return self::setItem(StorageEnums::JWKS_URL, $jwksUrl);
+        self::$jwksUrl = $jwksUrl;
     }
 }
