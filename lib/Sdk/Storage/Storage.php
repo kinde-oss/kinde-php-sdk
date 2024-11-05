@@ -11,6 +11,8 @@ class Storage extends BaseStorage
 
     private $tokenTimeToLive;
     
+    private string $jwksUrl;
+    
     public static function getInstance()
     {
         if (empty(self::$instance) || !(self::$instance instanceof Storage)) {
@@ -124,11 +126,11 @@ class Storage extends BaseStorage
 
     public function getJwksUrl()
     {
-        return $this->getItem(StorageEnums::JWKS_URL);
+        return $this->jwksUrl;
     }
 
     public function setJwksUrl($jwksUrl)
     {
-        $this->setItem(StorageEnums::JWKS_URL, $jwksUrl);
+        $this->jwksUrl = $jwksUrl;
     }
 }

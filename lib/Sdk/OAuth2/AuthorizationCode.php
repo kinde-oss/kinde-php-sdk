@@ -29,21 +29,33 @@ class AuthorizationCode
      */
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
+        if (!headers_sent()) {
+            exit(header('Location: ' . $this->buildAuthorizationURI($clientSDK->authorizationEndpoint, $clientSDK->clientId, $clientSDK->redirectUri, $clientSDK->scopes, $additionalParameters, $clientSDK->additionalParameters)));
+        }
+    }
+    
+    public function buildAuthorizationURI(
+        string $authorizationEndpoint,
+        string $clientId,
+        string $redirectUri,
+        string $scopes,
+        array $additionalParameters = [],
+        array $sdkAdditionalParameters = []
+    ): string
+    {
         $state = Utils::randomString();
         $this->storage->setState($state);
         $searchParams = [
-            'client_id' => $clientSDK->clientId,
+            'client_id' => $clientId,
             'grant_type' => GrantType::authorizationCode,
-            'redirect_uri' => $clientSDK->redirectUri,
+            'redirect_uri' => $redirectUri,
             'response_type' => 'code',
-            'scope' => $clientSDK->scopes,
+            'scope' => $scopes,
             'state' => $state,
             'start_page' => 'login'
         ];
-        $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        $mergedAdditionalParameters = Utils::addAdditionalParameters($sdkAdditionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
-        if (!headers_sent()) {
-            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
-        }
+        return $authorizationEndpoint . '?' . http_build_query($searchParams);
     }
 }
