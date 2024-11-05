@@ -211,13 +211,18 @@ class KindeClientSDK
     {
         $this->cleanStorage();
 
-        $searchParams = [
-            'redirect' => $this->logoutRedirectUri
-        ];
-        header('Location: ' . $this->logoutEndpoint . '?' . http_build_query($searchParams));
+        header('Location: ' . $this->getLogoutUrl());
         exit();
     }
 
+    public function getLogoutUrl()
+    {
+        $searchParams = [
+            'redirect' => $this->logoutRedirectUri
+        ];
+        return $this->logoutEndpoint . '?' . http_build_query($searchParams);
+    }
+    
     /**
      * Retrieves the access token for authentication.
      *
