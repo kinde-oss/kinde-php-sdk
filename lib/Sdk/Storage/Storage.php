@@ -126,7 +126,7 @@ class Storage extends BaseStorage
     {
         if (!self::$jwksUrl) {
           throw new \LogicException('No jwks url has been specified');
-        };
+        }
 
         return self::$jwksUrl;
     }
