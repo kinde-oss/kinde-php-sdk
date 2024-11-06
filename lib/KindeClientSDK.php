@@ -563,7 +563,19 @@ class KindeClientSDK
 
         return false;
     }
+    
+    public function refreshWithToken(string $refreshToken)
+    {
+        $formParams = [
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken
+        ];
 
+        $token = $this->fetchToken($formParams);
+        return $token;
+    }
     
     /**
      * Retrieves the claims from the specified token type.
