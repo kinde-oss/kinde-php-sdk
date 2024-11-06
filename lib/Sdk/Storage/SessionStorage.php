@@ -7,12 +7,15 @@ class SessionStorage implements StorageInterface
     public function getItem(string $key): string
     {
         $this->startSession();
-        $rawData = $_SESSION[$key];
-        if ($rawData === null) {
+        if (!isset($_SESSION[$key])) {
             return '';
         }
-        $data = json_decode($rawData, true);
-        if ($data['exp'] < time()) {
+        $rawData = $_SESSION[$key];
+        /**
+         * @var array{'exp': int, 'key': string, 'value': string} $data
+         */
+        $data = json_decode($rawData, true, 512, JSON_THROW_ON_ERROR);
+        if ($data['exp'] > 0 && $data['exp'] < time()) {
             $this->removeItem($key);
             return '';
         }

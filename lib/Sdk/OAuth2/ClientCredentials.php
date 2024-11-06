@@ -7,13 +7,14 @@ use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Throwable;
 
 class ClientCredentials
 {
     /**
      * @var Storage
      */
-    protected $storage;
+    protected Storage $storage;
 
     function __construct()
     {
@@ -24,33 +25,29 @@ class ClientCredentials
      * Authenticates the Kinde client SDK using the client credentials grant type.
      *
      * @param KindeClientSDK $clientSDK           The Kinde client SDK instance.
-     * @param array          $additionalParameters An associative array of additional parameters (optional).
+     * @param array<string, string> $additionalParameters An associative array of additional parameters (optional).
      *
-     * @return stdClass The decoded token response.
+     * @return object{'access_token': string, 'expires_in': int, 'id_token': string, 'refresh_token': string, 'scope': string, 'token_type': string} The decoded token response.
      *
      * @throws Throwable If an error occurs during the authentication process.
      */
-    public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
+    public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = []): object
     {
-        try {
-            $client = new Client();
-            $formData = [
-                'client_id' => $clientSDK->clientId,
-                'client_secret' => $clientSDK->clientSecret,
-                'grant_type' => GrantType::clientCredentials,
-                'scope' => $clientSDK->scopes
-            ];
-            $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
-            $formData = array_merge($formData, $mergedAdditionalParameters);
+        $client = new Client();
+        $formData = [
+            'client_id' => $clientSDK->clientId,
+            'client_secret' => $clientSDK->clientSecret,
+            'grant_type' => GrantType::clientCredentials,
+            'scope' => $clientSDK->scopes
+        ];
+        $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        $formData = array_merge($formData, $mergedAdditionalParameters);
 
-            $response =
-                $client->request('POST', $clientSDK->tokenEndpoint, [
-                    'form_params' => $formData
-                ]);
-            $token = $response->getBody()->getContents();
-            return json_decode($token);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        $response =
+            $client->request('POST', $clientSDK->tokenEndpoint, [
+                'form_params' => $formData
+            ]);
+        $token = $response->getBody()->getContents();
+        return json_decode($token, false, 512, JSON_THROW_ON_ERROR);
     }
 }
