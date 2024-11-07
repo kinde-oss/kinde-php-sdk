@@ -12,7 +12,7 @@ Method | HTTP request | Description
 ## `getConnectedAppAuthUrl()`
 
 ```php
-getConnectedAppAuthUrl($key_code_ref, $user_id): \Kinde\KindeSDK\Model\ConnectedAppsAuthUrl
+getConnectedAppAuthUrl($key_code_ref, $user_id, $org_code): \Kinde\KindeSDK\Model\ConnectedAppsAuthUrl
 ```
 
 Get Connected App URL
@@ -41,9 +41,10 @@ $config->setAccessToken(`kinde_access_token`);
 $apiInstance = new Kinde\KindeSDK\Api\ConnectedAppsApi($config);
 $key_code_ref = 'key_code_ref_example'; // string | The unique key code reference of the connected app to authenticate against.
 $user_id = 'user_id_example'; // string | The id of the user that needs to authenticate to the third-party connected app.
+$org_code = 'org_code_example'; // string | The code of the Kinde organization that needs to authenticate to the third-party connected app.
 
 try {
-    $result = $apiInstance->getConnectedAppAuthUrl($key_code_ref, $user_id);
+    $result = $apiInstance->getConnectedAppAuthUrl($key_code_ref, $user_id, $org_code);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ConnectedAppsApi->getConnectedAppAuthUrl: ', $e->getMessage(), PHP_EOL;
@@ -55,7 +56,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key_code_ref** | **string**| The unique key code reference of the connected app to authenticate against. |
- **user_id** | **string**| The id of the user that needs to authenticate to the third-party connected app. |
+ **user_id** | **string**| The id of the user that needs to authenticate to the third-party connected app. | [optional]
+ **org_code** | **string**| The code of the Kinde organization that needs to authenticate to the third-party connected app. | [optional]
 
 ### Return type
 
