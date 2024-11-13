@@ -7,15 +7,18 @@ use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 class BaseStorage
 {
     static $prefix = 'kinde';
+    static $m2mPrefix = 'kinde_m2m';
     static $storage;
     private static $cookieHttpOnly = true;
     private static $cookiePath = "/";
     private static $cookieDomain = "";
+    protected static $useM2M = false;
 
     static function getStorage()
     {
+        $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
         if (empty(self::$storage)) {
-            self::$storage = $_COOKIE['kinde'];
+            self::$storage = $_COOKIE[$prefix] ?? null;
         }
         return self::$storage;
     }
@@ -59,15 +62,18 @@ class BaseStorage
 
     public static function clear()
     {
-        self::removeItem(StorageEnums::TOKEN);
-        self::removeItem(StorageEnums::STATE);
-        self::removeItem(StorageEnums::CODE_VERIFIER);
-        self::removeItem(StorageEnums::USER_PROFILE);
+        $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
+        foreach ($_COOKIE as $key => $value) {
+            if (strpos($key, $prefix) === 0) {
+                self::removeItem($key);
+            }
+        }
     }
 
     private static function getKey($key)
     {
-        return self::$prefix . '_' . $key;
+        $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
+        return $prefix . '_' . $key;
     }
 
     public static function setCookieHttpOnly(bool $httpOnly)

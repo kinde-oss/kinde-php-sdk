@@ -28,7 +28,11 @@ class Storage extends BaseStorage
 
     static function setToken($token)
     {
-        return self::setItem(StorageEnums::TOKEN, gettype($token) == 'string' ? $token : json_encode($token), self::getTokenTimeToLive());
+        return self::setItem(
+            StorageEnums::TOKEN, 
+            gettype($token) == 'string' ? $token : json_encode($token), 
+            self::getTokenTimeToLive()
+        );
     }
 
     static function getAccessToken()
@@ -134,5 +138,10 @@ class Storage extends BaseStorage
     static function setJwksUrl($jwksUrl)
     {
         self::$jwksUrl = $jwksUrl;
+    }
+
+    public static function setM2MMode($isM2M)
+    {
+        self::$useM2M = $isM2M;
     }
 }
