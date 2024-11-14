@@ -23,28 +23,20 @@ class Storage extends BaseStorage
 
     static function getToken($associative = true)
     {
-        error_log('Getting token - M2M Mode: ' . (self::isM2MMode() ? 'true' : 'false'));
-        
         if (self::isM2MMode()) {
             if (self::$m2mToken !== null && self::$m2mTokenExpiry > time()) {
-                error_log('Returning cached M2M token');
                 return json_decode(self::$m2mToken, $associative);
             }
-            error_log('M2M token expired or not found');
             return null;
         }
         
         $token = self::getItem(StorageEnums::TOKEN);
-        error_log('Regular token state: ' . ($token ? 'exists' : 'null'));
         return empty($token) ? null : json_decode($token, $associative);
     }
 
     static function setToken($token)
     {
-        error_log('Setting token - M2M Mode: ' . (self::isM2MMode() ? 'true' : 'false'));
-        
         if (self::isM2MMode()) {
-            error_log('Storing M2M token');
             self::$m2mToken = $token;
             self::$m2mTokenExpiry = time() + 3600;
             return true;
@@ -59,7 +51,6 @@ class Storage extends BaseStorage
 
     public static function setM2MMode($isM2M)
     {
-        error_log('Setting M2M Mode: ' . ($isM2M ? 'true' : 'false'));
         self::$useM2M = $isM2M;
     }
 

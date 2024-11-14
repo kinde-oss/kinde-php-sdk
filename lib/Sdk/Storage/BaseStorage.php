@@ -16,16 +16,20 @@ class BaseStorage
 
     static function getStorage()
     {
-        $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
+        if (self::$useM2M) {
+            return self::$storage ?? null;
+        }
+        
         if (empty(self::$storage)) {
-            self::$storage = $_COOKIE[$prefix] ?? null;
+            self::$storage = $_COOKIE[self::$prefix] ?? null;
         }
         return self::$storage;
     }
 
     public static function getItem(string $key)
     {
-        return $_COOKIE[self::getKey($key)] ?? "";
+        $value = $_COOKIE[self::getKey($key)] ?? "";
+        return $value;
     }
 
     public static function setItem(
@@ -37,10 +41,13 @@ class BaseStorage
         bool $secure = true,
         bool $httpOnly = null
     ) {
-        error_log('BaseStorage::setItem called - Key: ' . $key);
-        error_log('Value: ' . substr($value, 0, 50) . '...');
-
         $newKey = self::getKey($key);
+        
+        if (self::$useM2M) {
+            self::$storage = $value;
+            return;
+        }
+
         $_COOKIE[$newKey] = $value;
         setcookie($newKey, $value, [
             'expires' => $expires,
@@ -54,16 +61,12 @@ class BaseStorage
 
     public static function removeItem(string $key)
     {
-        error_log('BaseStorage::removeItem called - Key: ' . $key);
-        
         if (Storage::isM2MMode() && $key === StorageEnums::TOKEN) {
-            error_log('Skipping token removal due to M2M mode');
             return;
         }
         
         $newKey = self::getKey($key);
         if (isset($_COOKIE[$newKey])) {
-            error_log('Removing cookie: ' . $newKey);
             unset($_COOKIE[$newKey]);
             self::setItem($key, "", -1);
         }
@@ -82,7 +85,8 @@ class BaseStorage
     private static function getKey($key)
     {
         $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
-        return $prefix . '_' . $key;
+        $finalKey = $prefix . '_' . $key;
+        return $finalKey;
     }
 
     public static function setCookieHttpOnly(bool $httpOnly)
