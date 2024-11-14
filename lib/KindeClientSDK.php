@@ -225,17 +225,8 @@ class KindeClientSDK
      * @throws OAuthException        When an OAuth-related error occurs.
      * @throws InvalidArgumentException When required parameters are missing or invalid.
      */
-    public function getToken($forM2M = false)
+    public function getToken()
     {
-        if ($forM2M) {
-            $this->storage->setM2MMode(true);
-            try {
-                return $this->storage->getToken(false);
-            } finally {
-                $this->storage->setM2MMode(false);
-            }
-        }
-        
         if ($this->grantType == GrantType::clientCredentials) {
             return $this->login();
         }

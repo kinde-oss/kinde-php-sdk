@@ -9,10 +9,10 @@ class BaseStorage
     static $prefix = 'kinde';
     static $m2mPrefix = 'kinde_m2m';
     static $storage;
+    protected static $useM2M = false;
     private static $cookieHttpOnly = true;
     private static $cookiePath = "/";
     private static $cookieDomain = "";
-    protected static $useM2M = false;
 
     static function getStorage()
     {
@@ -37,6 +37,8 @@ class BaseStorage
         bool $secure = true,
         bool $httpOnly = null
     ) {
+        error_log('BaseStorage::setItem called - Key: ' . $key);
+        error_log('Value: ' . substr($value, 0, 50) . '...');
 
         $newKey = self::getKey($key);
         $_COOKIE[$newKey] = $value;
@@ -47,17 +49,24 @@ class BaseStorage
             'samesite' => 'Lax',
             'secure' => $secure,
             'httponly' => $httpOnly ?? self::$cookieHttpOnly
-          ]);
+        ]);
     }
 
     public static function removeItem(string $key)
     {
+        error_log('BaseStorage::removeItem called - Key: ' . $key);
+        
+        if (Storage::isM2MMode() && $key === StorageEnums::TOKEN) {
+            error_log('Skipping token removal due to M2M mode');
+            return;
+        }
+        
         $newKey = self::getKey($key);
         if (isset($_COOKIE[$newKey])) {
+            error_log('Removing cookie: ' . $newKey);
             unset($_COOKIE[$newKey]);
             self::setItem($key, "", -1);
         }
-        self::setItem($key, "", -1);
     }
 
     public static function clear()

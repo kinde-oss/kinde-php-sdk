@@ -31,6 +31,9 @@ class ClientCredentials
      */
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
+        $this->storage->setM2MMode(true);
+        error_log('Starting M2M authentication');
+        
         try {
             $client = new Client();
             $formData = [
@@ -39,7 +42,6 @@ class ClientCredentials
                 'grant_type' => 'client_credentials'
             ];
     
-            // Add scopes if present
             if (!empty($clientSDK->scopes)) {
                 $formData['scope'] = $clientSDK->scopes;
             }
@@ -53,12 +55,16 @@ class ClientCredentials
             ]);
     
             $token = $response->getBody()->getContents();
-            $decodedToken = json_decode($token);
+            error_log('M2M Token received');
+            $this->storage->setToken($token);
             
-            return $decodedToken;
+            return json_decode($token);
         } catch (\Throwable $th) {
-            error_log('Full error response: ' . $th->getResponse()->getBody()->getContents());
+            error_log('M2M authentication error: ' . $th->getMessage());
             throw $th;
+        } finally {
+            error_log('Completing M2M authentication');
+            $this->storage->setM2MMode(false);
         }
     }
 }
