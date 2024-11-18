@@ -6,9 +6,9 @@ use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 
 class BaseStorage
 {
-    static $prefix = 'kinde';
-    static $m2mPrefix = 'kinde_m2m';
-    static $storage;
+   protected static $prefix = 'kinde';
+    protected static $m2mPrefix = 'kinde_m2m';
+    protected static $storage;
     protected static $useM2M = false;
     private static $cookieHttpOnly = true;
     private static $cookiePath = "/";
@@ -28,6 +28,9 @@ class BaseStorage
 
     public static function getItem(string $key)
     {
+       if (self::$useM2M) {
+           return self::$storage ?? "";
+       }
         $value = $_COOKIE[self::getKey($key)] ?? "";
         return $value;
     }
@@ -80,6 +83,9 @@ class BaseStorage
                 self::removeItem($key);
             }
         }
+       if (self::$useM2M) {
+           self::$storage = null;
+       }
     }
 
     private static function getKey($key)

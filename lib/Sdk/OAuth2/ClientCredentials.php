@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
+use Kinde\KindeSDK\Sdk\Enums\GrantType;
 
 class ClientCredentials
 {
@@ -19,6 +20,7 @@ class ClientCredentials
         $this->storage = Storage::getInstance();
     }
     
+    
     /**
      * Authenticates the Kinde client SDK using the client credentials grant type.
      *
@@ -29,6 +31,14 @@ class ClientCredentials
      *
      * @throws Throwable If an error occurs during the authentication process.
      */
+
+     private function isValidToken($token): bool
+{
+    return isset($token->access_token) 
+        && isset($token->token_type)
+        && isset($token->expires_in);
+}
+
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         $this->storage->setM2MMode(true);
@@ -39,7 +49,7 @@ class ClientCredentials
             $formData = [
                 'client_id' => $clientSDK->clientId,
                 'client_secret' => $clientSDK->clientSecret,
-                'grant_type' => 'client_credentials'
+                'grant_type' => GrantType::clientCredentials
             ];
     
             if (!empty($clientSDK->scopes)) {
@@ -56,9 +66,13 @@ class ClientCredentials
     
             $token = $response->getBody()->getContents();
             error_log('M2M Token received');
+            $decodedToken = json_decode($token);
+            if (!$this->isValidToken($decodedToken)) {
+                 throw new \RuntimeException('Invalid token format received');
+             }
             $this->storage->setToken($token);
             
-            return json_decode($token);
+             return $decodedToken;
         } catch (\Throwable $th) {
             error_log('M2M authentication error: ' . $th->getMessage());
             throw $th;

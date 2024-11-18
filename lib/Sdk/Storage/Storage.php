@@ -13,6 +13,7 @@ class Storage extends BaseStorage
     private static $m2mToken = null;
     private static $m2mTokenExpiry = null;
 
+    
     public static function getInstance()
     {
         if (empty(self::$instance) || !(self::$instance instanceof Storage)) {
@@ -37,7 +38,7 @@ class Storage extends BaseStorage
     static function setToken($token)
     {
         if (self::isM2MMode()) {
-            self::$m2mToken = $token;
+            self::$m2mToken = gettype($token) == 'string' ? $token : json_encode($token);
             self::$m2mTokenExpiry = time() + 3600;
             return true;
         }
