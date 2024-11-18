@@ -90,6 +90,14 @@ class BaseStorage
 
     private static function getKey($key)
     {
+         if (empty($key)) {
+             throw new \InvalidArgumentException('Key cannot be empty');
+         }
+         // Sanitize key to prevent injection
+         $key = preg_replace('/[^a-zA-Z0-9_-]/', '', $key);
+         if (strlen($key) > 255) {
+             throw new \InvalidArgumentException('Key length exceeds maximum limit');
+         }
         $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
         $finalKey = $prefix . '_' . $key;
         return $finalKey;

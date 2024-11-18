@@ -67,9 +67,13 @@ class ClientCredentials
             $token = $response->getBody()->getContents();
             error_log('M2M Token received');
             $decodedToken = json_decode($token);
+            if ($decodedToken === null && json_last_error() !== JSON_ERROR_NONE) {
+                throw new \RuntimeException('Failed to decode JSON token: ' . json_last_error_msg());
+            }
             if (!$this->isValidToken($decodedToken)) {
                  throw new \RuntimeException('Invalid token format received');
              }
+             
             $this->storage->setToken($token);
             
              return $decodedToken;
