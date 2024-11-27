@@ -139,4 +139,26 @@ class Storage extends BaseStorage
     {
         self::$jwksUrl = $jwksUrl;
     }
+
+    protected static function setPrefix($prefix)
+    {
+        if (empty($prefix)) {
+            throw new \InvalidArgumentException('Prefix cannot be empty');
+        }
+        
+        if (!preg_match('/^[a-zA-Z0-9_-]+$/', $prefix)) {
+            throw new \InvalidArgumentException('Prefix contains invalid characters');
+        }
+        
+        if (strlen($prefix) > 50) {
+            throw new \InvalidArgumentException('Prefix length exceeds maximum limit');
+        }
+        
+        // Prevent M2M prefix collision
+        if ($prefix !== 'kinde_m2m' && strpos($prefix, 'm2m') !== false) {
+            throw new \InvalidArgumentException('Prefix cannot contain m2m except for designated M2M storage');
+        }
+        
+        self::$prefix = $prefix;
+    }
 }
