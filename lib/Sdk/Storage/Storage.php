@@ -10,54 +10,29 @@ class Storage extends BaseStorage
     public static $instance;
     private static $jwksUrl;
     private static $tokenTimeToLive;
-    private static $m2mToken = null;
-    private static $m2mTokenExpiry = null;
 
-    
-    public static function getInstance()
+    public static function getInstance($prefix = 'kinde')
     {
         if (empty(self::$instance) || !(self::$instance instanceof Storage)) {
             self::$instance = new Storage();
+            self::setPrefix($prefix);
         }
         return self::$instance;
     }
 
     static function getToken($associative = true)
     {
-        if (self::isM2MMode()) {
-            if (self::$m2mToken !== null && self::$m2mTokenExpiry > time()) {
-                return json_decode(self::$m2mToken, $associative);
-            }
-            return null;
-        }
-        
         $token = self::getItem(StorageEnums::TOKEN);
         return empty($token) ? null : json_decode($token, $associative);
     }
 
     static function setToken($token)
     {
-        if (self::isM2MMode()) {
-            self::$m2mToken = gettype($token) == 'string' ? $token : json_encode($token);
-            self::$m2mTokenExpiry = time() + 3600;
-            return true;
-        }
-        
         return self::setItem(
             StorageEnums::TOKEN, 
             gettype($token) == 'string' ? $token : json_encode($token), 
             self::getTokenTimeToLive()
         );
-    }
-
-    public static function setM2MMode($isM2M)
-    {
-        self::$useM2M = $isM2M;
-    }
-
-    public static function isM2MMode()
-    {
-        return self::$useM2M;
     }
 
     static function getAccessToken()

@@ -32,17 +32,9 @@ class ClientCredentials
      * @throws Throwable If an error occurs during the authentication process.
      */
 
-     private function isValidToken($token): bool
-{
-    return isset($token->access_token) 
-        && isset($token->token_type)
-        && isset($token->expires_in);
-}
-
-    public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
+     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
-        $this->storage->setM2MMode(true);
-        error_log('Starting M2M authentication');
+        $storage = Storage::getInstance('kinde_m2m');
         
         try {
             $client = new Client();
@@ -65,24 +57,25 @@ class ClientCredentials
             ]);
     
             $token = $response->getBody()->getContents();
-            error_log('M2M Token received');
-            $decodedToken = json_decode($token);
-            if ($decodedToken === null && json_last_error() !== JSON_ERROR_NONE) {
-                throw new \RuntimeException('Failed to decode JSON token: ' . json_last_error_msg());
-            }
-            if (!$this->isValidToken($decodedToken)) {
-                 throw new \RuntimeException('Invalid token format received');
-             }
-             
-            $this->storage->setToken($token);
             
-             return $decodedToken;
+            
+            // Store token before validation to maintain existing behavior
+            $storage->setToken($token);
+            
+            $decodedToken = json_decode($token, true);
+            if ($decodedToken === null && json_last_error() !== JSON_ERROR_NONE) {
+                throw new \RuntimeException('Failed to decode token: ' . json_last_error_msg());
+            }
+            
+            // Simplified token validation
+            if (empty($decodedToken['access_token'])) {
+                throw new \RuntimeException('Invalid token format: missing access_token');
+            }
+            
+            return $decodedToken;
         } catch (\Throwable $th) {
-            error_log('M2M authentication error: ' . $th->getMessage());
+            error_log('Authentication error: ' . $th->getMessage());
             throw $th;
-        } finally {
-            error_log('Completing M2M authentication');
-            $this->storage->setM2MMode(false);
         }
     }
-}
+}ß

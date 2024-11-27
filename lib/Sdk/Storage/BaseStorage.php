@@ -6,20 +6,21 @@ use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 
 class BaseStorage
 {
-   protected static $prefix = 'kinde';
-    protected static $m2mPrefix = 'kinde_m2m';
+    protected static $prefix = 'kinde';
     protected static $storage;
-    protected static $useM2M = false;
     private static $cookieHttpOnly = true;
     private static $cookiePath = "/";
     private static $cookieDomain = "";
 
+    protected static function setPrefix($prefix)
+    {
+        if (!empty($prefix)) {
+            self::$prefix = $prefix;
+        }
+    }
+
     static function getStorage()
     {
-        if (self::$useM2M) {
-            return self::$storage ?? null;
-        }
-        
         if (empty(self::$storage)) {
             self::$storage = $_COOKIE[self::$prefix] ?? null;
         }
@@ -28,9 +29,6 @@ class BaseStorage
 
     public static function getItem(string $key)
     {
-       if (self::$useM2M) {
-           return self::$storage ?? "";
-       }
         $value = $_COOKIE[self::getKey($key)] ?? "";
         return $value;
     }
@@ -45,12 +43,6 @@ class BaseStorage
         bool $httpOnly = null
     ) {
         $newKey = self::getKey($key);
-        
-        if (self::$useM2M) {
-            self::$storage = $value;
-            return;
-        }
-
         $_COOKIE[$newKey] = $value;
         setcookie($newKey, $value, [
             'expires' => $expires,
@@ -62,12 +54,20 @@ class BaseStorage
         ]);
     }
 
+    private static function getKey($key)
+    {
+        if (empty($key)) {
+            throw new \InvalidArgumentException('Key cannot be empty');
+        }
+        $key = preg_replace('/[^a-zA-Z0-9_-]/', '', $key);
+        if (strlen($key) > 255) {
+            throw new \InvalidArgumentException('Key length exceeds maximum limit');
+        }
+        return self::$prefix . '_' . $key;
+    }
+
     public static function removeItem(string $key)
     {
-        if (Storage::isM2MMode() && $key === StorageEnums::TOKEN) {
-            return;
-        }
-        
         $newKey = self::getKey($key);
         if (isset($_COOKIE[$newKey])) {
             unset($_COOKIE[$newKey]);
@@ -77,30 +77,11 @@ class BaseStorage
 
     public static function clear()
     {
-        $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
         foreach ($_COOKIE as $key => $value) {
-            if (strpos($key, $prefix) === 0) {
+            if (strpos($key, self::$prefix) === 0) {
                 self::removeItem($key);
             }
         }
-       if (self::$useM2M) {
-           self::$storage = null;
-       }
-    }
-
-    private static function getKey($key)
-    {
-         if (empty($key)) {
-             throw new \InvalidArgumentException('Key cannot be empty');
-         }
-         // Sanitize key to prevent injection
-         $key = preg_replace('/[^a-zA-Z0-9_-]/', '', $key);
-         if (strlen($key) > 255) {
-             throw new \InvalidArgumentException('Key length exceeds maximum limit');
-         }
-        $prefix = self::$useM2M ? self::$m2mPrefix : self::$prefix;
-        $finalKey = $prefix . '_' . $key;
-        return $finalKey;
     }
 
     public static function setCookieHttpOnly(bool $httpOnly)
