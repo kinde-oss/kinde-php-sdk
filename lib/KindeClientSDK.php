@@ -152,16 +152,17 @@ class KindeClientSDK
     public function login(
         array $additionalParameters = []
     ) {
-        $this->cleanStorage();
         try {
             switch ($this->grantType) {
                 case GrantType::clientCredentials:
                     $auth = new ClientCredentials();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::authorizationCode:
+                    $this->cleanStorage();
                     $auth = new AuthorizationCode();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::PKCE:
+                    $this->cleanStorage();
                     $auth = new PKCE();
                     return $auth->authenticate($this, 'login', $additionalParameters);
                 default:
