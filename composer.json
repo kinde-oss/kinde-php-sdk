@@ -37,6 +37,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "Kinde\\KindeSDK\\": "lib/",
       "Kinde\\KindeSDK\\Test\\": "test/"
     }
   },
