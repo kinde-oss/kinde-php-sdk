@@ -630,4 +630,50 @@ class KindeClientSDK
                 break;
         }
     }
+
+    /**
+     * Generates a URL for the user's profile page on Kinde.
+     *
+     * @param string $returnUrl The URL to return to after the user is done with their profile.
+     * @param string $subNav The sub-navigation page to show (defaults to 'profile').
+     *
+     * @throws Exception If the access token is not found or if the API request fails.
+     *
+     * @return array An array containing the generated URL.
+     */
+    public function generateProfileUrl(string $returnUrl, string $subNav = 'profile')
+    {
+        $token = $this->storage->getAccessToken();
+        if (empty($token)) {
+            throw new Exception('generateProfileUrl: Access Token not found');
+        }
+
+        $params = [
+            'sub_nav' => $subNav,
+            'return_url' => $returnUrl
+        ];
+
+        $client = new Client();
+        try {
+            $response = $client->request('GET', $this->domain . '/account_api/v1/portal_link', [
+                'query' => $params,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                    'Kinde-SDK' => 'PHP/1.2'
+                ]
+            ]);
+
+            $result = json_decode($response->getBody()->getContents(), true);
+            
+            if (!isset($result['url']) || !is_string($result['url'])) {
+                throw new Exception('Invalid URL received from API');
+            }
+
+            return [
+                'url' => $result['url']
+            ];
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            throw new Exception('Failed to fetch profile URL: ' . $e->getMessage());
+        }
+    }
 }

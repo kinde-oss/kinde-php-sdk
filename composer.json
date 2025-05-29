@@ -40,9 +40,28 @@
       "Kinde\\KindeSDK\\Test\\": "test/"
     }
   },
+  "config": {
+    "process-timeout": 600,
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true
+    }
+  },
   "scripts": {
     "test": [
       "./vendor/bin/phpunit"
+    ],
+    "post-install-cmd": [
+      "npm install"
+    ],
+    "post-update-cmd": [
+      "npm install"
+    ],
+    "generate-api": [
+      "rm -rf lib/Api lib/Model",
+      "npm run generate",
+      "cp -r ./tmp/lib/Api ./tmp/lib/Model lib/",
+      "rm -rf ./tmp",
+      "composer dump-autoload"
     ]
   }
 }
