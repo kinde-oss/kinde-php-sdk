@@ -1,0 +1,18 @@
+{
+  "name": "kinde-php-sdk",
+  "version": "2.0.1",
+  "description": "Kinde PHP SDK for authentication",
+  "private": true,
+  "scripts": {
+    "generate": "openapi-generator-cli generate -i https://api-spec.kinde.com/kinde-combined-api-specs.yaml -g php -o ./tmp"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "2.7.0"
+  },
+  "openapi-generator-cli": {
+    "version": "2.7.0",
+    "generator-cli": {
+      "version": "2.7.0"
+    }
+  }
+} 
