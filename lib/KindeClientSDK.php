@@ -632,20 +632,25 @@ class KindeClientSDK
     }
 
     /**
-     * Generates a URL for the user's profile page on Kinde.
+     * Generates a URL to the user profile portal
      *
-     * @param string $returnUrl The URL to return to after the user is done with their profile.
-     * @param string $subNav The sub-navigation page to show (defaults to 'profile').
+     * @param string $returnUrl URL to redirect to after completing the profile flow
+     * @param string $subNav Sub-navigation section to display (defaults to 'profile')
      *
-     * @throws Exception If the access token is not found or if the API request fails.
+     * @throws Exception If the access token is not found or if the API request fails
+     * @throws InvalidArgumentException If the returnUrl is not an absolute URL
      *
-     * @return array An array containing the generated URL.
+     * @return array An array containing the generated URL
      */
-    public function generateProfileUrl(string $returnUrl, string $subNav = 'profile')
+    public function generatePortalUrl(string $returnUrl, string $subNav = PortalPage::PROFILE)
     {
         $token = $this->storage->getAccessToken();
         if (empty($token)) {
-            throw new Exception('generateProfileUrl: Access Token not found');
+            throw new Exception('generatePortalUrl: Access Token not found');
+        }
+
+        if (!filter_var($returnUrl, FILTER_VALIDATE_URL)) {
+            throw new InvalidArgumentException('generatePortalUrl: returnUrl must be an absolute URL');
         }
 
         $params = [
@@ -667,6 +672,10 @@ class KindeClientSDK
             
             if (!isset($result['url']) || !is_string($result['url'])) {
                 throw new Exception('Invalid URL received from API');
+            }
+
+            if (!filter_var($result['url'], FILTER_VALIDATE_URL)) {
+                throw new Exception('Invalid URL format received from API: ' . $result['url']);
             }
 
             return [
