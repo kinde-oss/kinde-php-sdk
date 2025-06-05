@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetEnvironmentVariableResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetEnvironmentVariableResponse implements ModelInterface, ArrayAccess, \Js
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'environment_variable' => '\OpenAPI\Client\Model\EnvironmentVariable'
+        'environment_variable' => '\Kinde\KindeSDK\Model\EnvironmentVariable'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetEnvironmentVariableResponse implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets environment_variable
      *
-     * @return \OpenAPI\Client\Model\EnvironmentVariable|null
+     * @return \Kinde\KindeSDK\Model\EnvironmentVariable|null
      */
     public function getEnvironmentVariable()
     {
@@ -371,7 +371,7 @@ class GetEnvironmentVariableResponse implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets environment_variable
      *
-     * @param \OpenAPI\Client\Model\EnvironmentVariable|null $environment_variable environment_variable
+     * @param \Kinde\KindeSDK\Model\EnvironmentVariable|null $environment_variable environment_variable
      *
      * @return self
      */

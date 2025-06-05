@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * OrganizationUserRolePermissions Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class OrganizationUserRolePermissions implements ModelInterface, ArrayAccess, \J
     protected static $openAPITypes = [
         'id' => 'string',
         'role' => 'string',
-        'permissions' => '\OpenAPI\Client\Model\OrganizationUserRolePermissionsPermissions'
+        'permissions' => '\Kinde\KindeSDK\Model\OrganizationUserRolePermissionsPermissions'
     ];
 
     /**
@@ -361,7 +361,7 @@ class OrganizationUserRolePermissions implements ModelInterface, ArrayAccess, \J
     /**
      * Gets permissions
      *
-     * @return \OpenAPI\Client\Model\OrganizationUserRolePermissionsPermissions|null
+     * @return \Kinde\KindeSDK\Model\OrganizationUserRolePermissionsPermissions|null
      */
     public function getPermissions()
     {
@@ -371,7 +371,7 @@ class OrganizationUserRolePermissions implements ModelInterface, ArrayAccess, \J
     /**
      * Sets permissions
      *
-     * @param \OpenAPI\Client\Model\OrganizationUserRolePermissionsPermissions|null $permissions permissions
+     * @param \Kinde\KindeSDK\Model\OrganizationUserRolePermissionsPermissions|null $permissions permissions
      *
      * @return self
      */

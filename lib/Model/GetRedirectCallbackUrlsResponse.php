@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetRedirectCallbackUrlsResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,7 +58,7 @@ class GetRedirectCallbackUrlsResponse implements ModelInterface, ArrayAccess, \J
       * @var string[]
       */
     protected static $openAPITypes = [
-        'redirect_urls' => '\OpenAPI\Client\Model\RedirectCallbackUrls[]'
+        'redirect_urls' => '\Kinde\KindeSDK\Model\RedirectCallbackUrls[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class GetRedirectCallbackUrlsResponse implements ModelInterface, ArrayAccess, \J
     /**
      * Gets redirect_urls
      *
-     * @return \OpenAPI\Client\Model\RedirectCallbackUrls[]|null
+     * @return \Kinde\KindeSDK\Model\RedirectCallbackUrls[]|null
      */
     public function getRedirectUrls()
     {
@@ -303,7 +303,7 @@ class GetRedirectCallbackUrlsResponse implements ModelInterface, ArrayAccess, \J
     /**
      * Sets redirect_urls
      *
-     * @param \OpenAPI\Client\Model\RedirectCallbackUrls[]|null $redirect_urls An application's redirect callback URLs.
+     * @param \Kinde\KindeSDK\Model\RedirectCallbackUrls[]|null $redirect_urls An application's redirect callback URLs.
      *
      * @return self
      */

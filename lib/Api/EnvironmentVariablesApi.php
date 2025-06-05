@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * EnvironmentVariablesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -143,12 +143,12 @@ class EnvironmentVariablesApi
      *
      * Create environment variable
      *
-     * @param  \OpenAPI\Client\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createEnvironmentVariable($create_environment_variable_request, string $contentType = self::contentTypes['createEnvironmentVariable'][0])
     {
@@ -161,12 +161,12 @@ class EnvironmentVariablesApi
      *
      * Create environment variable
      *
-     * @param  \OpenAPI\Client\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createEnvironmentVariableWithHttpInfo($create_environment_variable_request, string $contentType = self::contentTypes['createEnvironmentVariable'][0])
     {
@@ -198,25 +198,25 @@ class EnvironmentVariablesApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\CreateEnvironmentVariableResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -238,7 +238,7 @@ class EnvironmentVariablesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateEnvironmentVariableResponse',
+                '\Kinde\KindeSDK\Model\CreateEnvironmentVariableResponse',
                 $request,
                 $response,
             );
@@ -247,7 +247,7 @@ class EnvironmentVariablesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\CreateEnvironmentVariableResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -255,7 +255,7 @@ class EnvironmentVariablesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -263,7 +263,7 @@ class EnvironmentVariablesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -271,7 +271,7 @@ class EnvironmentVariablesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -288,7 +288,7 @@ class EnvironmentVariablesApi
      *
      * Create environment variable
      *
-     * @param  \OpenAPI\Client\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createEnvironmentVariable'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -309,7 +309,7 @@ class EnvironmentVariablesApi
      *
      * Create environment variable
      *
-     * @param  \OpenAPI\Client\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createEnvironmentVariable'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -317,7 +317,7 @@ class EnvironmentVariablesApi
      */
     public function createEnvironmentVariableAsyncWithHttpInfo($create_environment_variable_request, string $contentType = self::contentTypes['createEnvironmentVariable'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateEnvironmentVariableResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateEnvironmentVariableResponse';
         $request = $this->createEnvironmentVariableRequest($create_environment_variable_request, $contentType);
 
         return $this->client
@@ -359,7 +359,7 @@ class EnvironmentVariablesApi
     /**
      * Create request for operation 'createEnvironmentVariable'
      *
-     * @param  \OpenAPI\Client\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateEnvironmentVariableRequest $create_environment_variable_request The environment variable details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createEnvironmentVariable'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -459,9 +459,9 @@ class EnvironmentVariablesApi
      * @param  string $variable_id The environment variable&#39;s ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\DeleteEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\DeleteEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteEnvironmentVariable($variable_id, string $contentType = self::contentTypes['deleteEnvironmentVariable'][0])
     {
@@ -477,9 +477,9 @@ class EnvironmentVariablesApi
      * @param  string $variable_id The environment variable&#39;s ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\DeleteEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\DeleteEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteEnvironmentVariableWithHttpInfo($variable_id, string $contentType = self::contentTypes['deleteEnvironmentVariable'][0])
     {
@@ -511,25 +511,25 @@ class EnvironmentVariablesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\DeleteEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\DeleteEnvironmentVariableResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -551,7 +551,7 @@ class EnvironmentVariablesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\DeleteEnvironmentVariableResponse',
+                '\Kinde\KindeSDK\Model\DeleteEnvironmentVariableResponse',
                 $request,
                 $response,
             );
@@ -560,7 +560,7 @@ class EnvironmentVariablesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\DeleteEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\DeleteEnvironmentVariableResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -568,7 +568,7 @@ class EnvironmentVariablesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -576,7 +576,7 @@ class EnvironmentVariablesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -584,7 +584,7 @@ class EnvironmentVariablesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -630,7 +630,7 @@ class EnvironmentVariablesApi
      */
     public function deleteEnvironmentVariableAsyncWithHttpInfo($variable_id, string $contentType = self::contentTypes['deleteEnvironmentVariable'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\DeleteEnvironmentVariableResponse';
+        $returnType = '\Kinde\KindeSDK\Model\DeleteEnvironmentVariableResponse';
         $request = $this->deleteEnvironmentVariableRequest($variable_id, $contentType);
 
         return $this->client
@@ -773,9 +773,9 @@ class EnvironmentVariablesApi
      * @param  string $variable_id The environment variable&#39;s ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getEnvironmentVariable($variable_id, string $contentType = self::contentTypes['getEnvironmentVariable'][0])
     {
@@ -791,9 +791,9 @@ class EnvironmentVariablesApi
      * @param  string $variable_id The environment variable&#39;s ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEnvironmentVariableWithHttpInfo($variable_id, string $contentType = self::contentTypes['getEnvironmentVariable'][0])
     {
@@ -825,25 +825,25 @@ class EnvironmentVariablesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentVariableResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -865,7 +865,7 @@ class EnvironmentVariablesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetEnvironmentVariableResponse',
+                '\Kinde\KindeSDK\Model\GetEnvironmentVariableResponse',
                 $request,
                 $response,
             );
@@ -874,7 +874,7 @@ class EnvironmentVariablesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentVariableResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -882,7 +882,7 @@ class EnvironmentVariablesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -890,7 +890,7 @@ class EnvironmentVariablesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -898,7 +898,7 @@ class EnvironmentVariablesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -944,7 +944,7 @@ class EnvironmentVariablesApi
      */
     public function getEnvironmentVariableAsyncWithHttpInfo($variable_id, string $contentType = self::contentTypes['getEnvironmentVariable'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEnvironmentVariableResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetEnvironmentVariableResponse';
         $request = $this->getEnvironmentVariableRequest($variable_id, $contentType);
 
         return $this->client
@@ -1086,9 +1086,9 @@ class EnvironmentVariablesApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironmentVariables'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetEnvironmentVariablesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentVariablesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getEnvironmentVariables(string $contentType = self::contentTypes['getEnvironmentVariables'][0])
     {
@@ -1103,9 +1103,9 @@ class EnvironmentVariablesApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironmentVariables'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetEnvironmentVariablesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetEnvironmentVariablesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEnvironmentVariablesWithHttpInfo(string $contentType = self::contentTypes['getEnvironmentVariables'][0])
     {
@@ -1137,25 +1137,25 @@ class EnvironmentVariablesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetEnvironmentVariablesResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentVariablesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1177,7 +1177,7 @@ class EnvironmentVariablesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetEnvironmentVariablesResponse',
+                '\Kinde\KindeSDK\Model\GetEnvironmentVariablesResponse',
                 $request,
                 $response,
             );
@@ -1186,7 +1186,7 @@ class EnvironmentVariablesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEnvironmentVariablesResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentVariablesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1194,7 +1194,7 @@ class EnvironmentVariablesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1202,7 +1202,7 @@ class EnvironmentVariablesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1210,7 +1210,7 @@ class EnvironmentVariablesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1254,7 +1254,7 @@ class EnvironmentVariablesApi
      */
     public function getEnvironmentVariablesAsyncWithHttpInfo(string $contentType = self::contentTypes['getEnvironmentVariables'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEnvironmentVariablesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetEnvironmentVariablesResponse';
         $request = $this->getEnvironmentVariablesRequest($contentType);
 
         return $this->client
@@ -1379,12 +1379,12 @@ class EnvironmentVariablesApi
      * Update environment variable
      *
      * @param  string $variable_id The environment variable&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\UpdateEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\UpdateEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateEnvironmentVariable($variable_id, $update_environment_variable_request, string $contentType = self::contentTypes['updateEnvironmentVariable'][0])
     {
@@ -1398,12 +1398,12 @@ class EnvironmentVariablesApi
      * Update environment variable
      *
      * @param  string $variable_id The environment variable&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironmentVariable'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\UpdateEnvironmentVariableResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\UpdateEnvironmentVariableResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateEnvironmentVariableWithHttpInfo($variable_id, $update_environment_variable_request, string $contentType = self::contentTypes['updateEnvironmentVariable'][0])
     {
@@ -1435,25 +1435,25 @@ class EnvironmentVariablesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\UpdateEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\UpdateEnvironmentVariableResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1475,7 +1475,7 @@ class EnvironmentVariablesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\UpdateEnvironmentVariableResponse',
+                '\Kinde\KindeSDK\Model\UpdateEnvironmentVariableResponse',
                 $request,
                 $response,
             );
@@ -1484,7 +1484,7 @@ class EnvironmentVariablesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\UpdateEnvironmentVariableResponse',
+                        '\Kinde\KindeSDK\Model\UpdateEnvironmentVariableResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1492,7 +1492,7 @@ class EnvironmentVariablesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1500,7 +1500,7 @@ class EnvironmentVariablesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1508,7 +1508,7 @@ class EnvironmentVariablesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1526,7 +1526,7 @@ class EnvironmentVariablesApi
      * Update environment variable
      *
      * @param  string $variable_id The environment variable&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironmentVariable'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1548,7 +1548,7 @@ class EnvironmentVariablesApi
      * Update environment variable
      *
      * @param  string $variable_id The environment variable&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironmentVariable'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1556,7 +1556,7 @@ class EnvironmentVariablesApi
      */
     public function updateEnvironmentVariableAsyncWithHttpInfo($variable_id, $update_environment_variable_request, string $contentType = self::contentTypes['updateEnvironmentVariable'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\UpdateEnvironmentVariableResponse';
+        $returnType = '\Kinde\KindeSDK\Model\UpdateEnvironmentVariableResponse';
         $request = $this->updateEnvironmentVariableRequest($variable_id, $update_environment_variable_request, $contentType);
 
         return $this->client
@@ -1599,7 +1599,7 @@ class EnvironmentVariablesApi
      * Create request for operation 'updateEnvironmentVariable'
      *
      * @param  string $variable_id The environment variable&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironmentVariableRequest $update_environment_variable_request The new details for the environment variable (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironmentVariable'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

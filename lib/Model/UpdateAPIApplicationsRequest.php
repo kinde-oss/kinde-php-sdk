@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * UpdateAPIApplicationsRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,7 +58,7 @@ class UpdateAPIApplicationsRequest implements ModelInterface, ArrayAccess, \Json
       * @var string[]
       */
     protected static $openAPITypes = [
-        'applications' => '\OpenAPI\Client\Model\UpdateAPIApplicationsRequestApplicationsInner[]'
+        'applications' => '\Kinde\KindeSDK\Model\UpdateAPIApplicationsRequestApplicationsInner[]'
     ];
 
     /**
@@ -296,7 +296,7 @@ class UpdateAPIApplicationsRequest implements ModelInterface, ArrayAccess, \Json
     /**
      * Gets applications
      *
-     * @return \OpenAPI\Client\Model\UpdateAPIApplicationsRequestApplicationsInner[]
+     * @return \Kinde\KindeSDK\Model\UpdateAPIApplicationsRequestApplicationsInner[]
      */
     public function getApplications()
     {
@@ -306,7 +306,7 @@ class UpdateAPIApplicationsRequest implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets applications
      *
-     * @param \OpenAPI\Client\Model\UpdateAPIApplicationsRequestApplicationsInner[] $applications applications
+     * @param \Kinde\KindeSDK\Model\UpdateAPIApplicationsRequestApplicationsInner[] $applications applications
      *
      * @return self
      */

@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * UsersApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -182,12 +182,12 @@ class UsersApi
      *
      * Create user
      *
-     * @param  \OpenAPI\Client\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateUserResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateUserResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createUser($create_user_request = null, string $contentType = self::contentTypes['createUser'][0])
     {
@@ -200,12 +200,12 @@ class UsersApi
      *
      * Create user
      *
-     * @param  \OpenAPI\Client\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateUserResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateUserResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUserWithHttpInfo($create_user_request = null, string $contentType = self::contentTypes['createUser'][0])
     {
@@ -237,25 +237,25 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateUserResponse',
+                        '\Kinde\KindeSDK\Model\CreateUserResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -277,7 +277,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateUserResponse',
+                '\Kinde\KindeSDK\Model\CreateUserResponse',
                 $request,
                 $response,
             );
@@ -286,7 +286,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateUserResponse',
+                        '\Kinde\KindeSDK\Model\CreateUserResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -294,7 +294,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -302,7 +302,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -310,7 +310,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -327,7 +327,7 @@ class UsersApi
      *
      * Create user
      *
-     * @param  \OpenAPI\Client\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -348,7 +348,7 @@ class UsersApi
      *
      * Create user
      *
-     * @param  \OpenAPI\Client\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -356,7 +356,7 @@ class UsersApi
      */
     public function createUserAsyncWithHttpInfo($create_user_request = null, string $contentType = self::contentTypes['createUser'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateUserResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateUserResponse';
         $request = $this->createUserRequest($create_user_request, $contentType);
 
         return $this->client
@@ -398,7 +398,7 @@ class UsersApi
     /**
      * Create request for operation 'createUser'
      *
-     * @param  \OpenAPI\Client\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserRequest|null $create_user_request The details of the user to create. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -490,12 +490,12 @@ class UsersApi
      * Create identity
      *
      * @param  string $user_id The user&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateIdentityResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateIdentityResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createUserIdentity($user_id, $create_user_identity_request = null, string $contentType = self::contentTypes['createUserIdentity'][0])
     {
@@ -509,12 +509,12 @@ class UsersApi
      * Create identity
      *
      * @param  string $user_id The user&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateIdentityResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateIdentityResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUserIdentityWithHttpInfo($user_id, $create_user_identity_request = null, string $contentType = self::contentTypes['createUserIdentity'][0])
     {
@@ -546,13 +546,13 @@ class UsersApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateIdentityResponse',
+                        '\Kinde\KindeSDK\Model\CreateIdentityResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -574,7 +574,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateIdentityResponse',
+                '\Kinde\KindeSDK\Model\CreateIdentityResponse',
                 $request,
                 $response,
             );
@@ -583,7 +583,7 @@ class UsersApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateIdentityResponse',
+                        '\Kinde\KindeSDK\Model\CreateIdentityResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -591,7 +591,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -609,7 +609,7 @@ class UsersApi
      * Create identity
      *
      * @param  string $user_id The user&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserIdentity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -631,7 +631,7 @@ class UsersApi
      * Create identity
      *
      * @param  string $user_id The user&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserIdentity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -639,7 +639,7 @@ class UsersApi
      */
     public function createUserIdentityAsyncWithHttpInfo($user_id, $create_user_identity_request = null, string $contentType = self::contentTypes['createUserIdentity'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateIdentityResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateIdentityResponse';
         $request = $this->createUserIdentityRequest($user_id, $create_user_identity_request, $contentType);
 
         return $this->client
@@ -682,7 +682,7 @@ class UsersApi
      * Create request for operation 'createUserIdentity'
      *
      * @param  string $user_id The user&#39;s ID. (required)
-     * @param  \OpenAPI\Client\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateUserIdentityRequest|null $create_user_identity_request The identity details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserIdentity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -792,9 +792,9 @@ class UsersApi
      * @param  bool|null $is_delete_profile Delete all data and remove the user&#39;s profile from all of Kinde, including the subscriber list (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteUser($id, $is_delete_profile = null, string $contentType = self::contentTypes['deleteUser'][0])
     {
@@ -811,9 +811,9 @@ class UsersApi
      * @param  bool|null $is_delete_profile Delete all data and remove the user&#39;s profile from all of Kinde, including the subscriber list (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteUserWithHttpInfo($id, $is_delete_profile = null, string $contentType = self::contentTypes['deleteUser'][0])
     {
@@ -845,25 +845,25 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -885,7 +885,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -894,7 +894,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -902,7 +902,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -910,7 +910,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -918,7 +918,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -966,7 +966,7 @@ class UsersApi
      */
     public function deleteUserAsyncWithHttpInfo($id, $is_delete_profile = null, string $contentType = self::contentTypes['deleteUser'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteUserRequest($id, $is_delete_profile, $contentType);
 
         return $this->client
@@ -1121,9 +1121,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUserSessions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteUserSessions($user_id, string $contentType = self::contentTypes['deleteUserSessions'][0])
     {
@@ -1139,9 +1139,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteUserSessions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteUserSessionsWithHttpInfo($user_id, string $contentType = self::contentTypes['deleteUserSessions'][0])
     {
@@ -1173,31 +1173,31 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1219,7 +1219,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1228,7 +1228,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1236,7 +1236,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1244,7 +1244,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1252,7 +1252,7 @@ class UsersApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1260,7 +1260,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1306,7 +1306,7 @@ class UsersApi
      */
     public function deleteUserSessionsAsyncWithHttpInfo($user_id, string $contentType = self::contentTypes['deleteUserSessions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteUserSessionsRequest($user_id, $contentType);
 
         return $this->client
@@ -1450,9 +1450,9 @@ class UsersApi
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\User|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\User|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getUserData($id, $expand = null, string $contentType = self::contentTypes['getUserData'][0])
     {
@@ -1469,9 +1469,9 @@ class UsersApi
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\User|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\User|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserDataWithHttpInfo($id, $expand = null, string $contentType = self::contentTypes['getUserData'][0])
     {
@@ -1503,25 +1503,25 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\User',
+                        '\Kinde\KindeSDK\Model\User',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1543,7 +1543,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\User',
+                '\Kinde\KindeSDK\Model\User',
                 $request,
                 $response,
             );
@@ -1552,7 +1552,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\User',
+                        '\Kinde\KindeSDK\Model\User',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1560,7 +1560,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1568,7 +1568,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1576,7 +1576,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1624,7 +1624,7 @@ class UsersApi
      */
     public function getUserDataAsyncWithHttpInfo($id, $expand = null, string $contentType = self::contentTypes['getUserData'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\User';
+        $returnType = '\Kinde\KindeSDK\Model\User';
         $request = $this->getUserDataRequest($id, $expand, $contentType);
 
         return $this->client
@@ -1781,9 +1781,9 @@ class UsersApi
      * @param  string|null $ending_before The ID of the identity to end before. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserIdentities'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetIdentitiesResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetIdentitiesResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getUserIdentities($user_id, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getUserIdentities'][0])
     {
@@ -1801,9 +1801,9 @@ class UsersApi
      * @param  string|null $ending_before The ID of the identity to end before. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserIdentities'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetIdentitiesResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetIdentitiesResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserIdentitiesWithHttpInfo($user_id, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getUserIdentities'][0])
     {
@@ -1835,13 +1835,13 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetIdentitiesResponse',
+                        '\Kinde\KindeSDK\Model\GetIdentitiesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1863,7 +1863,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetIdentitiesResponse',
+                '\Kinde\KindeSDK\Model\GetIdentitiesResponse',
                 $request,
                 $response,
             );
@@ -1872,7 +1872,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetIdentitiesResponse',
+                        '\Kinde\KindeSDK\Model\GetIdentitiesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1880,7 +1880,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1930,7 +1930,7 @@ class UsersApi
      */
     public function getUserIdentitiesAsyncWithHttpInfo($user_id, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getUserIdentities'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetIdentitiesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetIdentitiesResponse';
         $request = $this->getUserIdentitiesRequest($user_id, $starting_after, $ending_before, $contentType);
 
         return $this->client
@@ -2095,9 +2095,9 @@ class UsersApi
      * @param  string $user_id The user&#39;s ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserPropertyValues'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetPropertyValuesResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetPropertyValuesResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getUserPropertyValues($user_id, string $contentType = self::contentTypes['getUserPropertyValues'][0])
     {
@@ -2113,9 +2113,9 @@ class UsersApi
      * @param  string $user_id The user&#39;s ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserPropertyValues'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetPropertyValuesResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetPropertyValuesResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserPropertyValuesWithHttpInfo($user_id, string $contentType = self::contentTypes['getUserPropertyValues'][0])
     {
@@ -2147,13 +2147,13 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2175,7 +2175,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                 $request,
                 $response,
             );
@@ -2184,7 +2184,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2192,7 +2192,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2238,7 +2238,7 @@ class UsersApi
      */
     public function getUserPropertyValuesAsyncWithHttpInfo($user_id, string $contentType = self::contentTypes['getUserPropertyValues'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetPropertyValuesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetPropertyValuesResponse';
         $request = $this->getUserPropertyValuesRequest($user_id, $contentType);
 
         return $this->client
@@ -2381,9 +2381,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserSessions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetUserSessionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetUserSessionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getUserSessions($user_id, string $contentType = self::contentTypes['getUserSessions'][0])
     {
@@ -2399,9 +2399,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserSessions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetUserSessionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetUserSessionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserSessionsWithHttpInfo($user_id, string $contentType = self::contentTypes['getUserSessions'][0])
     {
@@ -2433,31 +2433,31 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetUserSessionsResponse',
+                        '\Kinde\KindeSDK\Model\GetUserSessionsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2479,7 +2479,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetUserSessionsResponse',
+                '\Kinde\KindeSDK\Model\GetUserSessionsResponse',
                 $request,
                 $response,
             );
@@ -2488,7 +2488,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetUserSessionsResponse',
+                        '\Kinde\KindeSDK\Model\GetUserSessionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2496,7 +2496,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2504,7 +2504,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2512,7 +2512,7 @@ class UsersApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2520,7 +2520,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2566,7 +2566,7 @@ class UsersApi
      */
     public function getUserSessionsAsyncWithHttpInfo($user_id, string $contentType = self::contentTypes['getUserSessions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetUserSessionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetUserSessionsResponse';
         $request = $this->getUserSessionsRequest($user_id, $contentType);
 
         return $this->client
@@ -2715,9 +2715,9 @@ class UsersApi
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\UsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\UsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getUsers($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
@@ -2739,9 +2739,9 @@ class UsersApi
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\UsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\UsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUsersWithHttpInfo($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
@@ -2773,25 +2773,25 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\UsersResponse',
+                        '\Kinde\KindeSDK\Model\UsersResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2813,7 +2813,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\UsersResponse',
+                '\Kinde\KindeSDK\Model\UsersResponse',
                 $request,
                 $response,
             );
@@ -2822,7 +2822,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\UsersResponse',
+                        '\Kinde\KindeSDK\Model\UsersResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2830,7 +2830,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2838,7 +2838,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2846,7 +2846,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2904,7 +2904,7 @@ class UsersApi
      */
     public function getUsersAsyncWithHttpInfo($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\UsersResponse';
+        $returnType = '\Kinde\KindeSDK\Model\UsersResponse';
         $request = $this->getUsersRequest($page_size, $user_id, $next_token, $email, $username, $expand, $has_organization, $contentType);
 
         return $this->client
@@ -3108,9 +3108,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsersMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetUserMfaResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetUserMfaResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getUsersMFA($user_id, string $contentType = self::contentTypes['getUsersMFA'][0])
     {
@@ -3126,9 +3126,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsersMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetUserMfaResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetUserMfaResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUsersMFAWithHttpInfo($user_id, string $contentType = self::contentTypes['getUsersMFA'][0])
     {
@@ -3160,31 +3160,31 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetUserMfaResponse',
+                        '\Kinde\KindeSDK\Model\GetUserMfaResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3206,7 +3206,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetUserMfaResponse',
+                '\Kinde\KindeSDK\Model\GetUserMfaResponse',
                 $request,
                 $response,
             );
@@ -3215,7 +3215,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetUserMfaResponse',
+                        '\Kinde\KindeSDK\Model\GetUserMfaResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3223,7 +3223,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3231,7 +3231,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3239,7 +3239,7 @@ class UsersApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3247,7 +3247,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3293,7 +3293,7 @@ class UsersApi
      */
     public function getUsersMFAAsyncWithHttpInfo($user_id, string $contentType = self::contentTypes['getUsersMFA'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetUserMfaResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetUserMfaResponse';
         $request = $this->getUsersMFARequest($user_id, $contentType);
 
         return $this->client
@@ -3436,9 +3436,9 @@ class UsersApi
      * @param  string $user_id The id of the user whose claims needs to be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshUserClaims'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function refreshUserClaims($user_id, string $contentType = self::contentTypes['refreshUserClaims'][0])
     {
@@ -3454,9 +3454,9 @@ class UsersApi
      * @param  string $user_id The id of the user whose claims needs to be updated. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['refreshUserClaims'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function refreshUserClaimsWithHttpInfo($user_id, string $contentType = self::contentTypes['refreshUserClaims'][0])
     {
@@ -3488,19 +3488,19 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3522,7 +3522,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3531,7 +3531,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3539,7 +3539,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3547,7 +3547,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3593,7 +3593,7 @@ class UsersApi
      */
     public function refreshUserClaimsAsyncWithHttpInfo($user_id, string $contentType = self::contentTypes['refreshUserClaims'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->refreshUserClaimsRequest($user_id, $contentType);
 
         return $this->client
@@ -3737,9 +3737,9 @@ class UsersApi
      * @param  string $factor_id The identifier for the MFA factor (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetUsersMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function resetUsersMFA($user_id, $factor_id, string $contentType = self::contentTypes['resetUsersMFA'][0])
     {
@@ -3756,9 +3756,9 @@ class UsersApi
      * @param  string $factor_id The identifier for the MFA factor (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetUsersMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function resetUsersMFAWithHttpInfo($user_id, $factor_id, string $contentType = self::contentTypes['resetUsersMFA'][0])
     {
@@ -3790,31 +3790,31 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3836,7 +3836,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3845,7 +3845,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3853,7 +3853,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3861,7 +3861,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3869,7 +3869,7 @@ class UsersApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3877,7 +3877,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3925,7 +3925,7 @@ class UsersApi
      */
     public function resetUsersMFAAsyncWithHttpInfo($user_id, $factor_id, string $contentType = self::contentTypes['resetUsersMFA'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->resetUsersMFARequest($user_id, $factor_id, $contentType);
 
         return $this->client
@@ -4084,9 +4084,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetUsersMFAAll'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function resetUsersMFAAll($user_id, string $contentType = self::contentTypes['resetUsersMFAAll'][0])
     {
@@ -4102,9 +4102,9 @@ class UsersApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetUsersMFAAll'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function resetUsersMFAAllWithHttpInfo($user_id, string $contentType = self::contentTypes['resetUsersMFAAll'][0])
     {
@@ -4136,31 +4136,31 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -4182,7 +4182,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -4191,7 +4191,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4199,7 +4199,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4207,7 +4207,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4215,7 +4215,7 @@ class UsersApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4223,7 +4223,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4269,7 +4269,7 @@ class UsersApi
      */
     public function resetUsersMFAAllAsyncWithHttpInfo($user_id, string $contentType = self::contentTypes['resetUsersMFAAll'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->resetUsersMFAAllRequest($user_id, $contentType);
 
         return $this->client
@@ -4410,12 +4410,12 @@ class UsersApi
      * Set User password
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
+     * @param  \Kinde\KindeSDK\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function setUserPassword($user_id, $set_user_password_request, string $contentType = self::contentTypes['setUserPassword'][0])
     {
@@ -4429,12 +4429,12 @@ class UsersApi
      * Set User password
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
+     * @param  \Kinde\KindeSDK\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function setUserPasswordWithHttpInfo($user_id, $set_user_password_request, string $contentType = self::contentTypes['setUserPassword'][0])
     {
@@ -4466,13 +4466,13 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -4494,7 +4494,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -4503,7 +4503,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4511,7 +4511,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4529,7 +4529,7 @@ class UsersApi
      * Set User password
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
+     * @param  \Kinde\KindeSDK\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -4551,7 +4551,7 @@ class UsersApi
      * Set User password
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
+     * @param  \Kinde\KindeSDK\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -4559,7 +4559,7 @@ class UsersApi
      */
     public function setUserPasswordAsyncWithHttpInfo($user_id, $set_user_password_request, string $contentType = self::contentTypes['setUserPassword'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->setUserPasswordRequest($user_id, $set_user_password_request, $contentType);
 
         return $this->client
@@ -4602,7 +4602,7 @@ class UsersApi
      * Create request for operation 'setUserPassword'
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
+     * @param  \Kinde\KindeSDK\Model\SetUserPasswordRequest $set_user_password_request Password details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setUserPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -4715,12 +4715,12 @@ class UsersApi
      * Update user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateUserRequest $update_user_request The user to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateUserRequest $update_user_request The user to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\UpdateUserResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\UpdateUserResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateUser($id, $update_user_request, string $contentType = self::contentTypes['updateUser'][0])
     {
@@ -4734,12 +4734,12 @@ class UsersApi
      * Update user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateUserRequest $update_user_request The user to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateUserRequest $update_user_request The user to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\UpdateUserResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\UpdateUserResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserWithHttpInfo($id, $update_user_request, string $contentType = self::contentTypes['updateUser'][0])
     {
@@ -4771,25 +4771,25 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\UpdateUserResponse',
+                        '\Kinde\KindeSDK\Model\UpdateUserResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -4811,7 +4811,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\UpdateUserResponse',
+                '\Kinde\KindeSDK\Model\UpdateUserResponse',
                 $request,
                 $response,
             );
@@ -4820,7 +4820,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\UpdateUserResponse',
+                        '\Kinde\KindeSDK\Model\UpdateUserResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4828,7 +4828,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4836,7 +4836,7 @@ class UsersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4844,7 +4844,7 @@ class UsersApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4862,7 +4862,7 @@ class UsersApi
      * Update user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateUserRequest $update_user_request The user to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateUserRequest $update_user_request The user to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -4884,7 +4884,7 @@ class UsersApi
      * Update user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateUserRequest $update_user_request The user to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateUserRequest $update_user_request The user to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -4892,7 +4892,7 @@ class UsersApi
      */
     public function updateUserAsyncWithHttpInfo($id, $update_user_request, string $contentType = self::contentTypes['updateUser'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\UpdateUserResponse';
+        $returnType = '\Kinde\KindeSDK\Model\UpdateUserResponse';
         $request = $this->updateUserRequest($id, $update_user_request, $contentType);
 
         return $this->client
@@ -4935,7 +4935,7 @@ class UsersApi
      * Create request for operation 'updateUser'
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateUserRequest $update_user_request The user to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateUserRequest $update_user_request The user to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUser'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -5053,9 +5053,9 @@ class UsersApi
      * @param  string $value Override value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateUserFeatureFlagOverride($user_id, $feature_flag_key, $value, string $contentType = self::contentTypes['updateUserFeatureFlagOverride'][0])
     {
@@ -5073,9 +5073,9 @@ class UsersApi
      * @param  string $value Override value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserFeatureFlagOverrideWithHttpInfo($user_id, $feature_flag_key, $value, string $contentType = self::contentTypes['updateUserFeatureFlagOverride'][0])
     {
@@ -5107,13 +5107,13 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5135,7 +5135,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -5144,7 +5144,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5152,7 +5152,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5202,7 +5202,7 @@ class UsersApi
      */
     public function updateUserFeatureFlagOverrideAsyncWithHttpInfo($user_id, $feature_flag_key, $value, string $contentType = self::contentTypes['updateUserFeatureFlagOverride'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateUserFeatureFlagOverrideRequest($user_id, $feature_flag_key, $value, $contentType);
 
         return $this->client
@@ -5376,12 +5376,12 @@ class UsersApi
      * Update Property values
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperties'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateUserProperties($user_id, $update_organization_properties_request, string $contentType = self::contentTypes['updateUserProperties'][0])
     {
@@ -5395,12 +5395,12 @@ class UsersApi
      * Update Property values
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperties'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserPropertiesWithHttpInfo($user_id, $update_organization_properties_request, string $contentType = self::contentTypes['updateUserProperties'][0])
     {
@@ -5432,13 +5432,13 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5460,7 +5460,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -5469,7 +5469,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5477,7 +5477,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5495,7 +5495,7 @@ class UsersApi
      * Update Property values
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperties'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -5517,7 +5517,7 @@ class UsersApi
      * Update Property values
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperties'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -5525,7 +5525,7 @@ class UsersApi
      */
     public function updateUserPropertiesAsyncWithHttpInfo($user_id, $update_organization_properties_request, string $contentType = self::contentTypes['updateUserProperties'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateUserPropertiesRequest($user_id, $update_organization_properties_request, $contentType);
 
         return $this->client
@@ -5568,7 +5568,7 @@ class UsersApi
      * Create request for operation 'updateUserProperties'
      *
      * @param  string $user_id The identifier for the user (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperties'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -5685,9 +5685,9 @@ class UsersApi
      * @param  string $value The new property value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateUserProperty($user_id, $property_key, $value, string $contentType = self::contentTypes['updateUserProperty'][0])
     {
@@ -5705,9 +5705,9 @@ class UsersApi
      * @param  string $value The new property value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateUserProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserPropertyWithHttpInfo($user_id, $property_key, $value, string $contentType = self::contentTypes['updateUserProperty'][0])
     {
@@ -5739,13 +5739,13 @@ class UsersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5767,7 +5767,7 @@ class UsersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -5776,7 +5776,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5784,7 +5784,7 @@ class UsersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5834,7 +5834,7 @@ class UsersApi
      */
     public function updateUserPropertyAsyncWithHttpInfo($user_id, $property_key, $value, string $contentType = self::contentTypes['updateUserProperty'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateUserPropertyRequest($user_id, $property_key, $value, $contentType);
 
         return $this->client

@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateConnectionRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -63,7 +63,7 @@ class CreateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
         'strategy' => 'string',
         'enabled_applications' => 'string[]',
         'organization_code' => 'string',
-        'options' => '\OpenAPI\Client\Model\CreateConnectionRequestOptions'
+        'options' => '\Kinde\KindeSDK\Model\CreateConnectionRequestOptions'
     ];
 
     /**
@@ -536,7 +536,7 @@ class CreateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets options
      *
-     * @return \OpenAPI\Client\Model\CreateConnectionRequestOptions|null
+     * @return \Kinde\KindeSDK\Model\CreateConnectionRequestOptions|null
      */
     public function getOptions()
     {
@@ -546,7 +546,7 @@ class CreateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets options
      *
-     * @param \OpenAPI\Client\Model\CreateConnectionRequestOptions|null $options options
+     * @param \Kinde\KindeSDK\Model\CreateConnectionRequestOptions|null $options options
      *
      * @return self
      */

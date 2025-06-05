@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetApplicationResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetApplicationResponse implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'application' => '\OpenAPI\Client\Model\GetApplicationResponseApplication'
+        'application' => '\Kinde\KindeSDK\Model\GetApplicationResponseApplication'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetApplicationResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets application
      *
-     * @return \OpenAPI\Client\Model\GetApplicationResponseApplication|null
+     * @return \Kinde\KindeSDK\Model\GetApplicationResponseApplication|null
      */
     public function getApplication()
     {
@@ -371,7 +371,7 @@ class GetApplicationResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets application
      *
-     * @param \OpenAPI\Client\Model\GetApplicationResponseApplication|null $application application
+     * @param \Kinde\KindeSDK\Model\GetApplicationResponseApplication|null $application application
      *
      * @return self
      */

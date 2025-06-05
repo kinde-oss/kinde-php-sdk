@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * RoleScopesResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class RoleScopesResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'scopes' => '\OpenAPI\Client\Model\Scopes[]'
+        'scopes' => '\Kinde\KindeSDK\Model\Scopes[]'
     ];
 
     /**
@@ -361,7 +361,7 @@ class RoleScopesResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets scopes
      *
-     * @return \OpenAPI\Client\Model\Scopes[]|null
+     * @return \Kinde\KindeSDK\Model\Scopes[]|null
      */
     public function getScopes()
     {
@@ -371,7 +371,7 @@ class RoleScopesResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets scopes
      *
-     * @param \OpenAPI\Client\Model\Scopes[]|null $scopes scopes
+     * @param \Kinde\KindeSDK\Model\Scopes[]|null $scopes scopes
      *
      * @return self
      */

@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetEventResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetEventResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'event' => '\OpenAPI\Client\Model\GetEventResponseEvent'
+        'event' => '\Kinde\KindeSDK\Model\GetEventResponseEvent'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetEventResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets event
      *
-     * @return \OpenAPI\Client\Model\GetEventResponseEvent|null
+     * @return \Kinde\KindeSDK\Model\GetEventResponseEvent|null
      */
     public function getEvent()
     {
@@ -371,7 +371,7 @@ class GetEventResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets event
      *
-     * @param \OpenAPI\Client\Model\GetEventResponseEvent|null $event event
+     * @param \Kinde\KindeSDK\Model\GetEventResponseEvent|null $event event
      *
      * @return self
      */

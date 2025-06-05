@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetUserMfaResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetUserMfaResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     protected static $openAPITypes = [
         'message' => 'string',
         'code' => 'string',
-        'mfa' => '\OpenAPI\Client\Model\GetUserMfaResponseMfa'
+        'mfa' => '\Kinde\KindeSDK\Model\GetUserMfaResponseMfa'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetUserMfaResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Gets mfa
      *
-     * @return \OpenAPI\Client\Model\GetUserMfaResponseMfa|null
+     * @return \Kinde\KindeSDK\Model\GetUserMfaResponseMfa|null
      */
     public function getMfa()
     {
@@ -371,7 +371,7 @@ class GetUserMfaResponse implements ModelInterface, ArrayAccess, \JsonSerializab
     /**
      * Sets mfa
      *
-     * @param \OpenAPI\Client\Model\GetUserMfaResponseMfa|null $mfa mfa
+     * @param \Kinde\KindeSDK\Model\GetUserMfaResponseMfa|null $mfa mfa
      *
      * @return self
      */

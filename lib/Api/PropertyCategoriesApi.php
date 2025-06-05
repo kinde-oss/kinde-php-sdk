@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * PropertyCategoriesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -137,12 +137,12 @@ class PropertyCategoriesApi
      *
      * Create Category
      *
-     * @param  \OpenAPI\Client\Model\CreateCategoryRequest $create_category_request Category details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateCategoryRequest $create_category_request Category details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCategory'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateCategoryResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateCategoryResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createCategory($create_category_request, string $contentType = self::contentTypes['createCategory'][0])
     {
@@ -155,12 +155,12 @@ class PropertyCategoriesApi
      *
      * Create Category
      *
-     * @param  \OpenAPI\Client\Model\CreateCategoryRequest $create_category_request Category details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateCategoryRequest $create_category_request Category details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCategory'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateCategoryResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateCategoryResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createCategoryWithHttpInfo($create_category_request, string $contentType = self::contentTypes['createCategory'][0])
     {
@@ -192,13 +192,13 @@ class PropertyCategoriesApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateCategoryResponse',
+                        '\Kinde\KindeSDK\Model\CreateCategoryResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -220,7 +220,7 @@ class PropertyCategoriesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateCategoryResponse',
+                '\Kinde\KindeSDK\Model\CreateCategoryResponse',
                 $request,
                 $response,
             );
@@ -229,7 +229,7 @@ class PropertyCategoriesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateCategoryResponse',
+                        '\Kinde\KindeSDK\Model\CreateCategoryResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -237,7 +237,7 @@ class PropertyCategoriesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -254,7 +254,7 @@ class PropertyCategoriesApi
      *
      * Create Category
      *
-     * @param  \OpenAPI\Client\Model\CreateCategoryRequest $create_category_request Category details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateCategoryRequest $create_category_request Category details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCategory'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -275,7 +275,7 @@ class PropertyCategoriesApi
      *
      * Create Category
      *
-     * @param  \OpenAPI\Client\Model\CreateCategoryRequest $create_category_request Category details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateCategoryRequest $create_category_request Category details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCategory'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -283,7 +283,7 @@ class PropertyCategoriesApi
      */
     public function createCategoryAsyncWithHttpInfo($create_category_request, string $contentType = self::contentTypes['createCategory'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateCategoryResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateCategoryResponse';
         $request = $this->createCategoryRequest($create_category_request, $contentType);
 
         return $this->client
@@ -325,7 +325,7 @@ class PropertyCategoriesApi
     /**
      * Create request for operation 'createCategory'
      *
-     * @param  \OpenAPI\Client\Model\CreateCategoryRequest $create_category_request Category details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateCategoryRequest $create_category_request Category details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createCategory'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -428,9 +428,9 @@ class PropertyCategoriesApi
      * @param  string|null $context Filter the results by User or Organization context (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCategories'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetCategoriesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetCategoriesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getCategories($page_size = null, $starting_after = null, $ending_before = null, $context = null, string $contentType = self::contentTypes['getCategories'][0])
     {
@@ -449,9 +449,9 @@ class PropertyCategoriesApi
      * @param  string|null $context Filter the results by User or Organization context (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCategories'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetCategoriesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetCategoriesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCategoriesWithHttpInfo($page_size = null, $starting_after = null, $ending_before = null, $context = null, string $contentType = self::contentTypes['getCategories'][0])
     {
@@ -483,19 +483,19 @@ class PropertyCategoriesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetCategoriesResponse',
+                        '\Kinde\KindeSDK\Model\GetCategoriesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -517,7 +517,7 @@ class PropertyCategoriesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetCategoriesResponse',
+                '\Kinde\KindeSDK\Model\GetCategoriesResponse',
                 $request,
                 $response,
             );
@@ -526,7 +526,7 @@ class PropertyCategoriesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetCategoriesResponse',
+                        '\Kinde\KindeSDK\Model\GetCategoriesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -534,7 +534,7 @@ class PropertyCategoriesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -542,7 +542,7 @@ class PropertyCategoriesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -594,7 +594,7 @@ class PropertyCategoriesApi
      */
     public function getCategoriesAsyncWithHttpInfo($page_size = null, $starting_after = null, $ending_before = null, $context = null, string $contentType = self::contentTypes['getCategories'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetCategoriesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetCategoriesResponse';
         $request = $this->getCategoriesRequest($page_size, $starting_after, $ending_before, $context, $contentType);
 
         return $this->client
@@ -763,12 +763,12 @@ class PropertyCategoriesApi
      * Update Category
      *
      * @param  string $category_id The unique identifier for the category. (required)
-     * @param  \OpenAPI\Client\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCategory'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateCategory($category_id, $update_category_request, string $contentType = self::contentTypes['updateCategory'][0])
     {
@@ -782,12 +782,12 @@ class PropertyCategoriesApi
      * Update Category
      *
      * @param  string $category_id The unique identifier for the category. (required)
-     * @param  \OpenAPI\Client\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCategory'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateCategoryWithHttpInfo($category_id, $update_category_request, string $contentType = self::contentTypes['updateCategory'][0])
     {
@@ -819,13 +819,13 @@ class PropertyCategoriesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -847,7 +847,7 @@ class PropertyCategoriesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -856,7 +856,7 @@ class PropertyCategoriesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -864,7 +864,7 @@ class PropertyCategoriesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -882,7 +882,7 @@ class PropertyCategoriesApi
      * Update Category
      *
      * @param  string $category_id The unique identifier for the category. (required)
-     * @param  \OpenAPI\Client\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCategory'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -904,7 +904,7 @@ class PropertyCategoriesApi
      * Update Category
      *
      * @param  string $category_id The unique identifier for the category. (required)
-     * @param  \OpenAPI\Client\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCategory'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -912,7 +912,7 @@ class PropertyCategoriesApi
      */
     public function updateCategoryAsyncWithHttpInfo($category_id, $update_category_request, string $contentType = self::contentTypes['updateCategory'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateCategoryRequest($category_id, $update_category_request, $contentType);
 
         return $this->client
@@ -955,7 +955,7 @@ class PropertyCategoriesApi
      * Create request for operation 'updateCategory'
      *
      * @param  string $category_id The unique identifier for the category. (required)
-     * @param  \OpenAPI\Client\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateCategoryRequest $update_category_request The fields of the category to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateCategory'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

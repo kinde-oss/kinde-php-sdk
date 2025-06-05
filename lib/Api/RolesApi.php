@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * RolesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -162,12 +162,12 @@ class RolesApi
      * Add role scope
      *
      * @param  string $role_id The role id. (required)
-     * @param  \OpenAPI\Client\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
+     * @param  \Kinde\KindeSDK\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRoleScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\AddRoleScopeResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\AddRoleScopeResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function addRoleScope($role_id, $add_role_scope_request, string $contentType = self::contentTypes['addRoleScope'][0])
     {
@@ -181,12 +181,12 @@ class RolesApi
      * Add role scope
      *
      * @param  string $role_id The role id. (required)
-     * @param  \OpenAPI\Client\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
+     * @param  \Kinde\KindeSDK\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRoleScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\AddRoleScopeResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\AddRoleScopeResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addRoleScopeWithHttpInfo($role_id, $add_role_scope_request, string $contentType = self::contentTypes['addRoleScope'][0])
     {
@@ -218,25 +218,25 @@ class RolesApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\AddRoleScopeResponse',
+                        '\Kinde\KindeSDK\Model\AddRoleScopeResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -258,7 +258,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\AddRoleScopeResponse',
+                '\Kinde\KindeSDK\Model\AddRoleScopeResponse',
                 $request,
                 $response,
             );
@@ -267,7 +267,7 @@ class RolesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\AddRoleScopeResponse',
+                        '\Kinde\KindeSDK\Model\AddRoleScopeResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -275,7 +275,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -283,7 +283,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -291,7 +291,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -309,7 +309,7 @@ class RolesApi
      * Add role scope
      *
      * @param  string $role_id The role id. (required)
-     * @param  \OpenAPI\Client\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
+     * @param  \Kinde\KindeSDK\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRoleScope'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -331,7 +331,7 @@ class RolesApi
      * Add role scope
      *
      * @param  string $role_id The role id. (required)
-     * @param  \OpenAPI\Client\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
+     * @param  \Kinde\KindeSDK\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRoleScope'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -339,7 +339,7 @@ class RolesApi
      */
     public function addRoleScopeAsyncWithHttpInfo($role_id, $add_role_scope_request, string $contentType = self::contentTypes['addRoleScope'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\AddRoleScopeResponse';
+        $returnType = '\Kinde\KindeSDK\Model\AddRoleScopeResponse';
         $request = $this->addRoleScopeRequest($role_id, $add_role_scope_request, $contentType);
 
         return $this->client
@@ -382,7 +382,7 @@ class RolesApi
      * Create request for operation 'addRoleScope'
      *
      * @param  string $role_id The role id. (required)
-     * @param  \OpenAPI\Client\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
+     * @param  \Kinde\KindeSDK\Model\AddRoleScopeRequest $add_role_scope_request Add scope to role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRoleScope'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -494,12 +494,12 @@ class RolesApi
      *
      * Create role
      *
-     * @param  \OpenAPI\Client\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateRolesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateRolesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createRole($create_role_request = null, string $contentType = self::contentTypes['createRole'][0])
     {
@@ -512,12 +512,12 @@ class RolesApi
      *
      * Create role
      *
-     * @param  \OpenAPI\Client\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateRolesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateRolesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createRoleWithHttpInfo($create_role_request = null, string $contentType = self::contentTypes['createRole'][0])
     {
@@ -549,25 +549,25 @@ class RolesApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateRolesResponse',
+                        '\Kinde\KindeSDK\Model\CreateRolesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -589,7 +589,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateRolesResponse',
+                '\Kinde\KindeSDK\Model\CreateRolesResponse',
                 $request,
                 $response,
             );
@@ -598,7 +598,7 @@ class RolesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateRolesResponse',
+                        '\Kinde\KindeSDK\Model\CreateRolesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -606,7 +606,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -614,7 +614,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -622,7 +622,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -639,7 +639,7 @@ class RolesApi
      *
      * Create role
      *
-     * @param  \OpenAPI\Client\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -660,7 +660,7 @@ class RolesApi
      *
      * Create role
      *
-     * @param  \OpenAPI\Client\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -668,7 +668,7 @@ class RolesApi
      */
     public function createRoleAsyncWithHttpInfo($create_role_request = null, string $contentType = self::contentTypes['createRole'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateRolesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateRolesResponse';
         $request = $this->createRoleRequest($create_role_request, $contentType);
 
         return $this->client
@@ -710,7 +710,7 @@ class RolesApi
     /**
      * Create request for operation 'createRole'
      *
-     * @param  \OpenAPI\Client\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreateRoleRequest|null $create_role_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -804,9 +804,9 @@ class RolesApi
      * @param  string $role_id The identifier for the role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteRole($role_id, string $contentType = self::contentTypes['deleteRole'][0])
     {
@@ -822,9 +822,9 @@ class RolesApi
      * @param  string $role_id The identifier for the role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteRoleWithHttpInfo($role_id, string $contentType = self::contentTypes['deleteRole'][0])
     {
@@ -856,25 +856,25 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -896,7 +896,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -905,7 +905,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -913,7 +913,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -921,7 +921,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -929,7 +929,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -975,7 +975,7 @@ class RolesApi
      */
     public function deleteRoleAsyncWithHttpInfo($role_id, string $contentType = self::contentTypes['deleteRole'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteRoleRequest($role_id, $contentType);
 
         return $this->client
@@ -1119,9 +1119,9 @@ class RolesApi
      * @param  string $scope_id The scope id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteRoleScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\DeleteRoleScopeResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\DeleteRoleScopeResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteRoleScope($role_id, $scope_id, string $contentType = self::contentTypes['deleteRoleScope'][0])
     {
@@ -1138,9 +1138,9 @@ class RolesApi
      * @param  string $scope_id The scope id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteRoleScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\DeleteRoleScopeResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\DeleteRoleScopeResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteRoleScopeWithHttpInfo($role_id, $scope_id, string $contentType = self::contentTypes['deleteRoleScope'][0])
     {
@@ -1172,25 +1172,25 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\DeleteRoleScopeResponse',
+                        '\Kinde\KindeSDK\Model\DeleteRoleScopeResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1212,7 +1212,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\DeleteRoleScopeResponse',
+                '\Kinde\KindeSDK\Model\DeleteRoleScopeResponse',
                 $request,
                 $response,
             );
@@ -1221,7 +1221,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\DeleteRoleScopeResponse',
+                        '\Kinde\KindeSDK\Model\DeleteRoleScopeResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1229,7 +1229,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1237,7 +1237,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1245,7 +1245,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1293,7 +1293,7 @@ class RolesApi
      */
     public function deleteRoleScopeAsyncWithHttpInfo($role_id, $scope_id, string $contentType = self::contentTypes['deleteRoleScope'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\DeleteRoleScopeResponse';
+        $returnType = '\Kinde\KindeSDK\Model\DeleteRoleScopeResponse';
         $request = $this->deleteRoleScopeRequest($role_id, $scope_id, $contentType);
 
         return $this->client
@@ -1452,9 +1452,9 @@ class RolesApi
      * @param  string $role_id The identifier for the role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetRoleResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetRoleResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getRole($role_id, string $contentType = self::contentTypes['getRole'][0])
     {
@@ -1470,9 +1470,9 @@ class RolesApi
      * @param  string $role_id The identifier for the role. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetRoleResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetRoleResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getRoleWithHttpInfo($role_id, string $contentType = self::contentTypes['getRole'][0])
     {
@@ -1504,25 +1504,25 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetRoleResponse',
+                        '\Kinde\KindeSDK\Model\GetRoleResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1544,7 +1544,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetRoleResponse',
+                '\Kinde\KindeSDK\Model\GetRoleResponse',
                 $request,
                 $response,
             );
@@ -1553,7 +1553,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetRoleResponse',
+                        '\Kinde\KindeSDK\Model\GetRoleResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1561,7 +1561,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1569,7 +1569,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1577,7 +1577,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1623,7 +1623,7 @@ class RolesApi
      */
     public function getRoleAsyncWithHttpInfo($role_id, string $contentType = self::contentTypes['getRole'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetRoleResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetRoleResponse';
         $request = $this->getRoleRequest($role_id, $contentType);
 
         return $this->client
@@ -1769,9 +1769,9 @@ class RolesApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRolePermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\RolePermissionsResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\RolePermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getRolePermissions($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRolePermissions'][0])
     {
@@ -1790,9 +1790,9 @@ class RolesApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRolePermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\RolePermissionsResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\RolePermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getRolePermissionsWithHttpInfo($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRolePermissions'][0])
     {
@@ -1824,13 +1824,13 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\RolePermissionsResponse',
+                        '\Kinde\KindeSDK\Model\RolePermissionsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1852,7 +1852,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\RolePermissionsResponse',
+                '\Kinde\KindeSDK\Model\RolePermissionsResponse',
                 $request,
                 $response,
             );
@@ -1861,7 +1861,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\RolePermissionsResponse',
+                        '\Kinde\KindeSDK\Model\RolePermissionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1869,7 +1869,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1921,7 +1921,7 @@ class RolesApi
      */
     public function getRolePermissionsAsyncWithHttpInfo($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRolePermissions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\RolePermissionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\RolePermissionsResponse';
         $request = $this->getRolePermissionsRequest($role_id, $sort, $page_size, $next_token, $contentType);
 
         return $this->client
@@ -2097,9 +2097,9 @@ class RolesApi
      * @param  string $role_id The role id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleScopes'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\RoleScopesResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\RoleScopesResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getRoleScopes($role_id, string $contentType = self::contentTypes['getRoleScopes'][0])
     {
@@ -2115,9 +2115,9 @@ class RolesApi
      * @param  string $role_id The role id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleScopes'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\RoleScopesResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\RoleScopesResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getRoleScopesWithHttpInfo($role_id, string $contentType = self::contentTypes['getRoleScopes'][0])
     {
@@ -2149,13 +2149,13 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\RoleScopesResponse',
+                        '\Kinde\KindeSDK\Model\RoleScopesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2177,7 +2177,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\RoleScopesResponse',
+                '\Kinde\KindeSDK\Model\RoleScopesResponse',
                 $request,
                 $response,
             );
@@ -2186,7 +2186,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\RoleScopesResponse',
+                        '\Kinde\KindeSDK\Model\RoleScopesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2194,7 +2194,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2240,7 +2240,7 @@ class RolesApi
      */
     public function getRoleScopesAsyncWithHttpInfo($role_id, string $contentType = self::contentTypes['getRoleScopes'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\RoleScopesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\RoleScopesResponse';
         $request = $this->getRoleScopesRequest($role_id, $contentType);
 
         return $this->client
@@ -2385,9 +2385,9 @@ class RolesApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoles'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetRolesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetRolesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getRoles($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoles'][0])
     {
@@ -2405,9 +2405,9 @@ class RolesApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoles'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetRolesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetRolesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getRolesWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoles'][0])
     {
@@ -2439,25 +2439,25 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetRolesResponse',
+                        '\Kinde\KindeSDK\Model\GetRolesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2479,7 +2479,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetRolesResponse',
+                '\Kinde\KindeSDK\Model\GetRolesResponse',
                 $request,
                 $response,
             );
@@ -2488,7 +2488,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetRolesResponse',
+                        '\Kinde\KindeSDK\Model\GetRolesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2496,7 +2496,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2504,7 +2504,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2512,7 +2512,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2562,7 +2562,7 @@ class RolesApi
      */
     public function getRolesAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoles'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetRolesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetRolesResponse';
         $request = $this->getRolesRequest($sort, $page_size, $next_token, $contentType);
 
         return $this->client
@@ -2723,9 +2723,9 @@ class RolesApi
      * @param  string $permission_id The permission&#39;s public id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeRolePermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function removeRolePermission($role_id, $permission_id, string $contentType = self::contentTypes['removeRolePermission'][0])
     {
@@ -2742,9 +2742,9 @@ class RolesApi
      * @param  string $permission_id The permission&#39;s public id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeRolePermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function removeRolePermissionWithHttpInfo($role_id, $permission_id, string $contentType = self::contentTypes['removeRolePermission'][0])
     {
@@ -2776,13 +2776,13 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2804,7 +2804,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2813,7 +2813,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2821,7 +2821,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2869,7 +2869,7 @@ class RolesApi
      */
     public function removeRolePermissionAsyncWithHttpInfo($role_id, $permission_id, string $contentType = self::contentTypes['removeRolePermission'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->removeRolePermissionRequest($role_id, $permission_id, $contentType);
 
         return $this->client
@@ -3026,12 +3026,12 @@ class RolesApi
      * Update role permissions
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolePermissionsRequest $update_role_permissions_request update_role_permissions_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolePermissionsRequest $update_role_permissions_request update_role_permissions_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRolePermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\UpdateRolePermissionsResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\UpdateRolePermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateRolePermissions($role_id, $update_role_permissions_request, string $contentType = self::contentTypes['updateRolePermissions'][0])
     {
@@ -3045,12 +3045,12 @@ class RolesApi
      * Update role permissions
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRolePermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\UpdateRolePermissionsResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\UpdateRolePermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateRolePermissionsWithHttpInfo($role_id, $update_role_permissions_request, string $contentType = self::contentTypes['updateRolePermissions'][0])
     {
@@ -3082,13 +3082,13 @@ class RolesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\UpdateRolePermissionsResponse',
+                        '\Kinde\KindeSDK\Model\UpdateRolePermissionsResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3110,7 +3110,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\UpdateRolePermissionsResponse',
+                '\Kinde\KindeSDK\Model\UpdateRolePermissionsResponse',
                 $request,
                 $response,
             );
@@ -3119,7 +3119,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\UpdateRolePermissionsResponse',
+                        '\Kinde\KindeSDK\Model\UpdateRolePermissionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3127,7 +3127,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3145,7 +3145,7 @@ class RolesApi
      * Update role permissions
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRolePermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3167,7 +3167,7 @@ class RolesApi
      * Update role permissions
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRolePermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3175,7 +3175,7 @@ class RolesApi
      */
     public function updateRolePermissionsAsyncWithHttpInfo($role_id, $update_role_permissions_request, string $contentType = self::contentTypes['updateRolePermissions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\UpdateRolePermissionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\UpdateRolePermissionsResponse';
         $request = $this->updateRolePermissionsRequest($role_id, $update_role_permissions_request, $contentType);
 
         return $this->client
@@ -3218,7 +3218,7 @@ class RolesApi
      * Create request for operation 'updateRolePermissions'
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolePermissionsRequest $update_role_permissions_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRolePermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3331,12 +3331,12 @@ class RolesApi
      * Update role
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoles'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateRoles($role_id, $update_roles_request = null, string $contentType = self::contentTypes['updateRoles'][0])
     {
@@ -3350,12 +3350,12 @@ class RolesApi
      * Update role
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoles'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateRolesWithHttpInfo($role_id, $update_roles_request = null, string $contentType = self::contentTypes['updateRoles'][0])
     {
@@ -3387,25 +3387,25 @@ class RolesApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3427,7 +3427,7 @@ class RolesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3436,7 +3436,7 @@ class RolesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3444,7 +3444,7 @@ class RolesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3452,7 +3452,7 @@ class RolesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3460,7 +3460,7 @@ class RolesApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3478,7 +3478,7 @@ class RolesApi
      * Update role
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoles'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3500,7 +3500,7 @@ class RolesApi
      * Update role
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoles'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3508,7 +3508,7 @@ class RolesApi
      */
     public function updateRolesAsyncWithHttpInfo($role_id, $update_roles_request = null, string $contentType = self::contentTypes['updateRoles'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateRolesRequest($role_id, $update_roles_request, $contentType);
 
         return $this->client
@@ -3551,7 +3551,7 @@ class RolesApi
      * Create request for operation 'updateRoles'
      *
      * @param  string $role_id The identifier for the role. (required)
-     * @param  \OpenAPI\Client\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateRolesRequest|null $update_roles_request Role details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoles'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

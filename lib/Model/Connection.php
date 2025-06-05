@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * Connection Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class Connection implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'connection' => '\OpenAPI\Client\Model\ConnectionConnection'
+        'connection' => '\Kinde\KindeSDK\Model\ConnectionConnection'
     ];
 
     /**
@@ -361,7 +361,7 @@ class Connection implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets connection
      *
-     * @return \OpenAPI\Client\Model\ConnectionConnection|null
+     * @return \Kinde\KindeSDK\Model\ConnectionConnection|null
      */
     public function getConnection()
     {
@@ -371,7 +371,7 @@ class Connection implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets connection
      *
-     * @param \OpenAPI\Client\Model\ConnectionConnection|null $connection connection
+     * @param \Kinde\KindeSDK\Model\ConnectionConnection|null $connection connection
      *
      * @return self
      */

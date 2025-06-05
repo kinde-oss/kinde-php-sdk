@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,17 +27,17 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateUserRequestIdentitiesInner Class Doc Comment
  *
  * @category Class
  * @description The result of the user creation operation.
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -61,7 +61,7 @@ class CreateUserRequestIdentitiesInner implements ModelInterface, ArrayAccess, \
     protected static $openAPITypes = [
         'type' => 'string',
         'is_verified' => 'bool',
-        'details' => '\OpenAPI\Client\Model\CreateUserRequestIdentitiesInnerDetails'
+        'details' => '\Kinde\KindeSDK\Model\CreateUserRequestIdentitiesInnerDetails'
     ];
 
     /**
@@ -398,7 +398,7 @@ class CreateUserRequestIdentitiesInner implements ModelInterface, ArrayAccess, \
     /**
      * Gets details
      *
-     * @return \OpenAPI\Client\Model\CreateUserRequestIdentitiesInnerDetails|null
+     * @return \Kinde\KindeSDK\Model\CreateUserRequestIdentitiesInnerDetails|null
      */
     public function getDetails()
     {
@@ -408,7 +408,7 @@ class CreateUserRequestIdentitiesInner implements ModelInterface, ArrayAccess, \
     /**
      * Sets details
      *
-     * @param \OpenAPI\Client\Model\CreateUserRequestIdentitiesInnerDetails|null $details details
+     * @param \Kinde\KindeSDK\Model\CreateUserRequestIdentitiesInnerDetails|null $details details
      *
      * @return self
      */

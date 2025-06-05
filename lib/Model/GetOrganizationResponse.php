@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetOrganizationResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -68,14 +68,14 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => 'string',
         'favicon_svg' => 'string',
         'favicon_fallback' => 'string',
-        'link_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'background_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
-        'button_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'button_text_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
-        'link_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'background_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'button_text_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'button_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'link_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'background_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
+        'button_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'button_text_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
+        'link_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'background_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'button_text_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'button_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
         'button_border_radius' => 'int',
         'card_border_radius' => 'int',
         'input_border_radius' => 'int',
@@ -85,7 +85,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => 'bool',
         'sender_name' => 'string',
         'sender_email' => 'string',
-        'billing' => '\OpenAPI\Client\Model\GetOrganizationResponseBilling'
+        'billing' => '\Kinde\KindeSDK\Model\GetOrganizationResponseBilling'
     ];
 
     /**
@@ -846,7 +846,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets link_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getLinkColor()
     {
@@ -856,7 +856,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets link_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color link_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color link_color
      *
      * @return self
      */
@@ -880,7 +880,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets background_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
      */
     public function getBackgroundColor()
     {
@@ -890,7 +890,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets background_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $background_color background_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $background_color background_color
      *
      * @return self
      */
@@ -914,7 +914,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets button_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getButtonColor()
     {
@@ -924,7 +924,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets button_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color button_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color button_color
      *
      * @return self
      */
@@ -948,7 +948,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets button_text_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
      */
     public function getButtonTextColor()
     {
@@ -958,7 +958,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets button_text_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $button_text_color button_text_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $button_text_color button_text_color
      *
      * @return self
      */
@@ -982,7 +982,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets link_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getLinkColorDark()
     {
@@ -992,7 +992,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets link_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color_dark link_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color_dark link_color_dark
      *
      * @return self
      */
@@ -1016,7 +1016,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets background_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getBackgroundColorDark()
     {
@@ -1026,7 +1026,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets background_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $background_color_dark background_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $background_color_dark background_color_dark
      *
      * @return self
      */
@@ -1050,7 +1050,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets button_text_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getButtonTextColorDark()
     {
@@ -1060,7 +1060,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets button_text_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_text_color_dark button_text_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_text_color_dark button_text_color_dark
      *
      * @return self
      */
@@ -1084,7 +1084,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets button_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getButtonColorDark()
     {
@@ -1094,7 +1094,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets button_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color_dark button_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color_dark button_color_dark
      *
      * @return self
      */
@@ -1425,7 +1425,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets billing
      *
-     * @return \OpenAPI\Client\Model\GetOrganizationResponseBilling|null
+     * @return \Kinde\KindeSDK\Model\GetOrganizationResponseBilling|null
      */
     public function getBilling()
     {
@@ -1435,7 +1435,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets billing
      *
-     * @param \OpenAPI\Client\Model\GetOrganizationResponseBilling|null $billing billing
+     * @param \Kinde\KindeSDK\Model\GetOrganizationResponseBilling|null $billing billing
      *
      * @return self
      */

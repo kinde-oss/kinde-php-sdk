@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client\Model
+ * @package  Kinde\KindeSDK\Model
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,12 +27,12 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 /**
  * Interface abstracting model access.
  *
- * @package OpenAPI\Client\Model
+ * @package Kinde\KindeSDK\Model
  * @author  OpenAPI Generator team
  */
 interface ModelInterface

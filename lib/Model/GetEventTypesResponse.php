@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetEventTypesResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetEventTypesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'event_types' => '\OpenAPI\Client\Model\EventType[]'
+        'event_types' => '\Kinde\KindeSDK\Model\EventType[]'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetEventTypesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets event_types
      *
-     * @return \OpenAPI\Client\Model\EventType[]|null
+     * @return \Kinde\KindeSDK\Model\EventType[]|null
      */
     public function getEventTypes()
     {
@@ -371,7 +371,7 @@ class GetEventTypesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets event_types
      *
-     * @param \OpenAPI\Client\Model\EventType[]|null $event_types event_types
+     * @param \Kinde\KindeSDK\Model\EventType[]|null $event_types event_types
      *
      * @return self
      */

@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CallbacksApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -153,12 +153,12 @@ class CallbacksApi
      * Add logout redirect URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogoutRedirectURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function addLogoutRedirectURLs($app_id, $replace_logout_redirect_urls_request, string $contentType = self::contentTypes['addLogoutRedirectURLs'][0])
     {
@@ -172,12 +172,12 @@ class CallbacksApi
      * Add logout redirect URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogoutRedirectURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addLogoutRedirectURLsWithHttpInfo($app_id, $replace_logout_redirect_urls_request, string $contentType = self::contentTypes['addLogoutRedirectURLs'][0])
     {
@@ -209,25 +209,25 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -249,7 +249,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -258,7 +258,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -266,7 +266,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -274,7 +274,7 @@ class CallbacksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -282,7 +282,7 @@ class CallbacksApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -300,7 +300,7 @@ class CallbacksApi
      * Add logout redirect URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogoutRedirectURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -322,7 +322,7 @@ class CallbacksApi
      * Add logout redirect URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogoutRedirectURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -330,7 +330,7 @@ class CallbacksApi
      */
     public function addLogoutRedirectURLsAsyncWithHttpInfo($app_id, $replace_logout_redirect_urls_request, string $contentType = self::contentTypes['addLogoutRedirectURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->addLogoutRedirectURLsRequest($app_id, $replace_logout_redirect_urls_request, $contentType);
 
         return $this->client
@@ -373,7 +373,7 @@ class CallbacksApi
      * Create request for operation 'addLogoutRedirectURLs'
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogoutRedirectURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -486,12 +486,12 @@ class CallbacksApi
      * Add Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRedirectCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function addRedirectCallbackURLs($app_id, $replace_redirect_callback_urls_request, string $contentType = self::contentTypes['addRedirectCallbackURLs'][0])
     {
@@ -505,12 +505,12 @@ class CallbacksApi
      * Add Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRedirectCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addRedirectCallbackURLsWithHttpInfo($app_id, $replace_redirect_callback_urls_request, string $contentType = self::contentTypes['addRedirectCallbackURLs'][0])
     {
@@ -542,19 +542,19 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -576,7 +576,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -585,7 +585,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -593,7 +593,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -601,7 +601,7 @@ class CallbacksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -619,7 +619,7 @@ class CallbacksApi
      * Add Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRedirectCallbackURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -641,7 +641,7 @@ class CallbacksApi
      * Add Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRedirectCallbackURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -649,7 +649,7 @@ class CallbacksApi
      */
     public function addRedirectCallbackURLsAsyncWithHttpInfo($app_id, $replace_redirect_callback_urls_request, string $contentType = self::contentTypes['addRedirectCallbackURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->addRedirectCallbackURLsRequest($app_id, $replace_redirect_callback_urls_request, $contentType);
 
         return $this->client
@@ -692,7 +692,7 @@ class CallbacksApi
      * Create request for operation 'addRedirectCallbackURLs'
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addRedirectCallbackURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -808,9 +808,9 @@ class CallbacksApi
      * @param  string $urls Urls to delete, comma separated and url encoded. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteCallbackURLs($app_id, $urls, string $contentType = self::contentTypes['deleteCallbackURLs'][0])
     {
@@ -827,9 +827,9 @@ class CallbacksApi
      * @param  string $urls Urls to delete, comma separated and url encoded. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteCallbackURLsWithHttpInfo($app_id, $urls, string $contentType = self::contentTypes['deleteCallbackURLs'][0])
     {
@@ -861,19 +861,19 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -895,7 +895,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -904,7 +904,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -912,7 +912,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -920,7 +920,7 @@ class CallbacksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -968,7 +968,7 @@ class CallbacksApi
      */
     public function deleteCallbackURLsAsyncWithHttpInfo($app_id, $urls, string $contentType = self::contentTypes['deleteCallbackURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteCallbackURLsRequest($app_id, $urls, $contentType);
 
         return $this->client
@@ -1129,9 +1129,9 @@ class CallbacksApi
      * @param  string $urls Urls to delete, comma separated and url encoded. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteLogoutURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteLogoutURLs($app_id, $urls, string $contentType = self::contentTypes['deleteLogoutURLs'][0])
     {
@@ -1148,9 +1148,9 @@ class CallbacksApi
      * @param  string $urls Urls to delete, comma separated and url encoded. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteLogoutURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteLogoutURLsWithHttpInfo($app_id, $urls, string $contentType = self::contentTypes['deleteLogoutURLs'][0])
     {
@@ -1182,25 +1182,25 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1222,7 +1222,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1231,7 +1231,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1239,7 +1239,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1247,7 +1247,7 @@ class CallbacksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1255,7 +1255,7 @@ class CallbacksApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1303,7 +1303,7 @@ class CallbacksApi
      */
     public function deleteLogoutURLsAsyncWithHttpInfo($app_id, $urls, string $contentType = self::contentTypes['deleteLogoutURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteLogoutURLsRequest($app_id, $urls, $contentType);
 
         return $this->client
@@ -1463,9 +1463,9 @@ class CallbacksApi
      * @param  string $app_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\RedirectCallbackUrls|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\RedirectCallbackUrls|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getCallbackURLs($app_id, string $contentType = self::contentTypes['getCallbackURLs'][0])
     {
@@ -1481,9 +1481,9 @@ class CallbacksApi
      * @param  string $app_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\RedirectCallbackUrls|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\RedirectCallbackUrls|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCallbackURLsWithHttpInfo($app_id, string $contentType = self::contentTypes['getCallbackURLs'][0])
     {
@@ -1515,13 +1515,13 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\RedirectCallbackUrls',
+                        '\Kinde\KindeSDK\Model\RedirectCallbackUrls',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1543,7 +1543,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\RedirectCallbackUrls',
+                '\Kinde\KindeSDK\Model\RedirectCallbackUrls',
                 $request,
                 $response,
             );
@@ -1552,7 +1552,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\RedirectCallbackUrls',
+                        '\Kinde\KindeSDK\Model\RedirectCallbackUrls',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1560,7 +1560,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1606,7 +1606,7 @@ class CallbacksApi
      */
     public function getCallbackURLsAsyncWithHttpInfo($app_id, string $contentType = self::contentTypes['getCallbackURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\RedirectCallbackUrls';
+        $returnType = '\Kinde\KindeSDK\Model\RedirectCallbackUrls';
         $request = $this->getCallbackURLsRequest($app_id, $contentType);
 
         return $this->client
@@ -1749,9 +1749,9 @@ class CallbacksApi
      * @param  string $app_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getLogoutURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\LogoutRedirectUrls|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\LogoutRedirectUrls|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getLogoutURLs($app_id, string $contentType = self::contentTypes['getLogoutURLs'][0])
     {
@@ -1767,9 +1767,9 @@ class CallbacksApi
      * @param  string $app_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getLogoutURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\LogoutRedirectUrls|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\LogoutRedirectUrls|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getLogoutURLsWithHttpInfo($app_id, string $contentType = self::contentTypes['getLogoutURLs'][0])
     {
@@ -1801,25 +1801,25 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\LogoutRedirectUrls',
+                        '\Kinde\KindeSDK\Model\LogoutRedirectUrls',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1841,7 +1841,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\LogoutRedirectUrls',
+                '\Kinde\KindeSDK\Model\LogoutRedirectUrls',
                 $request,
                 $response,
             );
@@ -1850,7 +1850,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\LogoutRedirectUrls',
+                        '\Kinde\KindeSDK\Model\LogoutRedirectUrls',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1858,7 +1858,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1866,7 +1866,7 @@ class CallbacksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1874,7 +1874,7 @@ class CallbacksApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1920,7 +1920,7 @@ class CallbacksApi
      */
     public function getLogoutURLsAsyncWithHttpInfo($app_id, string $contentType = self::contentTypes['getLogoutURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\LogoutRedirectUrls';
+        $returnType = '\Kinde\KindeSDK\Model\LogoutRedirectUrls';
         $request = $this->getLogoutURLsRequest($app_id, $contentType);
 
         return $this->client
@@ -2061,12 +2061,12 @@ class CallbacksApi
      * Replace logout redirect URls
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceLogoutRedirectURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function replaceLogoutRedirectURLs($app_id, $replace_logout_redirect_urls_request, string $contentType = self::contentTypes['replaceLogoutRedirectURLs'][0])
     {
@@ -2080,12 +2080,12 @@ class CallbacksApi
      * Replace logout redirect URls
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceLogoutRedirectURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function replaceLogoutRedirectURLsWithHttpInfo($app_id, $replace_logout_redirect_urls_request, string $contentType = self::contentTypes['replaceLogoutRedirectURLs'][0])
     {
@@ -2117,25 +2117,25 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2157,7 +2157,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2166,7 +2166,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2174,7 +2174,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2182,7 +2182,7 @@ class CallbacksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2190,7 +2190,7 @@ class CallbacksApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2208,7 +2208,7 @@ class CallbacksApi
      * Replace logout redirect URls
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceLogoutRedirectURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2230,7 +2230,7 @@ class CallbacksApi
      * Replace logout redirect URls
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceLogoutRedirectURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2238,7 +2238,7 @@ class CallbacksApi
      */
     public function replaceLogoutRedirectURLsAsyncWithHttpInfo($app_id, $replace_logout_redirect_urls_request, string $contentType = self::contentTypes['replaceLogoutRedirectURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->replaceLogoutRedirectURLsRequest($app_id, $replace_logout_redirect_urls_request, $contentType);
 
         return $this->client
@@ -2281,7 +2281,7 @@ class CallbacksApi
      * Create request for operation 'replaceLogoutRedirectURLs'
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceLogoutRedirectURLsRequest $replace_logout_redirect_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceLogoutRedirectURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2394,12 +2394,12 @@ class CallbacksApi
      * Replace Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceRedirectCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function replaceRedirectCallbackURLs($app_id, $replace_redirect_callback_urls_request, string $contentType = self::contentTypes['replaceRedirectCallbackURLs'][0])
     {
@@ -2413,12 +2413,12 @@ class CallbacksApi
      * Replace Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceRedirectCallbackURLs'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function replaceRedirectCallbackURLsWithHttpInfo($app_id, $replace_redirect_callback_urls_request, string $contentType = self::contentTypes['replaceRedirectCallbackURLs'][0])
     {
@@ -2450,13 +2450,13 @@ class CallbacksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2478,7 +2478,7 @@ class CallbacksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2487,7 +2487,7 @@ class CallbacksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2495,7 +2495,7 @@ class CallbacksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2513,7 +2513,7 @@ class CallbacksApi
      * Replace Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceRedirectCallbackURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2535,7 +2535,7 @@ class CallbacksApi
      * Replace Redirect Callback URLs
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceRedirectCallbackURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2543,7 +2543,7 @@ class CallbacksApi
      */
     public function replaceRedirectCallbackURLsAsyncWithHttpInfo($app_id, $replace_redirect_callback_urls_request, string $contentType = self::contentTypes['replaceRedirectCallbackURLs'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->replaceRedirectCallbackURLsRequest($app_id, $replace_redirect_callback_urls_request, $contentType);
 
         return $this->client
@@ -2586,7 +2586,7 @@ class CallbacksApi
      * Create request for operation 'replaceRedirectCallbackURLs'
      *
      * @param  string $app_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceRedirectCallbackURLsRequest $replace_redirect_callback_urls_request Callback details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceRedirectCallbackURLs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

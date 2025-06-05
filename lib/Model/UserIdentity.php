@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * UserIdentity Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -59,7 +59,7 @@ class UserIdentity implements ModelInterface, ArrayAccess, \JsonSerializable
       */
     protected static $openAPITypes = [
         'type' => 'string',
-        'result' => '\OpenAPI\Client\Model\UserIdentityResult'
+        'result' => '\Kinde\KindeSDK\Model\UserIdentityResult'
     ];
 
     /**
@@ -327,7 +327,7 @@ class UserIdentity implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets result
      *
-     * @return \OpenAPI\Client\Model\UserIdentityResult|null
+     * @return \Kinde\KindeSDK\Model\UserIdentityResult|null
      */
     public function getResult()
     {
@@ -337,7 +337,7 @@ class UserIdentity implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets result
      *
-     * @param \OpenAPI\Client\Model\UserIdentityResult|null $result result
+     * @param \Kinde\KindeSDK\Model\UserIdentityResult|null $result result
      *
      * @return self
      */

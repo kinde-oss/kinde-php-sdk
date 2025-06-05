@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * FeatureFlagsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -137,12 +137,12 @@ class FeatureFlagsApi
      *
      * Create Feature Flag
      *
-     * @param  \OpenAPI\Client\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createFeatureFlag'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createFeatureFlag($create_feature_flag_request, string $contentType = self::contentTypes['createFeatureFlag'][0])
     {
@@ -155,12 +155,12 @@ class FeatureFlagsApi
      *
      * Create Feature Flag
      *
-     * @param  \OpenAPI\Client\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createFeatureFlag'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createFeatureFlagWithHttpInfo($create_feature_flag_request, string $contentType = self::contentTypes['createFeatureFlag'][0])
     {
@@ -192,13 +192,13 @@ class FeatureFlagsApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -220,7 +220,7 @@ class FeatureFlagsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -229,7 +229,7 @@ class FeatureFlagsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -237,7 +237,7 @@ class FeatureFlagsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -254,7 +254,7 @@ class FeatureFlagsApi
      *
      * Create Feature Flag
      *
-     * @param  \OpenAPI\Client\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createFeatureFlag'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -275,7 +275,7 @@ class FeatureFlagsApi
      *
      * Create Feature Flag
      *
-     * @param  \OpenAPI\Client\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createFeatureFlag'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -283,7 +283,7 @@ class FeatureFlagsApi
      */
     public function createFeatureFlagAsyncWithHttpInfo($create_feature_flag_request, string $contentType = self::contentTypes['createFeatureFlag'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->createFeatureFlagRequest($create_feature_flag_request, $contentType);
 
         return $this->client
@@ -325,7 +325,7 @@ class FeatureFlagsApi
     /**
      * Create request for operation 'createFeatureFlag'
      *
-     * @param  \OpenAPI\Client\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateFeatureFlagRequest $create_feature_flag_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createFeatureFlag'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -425,9 +425,9 @@ class FeatureFlagsApi
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteFeatureFlag'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteFeatureFlag($feature_flag_key, string $contentType = self::contentTypes['deleteFeatureFlag'][0])
     {
@@ -443,9 +443,9 @@ class FeatureFlagsApi
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteFeatureFlag'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteFeatureFlagWithHttpInfo($feature_flag_key, string $contentType = self::contentTypes['deleteFeatureFlag'][0])
     {
@@ -477,13 +477,13 @@ class FeatureFlagsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -505,7 +505,7 @@ class FeatureFlagsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -514,7 +514,7 @@ class FeatureFlagsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -522,7 +522,7 @@ class FeatureFlagsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -568,7 +568,7 @@ class FeatureFlagsApi
      */
     public function deleteFeatureFlagAsyncWithHttpInfo($feature_flag_key, string $contentType = self::contentTypes['deleteFeatureFlag'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteFeatureFlagRequest($feature_flag_key, $contentType);
 
         return $this->client
@@ -716,9 +716,9 @@ class FeatureFlagsApi
      * @param  string $default_value Default value for the flag used by environments and organizations. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateFeatureFlag'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateFeatureFlag($feature_flag_key, $name, $description, $type, $allow_override_level, $default_value, string $contentType = self::contentTypes['updateFeatureFlag'][0])
     {
@@ -739,9 +739,9 @@ class FeatureFlagsApi
      * @param  string $default_value Default value for the flag used by environments and organizations. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateFeatureFlag'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateFeatureFlagWithHttpInfo($feature_flag_key, $name, $description, $type, $allow_override_level, $default_value, string $contentType = self::contentTypes['updateFeatureFlag'][0])
     {
@@ -773,13 +773,13 @@ class FeatureFlagsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -801,7 +801,7 @@ class FeatureFlagsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -810,7 +810,7 @@ class FeatureFlagsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -818,7 +818,7 @@ class FeatureFlagsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -874,7 +874,7 @@ class FeatureFlagsApi
      */
     public function updateFeatureFlagAsyncWithHttpInfo($feature_flag_key, $name, $description, $type, $allow_override_level, $default_value, string $contentType = self::contentTypes['updateFeatureFlag'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateFeatureFlagRequest($feature_flag_key, $name, $description, $type, $allow_override_level, $default_value, $contentType);
 
         return $this->client

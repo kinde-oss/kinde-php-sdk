@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * ApplicationsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -161,12 +161,12 @@ class ApplicationsApi
      *
      * Create application
      *
-     * @param  \OpenAPI\Client\Model\CreateApplicationRequest $create_application_request create_application_request (required)
+     * @param  \Kinde\KindeSDK\Model\CreateApplicationRequest $create_application_request create_application_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateApplicationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateApplicationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createApplication($create_application_request, string $contentType = self::contentTypes['createApplication'][0])
     {
@@ -179,12 +179,12 @@ class ApplicationsApi
      *
      * Create application
      *
-     * @param  \OpenAPI\Client\Model\CreateApplicationRequest $create_application_request (required)
+     * @param  \Kinde\KindeSDK\Model\CreateApplicationRequest $create_application_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateApplicationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateApplicationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createApplicationWithHttpInfo($create_application_request, string $contentType = self::contentTypes['createApplication'][0])
     {
@@ -216,25 +216,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateApplicationResponse',
+                        '\Kinde\KindeSDK\Model\CreateApplicationResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -256,7 +256,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateApplicationResponse',
+                '\Kinde\KindeSDK\Model\CreateApplicationResponse',
                 $request,
                 $response,
             );
@@ -265,7 +265,7 @@ class ApplicationsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateApplicationResponse',
+                        '\Kinde\KindeSDK\Model\CreateApplicationResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -273,7 +273,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -281,7 +281,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -289,7 +289,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -306,7 +306,7 @@ class ApplicationsApi
      *
      * Create application
      *
-     * @param  \OpenAPI\Client\Model\CreateApplicationRequest $create_application_request (required)
+     * @param  \Kinde\KindeSDK\Model\CreateApplicationRequest $create_application_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createApplication'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -327,7 +327,7 @@ class ApplicationsApi
      *
      * Create application
      *
-     * @param  \OpenAPI\Client\Model\CreateApplicationRequest $create_application_request (required)
+     * @param  \Kinde\KindeSDK\Model\CreateApplicationRequest $create_application_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createApplication'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -335,7 +335,7 @@ class ApplicationsApi
      */
     public function createApplicationAsyncWithHttpInfo($create_application_request, string $contentType = self::contentTypes['createApplication'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateApplicationResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateApplicationResponse';
         $request = $this->createApplicationRequest($create_application_request, $contentType);
 
         return $this->client
@@ -377,7 +377,7 @@ class ApplicationsApi
     /**
      * Create request for operation 'createApplication'
      *
-     * @param  \OpenAPI\Client\Model\CreateApplicationRequest $create_application_request (required)
+     * @param  \Kinde\KindeSDK\Model\CreateApplicationRequest $create_application_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createApplication'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -477,9 +477,9 @@ class ApplicationsApi
      * @param  string $application_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteApplication($application_id, string $contentType = self::contentTypes['deleteApplication'][0])
     {
@@ -495,9 +495,9 @@ class ApplicationsApi
      * @param  string $application_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteApplicationWithHttpInfo($application_id, string $contentType = self::contentTypes['deleteApplication'][0])
     {
@@ -529,25 +529,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -569,7 +569,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -578,7 +578,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -586,7 +586,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -594,7 +594,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -602,7 +602,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -648,7 +648,7 @@ class ApplicationsApi
      */
     public function deleteApplicationAsyncWithHttpInfo($application_id, string $contentType = self::contentTypes['deleteApplication'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteApplicationRequest($application_id, $contentType);
 
         return $this->client
@@ -792,7 +792,7 @@ class ApplicationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['enableConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -810,7 +810,7 @@ class ApplicationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['enableConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -847,7 +847,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -855,7 +855,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -863,7 +863,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1057,9 +1057,9 @@ class ApplicationsApi
      * @param  string $application_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetApplicationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetApplicationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getApplication($application_id, string $contentType = self::contentTypes['getApplication'][0])
     {
@@ -1075,9 +1075,9 @@ class ApplicationsApi
      * @param  string $application_id The identifier for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetApplicationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetApplicationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getApplicationWithHttpInfo($application_id, string $contentType = self::contentTypes['getApplication'][0])
     {
@@ -1109,25 +1109,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetApplicationResponse',
+                        '\Kinde\KindeSDK\Model\GetApplicationResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1149,7 +1149,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetApplicationResponse',
+                '\Kinde\KindeSDK\Model\GetApplicationResponse',
                 $request,
                 $response,
             );
@@ -1158,7 +1158,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetApplicationResponse',
+                        '\Kinde\KindeSDK\Model\GetApplicationResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1166,7 +1166,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1174,7 +1174,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1182,7 +1182,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1228,7 +1228,7 @@ class ApplicationsApi
      */
     public function getApplicationAsyncWithHttpInfo($application_id, string $contentType = self::contentTypes['getApplication'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetApplicationResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetApplicationResponse';
         $request = $this->getApplicationRequest($application_id, $contentType);
 
         return $this->client
@@ -1371,9 +1371,9 @@ class ApplicationsApi
      * @param  string $application_id The identifier/client ID for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationConnections'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetConnectionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetConnectionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getApplicationConnections($application_id, string $contentType = self::contentTypes['getApplicationConnections'][0])
     {
@@ -1389,9 +1389,9 @@ class ApplicationsApi
      * @param  string $application_id The identifier/client ID for the application. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationConnections'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetConnectionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetConnectionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getApplicationConnectionsWithHttpInfo($application_id, string $contentType = self::contentTypes['getApplicationConnections'][0])
     {
@@ -1423,25 +1423,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetConnectionsResponse',
+                        '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1463,7 +1463,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetConnectionsResponse',
+                '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                 $request,
                 $response,
             );
@@ -1472,7 +1472,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetConnectionsResponse',
+                        '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1480,7 +1480,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1488,7 +1488,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1496,7 +1496,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1542,7 +1542,7 @@ class ApplicationsApi
      */
     public function getApplicationConnectionsAsyncWithHttpInfo($application_id, string $contentType = self::contentTypes['getApplicationConnections'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetConnectionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetConnectionsResponse';
         $request = $this->getApplicationConnectionsRequest($application_id, $contentType);
 
         return $this->client
@@ -1685,9 +1685,9 @@ class ApplicationsApi
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationPropertyValues'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetPropertyValuesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetPropertyValuesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getApplicationPropertyValues($application_id, string $contentType = self::contentTypes['getApplicationPropertyValues'][0])
     {
@@ -1703,9 +1703,9 @@ class ApplicationsApi
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationPropertyValues'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetPropertyValuesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetPropertyValuesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getApplicationPropertyValuesWithHttpInfo($application_id, string $contentType = self::contentTypes['getApplicationPropertyValues'][0])
     {
@@ -1737,25 +1737,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1777,7 +1777,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                 $request,
                 $response,
             );
@@ -1786,7 +1786,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1794,7 +1794,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1802,7 +1802,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1810,7 +1810,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1856,7 +1856,7 @@ class ApplicationsApi
      */
     public function getApplicationPropertyValuesAsyncWithHttpInfo($application_id, string $contentType = self::contentTypes['getApplicationPropertyValues'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetPropertyValuesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetPropertyValuesResponse';
         $request = $this->getApplicationPropertyValuesRequest($application_id, $contentType);
 
         return $this->client
@@ -2001,9 +2001,9 @@ class ApplicationsApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplications'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetApplicationsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetApplicationsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getApplications($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getApplications'][0])
     {
@@ -2021,9 +2021,9 @@ class ApplicationsApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplications'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetApplicationsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetApplicationsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getApplicationsWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getApplications'][0])
     {
@@ -2055,25 +2055,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetApplicationsResponse',
+                        '\Kinde\KindeSDK\Model\GetApplicationsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2095,7 +2095,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetApplicationsResponse',
+                '\Kinde\KindeSDK\Model\GetApplicationsResponse',
                 $request,
                 $response,
             );
@@ -2104,7 +2104,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetApplicationsResponse',
+                        '\Kinde\KindeSDK\Model\GetApplicationsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2112,7 +2112,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2120,7 +2120,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2128,7 +2128,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2178,7 +2178,7 @@ class ApplicationsApi
      */
     public function getApplicationsAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getApplications'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetApplicationsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetApplicationsResponse';
         $request = $this->getApplicationsRequest($sort, $page_size, $next_token, $contentType);
 
         return $this->client
@@ -2339,9 +2339,9 @@ class ApplicationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function removeConnection($application_id, $connection_id, string $contentType = self::contentTypes['removeConnection'][0])
     {
@@ -2358,9 +2358,9 @@ class ApplicationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function removeConnectionWithHttpInfo($application_id, $connection_id, string $contentType = self::contentTypes['removeConnection'][0])
     {
@@ -2392,25 +2392,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2432,7 +2432,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2441,7 +2441,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2449,7 +2449,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2457,7 +2457,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2465,7 +2465,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2513,7 +2513,7 @@ class ApplicationsApi
      */
     public function removeConnectionAsyncWithHttpInfo($application_id, $connection_id, string $contentType = self::contentTypes['removeConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->removeConnectionRequest($application_id, $connection_id, $contentType);
 
         return $this->client
@@ -2670,10 +2670,10 @@ class ApplicationsApi
      * Update Application
      *
      * @param  string $application_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -2688,10 +2688,10 @@ class ApplicationsApi
      * Update Application
      *
      * @param  string $application_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplication'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -2728,7 +2728,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2736,7 +2736,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2744,7 +2744,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2762,7 +2762,7 @@ class ApplicationsApi
      * Update Application
      *
      * @param  string $application_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplication'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2784,7 +2784,7 @@ class ApplicationsApi
      * Update Application
      *
      * @param  string $application_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplication'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2822,7 +2822,7 @@ class ApplicationsApi
      * Create request for operation 'updateApplication'
      *
      * @param  string $application_id The identifier for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationRequest|null $update_application_request Application details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplication'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2929,12 +2929,12 @@ class ApplicationsApi
      * Update application tokens
      *
      * @param  string $application_id The identifier/client ID for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationTokens'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateApplicationTokens($application_id, $update_application_tokens_request, string $contentType = self::contentTypes['updateApplicationTokens'][0])
     {
@@ -2948,12 +2948,12 @@ class ApplicationsApi
      * Update application tokens
      *
      * @param  string $application_id The identifier/client ID for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationTokens'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateApplicationTokensWithHttpInfo($application_id, $update_application_tokens_request, string $contentType = self::contentTypes['updateApplicationTokens'][0])
     {
@@ -2985,25 +2985,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3025,7 +3025,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3034,7 +3034,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3042,7 +3042,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3050,7 +3050,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3058,7 +3058,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3076,7 +3076,7 @@ class ApplicationsApi
      * Update application tokens
      *
      * @param  string $application_id The identifier/client ID for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationTokens'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3098,7 +3098,7 @@ class ApplicationsApi
      * Update application tokens
      *
      * @param  string $application_id The identifier/client ID for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationTokens'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3106,7 +3106,7 @@ class ApplicationsApi
      */
     public function updateApplicationTokensAsyncWithHttpInfo($application_id, $update_application_tokens_request, string $contentType = self::contentTypes['updateApplicationTokens'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateApplicationTokensRequest($application_id, $update_application_tokens_request, $contentType);
 
         return $this->client
@@ -3149,7 +3149,7 @@ class ApplicationsApi
      * Create request for operation 'updateApplicationTokens'
      *
      * @param  string $application_id The identifier/client ID for the application. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationTokensRequest $update_application_tokens_request Application tokens. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationTokens'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3263,12 +3263,12 @@ class ApplicationsApi
      *
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $property_key The property&#39;s key. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationsPropertyRequest $update_applications_property_request update_applications_property_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationsPropertyRequest $update_applications_property_request update_applications_property_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationsProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateApplicationsProperty($application_id, $property_key, $update_applications_property_request, string $contentType = self::contentTypes['updateApplicationsProperty'][0])
     {
@@ -3283,12 +3283,12 @@ class ApplicationsApi
      *
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $property_key The property&#39;s key. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationsProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateApplicationsPropertyWithHttpInfo($application_id, $property_key, $update_applications_property_request, string $contentType = self::contentTypes['updateApplicationsProperty'][0])
     {
@@ -3320,25 +3320,25 @@ class ApplicationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3360,7 +3360,7 @@ class ApplicationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3369,7 +3369,7 @@ class ApplicationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3377,7 +3377,7 @@ class ApplicationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3385,7 +3385,7 @@ class ApplicationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3393,7 +3393,7 @@ class ApplicationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3412,7 +3412,7 @@ class ApplicationsApi
      *
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $property_key The property&#39;s key. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationsProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3435,7 +3435,7 @@ class ApplicationsApi
      *
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $property_key The property&#39;s key. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationsProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3443,7 +3443,7 @@ class ApplicationsApi
      */
     public function updateApplicationsPropertyAsyncWithHttpInfo($application_id, $property_key, $update_applications_property_request, string $contentType = self::contentTypes['updateApplicationsProperty'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateApplicationsPropertyRequest($application_id, $property_key, $update_applications_property_request, $contentType);
 
         return $this->client
@@ -3487,7 +3487,7 @@ class ApplicationsApi
      *
      * @param  string $application_id The application&#39;s ID / client ID. (required)
      * @param  string $property_key The property&#39;s key. (required)
-     * @param  \OpenAPI\Client\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateApplicationsPropertyRequest $update_applications_property_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateApplicationsProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

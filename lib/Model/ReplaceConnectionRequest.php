@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * ReplaceConnectionRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -61,7 +61,7 @@ class ReplaceConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => 'string',
         'display_name' => 'string',
         'enabled_applications' => 'string[]',
-        'options' => '\OpenAPI\Client\Model\ReplaceConnectionRequestOptions'
+        'options' => '\Kinde\KindeSDK\Model\ReplaceConnectionRequestOptions'
     ];
 
     /**
@@ -395,7 +395,7 @@ class ReplaceConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets options
      *
-     * @return \OpenAPI\Client\Model\ReplaceConnectionRequestOptions|null
+     * @return \Kinde\KindeSDK\Model\ReplaceConnectionRequestOptions|null
      */
     public function getOptions()
     {
@@ -405,7 +405,7 @@ class ReplaceConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets options
      *
-     * @param \OpenAPI\Client\Model\ReplaceConnectionRequestOptions|null $options options
+     * @param \Kinde\KindeSDK\Model\ReplaceConnectionRequestOptions|null $options options
      *
      * @return self
      */

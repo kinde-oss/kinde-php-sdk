@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreatePropertyResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class CreatePropertyResponse implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPITypes = [
         'message' => 'string',
         'code' => 'string',
-        'property' => '\OpenAPI\Client\Model\CreatePropertyResponseProperty'
+        'property' => '\Kinde\KindeSDK\Model\CreatePropertyResponseProperty'
     ];
 
     /**
@@ -361,7 +361,7 @@ class CreatePropertyResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets property
      *
-     * @return \OpenAPI\Client\Model\CreatePropertyResponseProperty|null
+     * @return \Kinde\KindeSDK\Model\CreatePropertyResponseProperty|null
      */
     public function getProperty()
     {
@@ -371,7 +371,7 @@ class CreatePropertyResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets property
      *
-     * @param \OpenAPI\Client\Model\CreatePropertyResponseProperty|null $property property
+     * @param \Kinde\KindeSDK\Model\CreatePropertyResponseProperty|null $property property
      *
      * @return self
      */

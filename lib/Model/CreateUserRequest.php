@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateUserRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,10 +58,10 @@ class CreateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var string[]
       */
     protected static $openAPITypes = [
-        'profile' => '\OpenAPI\Client\Model\CreateUserRequestProfile',
+        'profile' => '\Kinde\KindeSDK\Model\CreateUserRequestProfile',
         'organization_code' => 'string',
         'provided_id' => 'string',
-        'identities' => '\OpenAPI\Client\Model\CreateUserRequestIdentitiesInner[]'
+        'identities' => '\Kinde\KindeSDK\Model\CreateUserRequestIdentitiesInner[]'
     ];
 
     /**
@@ -314,7 +314,7 @@ class CreateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets profile
      *
-     * @return \OpenAPI\Client\Model\CreateUserRequestProfile|null
+     * @return \Kinde\KindeSDK\Model\CreateUserRequestProfile|null
      */
     public function getProfile()
     {
@@ -324,7 +324,7 @@ class CreateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets profile
      *
-     * @param \OpenAPI\Client\Model\CreateUserRequestProfile|null $profile profile
+     * @param \Kinde\KindeSDK\Model\CreateUserRequestProfile|null $profile profile
      *
      * @return self
      */
@@ -395,7 +395,7 @@ class CreateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets identities
      *
-     * @return \OpenAPI\Client\Model\CreateUserRequestIdentitiesInner[]|null
+     * @return \Kinde\KindeSDK\Model\CreateUserRequestIdentitiesInner[]|null
      */
     public function getIdentities()
     {
@@ -405,7 +405,7 @@ class CreateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets identities
      *
-     * @param \OpenAPI\Client\Model\CreateUserRequestIdentitiesInner[]|null $identities Array of identities to assign to the created user
+     * @param \Kinde\KindeSDK\Model\CreateUserRequestIdentitiesInner[]|null $identities Array of identities to assign to the created user
      *
      * @return self
      */

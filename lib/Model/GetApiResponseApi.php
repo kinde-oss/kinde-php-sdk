@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetApiResponseApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -62,8 +62,8 @@ class GetApiResponseApi implements ModelInterface, ArrayAccess, \JsonSerializabl
         'name' => 'string',
         'audience' => 'string',
         'is_management_api' => 'bool',
-        'scopes' => '\OpenAPI\Client\Model\GetApiResponseApiScopesInner[]',
-        'applications' => '\OpenAPI\Client\Model\GetApiResponseApiApplicationsInner[]'
+        'scopes' => '\Kinde\KindeSDK\Model\GetApiResponseApiScopesInner[]',
+        'applications' => '\Kinde\KindeSDK\Model\GetApiResponseApiApplicationsInner[]'
     ];
 
     /**
@@ -436,7 +436,7 @@ class GetApiResponseApi implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets scopes
      *
-     * @return \OpenAPI\Client\Model\GetApiResponseApiScopesInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetApiResponseApiScopesInner[]|null
      */
     public function getScopes()
     {
@@ -446,7 +446,7 @@ class GetApiResponseApi implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets scopes
      *
-     * @param \OpenAPI\Client\Model\GetApiResponseApiScopesInner[]|null $scopes scopes
+     * @param \Kinde\KindeSDK\Model\GetApiResponseApiScopesInner[]|null $scopes scopes
      *
      * @return self
      */
@@ -463,7 +463,7 @@ class GetApiResponseApi implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets applications
      *
-     * @return \OpenAPI\Client\Model\GetApiResponseApiApplicationsInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetApiResponseApiApplicationsInner[]|null
      */
     public function getApplications()
     {
@@ -473,7 +473,7 @@ class GetApiResponseApi implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets applications
      *
-     * @param \OpenAPI\Client\Model\GetApiResponseApiApplicationsInner[]|null $applications applications
+     * @param \Kinde\KindeSDK\Model\GetApiResponseApiApplicationsInner[]|null $applications applications
      *
      * @return self
      */

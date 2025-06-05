@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * PropertiesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -140,12 +140,12 @@ class PropertiesApi
      *
      * Create Property
      *
-     * @param  \OpenAPI\Client\Model\CreatePropertyRequest $create_property_request Property details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreatePropertyRequest $create_property_request Property details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreatePropertyResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreatePropertyResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createProperty($create_property_request, string $contentType = self::contentTypes['createProperty'][0])
     {
@@ -158,12 +158,12 @@ class PropertiesApi
      *
      * Create Property
      *
-     * @param  \OpenAPI\Client\Model\CreatePropertyRequest $create_property_request Property details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreatePropertyRequest $create_property_request Property details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreatePropertyResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreatePropertyResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createPropertyWithHttpInfo($create_property_request, string $contentType = self::contentTypes['createProperty'][0])
     {
@@ -195,13 +195,13 @@ class PropertiesApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreatePropertyResponse',
+                        '\Kinde\KindeSDK\Model\CreatePropertyResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -223,7 +223,7 @@ class PropertiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreatePropertyResponse',
+                '\Kinde\KindeSDK\Model\CreatePropertyResponse',
                 $request,
                 $response,
             );
@@ -232,7 +232,7 @@ class PropertiesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreatePropertyResponse',
+                        '\Kinde\KindeSDK\Model\CreatePropertyResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -240,7 +240,7 @@ class PropertiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -257,7 +257,7 @@ class PropertiesApi
      *
      * Create Property
      *
-     * @param  \OpenAPI\Client\Model\CreatePropertyRequest $create_property_request Property details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreatePropertyRequest $create_property_request Property details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -278,7 +278,7 @@ class PropertiesApi
      *
      * Create Property
      *
-     * @param  \OpenAPI\Client\Model\CreatePropertyRequest $create_property_request Property details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreatePropertyRequest $create_property_request Property details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -286,7 +286,7 @@ class PropertiesApi
      */
     public function createPropertyAsyncWithHttpInfo($create_property_request, string $contentType = self::contentTypes['createProperty'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreatePropertyResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreatePropertyResponse';
         $request = $this->createPropertyRequest($create_property_request, $contentType);
 
         return $this->client
@@ -328,7 +328,7 @@ class PropertiesApi
     /**
      * Create request for operation 'createProperty'
      *
-     * @param  \OpenAPI\Client\Model\CreatePropertyRequest $create_property_request Property details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreatePropertyRequest $create_property_request Property details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -428,9 +428,9 @@ class PropertiesApi
      * @param  string $property_id The unique identifier for the property. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteProperty($property_id, string $contentType = self::contentTypes['deleteProperty'][0])
     {
@@ -446,9 +446,9 @@ class PropertiesApi
      * @param  string $property_id The unique identifier for the property. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deletePropertyWithHttpInfo($property_id, string $contentType = self::contentTypes['deleteProperty'][0])
     {
@@ -480,13 +480,13 @@ class PropertiesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -508,7 +508,7 @@ class PropertiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -517,7 +517,7 @@ class PropertiesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -525,7 +525,7 @@ class PropertiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -571,7 +571,7 @@ class PropertiesApi
      */
     public function deletePropertyAsyncWithHttpInfo($property_id, string $contentType = self::contentTypes['deleteProperty'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deletePropertyRequest($property_id, $contentType);
 
         return $this->client
@@ -717,9 +717,9 @@ class PropertiesApi
      * @param  string|null $context Filter results by user,  organization or application context (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProperties'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetPropertiesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetPropertiesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getProperties($page_size = null, $starting_after = null, $ending_before = null, $context = null, string $contentType = self::contentTypes['getProperties'][0])
     {
@@ -738,9 +738,9 @@ class PropertiesApi
      * @param  string|null $context Filter results by user,  organization or application context (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getProperties'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetPropertiesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetPropertiesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPropertiesWithHttpInfo($page_size = null, $starting_after = null, $ending_before = null, $context = null, string $contentType = self::contentTypes['getProperties'][0])
     {
@@ -772,19 +772,19 @@ class PropertiesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetPropertiesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertiesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -806,7 +806,7 @@ class PropertiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetPropertiesResponse',
+                '\Kinde\KindeSDK\Model\GetPropertiesResponse',
                 $request,
                 $response,
             );
@@ -815,7 +815,7 @@ class PropertiesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetPropertiesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertiesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -823,7 +823,7 @@ class PropertiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -831,7 +831,7 @@ class PropertiesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -883,7 +883,7 @@ class PropertiesApi
      */
     public function getPropertiesAsyncWithHttpInfo($page_size = null, $starting_after = null, $ending_before = null, $context = null, string $contentType = self::contentTypes['getProperties'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetPropertiesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetPropertiesResponse';
         $request = $this->getPropertiesRequest($page_size, $starting_after, $ending_before, $context, $contentType);
 
         return $this->client
@@ -1052,12 +1052,12 @@ class PropertiesApi
      * Update Property
      *
      * @param  string $property_id The unique identifier for the property. (required)
-     * @param  \OpenAPI\Client\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateProperty($property_id, $update_property_request, string $contentType = self::contentTypes['updateProperty'][0])
     {
@@ -1071,12 +1071,12 @@ class PropertiesApi
      * Update Property
      *
      * @param  string $property_id The unique identifier for the property. (required)
-     * @param  \OpenAPI\Client\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePropertyWithHttpInfo($property_id, $update_property_request, string $contentType = self::contentTypes['updateProperty'][0])
     {
@@ -1108,13 +1108,13 @@ class PropertiesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1136,7 +1136,7 @@ class PropertiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1145,7 +1145,7 @@ class PropertiesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1153,7 +1153,7 @@ class PropertiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1171,7 +1171,7 @@ class PropertiesApi
      * Update Property
      *
      * @param  string $property_id The unique identifier for the property. (required)
-     * @param  \OpenAPI\Client\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1193,7 +1193,7 @@ class PropertiesApi
      * Update Property
      *
      * @param  string $property_id The unique identifier for the property. (required)
-     * @param  \OpenAPI\Client\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1201,7 +1201,7 @@ class PropertiesApi
      */
     public function updatePropertyAsyncWithHttpInfo($property_id, $update_property_request, string $contentType = self::contentTypes['updateProperty'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updatePropertyRequest($property_id, $update_property_request, $contentType);
 
         return $this->client
@@ -1244,7 +1244,7 @@ class PropertiesApi
      * Create request for operation 'updateProperty'
      *
      * @param  string $property_id The unique identifier for the property. (required)
-     * @param  \OpenAPI\Client\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdatePropertyRequest $update_property_request The fields of the property to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateProperty'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

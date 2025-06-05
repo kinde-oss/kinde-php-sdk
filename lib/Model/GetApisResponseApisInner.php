@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetApisResponseApisInner Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -62,7 +62,7 @@ class GetApisResponseApisInner implements ModelInterface, ArrayAccess, \JsonSeri
         'name' => 'string',
         'audience' => 'string',
         'is_management_api' => 'bool',
-        'scopes' => '\OpenAPI\Client\Model\GetApisResponseApisInnerScopesInner[]'
+        'scopes' => '\Kinde\KindeSDK\Model\GetApisResponseApisInnerScopesInner[]'
     ];
 
     /**
@@ -429,7 +429,7 @@ class GetApisResponseApisInner implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets scopes
      *
-     * @return \OpenAPI\Client\Model\GetApisResponseApisInnerScopesInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetApisResponseApisInnerScopesInner[]|null
      */
     public function getScopes()
     {
@@ -439,7 +439,7 @@ class GetApisResponseApisInner implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets scopes
      *
-     * @param \OpenAPI\Client\Model\GetApisResponseApisInnerScopesInner[]|null $scopes scopes
+     * @param \Kinde\KindeSDK\Model\GetApisResponseApisInnerScopesInner[]|null $scopes scopes
      *
      * @return self
      */

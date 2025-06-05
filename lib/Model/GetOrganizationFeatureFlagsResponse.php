@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetOrganizationFeatureFlagsResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetOrganizationFeatureFlagsResponse implements ModelInterface, ArrayAccess
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'feature_flags' => 'array<string,\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponseFeatureFlagsValue>'
+        'feature_flags' => 'array<string,\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponseFeatureFlagsValue>'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetOrganizationFeatureFlagsResponse implements ModelInterface, ArrayAccess
     /**
      * Gets feature_flags
      *
-     * @return array<string,\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponseFeatureFlagsValue>|null
+     * @return array<string,\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponseFeatureFlagsValue>|null
      */
     public function getFeatureFlags()
     {
@@ -371,7 +371,7 @@ class GetOrganizationFeatureFlagsResponse implements ModelInterface, ArrayAccess
     /**
      * Sets feature_flags
      *
-     * @param array<string,\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponseFeatureFlagsValue>|null $feature_flags The environment's feature flag settings.
+     * @param array<string,\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponseFeatureFlagsValue>|null $feature_flags The environment's feature flag settings.
      *
      * @return self
      */

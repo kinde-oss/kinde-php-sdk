@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * EnvironmentsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -156,9 +156,9 @@ class EnvironmentsApi
      * @param  \SplFileObject $logo The logo file to upload. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function addLogo($type, $logo, string $contentType = self::contentTypes['addLogo'][0])
     {
@@ -175,9 +175,9 @@ class EnvironmentsApi
      * @param  \SplFileObject $logo The logo file to upload. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addLogoWithHttpInfo($type, $logo, string $contentType = self::contentTypes['addLogo'][0])
     {
@@ -209,25 +209,25 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -249,7 +249,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -258,7 +258,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -266,7 +266,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -274,7 +274,7 @@ class EnvironmentsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -282,7 +282,7 @@ class EnvironmentsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -330,7 +330,7 @@ class EnvironmentsApi
      */
     public function addLogoAsyncWithHttpInfo($type, $logo, string $contentType = self::contentTypes['addLogo'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->addLogoRequest($type, $logo, $contentType);
 
         return $this->client
@@ -491,9 +491,9 @@ class EnvironmentsApi
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteEnvironementFeatureFlagOverride($feature_flag_key, string $contentType = self::contentTypes['deleteEnvironementFeatureFlagOverride'][0])
     {
@@ -509,9 +509,9 @@ class EnvironmentsApi
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteEnvironementFeatureFlagOverrideWithHttpInfo($feature_flag_key, string $contentType = self::contentTypes['deleteEnvironementFeatureFlagOverride'][0])
     {
@@ -543,13 +543,13 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -571,7 +571,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -580,7 +580,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -588,7 +588,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -634,7 +634,7 @@ class EnvironmentsApi
      */
     public function deleteEnvironementFeatureFlagOverrideAsyncWithHttpInfo($feature_flag_key, string $contentType = self::contentTypes['deleteEnvironementFeatureFlagOverride'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteEnvironementFeatureFlagOverrideRequest($feature_flag_key, $contentType);
 
         return $this->client
@@ -776,9 +776,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteEnvironementFeatureFlagOverrides'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteEnvironementFeatureFlagOverrides(string $contentType = self::contentTypes['deleteEnvironementFeatureFlagOverrides'][0])
     {
@@ -793,9 +793,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteEnvironementFeatureFlagOverrides'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteEnvironementFeatureFlagOverridesWithHttpInfo(string $contentType = self::contentTypes['deleteEnvironementFeatureFlagOverrides'][0])
     {
@@ -827,13 +827,13 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -855,7 +855,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -864,7 +864,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -872,7 +872,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -916,7 +916,7 @@ class EnvironmentsApi
      */
     public function deleteEnvironementFeatureFlagOverridesAsyncWithHttpInfo(string $contentType = self::contentTypes['deleteEnvironementFeatureFlagOverrides'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteEnvironementFeatureFlagOverridesRequest($contentType);
 
         return $this->client
@@ -1043,9 +1043,9 @@ class EnvironmentsApi
      * @param  string $type The type of logo to delete. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteLogo($type, string $contentType = self::contentTypes['deleteLogo'][0])
     {
@@ -1061,9 +1061,9 @@ class EnvironmentsApi
      * @param  string $type The type of logo to delete. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteLogoWithHttpInfo($type, string $contentType = self::contentTypes['deleteLogo'][0])
     {
@@ -1095,25 +1095,25 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1135,7 +1135,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1144,7 +1144,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1152,7 +1152,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1160,7 +1160,7 @@ class EnvironmentsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1168,7 +1168,7 @@ class EnvironmentsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1214,7 +1214,7 @@ class EnvironmentsApi
      */
     public function deleteLogoAsyncWithHttpInfo($type, string $contentType = self::contentTypes['deleteLogo'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteLogoRequest($type, $contentType);
 
         return $this->client
@@ -1356,9 +1356,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironementFeatureFlags'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetEnvironmentFeatureFlagsResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentFeatureFlagsResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getEnvironementFeatureFlags(string $contentType = self::contentTypes['getEnvironementFeatureFlags'][0])
     {
@@ -1373,9 +1373,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironementFeatureFlags'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetEnvironmentFeatureFlagsResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetEnvironmentFeatureFlagsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEnvironementFeatureFlagsWithHttpInfo(string $contentType = self::contentTypes['getEnvironementFeatureFlags'][0])
     {
@@ -1407,13 +1407,13 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetEnvironmentFeatureFlagsResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentFeatureFlagsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1435,7 +1435,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetEnvironmentFeatureFlagsResponse',
+                '\Kinde\KindeSDK\Model\GetEnvironmentFeatureFlagsResponse',
                 $request,
                 $response,
             );
@@ -1444,7 +1444,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEnvironmentFeatureFlagsResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentFeatureFlagsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1452,7 +1452,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1496,7 +1496,7 @@ class EnvironmentsApi
      */
     public function getEnvironementFeatureFlagsAsyncWithHttpInfo(string $contentType = self::contentTypes['getEnvironementFeatureFlags'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEnvironmentFeatureFlagsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetEnvironmentFeatureFlagsResponse';
         $request = $this->getEnvironementFeatureFlagsRequest($contentType);
 
         return $this->client
@@ -1622,9 +1622,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironment'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getEnvironment(string $contentType = self::contentTypes['getEnvironment'][0])
     {
@@ -1639,9 +1639,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEnvironment'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetEnvironmentResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetEnvironmentResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEnvironmentWithHttpInfo(string $contentType = self::contentTypes['getEnvironment'][0])
     {
@@ -1673,25 +1673,25 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetEnvironmentResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1713,7 +1713,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetEnvironmentResponse',
+                '\Kinde\KindeSDK\Model\GetEnvironmentResponse',
                 $request,
                 $response,
             );
@@ -1722,7 +1722,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEnvironmentResponse',
+                        '\Kinde\KindeSDK\Model\GetEnvironmentResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1730,7 +1730,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1738,7 +1738,7 @@ class EnvironmentsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1746,7 +1746,7 @@ class EnvironmentsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1790,7 +1790,7 @@ class EnvironmentsApi
      */
     public function getEnvironmentAsyncWithHttpInfo(string $contentType = self::contentTypes['getEnvironment'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEnvironmentResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetEnvironmentResponse';
         $request = $this->getEnvironmentRequest($contentType);
 
         return $this->client
@@ -1916,9 +1916,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['readLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\ReadEnvLogoResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\ReadEnvLogoResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function readLogo(string $contentType = self::contentTypes['readLogo'][0])
     {
@@ -1933,9 +1933,9 @@ class EnvironmentsApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['readLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\ReadEnvLogoResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\ReadEnvLogoResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function readLogoWithHttpInfo(string $contentType = self::contentTypes['readLogo'][0])
     {
@@ -1967,25 +1967,25 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ReadEnvLogoResponse',
+                        '\Kinde\KindeSDK\Model\ReadEnvLogoResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2007,7 +2007,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\ReadEnvLogoResponse',
+                '\Kinde\KindeSDK\Model\ReadEnvLogoResponse',
                 $request,
                 $response,
             );
@@ -2016,7 +2016,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ReadEnvLogoResponse',
+                        '\Kinde\KindeSDK\Model\ReadEnvLogoResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2024,7 +2024,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2032,7 +2032,7 @@ class EnvironmentsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2040,7 +2040,7 @@ class EnvironmentsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2084,7 +2084,7 @@ class EnvironmentsApi
      */
     public function readLogoAsyncWithHttpInfo(string $contentType = self::contentTypes['readLogo'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\ReadEnvLogoResponse';
+        $returnType = '\Kinde\KindeSDK\Model\ReadEnvLogoResponse';
         $request = $this->readLogoRequest($contentType);
 
         return $this->client
@@ -2209,12 +2209,12 @@ class EnvironmentsApi
      * Update Environment Feature Flag Override
      *
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateEnvironementFeatureFlagOverride($feature_flag_key, $update_environement_feature_flag_override_request, string $contentType = self::contentTypes['updateEnvironementFeatureFlagOverride'][0])
     {
@@ -2228,12 +2228,12 @@ class EnvironmentsApi
      * Update Environment Feature Flag Override
      *
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateEnvironementFeatureFlagOverrideWithHttpInfo($feature_flag_key, $update_environement_feature_flag_override_request, string $contentType = self::contentTypes['updateEnvironementFeatureFlagOverride'][0])
     {
@@ -2265,13 +2265,13 @@ class EnvironmentsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2293,7 +2293,7 @@ class EnvironmentsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2302,7 +2302,7 @@ class EnvironmentsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2310,7 +2310,7 @@ class EnvironmentsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2328,7 +2328,7 @@ class EnvironmentsApi
      * Update Environment Feature Flag Override
      *
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2350,7 +2350,7 @@ class EnvironmentsApi
      * Update Environment Feature Flag Override
      *
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2358,7 +2358,7 @@ class EnvironmentsApi
      */
     public function updateEnvironementFeatureFlagOverrideAsyncWithHttpInfo($feature_flag_key, $update_environement_feature_flag_override_request, string $contentType = self::contentTypes['updateEnvironementFeatureFlagOverride'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateEnvironementFeatureFlagOverrideRequest($feature_flag_key, $update_environement_feature_flag_override_request, $contentType);
 
         return $this->client
@@ -2401,7 +2401,7 @@ class EnvironmentsApi
      * Create request for operation 'updateEnvironementFeatureFlagOverride'
      *
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
-     * @param  \OpenAPI\Client\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateEnvironementFeatureFlagOverrideRequest $update_environement_feature_flag_override_request Flag details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateEnvironementFeatureFlagOverride'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

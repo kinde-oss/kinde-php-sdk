@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetCategoriesResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetCategoriesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'categories' => '\OpenAPI\Client\Model\Category[]',
+        'categories' => '\Kinde\KindeSDK\Model\Category[]',
         'has_more' => 'bool'
     ];
 
@@ -368,7 +368,7 @@ class GetCategoriesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets categories
      *
-     * @return \OpenAPI\Client\Model\Category[]|null
+     * @return \Kinde\KindeSDK\Model\Category[]|null
      */
     public function getCategories()
     {
@@ -378,7 +378,7 @@ class GetCategoriesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets categories
      *
-     * @param \OpenAPI\Client\Model\Category[]|null $categories categories
+     * @param \Kinde\KindeSDK\Model\Category[]|null $categories categories
      *
      * @return self
      */

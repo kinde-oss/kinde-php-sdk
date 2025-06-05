@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetBillingAgreementsResponseAgreementsInner Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -62,7 +62,7 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         'plan_code' => 'string',
         'expires_on' => '\DateTime',
         'billing_group_id' => 'string',
-        'entitlements' => '\OpenAPI\Client\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]'
+        'entitlements' => '\Kinde\KindeSDK\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]'
     ];
 
     /**
@@ -429,7 +429,7 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
     /**
      * Gets entitlements
      *
-     * @return \OpenAPI\Client\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]|null
      */
     public function getEntitlements()
     {
@@ -439,7 +439,7 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
     /**
      * Sets entitlements
      *
-     * @param \OpenAPI\Client\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]|null $entitlements A list of billing entitlements that is part of this agreement
+     * @param \Kinde\KindeSDK\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]|null $entitlements A list of billing entitlements that is part of this agreement
      *
      * @return self
      */

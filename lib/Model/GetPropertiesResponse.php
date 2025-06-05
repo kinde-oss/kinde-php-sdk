@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetPropertiesResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'properties' => '\OpenAPI\Client\Model\Property[]',
+        'properties' => '\Kinde\KindeSDK\Model\Property[]',
         'has_more' => 'bool'
     ];
 
@@ -368,7 +368,7 @@ class GetPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets properties
      *
-     * @return \OpenAPI\Client\Model\Property[]|null
+     * @return \Kinde\KindeSDK\Model\Property[]|null
      */
     public function getProperties()
     {
@@ -378,7 +378,7 @@ class GetPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets properties
      *
-     * @param \OpenAPI\Client\Model\Property[]|null $properties properties
+     * @param \Kinde\KindeSDK\Model\Property[]|null $properties properties
      *
      * @return self
      */

@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetOrganizationsUserRolesResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetOrganizationsUserRolesResponse implements ModelInterface, ArrayAccess, 
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'roles' => '\OpenAPI\Client\Model\OrganizationUserRole[]',
+        'roles' => '\Kinde\KindeSDK\Model\OrganizationUserRole[]',
         'next_token' => 'string'
     ];
 
@@ -368,7 +368,7 @@ class GetOrganizationsUserRolesResponse implements ModelInterface, ArrayAccess, 
     /**
      * Gets roles
      *
-     * @return \OpenAPI\Client\Model\OrganizationUserRole[]|null
+     * @return \Kinde\KindeSDK\Model\OrganizationUserRole[]|null
      */
     public function getRoles()
     {
@@ -378,7 +378,7 @@ class GetOrganizationsUserRolesResponse implements ModelInterface, ArrayAccess, 
     /**
      * Sets roles
      *
-     * @param \OpenAPI\Client\Model\OrganizationUserRole[]|null $roles roles
+     * @param \Kinde\KindeSDK\Model\OrganizationUserRole[]|null $roles roles
      *
      * @return self
      */

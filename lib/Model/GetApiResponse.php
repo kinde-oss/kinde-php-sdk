@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetApiResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetApiResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'api' => '\OpenAPI\Client\Model\GetApiResponseApi'
+        'api' => '\Kinde\KindeSDK\Model\GetApiResponseApi'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetApiResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets api
      *
-     * @return \OpenAPI\Client\Model\GetApiResponseApi|null
+     * @return \Kinde\KindeSDK\Model\GetApiResponseApi|null
      */
     public function getApi()
     {
@@ -371,7 +371,7 @@ class GetApiResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets api
      *
-     * @param \OpenAPI\Client\Model\GetApiResponseApi|null $api api
+     * @param \Kinde\KindeSDK\Model\GetApiResponseApi|null $api api
      *
      * @return self
      */

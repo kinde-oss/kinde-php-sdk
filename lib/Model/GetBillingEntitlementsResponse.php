@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetBillingEntitlementsResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -61,8 +61,8 @@ class GetBillingEntitlementsResponse implements ModelInterface, ArrayAccess, \Js
         'code' => 'string',
         'message' => 'string',
         'has_more' => 'bool',
-        'entitlements' => '\OpenAPI\Client\Model\GetBillingEntitlementsResponseEntitlementsInner[]',
-        'plans' => '\OpenAPI\Client\Model\GetBillingEntitlementsResponsePlansInner[]'
+        'entitlements' => '\Kinde\KindeSDK\Model\GetBillingEntitlementsResponseEntitlementsInner[]',
+        'plans' => '\Kinde\KindeSDK\Model\GetBillingEntitlementsResponsePlansInner[]'
     ];
 
     /**
@@ -402,7 +402,7 @@ class GetBillingEntitlementsResponse implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets entitlements
      *
-     * @return \OpenAPI\Client\Model\GetBillingEntitlementsResponseEntitlementsInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetBillingEntitlementsResponseEntitlementsInner[]|null
      */
     public function getEntitlements()
     {
@@ -412,7 +412,7 @@ class GetBillingEntitlementsResponse implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets entitlements
      *
-     * @param \OpenAPI\Client\Model\GetBillingEntitlementsResponseEntitlementsInner[]|null $entitlements A list of entitlements
+     * @param \Kinde\KindeSDK\Model\GetBillingEntitlementsResponseEntitlementsInner[]|null $entitlements A list of entitlements
      *
      * @return self
      */
@@ -429,7 +429,7 @@ class GetBillingEntitlementsResponse implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets plans
      *
-     * @return \OpenAPI\Client\Model\GetBillingEntitlementsResponsePlansInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetBillingEntitlementsResponsePlansInner[]|null
      */
     public function getPlans()
     {
@@ -439,7 +439,7 @@ class GetBillingEntitlementsResponse implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets plans
      *
-     * @param \OpenAPI\Client\Model\GetBillingEntitlementsResponsePlansInner[]|null $plans A list of plans.
+     * @param \Kinde\KindeSDK\Model\GetBillingEntitlementsResponsePlansInner[]|null $plans A list of plans.
      *
      * @return self
      */

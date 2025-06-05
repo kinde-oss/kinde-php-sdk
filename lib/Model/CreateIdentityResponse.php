@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateIdentityResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class CreateIdentityResponse implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPITypes = [
         'message' => 'string',
         'code' => 'string',
-        'identity' => '\OpenAPI\Client\Model\CreateIdentityResponseIdentity'
+        'identity' => '\Kinde\KindeSDK\Model\CreateIdentityResponseIdentity'
     ];
 
     /**
@@ -361,7 +361,7 @@ class CreateIdentityResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets identity
      *
-     * @return \OpenAPI\Client\Model\CreateIdentityResponseIdentity|null
+     * @return \Kinde\KindeSDK\Model\CreateIdentityResponseIdentity|null
      */
     public function getIdentity()
     {
@@ -371,7 +371,7 @@ class CreateIdentityResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets identity
      *
-     * @param \OpenAPI\Client\Model\CreateIdentityResponseIdentity|null $identity identity
+     * @param \Kinde\KindeSDK\Model\CreateIdentityResponseIdentity|null $identity identity
      *
      * @return self
      */

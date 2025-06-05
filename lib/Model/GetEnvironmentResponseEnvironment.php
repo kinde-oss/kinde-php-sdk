@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetEnvironmentResponseEnvironment Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -70,14 +70,14 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'logo_dark' => 'string',
         'favicon_svg' => 'string',
         'favicon_fallback' => 'string',
-        'link_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'background_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
-        'button_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'button_text_color' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
-        'link_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'background_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'button_text_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
-        'button_color_dark' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'link_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'background_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
+        'button_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'button_text_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
+        'link_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'background_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'button_text_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
+        'button_color_dark' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
         'button_border_radius' => 'int',
         'card_border_radius' => 'int',
         'input_border_radius' => 'int',
@@ -893,7 +893,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets link_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getLinkColor()
     {
@@ -903,7 +903,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets link_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color link_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color link_color
      *
      * @return self
      */
@@ -927,7 +927,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets background_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
      */
     public function getBackgroundColor()
     {
@@ -937,7 +937,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets background_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $background_color background_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $background_color background_color
      *
      * @return self
      */
@@ -961,7 +961,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets button_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getButtonColor()
     {
@@ -971,7 +971,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets button_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color button_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color button_color
      *
      * @return self
      */
@@ -995,7 +995,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets button_text_color
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null
      */
     public function getButtonTextColor()
     {
@@ -1005,7 +1005,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets button_text_color
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $button_text_color button_text_color
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor|null $button_text_color button_text_color
      *
      * @return self
      */
@@ -1029,7 +1029,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets link_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getLinkColorDark()
     {
@@ -1039,7 +1039,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets link_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color_dark link_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $link_color_dark link_color_dark
      *
      * @return self
      */
@@ -1063,7 +1063,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets background_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getBackgroundColorDark()
     {
@@ -1073,7 +1073,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets background_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $background_color_dark background_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $background_color_dark background_color_dark
      *
      * @return self
      */
@@ -1097,7 +1097,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets button_text_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getButtonTextColorDark()
     {
@@ -1107,7 +1107,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets button_text_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_text_color_dark button_text_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_text_color_dark button_text_color_dark
      *
      * @return self
      */
@@ -1131,7 +1131,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Gets button_color_dark
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null
      */
     public function getButtonColorDark()
     {
@@ -1141,7 +1141,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets button_color_dark
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color_dark button_color_dark
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor|null $button_color_dark button_color_dark
      *
      * @return self
      */

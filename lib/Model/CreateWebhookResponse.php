@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateWebhookResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class CreateWebhookResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'webhook' => '\OpenAPI\Client\Model\CreateWebhookResponseWebhook'
+        'webhook' => '\Kinde\KindeSDK\Model\CreateWebhookResponseWebhook'
     ];
 
     /**
@@ -361,7 +361,7 @@ class CreateWebhookResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Gets webhook
      *
-     * @return \OpenAPI\Client\Model\CreateWebhookResponseWebhook|null
+     * @return \Kinde\KindeSDK\Model\CreateWebhookResponseWebhook|null
      */
     public function getWebhook()
     {
@@ -371,7 +371,7 @@ class CreateWebhookResponse implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets webhook
      *
-     * @param \OpenAPI\Client\Model\CreateWebhookResponseWebhook|null $webhook webhook
+     * @param \Kinde\KindeSDK\Model\CreateWebhookResponseWebhook|null $webhook webhook
      *
      * @return self
      */

@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * BillingEntitlementsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -139,9 +139,9 @@ class BillingEntitlementsApi
      * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetBillingEntitlementsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetBillingEntitlementsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getBillingEntitlements($customer_id, $page_size = null, $starting_after = null, $ending_before = null, $max_value = null, $expand = null, string $contentType = self::contentTypes['getBillingEntitlements'][0])
     {
@@ -162,9 +162,9 @@ class BillingEntitlementsApi
      * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetBillingEntitlementsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetBillingEntitlementsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getBillingEntitlementsWithHttpInfo($customer_id, $page_size = null, $starting_after = null, $ending_before = null, $max_value = null, $expand = null, string $contentType = self::contentTypes['getBillingEntitlements'][0])
     {
@@ -196,19 +196,19 @@ class BillingEntitlementsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetBillingEntitlementsResponse',
+                        '\Kinde\KindeSDK\Model\GetBillingEntitlementsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -230,7 +230,7 @@ class BillingEntitlementsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetBillingEntitlementsResponse',
+                '\Kinde\KindeSDK\Model\GetBillingEntitlementsResponse',
                 $request,
                 $response,
             );
@@ -239,7 +239,7 @@ class BillingEntitlementsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetBillingEntitlementsResponse',
+                        '\Kinde\KindeSDK\Model\GetBillingEntitlementsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -247,7 +247,7 @@ class BillingEntitlementsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -255,7 +255,7 @@ class BillingEntitlementsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -311,7 +311,7 @@ class BillingEntitlementsApi
      */
     public function getBillingEntitlementsAsyncWithHttpInfo($customer_id, $page_size = null, $starting_after = null, $ending_before = null, $max_value = null, $expand = null, string $contentType = self::contentTypes['getBillingEntitlements'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetBillingEntitlementsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetBillingEntitlementsResponse';
         $request = $this->getBillingEntitlementsRequest($customer_id, $page_size, $starting_after, $ending_before, $max_value, $expand, $contentType);
 
         return $this->client

@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,17 +27,17 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetOrganizationResponseBilling Class Doc Comment
  *
  * @category Class
  * @description The billing information if the organization is a billing customer.
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetOrganizationResponseBilling implements ModelInterface, ArrayAccess, \Js
       */
     protected static $openAPITypes = [
         'billing_customer_id' => 'string',
-        'agreements' => '\OpenAPI\Client\Model\GetOrganizationResponseBillingAgreementsInner[]'
+        'agreements' => '\Kinde\KindeSDK\Model\GetOrganizationResponseBillingAgreementsInner[]'
     ];
 
     /**
@@ -328,7 +328,7 @@ class GetOrganizationResponseBilling implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets agreements
      *
-     * @return \OpenAPI\Client\Model\GetOrganizationResponseBillingAgreementsInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetOrganizationResponseBillingAgreementsInner[]|null
      */
     public function getAgreements()
     {
@@ -338,7 +338,7 @@ class GetOrganizationResponseBilling implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets agreements
      *
-     * @param \OpenAPI\Client\Model\GetOrganizationResponseBillingAgreementsInner[]|null $agreements The billing agreements the billing customer is currently subscribed to
+     * @param \Kinde\KindeSDK\Model\GetOrganizationResponseBillingAgreementsInner[]|null $agreements The billing agreements the billing customer is currently subscribed to
      *
      * @return self
      */

@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * NotFoundResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,7 +58,7 @@ class NotFoundResponse implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'errors' => '\OpenAPI\Client\Model\NotFoundResponseErrors'
+        'errors' => '\Kinde\KindeSDK\Model\NotFoundResponseErrors'
     ];
 
     /**
@@ -293,7 +293,7 @@ class NotFoundResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets errors
      *
-     * @return \OpenAPI\Client\Model\NotFoundResponseErrors|null
+     * @return \Kinde\KindeSDK\Model\NotFoundResponseErrors|null
      */
     public function getErrors()
     {
@@ -303,7 +303,7 @@ class NotFoundResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets errors
      *
-     * @param \OpenAPI\Client\Model\NotFoundResponseErrors|null $errors errors
+     * @param \Kinde\KindeSDK\Model\NotFoundResponseErrors|null $errors errors
      *
      * @return self
      */

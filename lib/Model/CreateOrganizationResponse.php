@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateOrganizationResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class CreateOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSe
     protected static $openAPITypes = [
         'message' => 'string',
         'code' => 'string',
-        'organization' => '\OpenAPI\Client\Model\CreateOrganizationResponseOrganization'
+        'organization' => '\Kinde\KindeSDK\Model\CreateOrganizationResponseOrganization'
     ];
 
     /**
@@ -361,7 +361,7 @@ class CreateOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Gets organization
      *
-     * @return \OpenAPI\Client\Model\CreateOrganizationResponseOrganization|null
+     * @return \Kinde\KindeSDK\Model\CreateOrganizationResponseOrganization|null
      */
     public function getOrganization()
     {
@@ -371,7 +371,7 @@ class CreateOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets organization
      *
-     * @param \OpenAPI\Client\Model\CreateOrganizationResponseOrganization|null $organization organization
+     * @param \Kinde\KindeSDK\Model\CreateOrganizationResponseOrganization|null $organization organization
      *
      * @return self
      */

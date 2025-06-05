@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * PermissionsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -140,12 +140,12 @@ class PermissionsApi
      *
      * Create Permission
      *
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createPermission($create_permission_request = null, string $contentType = self::contentTypes['createPermission'][0])
     {
@@ -158,12 +158,12 @@ class PermissionsApi
      *
      * Create Permission
      *
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createPermissionWithHttpInfo($create_permission_request = null, string $contentType = self::contentTypes['createPermission'][0])
     {
@@ -195,19 +195,19 @@ class PermissionsApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -229,7 +229,7 @@ class PermissionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -238,7 +238,7 @@ class PermissionsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -246,7 +246,7 @@ class PermissionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -254,7 +254,7 @@ class PermissionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -271,7 +271,7 @@ class PermissionsApi
      *
      * Create Permission
      *
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -292,7 +292,7 @@ class PermissionsApi
      *
      * Create Permission
      *
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -300,7 +300,7 @@ class PermissionsApi
      */
     public function createPermissionAsyncWithHttpInfo($create_permission_request = null, string $contentType = self::contentTypes['createPermission'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->createPermissionRequest($create_permission_request, $contentType);
 
         return $this->client
@@ -342,7 +342,7 @@ class PermissionsApi
     /**
      * Create request for operation 'createPermission'
      *
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -436,9 +436,9 @@ class PermissionsApi
      * @param  string $permission_id The identifier for the permission. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deletePermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deletePermission($permission_id, string $contentType = self::contentTypes['deletePermission'][0])
     {
@@ -454,9 +454,9 @@ class PermissionsApi
      * @param  string $permission_id The identifier for the permission. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deletePermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deletePermissionWithHttpInfo($permission_id, string $contentType = self::contentTypes['deletePermission'][0])
     {
@@ -488,13 +488,13 @@ class PermissionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -516,7 +516,7 @@ class PermissionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -525,7 +525,7 @@ class PermissionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -533,7 +533,7 @@ class PermissionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -579,7 +579,7 @@ class PermissionsApi
      */
     public function deletePermissionAsyncWithHttpInfo($permission_id, string $contentType = self::contentTypes['deletePermission'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deletePermissionRequest($permission_id, $contentType);
 
         return $this->client
@@ -724,9 +724,9 @@ class PermissionsApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetPermissionsResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getPermissions($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getPermissions'][0])
     {
@@ -744,9 +744,9 @@ class PermissionsApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetPermissionsResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPermissionsWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getPermissions'][0])
     {
@@ -778,13 +778,13 @@ class PermissionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetPermissionsResponse',
+                        '\Kinde\KindeSDK\Model\GetPermissionsResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -806,7 +806,7 @@ class PermissionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetPermissionsResponse',
+                '\Kinde\KindeSDK\Model\GetPermissionsResponse',
                 $request,
                 $response,
             );
@@ -815,7 +815,7 @@ class PermissionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetPermissionsResponse',
+                        '\Kinde\KindeSDK\Model\GetPermissionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -823,7 +823,7 @@ class PermissionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -873,7 +873,7 @@ class PermissionsApi
      */
     public function getPermissionsAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getPermissions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetPermissionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetPermissionsResponse';
         $request = $this->getPermissionsRequest($sort, $page_size, $next_token, $contentType);
 
         return $this->client
@@ -1031,12 +1031,12 @@ class PermissionsApi
      * Update Permission
      *
      * @param  string $permission_id The identifier for the permission. (required)
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updatePermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updatePermissions($permission_id, $create_permission_request = null, string $contentType = self::contentTypes['updatePermissions'][0])
     {
@@ -1050,12 +1050,12 @@ class PermissionsApi
      * Update Permission
      *
      * @param  string $permission_id The identifier for the permission. (required)
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updatePermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePermissionsWithHttpInfo($permission_id, $create_permission_request = null, string $contentType = self::contentTypes['updatePermissions'][0])
     {
@@ -1087,19 +1087,19 @@ class PermissionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1121,7 +1121,7 @@ class PermissionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1130,7 +1130,7 @@ class PermissionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1138,7 +1138,7 @@ class PermissionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1146,7 +1146,7 @@ class PermissionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1164,7 +1164,7 @@ class PermissionsApi
      * Update Permission
      *
      * @param  string $permission_id The identifier for the permission. (required)
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updatePermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1186,7 +1186,7 @@ class PermissionsApi
      * Update Permission
      *
      * @param  string $permission_id The identifier for the permission. (required)
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updatePermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1194,7 +1194,7 @@ class PermissionsApi
      */
     public function updatePermissionsAsyncWithHttpInfo($permission_id, $create_permission_request = null, string $contentType = self::contentTypes['updatePermissions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updatePermissionsRequest($permission_id, $create_permission_request, $contentType);
 
         return $this->client
@@ -1237,7 +1237,7 @@ class PermissionsApi
      * Create request for operation 'updatePermissions'
      *
      * @param  string $permission_id The identifier for the permission. (required)
-     * @param  \OpenAPI\Client\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
+     * @param  \Kinde\KindeSDK\Model\CreatePermissionRequest|null $create_permission_request Permission details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updatePermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

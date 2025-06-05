@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * ConnectionsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -146,12 +146,12 @@ class ConnectionsApi
      *
      * Create Connection
      *
-     * @param  \OpenAPI\Client\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateConnectionResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateConnectionResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createConnection($create_connection_request, string $contentType = self::contentTypes['createConnection'][0])
     {
@@ -164,12 +164,12 @@ class ConnectionsApi
      *
      * Create Connection
      *
-     * @param  \OpenAPI\Client\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateConnectionResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateConnectionResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createConnectionWithHttpInfo($create_connection_request, string $contentType = self::contentTypes['createConnection'][0])
     {
@@ -201,25 +201,25 @@ class ConnectionsApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateConnectionResponse',
+                        '\Kinde\KindeSDK\Model\CreateConnectionResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -241,7 +241,7 @@ class ConnectionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateConnectionResponse',
+                '\Kinde\KindeSDK\Model\CreateConnectionResponse',
                 $request,
                 $response,
             );
@@ -250,7 +250,7 @@ class ConnectionsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateConnectionResponse',
+                        '\Kinde\KindeSDK\Model\CreateConnectionResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -258,7 +258,7 @@ class ConnectionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -266,7 +266,7 @@ class ConnectionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -274,7 +274,7 @@ class ConnectionsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -291,7 +291,7 @@ class ConnectionsApi
      *
      * Create Connection
      *
-     * @param  \OpenAPI\Client\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -312,7 +312,7 @@ class ConnectionsApi
      *
      * Create Connection
      *
-     * @param  \OpenAPI\Client\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -320,7 +320,7 @@ class ConnectionsApi
      */
     public function createConnectionAsyncWithHttpInfo($create_connection_request, string $contentType = self::contentTypes['createConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateConnectionResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateConnectionResponse';
         $request = $this->createConnectionRequest($create_connection_request, $contentType);
 
         return $this->client
@@ -362,7 +362,7 @@ class ConnectionsApi
     /**
      * Create request for operation 'createConnection'
      *
-     * @param  \OpenAPI\Client\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateConnectionRequest $create_connection_request Connection details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -462,9 +462,9 @@ class ConnectionsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteConnection($connection_id, string $contentType = self::contentTypes['deleteConnection'][0])
     {
@@ -480,9 +480,9 @@ class ConnectionsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteConnectionWithHttpInfo($connection_id, string $contentType = self::contentTypes['deleteConnection'][0])
     {
@@ -514,31 +514,31 @@ class ConnectionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -560,7 +560,7 @@ class ConnectionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -569,7 +569,7 @@ class ConnectionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -577,7 +577,7 @@ class ConnectionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -585,7 +585,7 @@ class ConnectionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -593,7 +593,7 @@ class ConnectionsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -601,7 +601,7 @@ class ConnectionsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -647,7 +647,7 @@ class ConnectionsApi
      */
     public function deleteConnectionAsyncWithHttpInfo($connection_id, string $contentType = self::contentTypes['deleteConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteConnectionRequest($connection_id, $contentType);
 
         return $this->client
@@ -790,9 +790,9 @@ class ConnectionsApi
      * @param  string $connection_id The unique identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Connection|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\Connection|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getConnection($connection_id, string $contentType = self::contentTypes['getConnection'][0])
     {
@@ -808,9 +808,9 @@ class ConnectionsApi
      * @param  string $connection_id The unique identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Connection|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Connection|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getConnectionWithHttpInfo($connection_id, string $contentType = self::contentTypes['getConnection'][0])
     {
@@ -842,25 +842,25 @@ class ConnectionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\Connection',
+                        '\Kinde\KindeSDK\Model\Connection',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -882,7 +882,7 @@ class ConnectionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\Connection',
+                '\Kinde\KindeSDK\Model\Connection',
                 $request,
                 $response,
             );
@@ -891,7 +891,7 @@ class ConnectionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Connection',
+                        '\Kinde\KindeSDK\Model\Connection',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -899,7 +899,7 @@ class ConnectionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -907,7 +907,7 @@ class ConnectionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -915,7 +915,7 @@ class ConnectionsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -961,7 +961,7 @@ class ConnectionsApi
      */
     public function getConnectionAsyncWithHttpInfo($connection_id, string $contentType = self::contentTypes['getConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\Connection';
+        $returnType = '\Kinde\KindeSDK\Model\Connection';
         $request = $this->getConnectionRequest($connection_id, $contentType);
 
         return $this->client
@@ -1107,9 +1107,9 @@ class ConnectionsApi
      * @param  string|null $ending_before The ID of the connection to end before. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetConnectionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetConnectionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getConnections($page_size = null, $home_realm_domain = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getConnections'][0])
     {
@@ -1128,9 +1128,9 @@ class ConnectionsApi
      * @param  string|null $ending_before The ID of the connection to end before. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnections'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetConnectionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetConnectionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getConnectionsWithHttpInfo($page_size = null, $home_realm_domain = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getConnections'][0])
     {
@@ -1162,19 +1162,19 @@ class ConnectionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetConnectionsResponse',
+                        '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1196,7 +1196,7 @@ class ConnectionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetConnectionsResponse',
+                '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                 $request,
                 $response,
             );
@@ -1205,7 +1205,7 @@ class ConnectionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetConnectionsResponse',
+                        '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1213,7 +1213,7 @@ class ConnectionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1221,7 +1221,7 @@ class ConnectionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1273,7 +1273,7 @@ class ConnectionsApi
      */
     public function getConnectionsAsyncWithHttpInfo($page_size = null, $home_realm_domain = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getConnections'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetConnectionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetConnectionsResponse';
         $request = $this->getConnectionsRequest($page_size, $home_realm_domain, $starting_after, $ending_before, $contentType);
 
         return $this->client
@@ -1442,12 +1442,12 @@ class ConnectionsApi
      * Replace Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function replaceConnection($connection_id, $replace_connection_request, string $contentType = self::contentTypes['replaceConnection'][0])
     {
@@ -1461,12 +1461,12 @@ class ConnectionsApi
      * Replace Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function replaceConnectionWithHttpInfo($connection_id, $replace_connection_request, string $contentType = self::contentTypes['replaceConnection'][0])
     {
@@ -1498,31 +1498,31 @@ class ConnectionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1544,7 +1544,7 @@ class ConnectionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1553,7 +1553,7 @@ class ConnectionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1561,7 +1561,7 @@ class ConnectionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1569,7 +1569,7 @@ class ConnectionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1577,7 +1577,7 @@ class ConnectionsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1585,7 +1585,7 @@ class ConnectionsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1603,7 +1603,7 @@ class ConnectionsApi
      * Replace Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1625,7 +1625,7 @@ class ConnectionsApi
      * Replace Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1633,7 +1633,7 @@ class ConnectionsApi
      */
     public function replaceConnectionAsyncWithHttpInfo($connection_id, $replace_connection_request, string $contentType = self::contentTypes['replaceConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->replaceConnectionRequest($connection_id, $replace_connection_request, $contentType);
 
         return $this->client
@@ -1676,7 +1676,7 @@ class ConnectionsApi
      * Create request for operation 'replaceConnection'
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceConnectionRequest $replace_connection_request The complete connection configuration to replace the existing one. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1789,12 +1789,12 @@ class ConnectionsApi
      * Update Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateConnection($connection_id, $update_connection_request, string $contentType = self::contentTypes['updateConnection'][0])
     {
@@ -1808,12 +1808,12 @@ class ConnectionsApi
      * Update Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateConnectionWithHttpInfo($connection_id, $update_connection_request, string $contentType = self::contentTypes['updateConnection'][0])
     {
@@ -1845,31 +1845,31 @@ class ConnectionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1891,7 +1891,7 @@ class ConnectionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1900,7 +1900,7 @@ class ConnectionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1908,7 +1908,7 @@ class ConnectionsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1916,7 +1916,7 @@ class ConnectionsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1924,7 +1924,7 @@ class ConnectionsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1932,7 +1932,7 @@ class ConnectionsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1950,7 +1950,7 @@ class ConnectionsApi
      * Update Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1972,7 +1972,7 @@ class ConnectionsApi
      * Update Connection
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1980,7 +1980,7 @@ class ConnectionsApi
      */
     public function updateConnectionAsyncWithHttpInfo($connection_id, $update_connection_request, string $contentType = self::contentTypes['updateConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateConnectionRequest($connection_id, $update_connection_request, $contentType);
 
         return $this->client
@@ -2023,7 +2023,7 @@ class ConnectionsApi
      * Create request for operation 'updateConnection'
      *
      * @param  string $connection_id The unique identifier for the connection. (required)
-     * @param  \OpenAPI\Client\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateConnectionRequest $update_connection_request The fields of the connection to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateConnection'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

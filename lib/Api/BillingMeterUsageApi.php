@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * BillingMeterUsageApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -131,12 +131,12 @@ class BillingMeterUsageApi
      *
      * Create meter usage record
      *
-     * @param  \OpenAPI\Client\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
+     * @param  \Kinde\KindeSDK\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMeterUsageRecord'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateMeterUsageRecordResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateMeterUsageRecordResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createMeterUsageRecord($create_meter_usage_record_request, string $contentType = self::contentTypes['createMeterUsageRecord'][0])
     {
@@ -149,12 +149,12 @@ class BillingMeterUsageApi
      *
      * Create meter usage record
      *
-     * @param  \OpenAPI\Client\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
+     * @param  \Kinde\KindeSDK\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMeterUsageRecord'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateMeterUsageRecordResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateMeterUsageRecordResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createMeterUsageRecordWithHttpInfo($create_meter_usage_record_request, string $contentType = self::contentTypes['createMeterUsageRecord'][0])
     {
@@ -186,25 +186,25 @@ class BillingMeterUsageApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateMeterUsageRecordResponse',
+                        '\Kinde\KindeSDK\Model\CreateMeterUsageRecordResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -226,7 +226,7 @@ class BillingMeterUsageApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateMeterUsageRecordResponse',
+                '\Kinde\KindeSDK\Model\CreateMeterUsageRecordResponse',
                 $request,
                 $response,
             );
@@ -235,7 +235,7 @@ class BillingMeterUsageApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateMeterUsageRecordResponse',
+                        '\Kinde\KindeSDK\Model\CreateMeterUsageRecordResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -243,7 +243,7 @@ class BillingMeterUsageApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -251,7 +251,7 @@ class BillingMeterUsageApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -259,7 +259,7 @@ class BillingMeterUsageApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -276,7 +276,7 @@ class BillingMeterUsageApi
      *
      * Create meter usage record
      *
-     * @param  \OpenAPI\Client\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
+     * @param  \Kinde\KindeSDK\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMeterUsageRecord'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -297,7 +297,7 @@ class BillingMeterUsageApi
      *
      * Create meter usage record
      *
-     * @param  \OpenAPI\Client\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
+     * @param  \Kinde\KindeSDK\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMeterUsageRecord'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -305,7 +305,7 @@ class BillingMeterUsageApi
      */
     public function createMeterUsageRecordAsyncWithHttpInfo($create_meter_usage_record_request, string $contentType = self::contentTypes['createMeterUsageRecord'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateMeterUsageRecordResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateMeterUsageRecordResponse';
         $request = $this->createMeterUsageRecordRequest($create_meter_usage_record_request, $contentType);
 
         return $this->client
@@ -347,7 +347,7 @@ class BillingMeterUsageApi
     /**
      * Create request for operation 'createMeterUsageRecord'
      *
-     * @param  \OpenAPI\Client\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
+     * @param  \Kinde\KindeSDK\Model\CreateMeterUsageRecordRequest $create_meter_usage_record_request Meter usage record (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMeterUsageRecord'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

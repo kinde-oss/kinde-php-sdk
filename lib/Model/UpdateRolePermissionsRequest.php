@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * UpdateRolePermissionsRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,7 +58,7 @@ class UpdateRolePermissionsRequest implements ModelInterface, ArrayAccess, \Json
       * @var string[]
       */
     protected static $openAPITypes = [
-        'permissions' => '\OpenAPI\Client\Model\UpdateRolePermissionsRequestPermissionsInner[]'
+        'permissions' => '\Kinde\KindeSDK\Model\UpdateRolePermissionsRequestPermissionsInner[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class UpdateRolePermissionsRequest implements ModelInterface, ArrayAccess, \Json
     /**
      * Gets permissions
      *
-     * @return \OpenAPI\Client\Model\UpdateRolePermissionsRequestPermissionsInner[]|null
+     * @return \Kinde\KindeSDK\Model\UpdateRolePermissionsRequestPermissionsInner[]|null
      */
     public function getPermissions()
     {
@@ -303,7 +303,7 @@ class UpdateRolePermissionsRequest implements ModelInterface, ArrayAccess, \Json
     /**
      * Sets permissions
      *
-     * @param \OpenAPI\Client\Model\UpdateRolePermissionsRequestPermissionsInner[]|null $permissions Permissions to add or remove from the role.
+     * @param \Kinde\KindeSDK\Model\UpdateRolePermissionsRequestPermissionsInner[]|null $permissions Permissions to add or remove from the role.
      *
      * @return self
      */

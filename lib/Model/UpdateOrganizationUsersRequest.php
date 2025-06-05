@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * UpdateOrganizationUsersRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,7 +58,7 @@ class UpdateOrganizationUsersRequest implements ModelInterface, ArrayAccess, \Js
       * @var string[]
       */
     protected static $openAPITypes = [
-        'users' => '\OpenAPI\Client\Model\UpdateOrganizationUsersRequestUsersInner[]'
+        'users' => '\Kinde\KindeSDK\Model\UpdateOrganizationUsersRequestUsersInner[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class UpdateOrganizationUsersRequest implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets users
      *
-     * @return \OpenAPI\Client\Model\UpdateOrganizationUsersRequestUsersInner[]|null
+     * @return \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequestUsersInner[]|null
      */
     public function getUsers()
     {
@@ -303,7 +303,7 @@ class UpdateOrganizationUsersRequest implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets users
      *
-     * @param \OpenAPI\Client\Model\UpdateOrganizationUsersRequestUsersInner[]|null $users Users to add, update or remove from the organization.
+     * @param \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequestUsersInner[]|null $users Users to add, update or remove from the organization.
      *
      * @return self
      */

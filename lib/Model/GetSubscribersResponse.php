@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetSubscribersResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetSubscribersResponse implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'subscribers' => '\OpenAPI\Client\Model\SubscribersSubscriber[]',
+        'subscribers' => '\Kinde\KindeSDK\Model\SubscribersSubscriber[]',
         'next_token' => 'string'
     ];
 
@@ -368,7 +368,7 @@ class GetSubscribersResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets subscribers
      *
-     * @return \OpenAPI\Client\Model\SubscribersSubscriber[]|null
+     * @return \Kinde\KindeSDK\Model\SubscribersSubscriber[]|null
      */
     public function getSubscribers()
     {
@@ -378,7 +378,7 @@ class GetSubscribersResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets subscribers
      *
-     * @param \OpenAPI\Client\Model\SubscribersSubscriber[]|null $subscribers subscribers
+     * @param \Kinde\KindeSDK\Model\SubscribersSubscriber[]|null $subscribers subscribers
      *
      * @return self
      */

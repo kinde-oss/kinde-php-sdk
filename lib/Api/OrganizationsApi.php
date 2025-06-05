@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * OrganizationsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -241,9 +241,9 @@ class OrganizationsApi
      * @param  \SplFileObject $logo The logo file to upload. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function addOrganizationLogo($org_code, $type, $logo, string $contentType = self::contentTypes['addOrganizationLogo'][0])
     {
@@ -261,9 +261,9 @@ class OrganizationsApi
      * @param  \SplFileObject $logo The logo file to upload. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addOrganizationLogoWithHttpInfo($org_code, $type, $logo, string $contentType = self::contentTypes['addOrganizationLogo'][0])
     {
@@ -295,25 +295,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -335,7 +335,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -344,7 +344,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -352,7 +352,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -360,7 +360,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -368,7 +368,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -418,7 +418,7 @@ class OrganizationsApi
      */
     public function addOrganizationLogoAsyncWithHttpInfo($org_code, $type, $logo, string $contentType = self::contentTypes['addOrganizationLogo'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->addOrganizationLogoRequest($org_code, $type, $logo, $contentType);
 
         return $this->client
@@ -598,7 +598,7 @@ class OrganizationsApi
      * @param  string $scope_id Scope ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUserAPIScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -618,7 +618,7 @@ class OrganizationsApi
      * @param  string $scope_id Scope ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUserAPIScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -655,7 +655,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -663,7 +663,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -671,7 +671,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -899,12 +899,12 @@ class OrganizationsApi
      * Add Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\AddOrganizationUsersRequest|null $add_organization_users_request add_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\AddOrganizationUsersRequest|null $add_organization_users_request add_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\AddOrganizationUsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\AddOrganizationUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function addOrganizationUsers($org_code, $add_organization_users_request = null, string $contentType = self::contentTypes['addOrganizationUsers'][0])
     {
@@ -918,12 +918,12 @@ class OrganizationsApi
      * Add Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\AddOrganizationUsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\AddOrganizationUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function addOrganizationUsersWithHttpInfo($org_code, $add_organization_users_request = null, string $contentType = self::contentTypes['addOrganizationUsers'][0])
     {
@@ -955,25 +955,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\AddOrganizationUsersResponse',
+                        '\Kinde\KindeSDK\Model\AddOrganizationUsersResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -995,7 +995,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\AddOrganizationUsersResponse',
+                '\Kinde\KindeSDK\Model\AddOrganizationUsersResponse',
                 $request,
                 $response,
             );
@@ -1004,7 +1004,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\AddOrganizationUsersResponse',
+                        '\Kinde\KindeSDK\Model\AddOrganizationUsersResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1012,7 +1012,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1020,7 +1020,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1028,7 +1028,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1046,7 +1046,7 @@ class OrganizationsApi
      * Add Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1068,7 +1068,7 @@ class OrganizationsApi
      * Add Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1076,7 +1076,7 @@ class OrganizationsApi
      */
     public function addOrganizationUsersAsyncWithHttpInfo($org_code, $add_organization_users_request = null, string $contentType = self::contentTypes['addOrganizationUsers'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\AddOrganizationUsersResponse';
+        $returnType = '\Kinde\KindeSDK\Model\AddOrganizationUsersResponse';
         $request = $this->addOrganizationUsersRequest($org_code, $add_organization_users_request, $contentType);
 
         return $this->client
@@ -1119,7 +1119,7 @@ class OrganizationsApi
      * Create request for operation 'addOrganizationUsers'
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\AddOrganizationUsersRequest|null $add_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addOrganizationUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1225,12 +1225,12 @@ class OrganizationsApi
      *
      * Create organization
      *
-     * @param  \OpenAPI\Client\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateOrganizationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createOrganization($create_organization_request, string $contentType = self::contentTypes['createOrganization'][0])
     {
@@ -1243,12 +1243,12 @@ class OrganizationsApi
      *
      * Create organization
      *
-     * @param  \OpenAPI\Client\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateOrganizationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createOrganizationWithHttpInfo($create_organization_request, string $contentType = self::contentTypes['createOrganization'][0])
     {
@@ -1280,25 +1280,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateOrganizationResponse',
+                        '\Kinde\KindeSDK\Model\CreateOrganizationResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1320,7 +1320,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateOrganizationResponse',
+                '\Kinde\KindeSDK\Model\CreateOrganizationResponse',
                 $request,
                 $response,
             );
@@ -1329,7 +1329,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateOrganizationResponse',
+                        '\Kinde\KindeSDK\Model\CreateOrganizationResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1337,7 +1337,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1345,7 +1345,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1353,7 +1353,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1370,7 +1370,7 @@ class OrganizationsApi
      *
      * Create organization
      *
-     * @param  \OpenAPI\Client\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1391,7 +1391,7 @@ class OrganizationsApi
      *
      * Create organization
      *
-     * @param  \OpenAPI\Client\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1399,7 +1399,7 @@ class OrganizationsApi
      */
     public function createOrganizationAsyncWithHttpInfo($create_organization_request, string $contentType = self::contentTypes['createOrganization'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateOrganizationResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateOrganizationResponse';
         $request = $this->createOrganizationRequest($create_organization_request, $contentType);
 
         return $this->client
@@ -1441,7 +1441,7 @@ class OrganizationsApi
     /**
      * Create request for operation 'createOrganization'
      *
-     * @param  \OpenAPI\Client\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationRequest $create_organization_request Organization details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1540,12 +1540,12 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserPermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse
      */
     public function createOrganizationUserPermission($org_code, $user_id, $create_organization_user_permission_request, string $contentType = self::contentTypes['createOrganizationUserPermission'][0])
     {
@@ -1560,12 +1560,12 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserPermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createOrganizationUserPermissionWithHttpInfo($org_code, $user_id, $create_organization_user_permission_request, string $contentType = self::contentTypes['createOrganizationUserPermission'][0])
     {
@@ -1597,7 +1597,7 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
@@ -1619,7 +1619,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1628,7 +1628,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1647,7 +1647,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1670,7 +1670,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1678,7 +1678,7 @@ class OrganizationsApi
      */
     public function createOrganizationUserPermissionAsyncWithHttpInfo($org_code, $user_id, $create_organization_user_permission_request, string $contentType = self::contentTypes['createOrganizationUserPermission'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->createOrganizationUserPermissionRequest($org_code, $user_id, $create_organization_user_permission_request, $contentType);
 
         return $this->client
@@ -1722,7 +1722,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserPermissionRequest $create_organization_user_permission_request Permission details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserPermission'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1851,12 +1851,12 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse
      */
     public function createOrganizationUserRole($org_code, $user_id, $create_organization_user_role_request, string $contentType = self::contentTypes['createOrganizationUserRole'][0])
     {
@@ -1871,12 +1871,12 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createOrganizationUserRoleWithHttpInfo($org_code, $user_id, $create_organization_user_role_request, string $contentType = self::contentTypes['createOrganizationUserRole'][0])
     {
@@ -1908,7 +1908,7 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
@@ -1930,7 +1930,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -1939,7 +1939,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1958,7 +1958,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1981,7 +1981,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1989,7 +1989,7 @@ class OrganizationsApi
      */
     public function createOrganizationUserRoleAsyncWithHttpInfo($org_code, $user_id, $create_organization_user_role_request, string $contentType = self::contentTypes['createOrganizationUserRole'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->createOrganizationUserRoleRequest($org_code, $user_id, $create_organization_user_role_request, $contentType);
 
         return $this->client
@@ -2033,7 +2033,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  \OpenAPI\Client\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationUserRoleRequest $create_organization_user_role_request Role details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationUserRole'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2163,9 +2163,9 @@ class OrganizationsApi
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganization($org_code, string $contentType = self::contentTypes['deleteOrganization'][0])
     {
@@ -2181,9 +2181,9 @@ class OrganizationsApi
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationWithHttpInfo($org_code, string $contentType = self::contentTypes['deleteOrganization'][0])
     {
@@ -2215,31 +2215,31 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2261,7 +2261,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2270,7 +2270,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2278,7 +2278,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2286,7 +2286,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2294,7 +2294,7 @@ class OrganizationsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2302,7 +2302,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2348,7 +2348,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['deleteOrganization'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationRequest($org_code, $contentType);
 
         return $this->client
@@ -2492,9 +2492,9 @@ class OrganizationsApi
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganizationFeatureFlagOverride($org_code, $feature_flag_key, string $contentType = self::contentTypes['deleteOrganizationFeatureFlagOverride'][0])
     {
@@ -2511,9 +2511,9 @@ class OrganizationsApi
      * @param  string $feature_flag_key The identifier for the feature flag. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationFeatureFlagOverrideWithHttpInfo($org_code, $feature_flag_key, string $contentType = self::contentTypes['deleteOrganizationFeatureFlagOverride'][0])
     {
@@ -2545,13 +2545,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2573,7 +2573,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2582,7 +2582,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2590,7 +2590,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2638,7 +2638,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationFeatureFlagOverrideAsyncWithHttpInfo($org_code, $feature_flag_key, string $contentType = self::contentTypes['deleteOrganizationFeatureFlagOverride'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationFeatureFlagOverrideRequest($org_code, $feature_flag_key, $contentType);
 
         return $this->client
@@ -2797,9 +2797,9 @@ class OrganizationsApi
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationFeatureFlagOverrides'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganizationFeatureFlagOverrides($org_code, string $contentType = self::contentTypes['deleteOrganizationFeatureFlagOverrides'][0])
     {
@@ -2815,9 +2815,9 @@ class OrganizationsApi
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationFeatureFlagOverrides'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationFeatureFlagOverridesWithHttpInfo($org_code, string $contentType = self::contentTypes['deleteOrganizationFeatureFlagOverrides'][0])
     {
@@ -2849,13 +2849,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -2877,7 +2877,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -2886,7 +2886,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2894,7 +2894,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2940,7 +2940,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationFeatureFlagOverridesAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['deleteOrganizationFeatureFlagOverrides'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationFeatureFlagOverridesRequest($org_code, $contentType);
 
         return $this->client
@@ -3083,9 +3083,9 @@ class OrganizationsApi
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationHandle'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganizationHandle($org_code, string $contentType = self::contentTypes['deleteOrganizationHandle'][0])
     {
@@ -3101,9 +3101,9 @@ class OrganizationsApi
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationHandle'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationHandleWithHttpInfo($org_code, string $contentType = self::contentTypes['deleteOrganizationHandle'][0])
     {
@@ -3135,13 +3135,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3163,7 +3163,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3172,7 +3172,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3180,7 +3180,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3226,7 +3226,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationHandleAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['deleteOrganizationHandle'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationHandleRequest($org_code, $contentType);
 
         return $this->client
@@ -3370,9 +3370,9 @@ class OrganizationsApi
      * @param  string $type The type of logo to delete. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganizationLogo($org_code, $type, string $contentType = self::contentTypes['deleteOrganizationLogo'][0])
     {
@@ -3389,9 +3389,9 @@ class OrganizationsApi
      * @param  string $type The type of logo to delete. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationLogoWithHttpInfo($org_code, $type, string $contentType = self::contentTypes['deleteOrganizationLogo'][0])
     {
@@ -3423,25 +3423,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -3463,7 +3463,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -3472,7 +3472,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3480,7 +3480,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3488,7 +3488,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3496,7 +3496,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3544,7 +3544,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationLogoAsyncWithHttpInfo($org_code, $type, string $contentType = self::contentTypes['deleteOrganizationLogo'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationLogoRequest($org_code, $type, $contentType);
 
         return $this->client
@@ -3706,7 +3706,7 @@ class OrganizationsApi
      * @param  string $scope_id Scope ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationUserAPIScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -3726,7 +3726,7 @@ class OrganizationsApi
      * @param  string $scope_id Scope ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationUserAPIScope'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -3763,7 +3763,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3771,7 +3771,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3779,7 +3779,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4011,9 +4011,9 @@ class OrganizationsApi
      * @param  string $permission_id The permission id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationUserPermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganizationUserPermission($org_code, $user_id, $permission_id, string $contentType = self::contentTypes['deleteOrganizationUserPermission'][0])
     {
@@ -4031,9 +4031,9 @@ class OrganizationsApi
      * @param  string $permission_id The permission id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationUserPermission'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationUserPermissionWithHttpInfo($org_code, $user_id, $permission_id, string $contentType = self::contentTypes['deleteOrganizationUserPermission'][0])
     {
@@ -4065,13 +4065,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -4093,7 +4093,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -4102,7 +4102,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4110,7 +4110,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4160,7 +4160,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationUserPermissionAsyncWithHttpInfo($org_code, $user_id, $permission_id, string $contentType = self::contentTypes['deleteOrganizationUserPermission'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationUserPermissionRequest($org_code, $user_id, $permission_id, $contentType);
 
         return $this->client
@@ -4337,9 +4337,9 @@ class OrganizationsApi
      * @param  string $role_id The role id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationUserRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteOrganizationUserRole($org_code, $user_id, $role_id, string $contentType = self::contentTypes['deleteOrganizationUserRole'][0])
     {
@@ -4357,9 +4357,9 @@ class OrganizationsApi
      * @param  string $role_id The role id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationUserRole'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrganizationUserRoleWithHttpInfo($org_code, $user_id, $role_id, string $contentType = self::contentTypes['deleteOrganizationUserRole'][0])
     {
@@ -4391,13 +4391,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -4419,7 +4419,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -4428,7 +4428,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4436,7 +4436,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4486,7 +4486,7 @@ class OrganizationsApi
      */
     public function deleteOrganizationUserRoleAsyncWithHttpInfo($org_code, $user_id, $role_id, string $contentType = self::contentTypes['deleteOrganizationUserRole'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteOrganizationUserRoleRequest($org_code, $user_id, $role_id, $contentType);
 
         return $this->client
@@ -4662,7 +4662,7 @@ class OrganizationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['enableOrgConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
@@ -4680,7 +4680,7 @@ class OrganizationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['enableOrgConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
@@ -4717,7 +4717,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4725,7 +4725,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4733,7 +4733,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4928,9 +4928,9 @@ class OrganizationsApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrgUserMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetUserMfaResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetUserMfaResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrgUserMFA($org_code, $user_id, string $contentType = self::contentTypes['getOrgUserMFA'][0])
     {
@@ -4947,9 +4947,9 @@ class OrganizationsApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrgUserMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetUserMfaResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetUserMfaResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrgUserMFAWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['getOrgUserMFA'][0])
     {
@@ -4981,31 +4981,31 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetUserMfaResponse',
+                        '\Kinde\KindeSDK\Model\GetUserMfaResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5027,7 +5027,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetUserMfaResponse',
+                '\Kinde\KindeSDK\Model\GetUserMfaResponse',
                 $request,
                 $response,
             );
@@ -5036,7 +5036,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetUserMfaResponse',
+                        '\Kinde\KindeSDK\Model\GetUserMfaResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5044,7 +5044,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5052,7 +5052,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5060,7 +5060,7 @@ class OrganizationsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5068,7 +5068,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5116,7 +5116,7 @@ class OrganizationsApi
      */
     public function getOrgUserMFAAsyncWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['getOrgUserMFA'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetUserMfaResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetUserMfaResponse';
         $request = $this->getOrgUserMFARequest($org_code, $user_id, $contentType);
 
         return $this->client
@@ -5275,9 +5275,9 @@ class OrganizationsApi
      * @param  string|null $code The organization&#39;s code. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetOrganizationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrganization($code = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
@@ -5293,9 +5293,9 @@ class OrganizationsApi
      * @param  string|null $code The organization&#39;s code. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetOrganizationResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationWithHttpInfo($code = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
@@ -5327,25 +5327,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetOrganizationResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5367,7 +5367,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetOrganizationResponse',
+                '\Kinde\KindeSDK\Model\GetOrganizationResponse',
                 $request,
                 $response,
             );
@@ -5376,7 +5376,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetOrganizationResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5384,7 +5384,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5392,7 +5392,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5400,7 +5400,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5446,7 +5446,7 @@ class OrganizationsApi
      */
     public function getOrganizationAsyncWithHttpInfo($code = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetOrganizationResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationResponse';
         $request = $this->getOrganizationRequest($code, $contentType);
 
         return $this->client
@@ -5584,9 +5584,9 @@ class OrganizationsApi
      * @param  string $organization_code The organization code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationConnections'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetConnectionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetConnectionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrganizationConnections($organization_code, string $contentType = self::contentTypes['getOrganizationConnections'][0])
     {
@@ -5602,9 +5602,9 @@ class OrganizationsApi
      * @param  string $organization_code The organization code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationConnections'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetConnectionsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetConnectionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationConnectionsWithHttpInfo($organization_code, string $contentType = self::contentTypes['getOrganizationConnections'][0])
     {
@@ -5636,25 +5636,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetConnectionsResponse',
+                        '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5676,7 +5676,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetConnectionsResponse',
+                '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                 $request,
                 $response,
             );
@@ -5685,7 +5685,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetConnectionsResponse',
+                        '\Kinde\KindeSDK\Model\GetConnectionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5693,7 +5693,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5701,7 +5701,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5709,7 +5709,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5755,7 +5755,7 @@ class OrganizationsApi
      */
     public function getOrganizationConnectionsAsyncWithHttpInfo($organization_code, string $contentType = self::contentTypes['getOrganizationConnections'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetConnectionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetConnectionsResponse';
         $request = $this->getOrganizationConnectionsRequest($organization_code, $contentType);
 
         return $this->client
@@ -5898,9 +5898,9 @@ class OrganizationsApi
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationFeatureFlags'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrganizationFeatureFlags($org_code, string $contentType = self::contentTypes['getOrganizationFeatureFlags'][0])
     {
@@ -5916,9 +5916,9 @@ class OrganizationsApi
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationFeatureFlags'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationFeatureFlagsWithHttpInfo($org_code, string $contentType = self::contentTypes['getOrganizationFeatureFlags'][0])
     {
@@ -5950,13 +5950,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -5978,7 +5978,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponse',
+                '\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponse',
                 $request,
                 $response,
             );
@@ -5987,7 +5987,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5995,7 +5995,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6041,7 +6041,7 @@ class OrganizationsApi
      */
     public function getOrganizationFeatureFlagsAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['getOrganizationFeatureFlags'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetOrganizationFeatureFlagsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationFeatureFlagsResponse';
         $request = $this->getOrganizationFeatureFlagsRequest($org_code, $contentType);
 
         return $this->client
@@ -6184,9 +6184,9 @@ class OrganizationsApi
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPropertyValues'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetPropertyValuesResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetPropertyValuesResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrganizationPropertyValues($org_code, string $contentType = self::contentTypes['getOrganizationPropertyValues'][0])
     {
@@ -6202,9 +6202,9 @@ class OrganizationsApi
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPropertyValues'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetPropertyValuesResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetPropertyValuesResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationPropertyValuesWithHttpInfo($org_code, string $contentType = self::contentTypes['getOrganizationPropertyValues'][0])
     {
@@ -6236,13 +6236,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -6264,7 +6264,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                 $request,
                 $response,
             );
@@ -6273,7 +6273,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetPropertyValuesResponse',
+                        '\Kinde\KindeSDK\Model\GetPropertyValuesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6281,7 +6281,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6327,7 +6327,7 @@ class OrganizationsApi
      */
     public function getOrganizationPropertyValuesAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['getOrganizationPropertyValues'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetPropertyValuesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetPropertyValuesResponse';
         $request = $this->getOrganizationPropertyValuesRequest($org_code, $contentType);
 
         return $this->client
@@ -6472,9 +6472,9 @@ class OrganizationsApi
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetOrganizationsUserPermissionsResponse
+     * @return \Kinde\KindeSDK\Model\GetOrganizationsUserPermissionsResponse
      */
     public function getOrganizationUserPermissions($org_code, $user_id, $expand = null, string $contentType = self::contentTypes['getOrganizationUserPermissions'][0])
     {
@@ -6492,9 +6492,9 @@ class OrganizationsApi
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetOrganizationsUserPermissionsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationsUserPermissionsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationUserPermissionsWithHttpInfo($org_code, $user_id, $expand = null, string $contentType = self::contentTypes['getOrganizationUserPermissions'][0])
     {
@@ -6526,7 +6526,7 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetOrganizationsUserPermissionsResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationsUserPermissionsResponse',
                         $request,
                         $response,
                     );
@@ -6548,7 +6548,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetOrganizationsUserPermissionsResponse',
+                '\Kinde\KindeSDK\Model\GetOrganizationsUserPermissionsResponse',
                 $request,
                 $response,
             );
@@ -6557,7 +6557,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetOrganizationsUserPermissionsResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationsUserPermissionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6607,7 +6607,7 @@ class OrganizationsApi
      */
     public function getOrganizationUserPermissionsAsyncWithHttpInfo($org_code, $user_id, $expand = null, string $contentType = self::contentTypes['getOrganizationUserPermissions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetOrganizationsUserPermissionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationsUserPermissionsResponse';
         $request = $this->getOrganizationUserPermissionsRequest($org_code, $user_id, $expand, $contentType);
 
         return $this->client
@@ -6778,9 +6778,9 @@ class OrganizationsApi
      * @param  string $user_id The user&#39;s id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserRoles'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetOrganizationsUserRolesResponse
+     * @return \Kinde\KindeSDK\Model\GetOrganizationsUserRolesResponse
      */
     public function getOrganizationUserRoles($org_code, $user_id, string $contentType = self::contentTypes['getOrganizationUserRoles'][0])
     {
@@ -6797,9 +6797,9 @@ class OrganizationsApi
      * @param  string $user_id The user&#39;s id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserRoles'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetOrganizationsUserRolesResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationsUserRolesResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationUserRolesWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['getOrganizationUserRoles'][0])
     {
@@ -6831,7 +6831,7 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetOrganizationsUserRolesResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationsUserRolesResponse',
                         $request,
                         $response,
                     );
@@ -6853,7 +6853,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetOrganizationsUserRolesResponse',
+                '\Kinde\KindeSDK\Model\GetOrganizationsUserRolesResponse',
                 $request,
                 $response,
             );
@@ -6862,7 +6862,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetOrganizationsUserRolesResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationsUserRolesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6910,7 +6910,7 @@ class OrganizationsApi
      */
     public function getOrganizationUserRolesAsyncWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['getOrganizationUserRoles'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetOrganizationsUserRolesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationsUserRolesResponse';
         $request = $this->getOrganizationUserRolesRequest($org_code, $user_id, $contentType);
 
         return $this->client
@@ -7074,9 +7074,9 @@ class OrganizationsApi
      * @param  string|null $roles Filter by user roles comma separated (where all match) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetOrganizationUsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetOrganizationUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrganizationUsers($org_code, $sort = null, $page_size = null, $next_token = null, $permissions = null, $roles = null, string $contentType = self::contentTypes['getOrganizationUsers'][0])
     {
@@ -7097,9 +7097,9 @@ class OrganizationsApi
      * @param  string|null $roles Filter by user roles comma separated (where all match) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetOrganizationUsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationUsersWithHttpInfo($org_code, $sort = null, $page_size = null, $next_token = null, $permissions = null, $roles = null, string $contentType = self::contentTypes['getOrganizationUsers'][0])
     {
@@ -7131,25 +7131,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetOrganizationUsersResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationUsersResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -7171,7 +7171,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetOrganizationUsersResponse',
+                '\Kinde\KindeSDK\Model\GetOrganizationUsersResponse',
                 $request,
                 $response,
             );
@@ -7180,7 +7180,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetOrganizationUsersResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationUsersResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7188,7 +7188,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7196,7 +7196,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7204,7 +7204,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7260,7 +7260,7 @@ class OrganizationsApi
      */
     public function getOrganizationUsersAsyncWithHttpInfo($org_code, $sort = null, $page_size = null, $next_token = null, $permissions = null, $roles = null, string $contentType = self::contentTypes['getOrganizationUsers'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetOrganizationUsersResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationUsersResponse';
         $request = $this->getOrganizationUsersRequest($org_code, $sort, $page_size, $next_token, $permissions, $roles, $contentType);
 
         return $this->client
@@ -7460,9 +7460,9 @@ class OrganizationsApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizations'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetOrganizationsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetOrganizationsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getOrganizations($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizations'][0])
     {
@@ -7480,9 +7480,9 @@ class OrganizationsApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizations'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetOrganizationsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrganizationsWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizations'][0])
     {
@@ -7514,25 +7514,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetOrganizationsResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -7554,7 +7554,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetOrganizationsResponse',
+                '\Kinde\KindeSDK\Model\GetOrganizationsResponse',
                 $request,
                 $response,
             );
@@ -7563,7 +7563,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetOrganizationsResponse',
+                        '\Kinde\KindeSDK\Model\GetOrganizationsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7571,7 +7571,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7579,7 +7579,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7587,7 +7587,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7637,7 +7637,7 @@ class OrganizationsApi
      */
     public function getOrganizationsAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizations'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetOrganizationsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationsResponse';
         $request = $this->getOrganizationsRequest($sort, $page_size, $next_token, $contentType);
 
         return $this->client
@@ -7797,9 +7797,9 @@ class OrganizationsApi
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['readOrganizationLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\ReadLogoResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\ReadLogoResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function readOrganizationLogo($org_code, string $contentType = self::contentTypes['readOrganizationLogo'][0])
     {
@@ -7815,9 +7815,9 @@ class OrganizationsApi
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['readOrganizationLogo'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\ReadLogoResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\ReadLogoResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function readOrganizationLogoWithHttpInfo($org_code, string $contentType = self::contentTypes['readOrganizationLogo'][0])
     {
@@ -7849,25 +7849,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ReadLogoResponse',
+                        '\Kinde\KindeSDK\Model\ReadLogoResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -7889,7 +7889,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\ReadLogoResponse',
+                '\Kinde\KindeSDK\Model\ReadLogoResponse',
                 $request,
                 $response,
             );
@@ -7898,7 +7898,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ReadLogoResponse',
+                        '\Kinde\KindeSDK\Model\ReadLogoResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7906,7 +7906,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7914,7 +7914,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7922,7 +7922,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7968,7 +7968,7 @@ class OrganizationsApi
      */
     public function readOrganizationLogoAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['readOrganizationLogo'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\ReadLogoResponse';
+        $returnType = '\Kinde\KindeSDK\Model\ReadLogoResponse';
         $request = $this->readOrganizationLogoRequest($org_code, $contentType);
 
         return $this->client
@@ -8112,9 +8112,9 @@ class OrganizationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeOrgConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function removeOrgConnection($organization_code, $connection_id, string $contentType = self::contentTypes['removeOrgConnection'][0])
     {
@@ -8131,9 +8131,9 @@ class OrganizationsApi
      * @param  string $connection_id The identifier for the connection. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeOrgConnection'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function removeOrgConnectionWithHttpInfo($organization_code, $connection_id, string $contentType = self::contentTypes['removeOrgConnection'][0])
     {
@@ -8165,25 +8165,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -8205,7 +8205,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -8214,7 +8214,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8222,7 +8222,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8230,7 +8230,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8238,7 +8238,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8286,7 +8286,7 @@ class OrganizationsApi
      */
     public function removeOrgConnectionAsyncWithHttpInfo($organization_code, $connection_id, string $contentType = self::contentTypes['removeOrgConnection'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->removeOrgConnectionRequest($organization_code, $connection_id, $contentType);
 
         return $this->client
@@ -8446,9 +8446,9 @@ class OrganizationsApi
      * @param  string $user_id The user&#39;s id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeOrganizationUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function removeOrganizationUser($org_code, $user_id, string $contentType = self::contentTypes['removeOrganizationUser'][0])
     {
@@ -8465,9 +8465,9 @@ class OrganizationsApi
      * @param  string $user_id The user&#39;s id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeOrganizationUser'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function removeOrganizationUserWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['removeOrganizationUser'][0])
     {
@@ -8499,13 +8499,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -8527,7 +8527,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -8536,7 +8536,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8544,7 +8544,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8592,7 +8592,7 @@ class OrganizationsApi
      */
     public function removeOrganizationUserAsyncWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['removeOrganizationUser'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->removeOrganizationUserRequest($org_code, $user_id, $contentType);
 
         return $this->client
@@ -8749,12 +8749,12 @@ class OrganizationsApi
      * Replace Organization MFA Configuration
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceOrganizationMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function replaceOrganizationMFA($org_code, $replace_organization_mfa_request, string $contentType = self::contentTypes['replaceOrganizationMFA'][0])
     {
@@ -8768,12 +8768,12 @@ class OrganizationsApi
      * Replace Organization MFA Configuration
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceOrganizationMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function replaceOrganizationMFAWithHttpInfo($org_code, $replace_organization_mfa_request, string $contentType = self::contentTypes['replaceOrganizationMFA'][0])
     {
@@ -8805,25 +8805,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -8845,7 +8845,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -8854,7 +8854,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8862,7 +8862,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8870,7 +8870,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8878,7 +8878,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -8896,7 +8896,7 @@ class OrganizationsApi
      * Replace Organization MFA Configuration
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceOrganizationMFA'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -8918,7 +8918,7 @@ class OrganizationsApi
      * Replace Organization MFA Configuration
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceOrganizationMFA'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -8926,7 +8926,7 @@ class OrganizationsApi
      */
     public function replaceOrganizationMFAAsyncWithHttpInfo($org_code, $replace_organization_mfa_request, string $contentType = self::contentTypes['replaceOrganizationMFA'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->replaceOrganizationMFARequest($org_code, $replace_organization_mfa_request, $contentType);
 
         return $this->client
@@ -8969,7 +8969,7 @@ class OrganizationsApi
      * Create request for operation 'replaceOrganizationMFA'
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
+     * @param  \Kinde\KindeSDK\Model\ReplaceOrganizationMFARequest $replace_organization_mfa_request MFA details. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['replaceOrganizationMFA'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -9086,9 +9086,9 @@ class OrganizationsApi
      * @param  string $factor_id The identifier for the MFA factor (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetOrgUserMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function resetOrgUserMFA($org_code, $user_id, $factor_id, string $contentType = self::contentTypes['resetOrgUserMFA'][0])
     {
@@ -9106,9 +9106,9 @@ class OrganizationsApi
      * @param  string $factor_id The identifier for the MFA factor (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetOrgUserMFA'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function resetOrgUserMFAWithHttpInfo($org_code, $user_id, $factor_id, string $contentType = self::contentTypes['resetOrgUserMFA'][0])
     {
@@ -9140,31 +9140,31 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -9186,7 +9186,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -9195,7 +9195,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9203,7 +9203,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9211,7 +9211,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9219,7 +9219,7 @@ class OrganizationsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9227,7 +9227,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9277,7 +9277,7 @@ class OrganizationsApi
      */
     public function resetOrgUserMFAAsyncWithHttpInfo($org_code, $user_id, $factor_id, string $contentType = self::contentTypes['resetOrgUserMFA'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->resetOrgUserMFARequest($org_code, $user_id, $factor_id, $contentType);
 
         return $this->client
@@ -9453,9 +9453,9 @@ class OrganizationsApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetOrgUserMFAAll'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function resetOrgUserMFAAll($org_code, $user_id, string $contentType = self::contentTypes['resetOrgUserMFAAll'][0])
     {
@@ -9472,9 +9472,9 @@ class OrganizationsApi
      * @param  string $user_id The identifier for the user (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resetOrgUserMFAAll'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\NotFoundResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function resetOrgUserMFAAllWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['resetOrgUserMFAAll'][0])
     {
@@ -9506,31 +9506,31 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -9552,7 +9552,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -9561,7 +9561,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9569,7 +9569,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9577,7 +9577,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9585,7 +9585,7 @@ class OrganizationsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\NotFoundResponse',
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9593,7 +9593,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9641,7 +9641,7 @@ class OrganizationsApi
      */
     public function resetOrgUserMFAAllAsyncWithHttpInfo($org_code, $user_id, string $contentType = self::contentTypes['resetOrgUserMFAAll'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->resetOrgUserMFAAllRequest($org_code, $user_id, $contentType);
 
         return $this->client
@@ -9799,12 +9799,12 @@ class OrganizationsApi
      *
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateOrganization($org_code, $expand = null, $update_organization_request = null, string $contentType = self::contentTypes['updateOrganization'][0])
     {
@@ -9819,12 +9819,12 @@ class OrganizationsApi
      *
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateOrganizationWithHttpInfo($org_code, $expand = null, $update_organization_request = null, string $contentType = self::contentTypes['updateOrganization'][0])
     {
@@ -9856,25 +9856,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -9896,7 +9896,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -9905,7 +9905,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9913,7 +9913,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9921,7 +9921,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9929,7 +9929,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9948,7 +9948,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -9971,7 +9971,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -9979,7 +9979,7 @@ class OrganizationsApi
      */
     public function updateOrganizationAsyncWithHttpInfo($org_code, $expand = null, $update_organization_request = null, string $contentType = self::contentTypes['updateOrganization'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateOrganizationRequest($org_code, $expand, $update_organization_request, $contentType);
 
         return $this->client
@@ -10023,7 +10023,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The identifier for the organization. (required)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -10144,9 +10144,9 @@ class OrganizationsApi
      * @param  string $value Override value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateOrganizationFeatureFlagOverride($org_code, $feature_flag_key, $value, string $contentType = self::contentTypes['updateOrganizationFeatureFlagOverride'][0])
     {
@@ -10164,9 +10164,9 @@ class OrganizationsApi
      * @param  string $value Override value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationFeatureFlagOverride'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateOrganizationFeatureFlagOverrideWithHttpInfo($org_code, $feature_flag_key, $value, string $contentType = self::contentTypes['updateOrganizationFeatureFlagOverride'][0])
     {
@@ -10198,13 +10198,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -10226,7 +10226,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -10235,7 +10235,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10243,7 +10243,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10293,7 +10293,7 @@ class OrganizationsApi
      */
     public function updateOrganizationFeatureFlagOverrideAsyncWithHttpInfo($org_code, $feature_flag_key, $value, string $contentType = self::contentTypes['updateOrganizationFeatureFlagOverride'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateOrganizationFeatureFlagOverrideRequest($org_code, $feature_flag_key, $value, $contentType);
 
         return $this->client
@@ -10467,12 +10467,12 @@ class OrganizationsApi
      * Update Organization Property values
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperties'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateOrganizationProperties($org_code, $update_organization_properties_request, string $contentType = self::contentTypes['updateOrganizationProperties'][0])
     {
@@ -10486,12 +10486,12 @@ class OrganizationsApi
      * Update Organization Property values
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperties'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateOrganizationPropertiesWithHttpInfo($org_code, $update_organization_properties_request, string $contentType = self::contentTypes['updateOrganizationProperties'][0])
     {
@@ -10523,13 +10523,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -10551,7 +10551,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -10560,7 +10560,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10568,7 +10568,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10586,7 +10586,7 @@ class OrganizationsApi
      * Update Organization Property values
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperties'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -10608,7 +10608,7 @@ class OrganizationsApi
      * Update Organization Property values
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperties'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -10616,7 +10616,7 @@ class OrganizationsApi
      */
     public function updateOrganizationPropertiesAsyncWithHttpInfo($org_code, $update_organization_properties_request, string $contentType = self::contentTypes['updateOrganizationProperties'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateOrganizationPropertiesRequest($org_code, $update_organization_properties_request, $contentType);
 
         return $this->client
@@ -10659,7 +10659,7 @@ class OrganizationsApi
      * Create request for operation 'updateOrganizationProperties'
      *
      * @param  string $org_code The identifier for the organization (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPropertiesRequest $update_organization_properties_request Properties to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperties'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -10776,9 +10776,9 @@ class OrganizationsApi
      * @param  string $value The new property value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateOrganizationProperty($org_code, $property_key, $value, string $contentType = self::contentTypes['updateOrganizationProperty'][0])
     {
@@ -10796,9 +10796,9 @@ class OrganizationsApi
      * @param  string $value The new property value (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationProperty'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateOrganizationPropertyWithHttpInfo($org_code, $property_key, $value, string $contentType = self::contentTypes['updateOrganizationProperty'][0])
     {
@@ -10830,13 +10830,13 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -10858,7 +10858,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -10867,7 +10867,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10875,7 +10875,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10925,7 +10925,7 @@ class OrganizationsApi
      */
     public function updateOrganizationPropertyAsyncWithHttpInfo($org_code, $property_key, $value, string $contentType = self::contentTypes['updateOrganizationProperty'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateOrganizationPropertyRequest($org_code, $property_key, $value, $contentType);
 
         return $this->client
@@ -11099,12 +11099,12 @@ class OrganizationsApi
      * Update organization session configuration
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationSessions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateOrganizationSessions($org_code, $update_organization_sessions_request, string $contentType = self::contentTypes['updateOrganizationSessions'][0])
     {
@@ -11118,12 +11118,12 @@ class OrganizationsApi
      * Update organization session configuration
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationSessions'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateOrganizationSessionsWithHttpInfo($org_code, $update_organization_sessions_request, string $contentType = self::contentTypes['updateOrganizationSessions'][0])
     {
@@ -11155,25 +11155,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -11195,7 +11195,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -11204,7 +11204,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11212,7 +11212,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11220,7 +11220,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11228,7 +11228,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11246,7 +11246,7 @@ class OrganizationsApi
      * Update organization session configuration
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationSessions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -11268,7 +11268,7 @@ class OrganizationsApi
      * Update organization session configuration
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationSessions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -11276,7 +11276,7 @@ class OrganizationsApi
      */
     public function updateOrganizationSessionsAsyncWithHttpInfo($org_code, $update_organization_sessions_request, string $contentType = self::contentTypes['updateOrganizationSessions'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateOrganizationSessionsRequest($org_code, $update_organization_sessions_request, $contentType);
 
         return $this->client
@@ -11319,7 +11319,7 @@ class OrganizationsApi
      * Create request for operation 'updateOrganizationSessions'
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationSessionsRequest $update_organization_sessions_request Organization session configuration. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationSessions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -11432,12 +11432,12 @@ class OrganizationsApi
      * Update Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request update_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request update_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\UpdateOrganizationUsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\UpdateOrganizationUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateOrganizationUsers($org_code, $update_organization_users_request = null, string $contentType = self::contentTypes['updateOrganizationUsers'][0])
     {
@@ -11451,12 +11451,12 @@ class OrganizationsApi
      * Update Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationUsers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\UpdateOrganizationUsersResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\UpdateOrganizationUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateOrganizationUsersWithHttpInfo($org_code, $update_organization_users_request = null, string $contentType = self::contentTypes['updateOrganizationUsers'][0])
     {
@@ -11488,25 +11488,25 @@ class OrganizationsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\UpdateOrganizationUsersResponse',
+                        '\Kinde\KindeSDK\Model\UpdateOrganizationUsersResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -11528,7 +11528,7 @@ class OrganizationsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\UpdateOrganizationUsersResponse',
+                '\Kinde\KindeSDK\Model\UpdateOrganizationUsersResponse',
                 $request,
                 $response,
             );
@@ -11537,7 +11537,7 @@ class OrganizationsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\UpdateOrganizationUsersResponse',
+                        '\Kinde\KindeSDK\Model\UpdateOrganizationUsersResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11545,7 +11545,7 @@ class OrganizationsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11553,7 +11553,7 @@ class OrganizationsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11561,7 +11561,7 @@ class OrganizationsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -11579,7 +11579,7 @@ class OrganizationsApi
      * Update Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -11601,7 +11601,7 @@ class OrganizationsApi
      * Update Organization Users
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -11609,7 +11609,7 @@ class OrganizationsApi
      */
     public function updateOrganizationUsersAsyncWithHttpInfo($org_code, $update_organization_users_request = null, string $contentType = self::contentTypes['updateOrganizationUsers'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\UpdateOrganizationUsersResponse';
+        $returnType = '\Kinde\KindeSDK\Model\UpdateOrganizationUsersResponse';
         $request = $this->updateOrganizationUsersRequest($org_code, $update_organization_users_request, $contentType);
 
         return $this->client
@@ -11652,7 +11652,7 @@ class OrganizationsApi
      * Create request for operation 'updateOrganizationUsers'
      *
      * @param  string $org_code The organization&#39;s code. (required)
-     * @param  \OpenAPI\Client\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationUsersRequest|null $update_organization_users_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

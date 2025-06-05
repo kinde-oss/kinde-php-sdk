@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * SubscribersApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -142,9 +142,9 @@ class SubscribersApi
      * @param  string $email The email address of the subscriber. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateSubscriberSuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createSubscriber($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
     {
@@ -162,9 +162,9 @@ class SubscribersApi
      * @param  string $email The email address of the subscriber. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateSubscriberSuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createSubscriberWithHttpInfo($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
     {
@@ -196,19 +196,19 @@ class SubscribersApi
             switch($statusCode) {
                 case 201:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateSubscriberSuccessResponse',
+                        '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -230,7 +230,7 @@ class SubscribersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateSubscriberSuccessResponse',
+                '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse',
                 $request,
                 $response,
             );
@@ -239,7 +239,7 @@ class SubscribersApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateSubscriberSuccessResponse',
+                        '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -247,7 +247,7 @@ class SubscribersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -255,7 +255,7 @@ class SubscribersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -305,7 +305,7 @@ class SubscribersApi
      */
     public function createSubscriberAsyncWithHttpInfo($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateSubscriberSuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse';
         $request = $this->createSubscriberRequest($first_name, $last_name, $email, $contentType);
 
         return $this->client
@@ -483,9 +483,9 @@ class SubscribersApi
      * @param  string $subscriber_id The subscriber&#39;s id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetSubscriberResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetSubscriberResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getSubscriber($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
     {
@@ -501,9 +501,9 @@ class SubscribersApi
      * @param  string $subscriber_id The subscriber&#39;s id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetSubscriberResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetSubscriberResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getSubscriberWithHttpInfo($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
     {
@@ -535,19 +535,19 @@ class SubscribersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetSubscriberResponse',
+                        '\Kinde\KindeSDK\Model\GetSubscriberResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -569,7 +569,7 @@ class SubscribersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetSubscriberResponse',
+                '\Kinde\KindeSDK\Model\GetSubscriberResponse',
                 $request,
                 $response,
             );
@@ -578,7 +578,7 @@ class SubscribersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetSubscriberResponse',
+                        '\Kinde\KindeSDK\Model\GetSubscriberResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -586,7 +586,7 @@ class SubscribersApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -594,7 +594,7 @@ class SubscribersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -640,7 +640,7 @@ class SubscribersApi
      */
     public function getSubscriberAsyncWithHttpInfo($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetSubscriberResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetSubscriberResponse';
         $request = $this->getSubscriberRequest($subscriber_id, $contentType);
 
         return $this->client
@@ -785,9 +785,9 @@ class SubscribersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetSubscribersResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetSubscribersResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getSubscribers($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
     {
@@ -805,9 +805,9 @@ class SubscribersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetSubscribersResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetSubscribersResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getSubscribersWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
     {
@@ -839,13 +839,13 @@ class SubscribersApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetSubscribersResponse',
+                        '\Kinde\KindeSDK\Model\GetSubscribersResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -867,7 +867,7 @@ class SubscribersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetSubscribersResponse',
+                '\Kinde\KindeSDK\Model\GetSubscribersResponse',
                 $request,
                 $response,
             );
@@ -876,7 +876,7 @@ class SubscribersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetSubscribersResponse',
+                        '\Kinde\KindeSDK\Model\GetSubscribersResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -884,7 +884,7 @@ class SubscribersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -934,7 +934,7 @@ class SubscribersApi
      */
     public function getSubscribersAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetSubscribersResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetSubscribersResponse';
         $request = $this->getSubscribersRequest($sort, $page_size, $next_token, $contentType);
 
         return $this->client

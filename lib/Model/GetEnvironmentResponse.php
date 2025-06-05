@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetEnvironmentResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class GetEnvironmentResponse implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'environment' => '\OpenAPI\Client\Model\GetEnvironmentResponseEnvironment'
+        'environment' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironment'
     ];
 
     /**
@@ -361,7 +361,7 @@ class GetEnvironmentResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets environment
      *
-     * @return \OpenAPI\Client\Model\GetEnvironmentResponseEnvironment|null
+     * @return \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironment|null
      */
     public function getEnvironment()
     {
@@ -371,7 +371,7 @@ class GetEnvironmentResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets environment
      *
-     * @param \OpenAPI\Client\Model\GetEnvironmentResponseEnvironment|null $environment environment
+     * @param \Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironment|null $environment environment
      *
      * @return self
      */

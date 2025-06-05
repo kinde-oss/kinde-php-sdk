@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * WebhooksApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -146,12 +146,12 @@ class WebhooksApi
      *
      * Create a Webhook
      *
-     * @param  \OpenAPI\Client\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebHook'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\CreateWebhookResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\CreateWebhookResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createWebHook($create_web_hook_request, string $contentType = self::contentTypes['createWebHook'][0])
     {
@@ -164,12 +164,12 @@ class WebhooksApi
      *
      * Create a Webhook
      *
-     * @param  \OpenAPI\Client\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebHook'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\CreateWebhookResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\CreateWebhookResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createWebHookWithHttpInfo($create_web_hook_request, string $contentType = self::contentTypes['createWebHook'][0])
     {
@@ -201,19 +201,19 @@ class WebhooksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\CreateWebhookResponse',
+                        '\Kinde\KindeSDK\Model\CreateWebhookResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -235,7 +235,7 @@ class WebhooksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\CreateWebhookResponse',
+                '\Kinde\KindeSDK\Model\CreateWebhookResponse',
                 $request,
                 $response,
             );
@@ -244,7 +244,7 @@ class WebhooksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\CreateWebhookResponse',
+                        '\Kinde\KindeSDK\Model\CreateWebhookResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -252,7 +252,7 @@ class WebhooksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -260,7 +260,7 @@ class WebhooksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -277,7 +277,7 @@ class WebhooksApi
      *
      * Create a Webhook
      *
-     * @param  \OpenAPI\Client\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebHook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -298,7 +298,7 @@ class WebhooksApi
      *
      * Create a Webhook
      *
-     * @param  \OpenAPI\Client\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebHook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -306,7 +306,7 @@ class WebhooksApi
      */
     public function createWebHookAsyncWithHttpInfo($create_web_hook_request, string $contentType = self::contentTypes['createWebHook'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\CreateWebhookResponse';
+        $returnType = '\Kinde\KindeSDK\Model\CreateWebhookResponse';
         $request = $this->createWebHookRequest($create_web_hook_request, $contentType);
 
         return $this->client
@@ -348,7 +348,7 @@ class WebhooksApi
     /**
      * Create request for operation 'createWebHook'
      *
-     * @param  \OpenAPI\Client\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateWebHookRequest $create_web_hook_request Webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createWebHook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -448,9 +448,9 @@ class WebhooksApi
      * @param  string $webhook_id The webhook id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebHook'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\DeleteWebhookResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\DeleteWebhookResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteWebHook($webhook_id, string $contentType = self::contentTypes['deleteWebHook'][0])
     {
@@ -466,9 +466,9 @@ class WebhooksApi
      * @param  string $webhook_id The webhook id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteWebHook'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\DeleteWebhookResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\DeleteWebhookResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteWebHookWithHttpInfo($webhook_id, string $contentType = self::contentTypes['deleteWebHook'][0])
     {
@@ -500,19 +500,19 @@ class WebhooksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\DeleteWebhookResponse',
+                        '\Kinde\KindeSDK\Model\DeleteWebhookResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -534,7 +534,7 @@ class WebhooksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\DeleteWebhookResponse',
+                '\Kinde\KindeSDK\Model\DeleteWebhookResponse',
                 $request,
                 $response,
             );
@@ -543,7 +543,7 @@ class WebhooksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\DeleteWebhookResponse',
+                        '\Kinde\KindeSDK\Model\DeleteWebhookResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -551,7 +551,7 @@ class WebhooksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -559,7 +559,7 @@ class WebhooksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -605,7 +605,7 @@ class WebhooksApi
      */
     public function deleteWebHookAsyncWithHttpInfo($webhook_id, string $contentType = self::contentTypes['deleteWebHook'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\DeleteWebhookResponse';
+        $returnType = '\Kinde\KindeSDK\Model\DeleteWebhookResponse';
         $request = $this->deleteWebHookRequest($webhook_id, $contentType);
 
         return $this->client
@@ -748,9 +748,9 @@ class WebhooksApi
      * @param  string $event_id The event id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEvent'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetEventResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetEventResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getEvent($event_id, string $contentType = self::contentTypes['getEvent'][0])
     {
@@ -766,9 +766,9 @@ class WebhooksApi
      * @param  string $event_id The event id. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEvent'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetEventResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetEventResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEventWithHttpInfo($event_id, string $contentType = self::contentTypes['getEvent'][0])
     {
@@ -800,19 +800,19 @@ class WebhooksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetEventResponse',
+                        '\Kinde\KindeSDK\Model\GetEventResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -834,7 +834,7 @@ class WebhooksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetEventResponse',
+                '\Kinde\KindeSDK\Model\GetEventResponse',
                 $request,
                 $response,
             );
@@ -843,7 +843,7 @@ class WebhooksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEventResponse',
+                        '\Kinde\KindeSDK\Model\GetEventResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -851,7 +851,7 @@ class WebhooksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -859,7 +859,7 @@ class WebhooksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -905,7 +905,7 @@ class WebhooksApi
      */
     public function getEventAsyncWithHttpInfo($event_id, string $contentType = self::contentTypes['getEvent'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEventResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetEventResponse';
         $request = $this->getEventRequest($event_id, $contentType);
 
         return $this->client
@@ -1047,9 +1047,9 @@ class WebhooksApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEventTypes'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetEventTypesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetEventTypesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getEventTypes(string $contentType = self::contentTypes['getEventTypes'][0])
     {
@@ -1064,9 +1064,9 @@ class WebhooksApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getEventTypes'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetEventTypesResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetEventTypesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEventTypesWithHttpInfo(string $contentType = self::contentTypes['getEventTypes'][0])
     {
@@ -1098,19 +1098,19 @@ class WebhooksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetEventTypesResponse',
+                        '\Kinde\KindeSDK\Model\GetEventTypesResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1132,7 +1132,7 @@ class WebhooksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetEventTypesResponse',
+                '\Kinde\KindeSDK\Model\GetEventTypesResponse',
                 $request,
                 $response,
             );
@@ -1141,7 +1141,7 @@ class WebhooksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetEventTypesResponse',
+                        '\Kinde\KindeSDK\Model\GetEventTypesResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1149,7 +1149,7 @@ class WebhooksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1157,7 +1157,7 @@ class WebhooksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1201,7 +1201,7 @@ class WebhooksApi
      */
     public function getEventTypesAsyncWithHttpInfo(string $contentType = self::contentTypes['getEventTypes'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetEventTypesResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetEventTypesResponse';
         $request = $this->getEventTypesRequest($contentType);
 
         return $this->client
@@ -1327,9 +1327,9 @@ class WebhooksApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebHooks'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetWebhooksResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetWebhooksResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getWebHooks(string $contentType = self::contentTypes['getWebHooks'][0])
     {
@@ -1344,9 +1344,9 @@ class WebhooksApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getWebHooks'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetWebhooksResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetWebhooksResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getWebHooksWithHttpInfo(string $contentType = self::contentTypes['getWebHooks'][0])
     {
@@ -1378,19 +1378,19 @@ class WebhooksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetWebhooksResponse',
+                        '\Kinde\KindeSDK\Model\GetWebhooksResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1412,7 +1412,7 @@ class WebhooksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetWebhooksResponse',
+                '\Kinde\KindeSDK\Model\GetWebhooksResponse',
                 $request,
                 $response,
             );
@@ -1421,7 +1421,7 @@ class WebhooksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetWebhooksResponse',
+                        '\Kinde\KindeSDK\Model\GetWebhooksResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1429,7 +1429,7 @@ class WebhooksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1437,7 +1437,7 @@ class WebhooksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1481,7 +1481,7 @@ class WebhooksApi
      */
     public function getWebHooksAsyncWithHttpInfo(string $contentType = self::contentTypes['getWebHooks'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetWebhooksResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetWebhooksResponse';
         $request = $this->getWebHooksRequest($contentType);
 
         return $this->client
@@ -1606,12 +1606,12 @@ class WebhooksApi
      * Update a Webhook
      *
      * @param  string $webhook_id The webhook id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebHook'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\UpdateWebhookResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\UpdateWebhookResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateWebHook($webhook_id, $update_web_hook_request, string $contentType = self::contentTypes['updateWebHook'][0])
     {
@@ -1625,12 +1625,12 @@ class WebhooksApi
      * Update a Webhook
      *
      * @param  string $webhook_id The webhook id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebHook'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\UpdateWebhookResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\UpdateWebhookResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateWebHookWithHttpInfo($webhook_id, $update_web_hook_request, string $contentType = self::contentTypes['updateWebHook'][0])
     {
@@ -1662,19 +1662,19 @@ class WebhooksApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\UpdateWebhookResponse',
+                        '\Kinde\KindeSDK\Model\UpdateWebhookResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -1696,7 +1696,7 @@ class WebhooksApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\UpdateWebhookResponse',
+                '\Kinde\KindeSDK\Model\UpdateWebhookResponse',
                 $request,
                 $response,
             );
@@ -1705,7 +1705,7 @@ class WebhooksApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\UpdateWebhookResponse',
+                        '\Kinde\KindeSDK\Model\UpdateWebhookResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1713,7 +1713,7 @@ class WebhooksApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1721,7 +1721,7 @@ class WebhooksApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1739,7 +1739,7 @@ class WebhooksApi
      * Update a Webhook
      *
      * @param  string $webhook_id The webhook id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebHook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1761,7 +1761,7 @@ class WebhooksApi
      * Update a Webhook
      *
      * @param  string $webhook_id The webhook id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebHook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1769,7 +1769,7 @@ class WebhooksApi
      */
     public function updateWebHookAsyncWithHttpInfo($webhook_id, $update_web_hook_request, string $contentType = self::contentTypes['updateWebHook'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\UpdateWebhookResponse';
+        $returnType = '\Kinde\KindeSDK\Model\UpdateWebhookResponse';
         $request = $this->updateWebHookRequest($webhook_id, $update_web_hook_request, $contentType);
 
         return $this->client
@@ -1812,7 +1812,7 @@ class WebhooksApi
      * Create request for operation 'updateWebHook'
      *
      * @param  string $webhook_id The webhook id. (required)
-     * @param  \OpenAPI\Client\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateWebHookRequest $update_web_hook_request Update webhook request specification. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateWebHook'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

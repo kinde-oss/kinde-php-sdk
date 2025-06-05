@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * ConnectedAppsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -143,9 +143,9 @@ class ConnectedAppsApi
      * @param  string|null $override_callback_url A URL that overrides the default callback URL setup in your connected app configuration (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnectedAppAuthUrl'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\ConnectedAppsAuthUrl|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\ConnectedAppsAuthUrl|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getConnectedAppAuthUrl($key_code_ref, $user_id = null, $org_code = null, $override_callback_url = null, string $contentType = self::contentTypes['getConnectedAppAuthUrl'][0])
     {
@@ -164,9 +164,9 @@ class ConnectedAppsApi
      * @param  string|null $override_callback_url A URL that overrides the default callback URL setup in your connected app configuration (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnectedAppAuthUrl'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\ConnectedAppsAuthUrl|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\ConnectedAppsAuthUrl|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getConnectedAppAuthUrlWithHttpInfo($key_code_ref, $user_id = null, $org_code = null, $override_callback_url = null, string $contentType = self::contentTypes['getConnectedAppAuthUrl'][0])
     {
@@ -198,19 +198,19 @@ class ConnectedAppsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ConnectedAppsAuthUrl',
+                        '\Kinde\KindeSDK\Model\ConnectedAppsAuthUrl',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 404:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -232,7 +232,7 @@ class ConnectedAppsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\ConnectedAppsAuthUrl',
+                '\Kinde\KindeSDK\Model\ConnectedAppsAuthUrl',
                 $request,
                 $response,
             );
@@ -241,7 +241,7 @@ class ConnectedAppsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ConnectedAppsAuthUrl',
+                        '\Kinde\KindeSDK\Model\ConnectedAppsAuthUrl',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -249,7 +249,7 @@ class ConnectedAppsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -257,7 +257,7 @@ class ConnectedAppsApi
                 case 404:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -309,7 +309,7 @@ class ConnectedAppsApi
      */
     public function getConnectedAppAuthUrlAsyncWithHttpInfo($key_code_ref, $user_id = null, $org_code = null, $override_callback_url = null, string $contentType = self::contentTypes['getConnectedAppAuthUrl'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\ConnectedAppsAuthUrl';
+        $returnType = '\Kinde\KindeSDK\Model\ConnectedAppsAuthUrl';
         $request = $this->getConnectedAppAuthUrlRequest($key_code_ref, $user_id, $org_code, $override_callback_url, $contentType);
 
         return $this->client
@@ -486,9 +486,9 @@ class ConnectedAppsApi
      * @param  string $session_id The unique sesssion id representing the login session of a user. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnectedAppToken'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\ConnectedAppsAccessToken|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\ConnectedAppsAccessToken|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getConnectedAppToken($session_id, string $contentType = self::contentTypes['getConnectedAppToken'][0])
     {
@@ -504,9 +504,9 @@ class ConnectedAppsApi
      * @param  string $session_id The unique sesssion id representing the login session of a user. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getConnectedAppToken'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\ConnectedAppsAccessToken|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\ConnectedAppsAccessToken|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getConnectedAppTokenWithHttpInfo($session_id, string $contentType = self::contentTypes['getConnectedAppToken'][0])
     {
@@ -538,19 +538,19 @@ class ConnectedAppsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ConnectedAppsAccessToken',
+                        '\Kinde\KindeSDK\Model\ConnectedAppsAccessToken',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -572,7 +572,7 @@ class ConnectedAppsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\ConnectedAppsAccessToken',
+                '\Kinde\KindeSDK\Model\ConnectedAppsAccessToken',
                 $request,
                 $response,
             );
@@ -581,7 +581,7 @@ class ConnectedAppsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ConnectedAppsAccessToken',
+                        '\Kinde\KindeSDK\Model\ConnectedAppsAccessToken',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -589,7 +589,7 @@ class ConnectedAppsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -597,7 +597,7 @@ class ConnectedAppsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -643,7 +643,7 @@ class ConnectedAppsApi
      */
     public function getConnectedAppTokenAsyncWithHttpInfo($session_id, string $contentType = self::contentTypes['getConnectedAppToken'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\ConnectedAppsAccessToken';
+        $returnType = '\Kinde\KindeSDK\Model\ConnectedAppsAccessToken';
         $request = $this->getConnectedAppTokenRequest($session_id, $contentType);
 
         return $this->client
@@ -787,9 +787,9 @@ class ConnectedAppsApi
      * @param  string $session_id The unique sesssion id representing the login session of a user. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeConnectedAppToken'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function revokeConnectedAppToken($session_id, string $contentType = self::contentTypes['revokeConnectedAppToken'][0])
     {
@@ -805,9 +805,9 @@ class ConnectedAppsApi
      * @param  string $session_id The unique sesssion id representing the login session of a user. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeConnectedAppToken'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function revokeConnectedAppTokenWithHttpInfo($session_id, string $contentType = self::contentTypes['revokeConnectedAppToken'][0])
     {
@@ -839,19 +839,19 @@ class ConnectedAppsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -873,7 +873,7 @@ class ConnectedAppsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -882,7 +882,7 @@ class ConnectedAppsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -890,7 +890,7 @@ class ConnectedAppsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -898,7 +898,7 @@ class ConnectedAppsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -944,7 +944,7 @@ class ConnectedAppsApi
      */
     public function revokeConnectedAppTokenAsyncWithHttpInfo($session_id, string $contentType = self::contentTypes['revokeConnectedAppToken'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->revokeConnectedAppTokenRequest($session_id, $contentType);
 
         return $this->client

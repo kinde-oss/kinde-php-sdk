@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * IdentitiesApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -140,9 +140,9 @@ class IdentitiesApi
      * @param  string $identity_id The unique identifier for the identity. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function deleteIdentity($identity_id, string $contentType = self::contentTypes['deleteIdentity'][0])
     {
@@ -158,9 +158,9 @@ class IdentitiesApi
      * @param  string $identity_id The unique identifier for the identity. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteIdentityWithHttpInfo($identity_id, string $contentType = self::contentTypes['deleteIdentity'][0])
     {
@@ -192,13 +192,13 @@ class IdentitiesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -220,7 +220,7 @@ class IdentitiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -229,7 +229,7 @@ class IdentitiesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -237,7 +237,7 @@ class IdentitiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -283,7 +283,7 @@ class IdentitiesApi
      */
     public function deleteIdentityAsyncWithHttpInfo($identity_id, string $contentType = self::contentTypes['deleteIdentity'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->deleteIdentityRequest($identity_id, $contentType);
 
         return $this->client
@@ -426,9 +426,9 @@ class IdentitiesApi
      * @param  string $identity_id The unique identifier for the identity. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\Identity|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\Identity|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getIdentity($identity_id, string $contentType = self::contentTypes['getIdentity'][0])
     {
@@ -444,9 +444,9 @@ class IdentitiesApi
      * @param  string $identity_id The unique identifier for the identity. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\Identity|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Identity|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getIdentityWithHttpInfo($identity_id, string $contentType = self::contentTypes['getIdentity'][0])
     {
@@ -478,19 +478,19 @@ class IdentitiesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\Identity',
+                        '\Kinde\KindeSDK\Model\Identity',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -512,7 +512,7 @@ class IdentitiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\Identity',
+                '\Kinde\KindeSDK\Model\Identity',
                 $request,
                 $response,
             );
@@ -521,7 +521,7 @@ class IdentitiesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\Identity',
+                        '\Kinde\KindeSDK\Model\Identity',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -529,7 +529,7 @@ class IdentitiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -537,7 +537,7 @@ class IdentitiesApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -583,7 +583,7 @@ class IdentitiesApi
      */
     public function getIdentityAsyncWithHttpInfo($identity_id, string $contentType = self::contentTypes['getIdentity'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\Identity';
+        $returnType = '\Kinde\KindeSDK\Model\Identity';
         $request = $this->getIdentityRequest($identity_id, $contentType);
 
         return $this->client
@@ -724,12 +724,12 @@ class IdentitiesApi
      * Update identity
      *
      * @param  string $identity_id The unique identifier for the identity. (required)
-     * @param  \OpenAPI\Client\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function updateIdentity($identity_id, $update_identity_request, string $contentType = self::contentTypes['updateIdentity'][0])
     {
@@ -743,12 +743,12 @@ class IdentitiesApi
      * Update identity
      *
      * @param  string $identity_id The unique identifier for the identity. (required)
-     * @param  \OpenAPI\Client\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateIdentity'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateIdentityWithHttpInfo($identity_id, $update_identity_request, string $contentType = self::contentTypes['updateIdentity'][0])
     {
@@ -780,13 +780,13 @@ class IdentitiesApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -808,7 +808,7 @@ class IdentitiesApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -817,7 +817,7 @@ class IdentitiesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -825,7 +825,7 @@ class IdentitiesApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -843,7 +843,7 @@ class IdentitiesApi
      * Update identity
      *
      * @param  string $identity_id The unique identifier for the identity. (required)
-     * @param  \OpenAPI\Client\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateIdentity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -865,7 +865,7 @@ class IdentitiesApi
      * Update identity
      *
      * @param  string $identity_id The unique identifier for the identity. (required)
-     * @param  \OpenAPI\Client\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateIdentity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -873,7 +873,7 @@ class IdentitiesApi
      */
     public function updateIdentityAsyncWithHttpInfo($identity_id, $update_identity_request, string $contentType = self::contentTypes['updateIdentity'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->updateIdentityRequest($identity_id, $update_identity_request, $contentType);
 
         return $this->client
@@ -916,7 +916,7 @@ class IdentitiesApi
      * Create request for operation 'updateIdentity'
      *
      * @param  string $identity_id The unique identifier for the identity. (required)
-     * @param  \OpenAPI\Client\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateIdentityRequest $update_identity_request The fields of the identity to update. (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateIdentity'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

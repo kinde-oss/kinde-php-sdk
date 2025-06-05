@@ -4,7 +4,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Api;
+namespace Kinde\KindeSDK\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -37,17 +37,17 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use OpenAPI\Client\ApiException;
-use OpenAPI\Client\Configuration;
-use OpenAPI\Client\FormDataProcessor;
-use OpenAPI\Client\HeaderSelector;
-use OpenAPI\Client\ObjectSerializer;
+use Kinde\KindeSDK\ApiException;
+use Kinde\KindeSDK\Configuration;
+use Kinde\KindeSDK\FormDataProcessor;
+use Kinde\KindeSDK\HeaderSelector;
+use Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * BillingAgreementsApi Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -132,12 +132,14 @@ class BillingAgreementsApi
     /**
      * Operation createBillingAgreement
      *
-     * @param  \OpenAPI\Client\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
+     * Create billing agreement
+     *
+     * @param  \Kinde\KindeSDK\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBillingAgreement'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function createBillingAgreement($create_billing_agreement_request, string $contentType = self::contentTypes['createBillingAgreement'][0])
     {
@@ -148,12 +150,14 @@ class BillingAgreementsApi
     /**
      * Operation createBillingAgreementWithHttpInfo
      *
-     * @param  \OpenAPI\Client\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
+     * Create billing agreement
+     *
+     * @param  \Kinde\KindeSDK\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBillingAgreement'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\SuccessResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function createBillingAgreementWithHttpInfo($create_billing_agreement_request, string $contentType = self::contentTypes['createBillingAgreement'][0])
     {
@@ -185,25 +189,25 @@ class BillingAgreementsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 429:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -225,7 +229,7 @@ class BillingAgreementsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\SuccessResponse',
+                '\Kinde\KindeSDK\Model\SuccessResponse',
                 $request,
                 $response,
             );
@@ -234,7 +238,7 @@ class BillingAgreementsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\SuccessResponse',
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -242,7 +246,7 @@ class BillingAgreementsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -250,7 +254,7 @@ class BillingAgreementsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -258,7 +262,7 @@ class BillingAgreementsApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -273,7 +277,9 @@ class BillingAgreementsApi
     /**
      * Operation createBillingAgreementAsync
      *
-     * @param  \OpenAPI\Client\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
+     * Create billing agreement
+     *
+     * @param  \Kinde\KindeSDK\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBillingAgreement'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -292,7 +298,9 @@ class BillingAgreementsApi
     /**
      * Operation createBillingAgreementAsyncWithHttpInfo
      *
-     * @param  \OpenAPI\Client\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
+     * Create billing agreement
+     *
+     * @param  \Kinde\KindeSDK\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBillingAgreement'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -300,7 +308,7 @@ class BillingAgreementsApi
      */
     public function createBillingAgreementAsyncWithHttpInfo($create_billing_agreement_request, string $contentType = self::contentTypes['createBillingAgreement'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\SuccessResponse';
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
         $request = $this->createBillingAgreementRequest($create_billing_agreement_request, $contentType);
 
         return $this->client
@@ -342,7 +350,7 @@ class BillingAgreementsApi
     /**
      * Create request for operation 'createBillingAgreement'
      *
-     * @param  \OpenAPI\Client\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
+     * @param  \Kinde\KindeSDK\Model\CreateBillingAgreementRequest $create_billing_agreement_request New agreement request values (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createBillingAgreement'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -446,9 +454,9 @@ class BillingAgreementsApi
      * @param  string|null $feature_code The feature code to filter by agreements only containing that feature (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingAgreements'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \OpenAPI\Client\Model\GetBillingAgreementsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Model\GetBillingAgreementsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
     public function getBillingAgreements($customer_id, $page_size = null, $starting_after = null, $ending_before = null, $feature_code = null, string $contentType = self::contentTypes['getBillingAgreements'][0])
     {
@@ -468,9 +476,9 @@ class BillingAgreementsApi
      * @param  string|null $feature_code The feature code to filter by agreements only containing that feature (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingAgreements'] to see the possible values for this operation
      *
-     * @throws \OpenAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \OpenAPI\Client\Model\GetBillingAgreementsResponse|\OpenAPI\Client\Model\ErrorResponse|\OpenAPI\Client\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\GetBillingAgreementsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getBillingAgreementsWithHttpInfo($customer_id, $page_size = null, $starting_after = null, $ending_before = null, $feature_code = null, string $contentType = self::contentTypes['getBillingAgreements'][0])
     {
@@ -502,19 +510,19 @@ class BillingAgreementsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\GetBillingAgreementsResponse',
+                        '\Kinde\KindeSDK\Model\GetBillingAgreementsResponse',
                         $request,
                         $response,
                     );
                 case 400:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
                 case 403:
                     return $this->handleResponseWithDataType(
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $request,
                         $response,
                     );
@@ -536,7 +544,7 @@ class BillingAgreementsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\OpenAPI\Client\Model\GetBillingAgreementsResponse',
+                '\Kinde\KindeSDK\Model\GetBillingAgreementsResponse',
                 $request,
                 $response,
             );
@@ -545,7 +553,7 @@ class BillingAgreementsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\GetBillingAgreementsResponse',
+                        '\Kinde\KindeSDK\Model\GetBillingAgreementsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -553,7 +561,7 @@ class BillingAgreementsApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -561,7 +569,7 @@ class BillingAgreementsApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\OpenAPI\Client\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -615,7 +623,7 @@ class BillingAgreementsApi
      */
     public function getBillingAgreementsAsyncWithHttpInfo($customer_id, $page_size = null, $starting_after = null, $ending_before = null, $feature_code = null, string $contentType = self::contentTypes['getBillingAgreements'][0])
     {
-        $returnType = '\OpenAPI\Client\Model\GetBillingAgreementsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\GetBillingAgreementsResponse';
         $request = $this->getBillingAgreementsRequest($customer_id, $page_size, $starting_after, $ending_before, $feature_code, $contentType);
 
         return $this->client

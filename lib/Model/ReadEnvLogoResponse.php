@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * ReadEnvLogoResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -59,7 +59,7 @@ class ReadEnvLogoResponse implements ModelInterface, ArrayAccess, \JsonSerializa
       */
     protected static $openAPITypes = [
         'code' => 'string',
-        'logos' => '\OpenAPI\Client\Model\ReadEnvLogoResponseLogosInner[]',
+        'logos' => '\Kinde\KindeSDK\Model\ReadEnvLogoResponseLogosInner[]',
         'message' => 'string'
     ];
 
@@ -334,7 +334,7 @@ class ReadEnvLogoResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets logos
      *
-     * @return \OpenAPI\Client\Model\ReadEnvLogoResponseLogosInner[]|null
+     * @return \Kinde\KindeSDK\Model\ReadEnvLogoResponseLogosInner[]|null
      */
     public function getLogos()
     {
@@ -344,7 +344,7 @@ class ReadEnvLogoResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets logos
      *
-     * @param \OpenAPI\Client\Model\ReadEnvLogoResponseLogosInner[]|null $logos A list of logos.
+     * @param \Kinde\KindeSDK\Model\ReadEnvLogoResponseLogosInner[]|null $logos A list of logos.
      *
      * @return self
      */

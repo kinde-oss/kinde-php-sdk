@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * SearchUsersResponseResultsInner Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -71,7 +71,7 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'last_signed_in' => 'string',
         'created_on' => 'string',
         'organizations' => 'string[]',
-        'identities' => '\OpenAPI\Client\Model\UserIdentitiesInner[]',
+        'identities' => '\Kinde\KindeSDK\Model\UserIdentitiesInner[]',
         'properties' => 'array<string,string>'
     ];
 
@@ -798,7 +798,7 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
     /**
      * Gets identities
      *
-     * @return \OpenAPI\Client\Model\UserIdentitiesInner[]|null
+     * @return \Kinde\KindeSDK\Model\UserIdentitiesInner[]|null
      */
     public function getIdentities()
     {
@@ -808,7 +808,7 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
     /**
      * Sets identities
      *
-     * @param \OpenAPI\Client\Model\UserIdentitiesInner[]|null $identities Array of identities belonging to the user.
+     * @param \Kinde\KindeSDK\Model\UserIdentitiesInner[]|null $identities Array of identities belonging to the user.
      *
      * @return self
      */

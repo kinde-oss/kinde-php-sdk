@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * CreateRolesResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -60,7 +60,7 @@ class CreateRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     protected static $openAPITypes = [
         'code' => 'string',
         'message' => 'string',
-        'role' => '\OpenAPI\Client\Model\CreateRolesResponseRole'
+        'role' => '\Kinde\KindeSDK\Model\CreateRolesResponseRole'
     ];
 
     /**
@@ -361,7 +361,7 @@ class CreateRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets role
      *
-     * @return \OpenAPI\Client\Model\CreateRolesResponseRole|null
+     * @return \Kinde\KindeSDK\Model\CreateRolesResponseRole|null
      */
     public function getRole()
     {
@@ -371,7 +371,7 @@ class CreateRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets role
      *
-     * @param \OpenAPI\Client\Model\CreateRolesResponseRole|null $role role
+     * @param \Kinde\KindeSDK\Model\CreateRolesResponseRole|null $role role
      *
      * @return self
      */

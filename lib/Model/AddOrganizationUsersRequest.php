@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * AddOrganizationUsersRequest Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -58,7 +58,7 @@ class AddOrganizationUsersRequest implements ModelInterface, ArrayAccess, \JsonS
       * @var string[]
       */
     protected static $openAPITypes = [
-        'users' => '\OpenAPI\Client\Model\AddOrganizationUsersRequestUsersInner[]'
+        'users' => '\Kinde\KindeSDK\Model\AddOrganizationUsersRequestUsersInner[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class AddOrganizationUsersRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Gets users
      *
-     * @return \OpenAPI\Client\Model\AddOrganizationUsersRequestUsersInner[]|null
+     * @return \Kinde\KindeSDK\Model\AddOrganizationUsersRequestUsersInner[]|null
      */
     public function getUsers()
     {
@@ -303,7 +303,7 @@ class AddOrganizationUsersRequest implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets users
      *
-     * @param \OpenAPI\Client\Model\AddOrganizationUsersRequestUsersInner[]|null $users Users to be added to the organization.
+     * @param \Kinde\KindeSDK\Model\AddOrganizationUsersRequestUsersInner[]|null $users Users to be added to the organization.
      *
      * @return self
      */

@@ -5,7 +5,7 @@
  * PHP version 8.1
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
@@ -27,16 +27,16 @@
  * Do not edit the class manually.
  */
 
-namespace OpenAPI\Client\Model;
+namespace Kinde\KindeSDK\Model;
 
 use \ArrayAccess;
-use \OpenAPI\Client\ObjectSerializer;
+use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
  * GetUserSessionsResponse Class Doc Comment
  *
  * @category Class
- * @package  OpenAPI\Client
+ * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
@@ -61,7 +61,7 @@ class GetUserSessionsResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'code' => 'string',
         'message' => 'string',
         'has_more' => 'bool',
-        'sessions' => '\OpenAPI\Client\Model\GetUserSessionsResponseSessionsInner[]'
+        'sessions' => '\Kinde\KindeSDK\Model\GetUserSessionsResponseSessionsInner[]'
     ];
 
     /**
@@ -395,7 +395,7 @@ class GetUserSessionsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets sessions
      *
-     * @return \OpenAPI\Client\Model\GetUserSessionsResponseSessionsInner[]|null
+     * @return \Kinde\KindeSDK\Model\GetUserSessionsResponseSessionsInner[]|null
      */
     public function getSessions()
     {
@@ -405,7 +405,7 @@ class GetUserSessionsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets sessions
      *
-     * @param \OpenAPI\Client\Model\GetUserSessionsResponseSessionsInner[]|null $sessions sessions
+     * @param \Kinde\KindeSDK\Model\GetUserSessionsResponseSessionsInner[]|null $sessions sessions
      *
      * @return self
      */
