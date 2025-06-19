@@ -9,6 +9,7 @@ use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 use Kinde\KindeSDK\Sdk\Enums\TokenType;
+use Kinde\KindeSDK\Sdk\Enums\PortalPage;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
@@ -628,6 +629,61 @@ class KindeClientSDK
             default:
                 throw new InvalidArgumentException("Please provide correct grant_type");
                 break;
+        }
+    }
+
+    /**
+     * Generates a URL to the user profile portal
+     *
+     * @param string $returnUrl URL to redirect to after completing the profile flow
+     * @param string $subNav Sub-navigation section to display (defaults to 'profile')
+     *
+     * @throws Exception If the access token is not found or if the API request fails
+     * @throws InvalidArgumentException If the returnUrl is not an absolute URL
+     *
+     * @return array An array containing the generated URL
+     */
+    public function generatePortalUrl(string $returnUrl, string $subNav = PortalPage::PROFILE)
+    {
+        $token = $this->storage->getAccessToken();
+        if (empty($token)) {
+            throw new Exception('generatePortalUrl: Access Token not found');
+        }
+
+        if (!filter_var($returnUrl, FILTER_VALIDATE_URL)) {
+            throw new InvalidArgumentException('generatePortalUrl: returnUrl must be an absolute URL');
+        }
+
+        $params = [
+            'sub_nav' => $subNav,
+            'return_url' => $returnUrl
+        ];
+
+        $client = new Client();
+        try {
+            $response = $client->request('GET', $this->domain . '/account_api/v1/portal_link', [
+                'query' => $params,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                    'Kinde-SDK' => 'PHP/1.2'
+                ]
+            ]);
+
+            $result = json_decode($response->getBody()->getContents(), true);
+            
+            if (!isset($result['url']) || !is_string($result['url'])) {
+                throw new Exception('Invalid URL received from API');
+            }
+
+            if (!filter_var($result['url'], FILTER_VALIDATE_URL)) {
+                throw new Exception('Invalid URL format received from API: ' . $result['url']);
+            }
+
+            return [
+                'url' => $result['url']
+            ];
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            throw new Exception('Failed to fetch profile URL: ' . $e->getMessage());
         }
     }
 }

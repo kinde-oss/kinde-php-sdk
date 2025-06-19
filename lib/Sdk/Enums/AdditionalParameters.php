@@ -11,6 +11,8 @@ class AdditionalParameters
         'is_create_org' => 'string',
         'login_hint' => 'string',
         'connection_id' => 'string',
-        'lang' => 'string'
+        'lang' => 'string',
+        'plan_interest' => 'string',
+        'pricing_table_key' => 'string'
     ];
 }

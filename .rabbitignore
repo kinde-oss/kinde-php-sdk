@@ -1,0 +1,6 @@
+# Ignore auto-generated API code
+lib/Api/
+lib/Model/
+
+# Ignore temporary files
+tmp/ 
