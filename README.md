@@ -21,9 +21,10 @@ To generate the API code, you'll need:
 
 ### Installation
 
-Install all dependencies (both PHP and Node.js):
+Install all dependencies:
 ```bash
 composer install
+npm install
 ```
 
 This will automatically:
