@@ -73,12 +73,17 @@ class HeaderSelector
     /**
      * Return the header 'Accept' based on an array of Accept provided
      *
-     * @param string[] $accept Array of header
+     * @param string[]|string $accept Array of header or string
      *
      * @return null|string Accept (e.g. application/json)
      */
     private function selectAcceptHeader($accept)
     {
+        // Convert string to array if needed
+        if (is_string($accept)) {
+            $accept = [$accept];
+        }
+        
         if (count($accept) === 0 || (count($accept) === 1 && $accept[0] === '')) {
             return null;
         } elseif ($jsonAccept = preg_grep('~(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$~', $accept)) {
@@ -91,12 +96,17 @@ class HeaderSelector
     /**
      * Return the content type based on an array of content-type provided
      *
-     * @param string[] $contentType Array fo content-type
+     * @param string[]|string $contentType Array of content-type or string
      *
      * @return string Content-Type (e.g. application/json)
      */
     private function selectContentTypeHeader($contentType)
     {
+        // Convert string to array if needed
+        if (is_string($contentType)) {
+            $contentType = [$contentType];
+        }
+        
         if (count($contentType) === 0 || (count($contentType) === 1 && $contentType[0] === '')) {
             return 'application/json';
         } elseif (preg_grep("/application\/json/i", $contentType)) {

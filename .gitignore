@@ -18,3 +18,6 @@ composer.phar
 
 # Node.js dependencies
 node_modules/
+
+# Temporary files
+tmp/
