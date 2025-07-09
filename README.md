@@ -6,6 +6,17 @@ You can also use the PHP starter kit [here](https://github.com/kinde-starter-kit
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com) [![Kinde Docs](https://img.shields.io/badge/Kinde-Docs-eee?style=flat-square)](https://kinde.com/docs/developer-tools) [![Kinde Community](https://img.shields.io/badge/Kinde-Community-eee?style=flat-square)](https://thekindecommunity.slack.com)
 
+## Features
+
+### JWKS Caching
+The SDK now includes intelligent JWKS (JSON Web Key Set) caching to improve performance:
+- **Reduced Network Requests**: JWKS is cached for 1 hour by default
+- **Automatic Fallback**: If cached keys fail, automatically refresh from server
+- **Better Performance**: Faster token validation with no network latency for cached JWKS
+- **Backward Compatible**: No code changes required for existing implementations
+
+For detailed information about JWKS caching, see [JWKS_CACHING.md](JWKS_CACHING.md).
+
 ## Documentation
 
 For details on integrating this SDK into your project, head over to the [Kinde docs](https://kinde.com/docs/) and see the [PHP SDK](https://kinde.com/docs/developer-tools/php-sdk) doc 👍🏼.

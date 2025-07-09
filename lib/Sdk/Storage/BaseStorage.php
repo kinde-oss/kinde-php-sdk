@@ -63,6 +63,7 @@ class BaseStorage
         self::removeItem(StorageEnums::STATE);
         self::removeItem(StorageEnums::CODE_VERIFIER);
         self::removeItem(StorageEnums::USER_PROFILE);
+        self::removeItem(StorageEnums::JWKS_CACHE);
     }
 
     private static function getKey($key)

@@ -633,6 +633,17 @@ class KindeClientSDK
     }
 
     /**
+     * Clears the cached JWKS data.
+     * This can be useful when JWKS keys are rotated or for testing purposes.
+     *
+     * @return void
+     */
+    public function clearJwksCache()
+    {
+        $this->storage->clearCachedJwks();
+    }
+
+    /**
      * Generates a URL to the user profile portal
      *
      * @param string $returnUrl URL to redirect to after completing the profile flow
