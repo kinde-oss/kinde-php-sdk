@@ -8,6 +8,7 @@ use Kinde\KindeSDK\Test\Sdk\Utils\Utils;
 class Storage extends BaseStorage
 {
     public static $instance;
+    private static $jwksUrl;
 
     public static function getInstance()
     {
@@ -83,5 +84,85 @@ class Storage extends BaseStorage
             'email' => $payload['email'] ?? '',
             'picture' => $payload['picture'] ?? '',
         ];
+    }
+
+    static function getDecodedIdToken()
+    {
+        $token = self::getToken();
+        $payload = Utils::parseJWT($token['id_token'] ?? '');
+        return $payload;
+    }
+
+    static function getDecodedAccessToken()
+    {
+        $token = self::getToken();
+        $payload = Utils::parseJWT($token['access_token'] ?? '');
+        return $payload;
+    }
+
+    static function getJwksUrl()
+    {
+        if (!self::$jwksUrl) {
+            throw new \LogicException('No jwks url has been specified');
+        }
+        return self::$jwksUrl;
+    }
+
+    static function setJwksUrl($jwksUrl)
+    {
+        self::$jwksUrl = $jwksUrl;
+    }
+
+    /**
+     * Gets cached JWKS data if available and not expired
+     *
+     * @return array|null The cached JWKS data or null if not available/expired
+     */
+    static function getCachedJwks()
+    {
+        $cachedData = self::getItem(StorageEnums::JWKS_CACHE);
+        if (empty($cachedData)) {
+            return null;
+        }
+
+        $data = json_decode($cachedData, true);
+        if (!$data || !isset($data['jwks']) || !isset($data['expires_at'])) {
+            return null;
+        }
+
+        // Check if cache has expired
+        if ($data['expires_at'] < time()) {
+            self::removeItem(StorageEnums::JWKS_CACHE);
+            return null;
+        }
+
+        return $data['jwks'];
+    }
+
+    /**
+     * Sets JWKS data in cache with TTL
+     *
+     * @param array $jwks The JWKS data to cache
+     * @param int $ttlSeconds TTL in seconds (default: 1 hour)
+     * @return void
+     */
+    static function setCachedJwks(array $jwks, int $ttlSeconds = 3600)
+    {
+        $cacheData = [
+            'jwks' => $jwks,
+            'expires_at' => time() + $ttlSeconds
+        ];
+
+        self::setItem(StorageEnums::JWKS_CACHE, json_encode($cacheData), time() + $ttlSeconds);
+    }
+
+    /**
+     * Clears the cached JWKS data
+     *
+     * @return void
+     */
+    static function clearCachedJwks()
+    {
+        self::removeItem(StorageEnums::JWKS_CACHE);
     }
 }

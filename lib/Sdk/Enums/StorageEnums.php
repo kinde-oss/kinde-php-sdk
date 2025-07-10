@@ -13,4 +13,6 @@ class StorageEnums
     const AUTH_STATUS = 'auth_status';
 
     const USER_PROFILE = 'user_profile';
+
+    const JWKS_CACHE = 'jwks_cache';
 }
