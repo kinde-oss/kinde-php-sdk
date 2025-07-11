@@ -697,4 +697,31 @@ class KindeClientSDK
             throw new Exception('Failed to fetch profile URL: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Force re-authentication 
+     * @param array $additionalParameters Additional parameters
+     * @return mixed Authentication result
+     */
+    public function reAuthenticate(array $additionalParameters = [])
+    {
+        $additionalParameters['prompt'] = PromptTypes::LOGIN;
+        return $this->login($additionalParameters);
+    }
+
+    /**
+     * Create reauth state from current configuration
+     * @param array $additionalParams Additional parameters to preserve
+     * @return string Base64 encoded reauth state
+     */
+    public function createReauthState(array $additionalParams = []): string
+    {
+        $state = array_merge([
+            'client_id' => $this->clientId,
+            'redirect_uri' => $this->redirectUri,
+            'scope' => $this->scopes,
+        ], $additionalParams);
+        
+        return base64_encode(json_encode($state));
+    }
 }

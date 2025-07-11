@@ -185,4 +185,29 @@ class Utils
         }
         return $target;
     }
+
+    /**
+     * Processes re-authentication state parameter
+     * @param string $reauthState Base64 encoded re-auth parameters  
+     * @return array Decoded parameters (already in snake_case)
+     * @throws InvalidArgumentException On invalid input
+     */
+    static public function processReauthState(string $reauthState): array
+    {
+        try {
+            $decoded = base64_decode($reauthState, true);
+            if ($decoded === false) {
+                throw new InvalidArgumentException('Invalid base64 reauth_state');
+            }
+            
+            $params = json_decode($decoded, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new InvalidArgumentException('Invalid JSON in reauth_state: ' . json_last_error_msg());
+            }
+            
+            return $params;
+        } catch (Exception $e) {
+            throw new InvalidArgumentException('Error handling reauth state: ' . $e->getMessage());
+        }
+    }
 }
