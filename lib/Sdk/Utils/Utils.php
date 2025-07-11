@@ -8,6 +8,7 @@ use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use Exception;
+use Kinde\KindeSDK\Sdk\Enums\PromptTypes;
 
 class Utils
 {
@@ -205,7 +206,9 @@ class Utils
                 throw new InvalidArgumentException('Invalid JSON in reauth_state: ' . json_last_error_msg());
             }
             
-            return $params;
+            return $params; // No conversion needed - PHP uses snake_case
+        } catch (InvalidArgumentException $e) {
+            throw $e; // Re-throw specific validation errors as-is
         } catch (Exception $e) {
             throw new InvalidArgumentException('Error handling reauth state: ' . $e->getMessage());
         }

@@ -10,6 +10,7 @@ use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 use Kinde\KindeSDK\Sdk\Enums\TokenType;
 use Kinde\KindeSDK\Sdk\Enums\PortalPage;
+use Kinde\KindeSDK\Sdk\Enums\PromptTypes;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
@@ -710,7 +711,7 @@ class KindeClientSDK
     }
 
     /**
-     * Create reauth state from current configuration
+     * Creates re-authentication state from current configuration
      * @param array $additionalParams Additional parameters to preserve
      * @return string Base64 encoded reauth state
      */
@@ -722,6 +723,11 @@ class KindeClientSDK
             'scope' => $this->scopes,
         ], $additionalParams);
         
-        return base64_encode(json_encode($state));
+        $json = json_encode($state);
+        if ($json === false) {
+            throw new InvalidArgumentException('Failed to encode reauth state: ' . json_last_error_msg());
+        }
+        
+        return base64_encode($json);
     }
 }
