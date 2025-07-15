@@ -30,6 +30,17 @@ class PKCE
      */
     public function authenticate(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
     {
+        // Handle reauth_state if present (using existing processReauthState function)
+        if (isset($additionalParameters['reauth_state'])) {
+            try {
+                $reauthParams = Utils::processReauthState($additionalParameters['reauth_state']);
+                $additionalParameters = array_merge($reauthParams, $additionalParameters);
+                unset($additionalParameters['reauth_state']);
+            } catch (Exception $e) {
+                throw new InvalidArgumentException($e->getMessage());
+            }
+        }
+
         $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
         $challenge = Utils::generateChallenge();
         $state = $challenge['state'];

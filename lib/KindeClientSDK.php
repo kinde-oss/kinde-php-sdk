@@ -185,8 +185,8 @@ class KindeClientSDK
      */
     public function register(array $additionalParameters = [])
     {
-        $this->grantType = 'authorization_code';
 
+        $this->grantType = 'authorization_code';
         $auth = new PKCE();
         return $auth->authenticate($this, 'registration', $additionalParameters);
     }
@@ -233,6 +233,7 @@ class KindeClientSDK
         if ($this->grantType == GrantType::clientCredentials) {
             return $this->login();
         }
+
         // Check authenticated
         if ($this->isAuthenticated) {
             $token = $this->storage->getToken(false);
@@ -240,6 +241,33 @@ class KindeClientSDK
                 return $token;
             }
         }
+
+        $url = $this->getProtocol() . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $urlComponents = parse_url($url);
+        parse_str($urlComponents['query'] ?? "", $params);
+        
+        $error = $params['error'] ?? '';
+        
+        // Handle login_link_expired with reauth_state (like Next.js implementation)
+        if (strtolower($error) === 'login_link_expired') {
+            $reauthState = $params['reauth_state'] ?? '';
+            
+            if ($reauthState) {
+                try {
+                    $reauthParams = Utils::processReauthState($reauthState);
+                    
+                    $this->login($reauthParams);
+                    return null; // Will redirect
+                    
+                } catch (Exception $e) {
+                    throw new InvalidArgumentException('Error parsing reauth state: ' . $e->getMessage());
+                }
+            }
+            
+            $this->login(['prompt' => PromptTypes::LOGIN]);
+            return null;
+        }
+
 
         $newGrantType = $this->getGrantType($this->grantType);
         $formParams = [
@@ -250,14 +278,10 @@ class KindeClientSDK
             'response_type' => 'code'
         ];
 
-        $url = $this->getProtocol() . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $urlComponents = parse_url($url);
-        parse_str($urlComponents['query'] ?? "", $params);
         $stateServer = $params['state'] ?? null;
-
         $this->checkStateAuthentication($stateServer);
 
-        $error = $params['error'] ?? '';
+        // Handle other errors
         if (!empty($error)) {
             $errorDescription = $params['error_description'] ?? '';
             $msg = !empty($errorDescription) ? $errorDescription : $error;
@@ -697,37 +721,5 @@ class KindeClientSDK
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             throw new Exception('Failed to fetch profile URL: ' . $e->getMessage());
         }
-    }
-
-    /**
-     * Force re-authentication 
-     * @param array $additionalParameters Additional parameters
-     * @return mixed Authentication result
-     */
-    public function reAuthenticate(array $additionalParameters = [])
-    {
-        $additionalParameters['prompt'] = PromptTypes::LOGIN;
-        return $this->login($additionalParameters);
-    }
-
-    /**
-     * Creates re-authentication state from current configuration
-     * @param array $additionalParams Additional parameters to preserve
-     * @return string Base64 encoded reauth state
-     */
-    public function createReauthState(array $additionalParams = []): string
-    {
-        $state = array_merge([
-            'client_id' => $this->clientId,
-            'redirect_uri' => $this->redirectUri,
-            'scope' => $this->scopes,
-        ], $additionalParams);
-        
-        $json = json_encode($state);
-        if ($json === false) {
-            throw new InvalidArgumentException('Failed to encode reauth state: ' . json_last_error_msg());
-        }
-        
-        return base64_encode($json);
     }
 }
