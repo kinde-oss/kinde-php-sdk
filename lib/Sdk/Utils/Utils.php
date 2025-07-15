@@ -206,9 +206,9 @@ class Utils
                 throw new InvalidArgumentException('Invalid JSON in reauth_state: ' . json_last_error_msg());
             }
             
-            return $params; // No conversion needed - PHP uses snake_case
+            return $params; 
         } catch (InvalidArgumentException $e) {
-            throw $e; // Re-throw specific validation errors as-is
+            throw $e; 
         } catch (Exception $e) {
             throw new InvalidArgumentException('Error handling reauth state: ' . $e->getMessage());
         }

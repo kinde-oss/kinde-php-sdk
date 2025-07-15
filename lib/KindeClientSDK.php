@@ -248,7 +248,7 @@ class KindeClientSDK
         
         $error = $params['error'] ?? '';
         
-        // Handle login_link_expired with reauth_state (like Next.js implementation)
+
         if (strtolower($error) === 'login_link_expired') {
             $reauthState = $params['reauth_state'] ?? '';
             
@@ -257,7 +257,7 @@ class KindeClientSDK
                     $reauthParams = Utils::processReauthState($reauthState);
                     
                     $this->login($reauthParams);
-                    return null; // Will redirect
+                    return null; 
                     
                 } catch (Exception $e) {
                     throw new InvalidArgumentException('Error parsing reauth state: ' . $e->getMessage());
