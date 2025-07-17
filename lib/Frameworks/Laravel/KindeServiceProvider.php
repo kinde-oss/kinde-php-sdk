@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+use Inertia\Inertia;
 
 class KindeServiceProvider extends ServiceProvider
 {
@@ -50,5 +51,23 @@ class KindeServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../../routes/auth.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'kinde');
+
+        // Share Kinde data with Inertia if Inertia is available
+        if (class_exists(Inertia::class)) {
+            $this->shareKindeDataWithInertia();
+        }
+    }
+
+    /**
+     * Share Kinde authentication data with Inertia
+     */
+    protected function shareKindeDataWithInertia(): void
+    {
+        Inertia::share('kinde', function () {
+            $kindeClient = app(KindeClientSDK::class);
+            $authController = app(\Kinde\KindeSDK\Frameworks\Laravel\Controllers\KindeAuthController::class);
+            
+            return $authController->getUserData();
+        });
     }
 } 

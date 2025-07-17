@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\OAuthException;
+use Inertia\Inertia;
+use Inertia\Response;
 use Exception;
 
 class KindeAuthController extends Controller
@@ -120,9 +122,9 @@ class KindeAuthController extends Controller
     }
 
     /**
-     * Get user profile
+     * Get user profile - supports both Blade and Inertia
      */
-    public function profile()
+    public function profile(Request $request)
     {
         if (!$this->kindeClient->isAuthenticated) {
             return redirect()->route('login');
@@ -132,6 +134,39 @@ class KindeAuthController extends Controller
         $permissions = $this->kindeClient->getPermissions();
         $organization = $this->kindeClient->getOrganization();
 
+        // Check if this is an Inertia request
+        if ($request->header('X-Inertia')) {
+            return Inertia::render('Profile', [
+                'user' => $userDetails,
+                'permissions' => $permissions,
+                'organization' => $organization,
+                'isAuthenticated' => true
+            ]);
+        }
+
+        // Fallback to Blade view
         return view('kinde::profile', compact('userDetails', 'permissions', 'organization'));
+    }
+
+    /**
+     * Get user data for Inertia shared data
+     */
+    public function getUserData(): array
+    {
+        if (!$this->kindeClient->isAuthenticated) {
+            return [
+                'isAuthenticated' => false,
+                'user' => null,
+                'permissions' => [],
+                'organization' => null
+            ];
+        }
+
+        return [
+            'isAuthenticated' => true,
+            'user' => $this->kindeClient->getUserDetails(),
+            'permissions' => $this->kindeClient->getPermissions(),
+            'organization' => $this->kindeClient->getOrganization()
+        ];
     }
 } 
