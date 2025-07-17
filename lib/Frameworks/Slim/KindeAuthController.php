@@ -133,9 +133,9 @@ class KindeAuthController
     }
 
     /**
-     * Get user profile
+     * Get user info
      */
-    public function profile(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function userInfo(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         if (!$this->kindeClient->isAuthenticated) {
             return $response
@@ -155,5 +155,32 @@ class KindeAuthController
 
         $response->getBody()->write(json_encode($data));
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * Generate portal URL and redirect to Kinde portal
+     */
+    public function portal(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        if (!$this->kindeClient->isAuthenticated) {
+            return $response
+                ->withStatus(302)
+                ->withHeader('Location', '/auth/login');
+        }
+
+        $queryParams = $request->getQueryParams();
+        $returnUrl = $queryParams['return_url'] ?? '/dashboard';
+        $subNav = $queryParams['sub_nav'] ?? 'profile';
+
+        try {
+            $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
+            return $response
+                ->withStatus(302)
+                ->withHeader('Location', $portalData['url']);
+        } catch (Exception $e) {
+            return $response
+                ->withStatus(302)
+                ->withHeader('Location', '/?error=' . urlencode('Failed to generate portal URL: ' . $e->getMessage()));
+        }
     }
 } 

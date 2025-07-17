@@ -122,9 +122,9 @@ class KindeAuthController extends Controller
     }
 
     /**
-     * Get user profile - supports both Blade and Inertia
+     * Get user info - supports both Blade and Inertia
      */
-    public function profile(Request $request)
+    public function userInfo(Request $request)
     {
         if (!$this->kindeClient->isAuthenticated) {
             return redirect()->route('login');
@@ -136,7 +136,7 @@ class KindeAuthController extends Controller
 
         // Check if this is an Inertia request
         if ($request->header('X-Inertia')) {
-            return Inertia::render('Profile', [
+            return Inertia::render('UserInfo', [
                 'user' => $userDetails,
                 'permissions' => $permissions,
                 'organization' => $organization,
@@ -145,7 +145,27 @@ class KindeAuthController extends Controller
         }
 
         // Fallback to Blade view
-        return view('kinde::profile', compact('userDetails', 'permissions', 'organization'));
+        return view('kinde::user-info', compact('userDetails', 'permissions', 'organization'));
+    }
+
+    /**
+     * Generate portal URL and redirect to Kinde portal
+     */
+    public function portal(Request $request): RedirectResponse
+    {
+        if (!$this->kindeClient->isAuthenticated) {
+            return redirect()->route('login');
+        }
+
+        $returnUrl = $request->get('return_url', route('dashboard'));
+        $subNav = $request->get('sub_nav', 'profile');
+
+        try {
+            $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
+            return redirect()->away($portalData['url']);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['portal' => 'Failed to generate portal URL: ' . $e->getMessage()]);
+        }
     }
 
     /**

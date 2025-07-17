@@ -128,9 +128,9 @@ class KindeAuthController extends Controller
     }
 
     /**
-     * Get user profile
+     * Get user info
      */
-    public function profile()
+    public function userInfo()
     {
         if (!$this->kindeClient->isAuthenticated) {
             return redirect()->to('/auth/login');
@@ -140,10 +140,31 @@ class KindeAuthController extends Controller
         $permissions = $this->kindeClient->getPermissions();
         $organization = $this->kindeClient->getOrganization();
 
-        return view('kinde/profile', [
+        return view('kinde/user-info', [
             'userDetails' => $userDetails,
             'permissions' => $permissions,
             'organization' => $organization
         ]);
+    }
+
+    /**
+     * Generate portal URL and redirect to Kinde portal
+     */
+    public function portal()
+    {
+        if (!$this->kindeClient->isAuthenticated) {
+            return redirect()->to('/auth/login');
+        }
+
+        $returnUrl = $this->request->getGet('return_url') ?? base_url('dashboard');
+        $subNav = $this->request->getGet('sub_nav') ?? 'profile';
+
+        try {
+            $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
+            return redirect()->away($portalData['url']);
+        } catch (Exception $e) {
+            session()->setFlashdata('error', 'Failed to generate portal URL: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 } 

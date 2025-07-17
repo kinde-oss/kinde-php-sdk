@@ -111,14 +111,14 @@ BLADE;
 
         File::put($viewsPath . '/login-button.blade.php', $loginButton);
 
-        // Create profile view
-        $profileView = <<<'BLADE'
+        // Create user info view
+        $userInfoView = <<<'BLADE'
 @extends('layouts.app')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto">
-        <h1 class="text-3xl font-bold mb-6">Profile</h1>
+        <h1 class="text-3xl font-bold mb-6">User Info</h1>
         
         @if(session('kinde_authenticated'))
             <div class="bg-white shadow rounded-lg p-6">
@@ -168,7 +168,7 @@ BLADE;
 @endsection
 BLADE;
 
-        File::put($viewsPath . '/profile.blade.php', $profileView);
+        File::put($viewsPath . '/user-info.blade.php', $userInfoView);
 
         $this->info('Created example views in resources/views/kinde/');
     }
@@ -184,12 +184,12 @@ BLADE;
             File::makeDirectory($jsPath, 0755, true);
         }
 
-        // Create Profile page component
-        $profileComponent = <<<'VUE'
+        // Create UserInfo page component
+        $userInfoComponent = <<<'VUE'
 <template>
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-2xl mx-auto">
-            <h1 class="text-3xl font-bold mb-6">Profile</h1>
+            <h1 class="text-3xl font-bold mb-6">User Info</h1>
             
             <div v-if="kinde.isAuthenticated" class="bg-white shadow rounded-lg p-6">
                 <h2 class="text-xl font-semibold mb-4">User Information</h2>
@@ -246,7 +246,7 @@ const { kinde } = usePage().props
 </script>
 VUE;
 
-        File::put($jsPath . '/Profile.vue', $profileComponent);
+        File::put($jsPath . '/UserInfo.vue', $userInfoComponent);
 
         // Create Dashboard component
         $dashboardComponent = <<<'VUE'
@@ -276,9 +276,9 @@ VUE;
                 </div>
                 
                 <div class="mt-6 flex space-x-4">
-                    <a href="/auth/profile" 
+                    <a href="/auth/user-info" 
                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        View Profile
+                        View User Info
                     </a>
                     
                     <a href="/auth/logout" 

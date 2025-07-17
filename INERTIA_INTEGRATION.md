@@ -63,8 +63,8 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware('kinde.auth');
 
-Route::get('/profile', function () {
-    return Inertia::render('Profile');
+Route::get('/user-info', function () {
+    return Inertia::render('UserInfo');
 })->middleware('kinde.auth');
 ```
 
@@ -78,12 +78,12 @@ The following routes are automatically registered by the Kinde package:
 
 ## Vue Components
 
-### Profile Component
+### User Info Component
 ```vue
 <template>
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-2xl mx-auto">
-            <h1 class="text-3xl font-bold mb-6">Profile</h1>
+            <h1 class="text-3xl font-bold mb-6">User Info</h1>
             
             <div v-if="kinde.isAuthenticated" class="bg-white shadow rounded-lg p-6">
                 <h2 class="text-xl font-semibold mb-4">User Information</h2>
@@ -240,11 +240,11 @@ const { kinde } = usePage().props
 
 If you're using React instead of Vue, here's how the components would look:
 
-### Profile Component (React)
+### User Info Component (React)
 ```jsx
 import { usePage } from '@inertiajs/react'
 
-export default function Profile() {
+export default function UserInfo() {
     const { kinde } = usePage().props
 
     return (

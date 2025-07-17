@@ -15,8 +15,13 @@ Route::group(['prefix' => 'auth', 'as' => 'kinde.'], function () {
     // Logout route
     Route::get('/logout', [KindeAuthController::class, 'logout'])->name('logout');
     
-    // Profile route (protected)
-    Route::get('/profile', [KindeAuthController::class, 'profile'])
-        ->name('profile')
+    // User info route (protected)
+    Route::get('/user-info', [KindeAuthController::class, 'userInfo'])
+        ->name('user_info')
+        ->middleware('kinde.auth');
+    
+    // Portal route (protected)
+    Route::get('/portal', [KindeAuthController::class, 'portal'])
+        ->name('portal')
         ->middleware('kinde.auth');
 }); 

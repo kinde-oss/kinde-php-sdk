@@ -121,9 +121,9 @@ class KindeAuthController extends AbstractController
     }
 
     /**
-     * @Route("/auth/profile", name="kinde_profile")
+     * @Route("/auth/user-info", name="kinde_user_info")
      */
-    public function profile(Request $request): Response
+    public function userInfo(Request $request): Response
     {
         if (!$this->kindeClient->isAuthenticated) {
             return $this->redirectToRoute('kinde_login');
@@ -133,10 +133,31 @@ class KindeAuthController extends AbstractController
         $permissions = $this->kindeClient->getPermissions();
         $organization = $this->kindeClient->getOrganization();
 
-        return $this->render('kinde/profile.html.twig', [
+        return $this->render('kinde/user-info.html.twig', [
             'userDetails' => $userDetails,
             'permissions' => $permissions,
             'organization' => $organization
         ]);
+    }
+
+    /**
+     * @Route("/auth/portal", name="kinde_portal")
+     */
+    public function portal(Request $request): RedirectResponse
+    {
+        if (!$this->kindeClient->isAuthenticated) {
+            return $this->redirectToRoute('kinde_login');
+        }
+
+        $returnUrl = $request->query->get('return_url', $this->generateUrl('dashboard'));
+        $subNav = $request->query->get('sub_nav', 'profile');
+
+        try {
+            $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
+            return $this->redirect($portalData['url']);
+        } catch (Exception $e) {
+            $this->addFlash('error', 'Failed to generate portal URL: ' . $e->getMessage());
+            return $this->redirectToRoute('home');
+        }
     }
 } 

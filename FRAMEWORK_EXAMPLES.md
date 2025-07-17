@@ -30,7 +30,8 @@ return [
 // GET /auth/register
 // GET /auth/create-org
 // GET /auth/logout
-// GET /auth/profile
+// GET /auth/user-info
+// GET /auth/portal
 ```
 
 ### Route Protection
@@ -54,9 +55,10 @@ Route::middleware('kinde.auth:read:users')->group(function () {
 {{-- Logout button --}}
 <x-kinde::logout-button />
 
-{{-- Profile view --}}
+{{-- User info view --}}
 @if(session('kinde_authenticated'))
     <div>Welcome, {{ session('kinde_user')->given_name }}</div>
+    <a href="{{ route('kinde.portal') }}">Manage Account</a>
 @endif
 ```
 
@@ -92,7 +94,8 @@ $app->get('/auth/callback', [KindeAuthController::class, 'callback']);
 $app->get('/auth/register', [KindeAuthController::class, 'register']);
 $app->get('/auth/create-org', [KindeAuthController::class, 'createOrg']);
 $app->get('/auth/logout', [KindeAuthController::class, 'logout']);
-$app->get('/auth/profile', [KindeAuthController::class, 'profile']);
+$app->get('/auth/user-info', [KindeAuthController::class, 'userInfo']);
+$app->get('/auth/portal', [KindeAuthController::class, 'portal']);
 
 // Protected routes
 $app->get('/dashboard', function (Request $request, Response $response) {
@@ -154,9 +157,10 @@ security:
     Login with Kinde
 </a>
 
-{# templates/kinde/profile.html.twig #}
+{# templates/kinde/user-info.html.twig #}
 {% if app.session.get('kinde_authenticated') %}
     <div>Welcome, {{ app.session.get('kinde_user').given_name }}</div>
+    <a href="{{ path('kinde_portal') }}" class="btn btn-primary">Manage Account</a>
     <a href="{{ path('kinde_logout') }}" class="btn btn-danger">Logout</a>
 {% endif %}
 ```
@@ -176,7 +180,8 @@ $routes->get('auth/callback', 'KindeAuthController::callback');
 $routes->get('auth/register', 'KindeAuthController::register');
 $routes->get('auth/create-org', 'KindeAuthController::createOrg');
 $routes->get('auth/logout', 'KindeAuthController::logout');
-$routes->get('auth/profile', 'KindeAuthController::profile');
+$routes->get('auth/user-info', 'KindeAuthController::userInfo');
+$routes->get('auth/portal', 'KindeAuthController::portal');
 ```
 
 ### Middleware
@@ -212,9 +217,10 @@ class KindeAuthFilter implements FilterInterface
     Login with Kinde
 </a>
 
-// app/Views/kinde/profile.php
+// app/Views/kinde/user-info.php
 <?php if (session()->get('kinde_authenticated')): ?>
     <div>Welcome, <?= session()->get('kinde_user')->given_name ?></div>
+    <a href="<?= base_url('auth/portal') ?>" class="btn btn-primary">Manage Account</a>
     <a href="<?= base_url('auth/logout') ?>" class="btn btn-danger">Logout</a>
 <?php endif; ?>
 ```
