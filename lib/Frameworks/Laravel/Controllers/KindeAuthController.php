@@ -145,7 +145,7 @@ class KindeAuthController extends Controller
         }
 
         // Fallback to Blade view
-        return view('kinde::user-info', compact('userDetails', 'permissions', 'organization'));
+        return view('kinde.user-info', compact('userDetails', 'permissions', 'organization'));
     }
 
     /**

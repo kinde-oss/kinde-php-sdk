@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         backupGlobals="false">
+    <testsuites>
+        <!-- Core SDK Tests -->
+        <testsuite name="Core SDK">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        
+        <!-- Framework Tests -->
+        <testsuite name="Laravel Framework">
+            <directory>tests/Framework/Laravel</directory>
+        </testsuite>
+        
+        <testsuite name="Slim Framework">
+            <directory>tests/Framework/Slim</directory>
+        </testsuite>
+        
+        <testsuite name="Symfony Framework">
+            <directory>tests/Framework/Symfony</directory>
+        </testsuite>
+        
+        <testsuite name="CodeIgniter Framework">
+            <directory>tests/Framework/CodeIgniter</directory>
+        </testsuite>
+        
+        <!-- Integration Tests -->
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        
+        <!-- All Tests -->
+        <testsuite name="All">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    
+    <coverage>
+        <include>
+            <directory suffix=".php">lib</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">lib/Frameworks</directory>
+            <directory suffix=".php">vendor</directory>
+            <directory suffix=".php">tests</directory>
+            <directory suffix=".php">examples</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="coverage/html"/>
+            <clover outputFile="coverage/clover.xml"/>
+        </report>
+    </coverage>
+    
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="KINDE_DOMAIN" value="https://test-domain.kinde.com"/>
+        <env name="KINDE_CLIENT_ID" value="test_client_id"/>
+        <env name="KINDE_CLIENT_SECRET" value="test_client_secret"/>
+        <env name="KINDE_REDIRECT_URI" value="http://localhost:8000/auth/callback"/>
+        <env name="KINDE_GRANT_TYPE" value="authorization_code"/>
+        <env name="KINDE_LOGOUT_REDIRECT_URI" value="http://localhost:8000"/>
+        <env name="KINDE_SCOPES" value="openid profile email offline"/>
+        <env name="KINDE_PROTOCOL" value="https"/>
+        <env name="KINDE_MANAGEMENT_ACCESS_TOKEN" value="test_management_token"/>
+    </php>
+</phpunit> 

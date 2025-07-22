@@ -35,6 +35,18 @@ return [
     
     /*
     |--------------------------------------------------------------------------
+    | Management API Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuration for server-to-server management operations.
+    | This uses the same client credentials but for management API access.
+    |
+    */
+    
+    'management_access_token' => env('KINDE_MANAGEMENT_ACCESS_TOKEN', null),
+    
+    /*
+    |--------------------------------------------------------------------------
     | Session Configuration
     |--------------------------------------------------------------------------
     |
@@ -64,16 +76,30 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Feature Flags Configuration
+    | Middleware Configuration
     |--------------------------------------------------------------------------
     |
-    | Configure default values for feature flags.
+    | Configure the middleware behavior.
     |
     */
     
-    'feature_flags' => [
-        'defaults' => [
-            // 'my_feature' => false,
-        ],
+    'middleware' => [
+        'redirect_to_login' => true,
+        'store_user_in_session' => true,
+        'store_permissions_in_session' => true,
+    ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Portal Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure portal redirect behavior.
+    |
+    */
+    
+    'portal' => [
+        'default_sub_nav' => 'profile',
+        'default_return_url' => '/dashboard',
     ],
 ]; 
