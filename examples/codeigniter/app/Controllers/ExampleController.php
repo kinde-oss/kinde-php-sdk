@@ -1,6 +1,6 @@
 <?php
 
-namespace Kinde\KindeSDK\Examples\CodeIgniter;
+namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use Kinde\KindeSDK\KindeClientSDK;
@@ -18,8 +18,6 @@ class ExampleController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
-        
         // Initialize Kinde clients
         $this->kindeClient = KindeClientSDK::createFromEnv();
         $this->management = KindeManagementClient::createFromEnv();
@@ -46,11 +44,19 @@ class ExampleController extends Controller
      */
     public function login()
     {
+        // Debug: Confirm this method is being called
+        echo "<b>DEBUG:</b> Entered ExampleController::login()<br>";
         $additionalParams = $this->request->getGet(['org_code', 'org_name', 'is_create_org']);
-        
         try {
             $result = $this->kindeClient->login($additionalParams);
-            return redirect()->to($result->getAuthUrl());
+            $authUrl = $result->getAuthUrl();
+            if (empty($authUrl)) {
+                log_message('error', 'Kinde login returned empty auth URL');
+                echo "Kinde login failed: No auth URL generated. Check your Kinde configuration.<br>";
+                echo "<pre>" . print_r($result, true) . "</pre>";
+                exit;
+            }
+            return redirect()->to($authUrl);
         } catch (Exception $e) {
             session()->setFlashdata('error', $e->getMessage());
             return redirect()->to('/');

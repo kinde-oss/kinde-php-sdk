@@ -13,8 +13,6 @@ class KindeAuthController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
-        
         // Initialize Kinde client (you'd configure this in your service)
         $this->kindeClient = new KindeClientSDK(
             getenv('KINDE_DOMAIN'),
@@ -32,15 +30,29 @@ class KindeAuthController extends Controller
      */
     public function login()
     {
-        $additionalParams = $this->request->getGet(['org_code', 'org_name', 'is_create_org']);
-        
+        // Debug: Log environment variables
+        log_message('error', 'DEBUG: Entered KindeAuthController::login()');
+        log_message('error', 'Env KINDE_CLIENT_ID: ' . getenv('KINDE_CLIENT_ID'));
+        log_message('error', 'Env KINDE_DOMAIN: ' . getenv('KINDE_DOMAIN'));
+        log_message('error', 'Env KINDE_REDIRECT_URI: ' . getenv('KINDE_REDIRECT_URI'));
+        $additionalParams = array_filter(
+            $this->request->getGet(['org_code', 'org_name', 'is_create_org']),
+            function($v) { return $v !== null && $v !== ''; }
+        );
         try {
+            log_message('error', print_r($additionalParams, true));
             $result = $this->kindeClient->login($additionalParams);
-            
-            // The login method should handle the redirect internally
-            // This is just a fallback
-            return redirect()->to($result->getAuthUrl());
+            $authUrl = $result->getAuthUrl();
+            log_message('error', 'DEBUG: Auth URL: ' . $authUrl);
+            if (empty($authUrl)) {
+                log_message('error', 'ERROR: No auth URL generated. Check your Kinde configuration.');
+                log_message('error', print_r($result, true));
+                exit;
+            }
+            return redirect()->to($authUrl);
         } catch (Exception $e) {
+            log_message('error', 'EXCEPTION: ' . $e->getMessage());
+            log_message('error', $e->getTraceAsString());
             session()->setFlashdata('error', $e->getMessage());
             return redirect()->to('/');
         }
@@ -82,7 +94,10 @@ class KindeAuthController extends Controller
      */
     public function register()
     {
-        $additionalParams = $this->request->getGet(['org_code', 'org_name', 'is_create_org']);
+        $additionalParams = array_filter(
+            $this->request->getGet(['org_code', 'org_name', 'is_create_org']),
+            function($v) { return $v !== null && $v !== ''; }
+        );
         
         try {
             $result = $this->kindeClient->register($additionalParams);
@@ -99,7 +114,10 @@ class KindeAuthController extends Controller
      */
     public function createOrg()
     {
-        $additionalParams = $this->request->getGet(['org_name']);
+        $additionalParams = array_filter(
+            $this->request->getGet(['org_name']),
+            function($v) { return $v !== null && $v !== ''; }
+        );
         $additionalParams['is_create_org'] = 'true';
         
         try {
@@ -161,7 +179,7 @@ class KindeAuthController extends Controller
 
         try {
             $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
-            return redirect()->away($portalData['url']);
+            return redirect()->to($portalData['url']);
         } catch (Exception $e) {
             session()->setFlashdata('error', 'Failed to generate portal URL: ' . $e->getMessage());
             return redirect()->back();
