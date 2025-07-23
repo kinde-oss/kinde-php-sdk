@@ -140,17 +140,6 @@ class AuthController extends Controller
 }
 ```
 
-### Slim Framework
-
-```php
-use Kinde\KindeSDK\KindeClientSDK;
-use Kinde\KindeSDK\KindeManagementClient;
-
-// Create clients from environment variables
-$kindeClient = KindeClientSDK::createFromEnv();
-$management = KindeManagementClient::createFromEnv();
-```
-
 ## Available APIs
 
 ### Management Client APIs

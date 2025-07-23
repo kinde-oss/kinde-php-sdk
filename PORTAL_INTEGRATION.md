@@ -62,52 +62,6 @@ public function portal(Request $request): RedirectResponse
 }
 ```
 
-### Slim Framework
-
-#### Route
-```php
-$app->get('/auth/portal', [KindeAuthController::class, 'portal']);
-```
-
-#### Usage
-```php
-// Basic portal redirect
-<a href="/auth/portal">Manage Account</a>
-
-// Portal with specific sub-navigation
-<a href="/auth/portal?sub_nav=organization_plan_details">Billing</a>
-
-// Portal with custom return URL
-<a href="/auth/portal?sub_nav=organization_payment_details&return_url=/dashboard">Payment Settings</a>
-```
-
-#### Controller Method
-```php
-public function portal(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
-{
-    if (!$this->kindeClient->isAuthenticated) {
-        return $response
-            ->withStatus(302)
-            ->withHeader('Location', '/auth/login');
-    }
-
-    $queryParams = $request->getQueryParams();
-    $returnUrl = $queryParams['return_url'] ?? '/dashboard';
-    $subNav = $queryParams['sub_nav'] ?? 'profile';
-
-    try {
-        $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
-        return $response
-            ->withStatus(302)
-            ->withHeader('Location', $portalData['url']);
-    } catch (Exception $e) {
-        return $response
-            ->withStatus(302)
-            ->withHeader('Location', '/?error=' . urlencode('Failed to generate portal URL: ' . $e->getMessage()));
-    }
-}
-```
-
 ### Symfony
 
 #### Route

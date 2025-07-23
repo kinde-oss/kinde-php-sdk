@@ -17,10 +17,6 @@
             <directory>tests/Framework/Laravel</directory>
         </testsuite>
         
-        <testsuite name="Slim Framework">
-            <directory>tests/Framework/Slim</directory>
-        </testsuite>
-        
         <testsuite name="Symfony Framework">
             <directory>tests/Framework/Symfony</directory>
         </testsuite>

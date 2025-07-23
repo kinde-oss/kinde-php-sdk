@@ -94,31 +94,6 @@ This document provides a comprehensive overview of all tests and examples create
 - ✅ `getUserProfile()` - Get user profile
 - ✅ `bulkCreateUsers()` - Bulk user creation
 
-#### Slim Framework Example (`examples/slim/ExampleApp.php`)
-
-**OAuth Routes:**
-- ✅ Home page with authentication status
-- ✅ Login route with parameters
-- ✅ Callback route
-- ✅ Register route
-- ✅ Create organization route
-- ✅ Logout route
-- ✅ User info route
-- ✅ Portal route
-- ✅ Protected dashboard route
-
-**Management API Routes:**
-- ✅ `GET /api/users` - List users
-- ✅ `POST /api/users` - Create user
-- ✅ `GET /api/organizations` - List organizations
-- ✅ `POST /api/organizations` - Create organization
-- ✅ `GET /api/applications` - List applications
-- ✅ `GET /api/roles` - List roles
-- ✅ `GET /api/permissions` - List permissions
-- ✅ `GET /api/feature-flags` - List feature flags
-- ✅ `GET /api/user-profile` - Get user profile
-- ✅ `POST /api/users/bulk` - Bulk user creation
-
 #### Symfony Framework Example (`examples/symfony/ExampleController.php`)
 
 **OAuth Routes:**
@@ -178,7 +153,6 @@ This document provides a comprehensive overview of all tests and examples create
 **Test Suites:**
 - ✅ Core SDK tests
 - ✅ Laravel Framework tests
-- ✅ Slim Framework tests
 - ✅ Symfony Framework tests
 - ✅ CodeIgniter Framework tests
 - ✅ Integration tests
@@ -242,12 +216,6 @@ This document provides a comprehensive overview of all tests and examples create
 - ✅ Middleware authentication
 - ✅ Controller authentication flows
 - ✅ Inertia.js integration
-
-**Slim Framework:**
-- ✅ Route handling
-- ✅ Response formatting
-- ✅ Error handling
-- ✅ JSON responses
 
 **Symfony Framework:**
 - ✅ Route annotations
@@ -342,7 +310,7 @@ The Kinde PHP SDK now has comprehensive testing coverage including:
 
 - **2 Core Unit Test Files** with 25+ test methods
 - **3 Laravel Framework Test Files** with 15+ test methods
-- **4 Complete Example Applications** (Laravel, Slim, Symfony, CodeIgniter)
+- **4 Complete Example Applications** (Laravel, Symfony, CodeIgniter)
 - **Comprehensive Test Configuration** with coverage reporting
 - **Automated Test Runner** with multiple execution options
 - **Complete Documentation** for testing and examples

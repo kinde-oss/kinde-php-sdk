@@ -229,26 +229,6 @@ class ExampleController extends Controller
 }
 ```
 
-### Slim Example
-
-```php
-// examples/slim/ExampleApp.php
-$app->get('/auth/login', function (Request $request, Response $response) use ($kindeAuthController) {
-    return $kindeAuthController->login($request, $response);
-});
-
-$app->get('/api/users', function (Request $request, Response $response) use ($management) {
-    try {
-        $users = $management->users->getUsers();
-        $response->getBody()->write(json_encode($users));
-        return $response->withHeader('Content-Type', 'application/json');
-    } catch (ApiException $e) {
-        $response->getBody()->write(json_encode(['error' => $e->getMessage()]));
-        return $response->withStatus($e->getCode());
-    }
-});
-```
-
 ## Coverage Reports
 
 After running tests, coverage reports are generated in the `coverage/` directory:

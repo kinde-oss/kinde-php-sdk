@@ -62,54 +62,6 @@ Route::middleware('kinde.auth:read:users')->group(function () {
 @endif
 ```
 
-## Slim Framework Integration
-
-### Installation
-```bash
-composer require kinde-oss/kinde-auth-slim
-```
-
-### Setup
-```php
-// bootstrap/app.php
-use Kinde\KindeSDK\Frameworks\Slim\KindeAuthController;
-use Kinde\KindeSDK\Frameworks\Slim\KindeAuthMiddleware;
-
-// Create Kinde client
-$kindeClient = new KindeClientSDK(
-    $_ENV['KINDE_DOMAIN'],
-    $_ENV['KINDE_REDIRECT_URI'],
-    $_ENV['KINDE_CLIENT_ID'],
-    $_ENV['KINDE_CLIENT_SECRET'],
-    $_ENV['KINDE_GRANT_TYPE'],
-    $_ENV['KINDE_LOGOUT_REDIRECT_URI']
-);
-
-// Add to container
-$container->set(KindeClientSDK::class, $kindeClient);
-
-// Register routes
-$app->get('/auth/login', [KindeAuthController::class, 'login']);
-$app->get('/auth/callback', [KindeAuthController::class, 'callback']);
-$app->get('/auth/register', [KindeAuthController::class, 'register']);
-$app->get('/auth/create-org', [KindeAuthController::class, 'createOrg']);
-$app->get('/auth/logout', [KindeAuthController::class, 'logout']);
-$app->get('/auth/user-info', [KindeAuthController::class, 'userInfo']);
-$app->get('/auth/portal', [KindeAuthController::class, 'portal']);
-
-// Protected routes
-$app->get('/dashboard', function (Request $request, Response $response) {
-    $response->getBody()->write('Dashboard');
-    return $response;
-})->add(new KindeAuthMiddleware($kindeClient));
-
-// With permission check
-$app->get('/users', function (Request $request, Response $response) {
-    $response->getBody()->write('Users');
-    return $response;
-})->add(KindeAuthMiddleware::withPermission('read:users'));
-```
-
 ## Symfony Integration
 
 ### Installation
@@ -260,12 +212,6 @@ Route::middleware(function($request, $next) {
 Route::middleware('kinde.auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 });
-
-// Slim
-$app->get('/dashboard', function (Request $request, Response $response) {
-    $response->getBody()->write('Dashboard');
-    return $response;
-})->add(new KindeAuthMiddleware($kindeClient));
 
 // Symfony
 #[Route('/dashboard')]
