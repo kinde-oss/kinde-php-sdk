@@ -39,52 +39,6 @@ class ExampleController extends Controller
         return view('kinde/home', $data);
     }
 
-    /**
-     * Redirect to Kinde login
-     */
-    public function login()
-    {
-        // Debug: Confirm this method is being called
-        echo "<b>DEBUG:</b> Entered ExampleController::login()<br>";
-        $additionalParams = $this->request->getGet(['org_code', 'org_name', 'is_create_org']);
-        try {
-            $result = $this->kindeClient->login($additionalParams);
-            $authUrl = $result->getAuthUrl();
-            if (empty($authUrl)) {
-                log_message('error', 'Kinde login returned empty auth URL');
-                echo "Kinde login failed: No auth URL generated. Check your Kinde configuration.<br>";
-                echo "<pre>" . print_r($result, true) . "</pre>";
-                exit;
-            }
-            return redirect()->to($authUrl);
-        } catch (Exception $e) {
-            session()->setFlashdata('error', $e->getMessage());
-            return redirect()->to('/');
-        }
-    }
-
-    /**
-     * Handle OAuth callback
-     */
-    public function callback()
-    {
-        try {
-            if ($this->kindeClient->isAuthenticated) {
-                $user = $this->kindeClient->getUserDetails();
-                session()->set('kinde_user', $user);
-                session()->set('kinde_authenticated', true);
-                
-                session()->setFlashdata('success', 'Logged in successfully');
-                return redirect()->to('/dashboard');
-            }
-            
-            session()->setFlashdata('error', 'Authentication failed');
-            return redirect()->to('/');
-        } catch (OAuthException $e) {
-            session()->setFlashdata('error', $e->getMessage());
-            return redirect()->to('/');
-        }
-    }
 
     /**
      * Show user dashboard
@@ -140,39 +94,6 @@ class ExampleController extends Controller
         } catch (Exception $e) {
             session()->setFlashdata('error', 'Failed to generate portal URL: ' . $e->getMessage());
             return redirect()->back();
-        }
-    }
-
-    /**
-     * Logout user
-     */
-    public function logout()
-    {
-        session()->remove(['kinde_user', 'kinde_authenticated', 'kinde_permissions', 'kinde_organization']);
-        
-        try {
-            $this->kindeClient->logout();
-        } catch (Exception $e) {
-            // Continue with logout even if Kinde logout fails
-        }
-        
-        session()->setFlashdata('success', 'Logged out successfully');
-        return redirect()->to('/');
-    }
-
-    /**
-     * Register new user
-     */
-    public function register()
-    {
-        $additionalParams = $this->request->getGet(['org_code', 'org_name', 'is_create_org']);
-        
-        try {
-            $result = $this->kindeClient->register($additionalParams);
-            return redirect()->to($result->getAuthUrl());
-        } catch (Exception $e) {
-            session()->setFlashdata('error', $e->getMessage());
-            return redirect()->to('/');
         }
     }
 
