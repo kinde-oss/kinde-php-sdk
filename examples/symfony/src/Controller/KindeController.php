@@ -1,46 +1,61 @@
 <?php
 
-namespace Kinde\KindeSDK\Examples\Symfony;
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\KindeManagementClient;
 use Kinde\KindeSDK\Frameworks\Symfony\KindeAuthController;
 use Kinde\KindeSDK\OAuthException;
 use Kinde\KindeSDK\ApiException;
 use Exception;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class ExampleController extends AbstractController
+class KindeController extends AbstractController
 {
     public function __construct(
         private KindeClientSDK $kindeClient,
-        private KindeManagementClient $management
+        private KindeManagementClient $management,
+        private RequestStack $requestStack
     ) {}
 
-    /**
-     * @Route("/", name="home")
-     */
+    #[Route('/', name: 'home')]
     public function home(): Response
     {
+        $isAuthenticated = $this->getSession()?->get('kinde_authenticated', false);
+        $permissionsRaw = $this->getPermissions();
+        $permissions = $permissionsRaw['permissions'] ?? [];
+        $organization = $this->getOrganization();
+        if ($organization && isset($organization['orgCode'])) {
+            $organization['name'] = $organization['orgCode'];
+        }
         return $this->render('kinde/home.html.twig', [
-            'isAuthenticated' => $this->kindeClient->isAuthenticated,
-            'user' => $this->getUser(),
-            'permissions' => $this->getPermissions(),
-            'organization' => $this->getOrganization()
+            'isAuthenticated' => $isAuthenticated,
+            'user' => $this->getKindeUser(),
+            'permissions' => $permissions,
+            'organization' => $organization
         ]);
     }
 
-    /**
-     * @Route("/auth/login", name="kinde_login")
-     */
+    #[Route('/auth/login', name: 'kinde_login')]
     public function login(Request $request): RedirectResponse
     {
-        $additionalParams = $request->query->only(['org_code', 'org_name', 'is_create_org']);
+        $additionalParams = [];
+        if ($request->query->has('org_code')) {
+            $additionalParams['org_code'] = $request->query->get('org_code');
+        }
+        if ($request->query->has('org_name')) {
+            $additionalParams['org_name'] = $request->query->get('org_name');
+        }
+        if ($request->query->has('is_create_org')) {
+            $additionalParams['is_create_org'] = $request->query->get('is_create_org');
+        }
         
         try {
             $result = $this->kindeClient->login($additionalParams);
@@ -51,19 +66,29 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/auth/callback", name="kinde_callback")
-     */
+    #[Route('/auth/callback', name: 'kinde_callback')]
     public function callback(Request $request): RedirectResponse
     {
         try {
-            if ($this->kindeClient->isAuthenticated) {
+            $result = $this->kindeClient->getToken();
+            if ($result) {
                 $user = $this->kindeClient->getUserDetails();
+                error_log('[KindeController] User details from Kinde: ' . print_r($user, true));
                 $this->setUser($user);
+                // Store permissions and organization info
+                $permissions = $this->kindeClient->getPermissions();
+                $organization = $this->kindeClient->getOrganization();
+                $session = $this->getSession();
+                if ($session) {
+                    $session->set('kinde_permissions', $permissions);
+                    $session->set('kinde_organization', $organization);
+                    error_log('[KindeController] Permissions set in session: ' . print_r($permissions, true));
+                    error_log('[KindeController] Organization set in session: ' . print_r($organization, true));
+                }
+                error_log('[KindeController] User set in session: ' . print_r($this->getKindeUser(), true));
                 $this->addFlash('success', 'Logged in successfully');
                 return $this->redirectToRoute('dashboard');
             }
-            
             $this->addFlash('error', 'Authentication failed');
             return $this->redirectToRoute('home');
         } catch (OAuthException $e) {
@@ -72,44 +97,55 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/dashboard", name="dashboard")
-     */
+    #[Route('/dashboard', name: 'dashboard')]
     public function dashboard(): Response
     {
-        if (!$this->kindeClient->isAuthenticated) {
-            return $this->redirectToRoute('kinde_login');
+        error_log('[KindeController] Dashboard route accessed');
+        $user = $this->getKindeUser();
+        $isAuthenticated = $this->getSession()?->get('kinde_authenticated', false);
+        error_log('[KindeController] User from session in dashboard: ' . print_r($user, true));
+        $permissionsRaw = $this->getPermissions();
+        $permissions = $permissionsRaw['permissions'] ?? [];
+        $organization = $this->getOrganization();
+        if ($organization && isset($organization['orgCode'])) {
+            $organization['name'] = $organization['orgCode'];
         }
-
         return $this->render('kinde/dashboard.html.twig', [
-            'user' => $this->getUser(),
-            'permissions' => $this->getPermissions(),
-            'organization' => $this->getOrganization()
+            'isAuthenticated' => $isAuthenticated,
+            'user' => $user,
+            'permissions' => $permissions,
+            'organization' => $organization
         ]);
     }
 
-    /**
-     * @Route("/auth/user-info", name="kinde_user_info")
-     */
+    #[Route('/auth/user-info', name: 'kinde_user_info')]
     public function userInfo(): Response
     {
-        if (!$this->kindeClient->isAuthenticated) {
+        $isAuthenticated = $this->getSession()?->get('kinde_authenticated', false);
+        $user = $this->getKindeUser();
+        if (!$isAuthenticated) {
             return $this->redirectToRoute('kinde_login');
         }
-
+        $permissionsRaw = $this->getPermissions();
+        $permissions = $permissionsRaw['permissions'] ?? [];
+        $organization = $this->getOrganization();
+        if ($organization && isset($organization['orgCode'])) {
+            $organization['name'] = $organization['orgCode'];
+        }
         return $this->render('kinde/user-info.html.twig', [
-            'user' => $this->getUser(),
-            'permissions' => $this->getPermissions(),
-            'organization' => $this->getOrganization()
+            'isAuthenticated' => $isAuthenticated,
+            'user' => $user,
+            'permissions' => $permissions,
+            'organization' => $organization
         ]);
     }
 
-    /**
-     * @Route("/auth/portal", name="kinde_portal")
-     */
+    #[Route('/auth/portal', name: 'kinde_portal')]
     public function portal(Request $request): RedirectResponse
     {
-        if (!$this->kindeClient->isAuthenticated) {
+        $isAuthenticated = $this->getSession()?->get('kinde_authenticated', false);
+        
+        if (!$isAuthenticated) {
             return $this->redirectToRoute('kinde_login');
         }
 
@@ -125,9 +161,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/auth/logout", name="kinde_logout")
-     */
+    #[Route('/auth/logout', name: 'kinde_logout')]
     public function logout(): RedirectResponse
     {
         $this->clearUser();
@@ -142,12 +176,19 @@ class ExampleController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /**
-     * @Route("/auth/register", name="kinde_register")
-     */
+    #[Route('/auth/register', name: 'kinde_register')]
     public function register(Request $request): RedirectResponse
     {
-        $additionalParams = $request->query->only(['org_code', 'org_name', 'is_create_org']);
+        $additionalParams = [];
+        if ($request->query->has('org_code')) {
+            $additionalParams['org_code'] = $request->query->get('org_code');
+        }
+        if ($request->query->has('org_name')) {
+            $additionalParams['org_name'] = $request->query->get('org_name');
+        }
+        if ($request->query->has('is_create_org')) {
+            $additionalParams['is_create_org'] = $request->query->get('is_create_org');
+        }
         
         try {
             $result = $this->kindeClient->register($additionalParams);
@@ -158,12 +199,16 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/auth/create-org", name="kinde_create_org")
-     */
+    #[Route('/auth/create-org', name: 'kinde_create_org')]
     public function createOrg(Request $request): RedirectResponse
     {
-        $additionalParams = $request->query->only(['org_code', 'org_name']);
+        $additionalParams = [];
+        if ($request->query->has('org_code')) {
+            $additionalParams['org_code'] = $request->query->get('org_code');
+        }
+        if ($request->query->has('org_name')) {
+            $additionalParams['org_name'] = $request->query->get('org_name');
+        }
         $additionalParams['is_create_org'] = 'true';
         
         try {
@@ -177,9 +222,7 @@ class ExampleController extends AbstractController
 
     // Management API Routes
 
-    /**
-     * @Route("/api/users", name="api_users", methods={"GET"})
-     */
+    #[Route('/api/users', name: 'api_users', methods: ['GET'])]
     public function listUsers(): JsonResponse
     {
         try {
@@ -190,9 +233,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/users", name="api_create_user", methods={"POST"})
-     */
+    #[Route('/api/users', name: 'api_create_user', methods: ['POST'])]
     public function createUser(Request $request): JsonResponse
     {
         try {
@@ -210,9 +251,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/organizations", name="api_organizations", methods={"GET"})
-     */
+    #[Route('/api/organizations', name: 'api_organizations', methods: ['GET'])]
     public function listOrganizations(): JsonResponse
     {
         try {
@@ -223,9 +262,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/organizations", name="api_create_organization", methods={"POST"})
-     */
+    #[Route('/api/organizations', name: 'api_create_organization', methods: ['POST'])]
     public function createOrganization(Request $request): JsonResponse
     {
         try {
@@ -242,9 +279,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/applications", name="api_applications", methods={"GET"})
-     */
+    #[Route('/api/applications', name: 'api_applications', methods: ['GET'])]
     public function listApplications(): JsonResponse
     {
         try {
@@ -255,9 +290,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/roles", name="api_roles", methods={"GET"})
-     */
+    #[Route('/api/roles', name: 'api_roles', methods: ['GET'])]
     public function listRoles(): JsonResponse
     {
         try {
@@ -268,9 +301,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/permissions", name="api_permissions", methods={"GET"})
-     */
+    #[Route('/api/permissions', name: 'api_permissions', methods: ['GET'])]
     public function listPermissions(): JsonResponse
     {
         try {
@@ -281,9 +312,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/feature-flags", name="api_feature_flags", methods={"GET"})
-     */
+    #[Route('/api/feature-flags', name: 'api_feature_flags', methods: ['GET'])]
     public function listFeatureFlags(): JsonResponse
     {
         try {
@@ -294,9 +323,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/user-profile", name="api_user_profile", methods={"GET"})
-     */
+    #[Route('/api/user-profile', name: 'api_user_profile', methods: ['GET'])]
     public function getUserProfile(): JsonResponse
     {
         try {
@@ -307,9 +334,7 @@ class ExampleController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/users/bulk", name="api_bulk_create_users", methods={"POST"})
-     */
+    #[Route('/api/users/bulk', name: 'api_bulk_create_users', methods: ['POST'])]
     public function bulkCreateUsers(Request $request): JsonResponse
     {
         try {
@@ -347,32 +372,44 @@ class ExampleController extends AbstractController
 
     // Helper methods for session management
 
-    private function getUser()
+    private function getSession(): ?SessionInterface
     {
-        return $this->get('session')->get('kinde_user');
+        $request = $this->requestStack->getCurrentRequest();
+        return $request?->getSession();
+    }
+
+    private function getKindeUser()
+    {
+        return $this->getSession()?->get('kinde_user');
     }
 
     private function setUser($user)
     {
-        $this->get('session')->set('kinde_user', $user);
-        $this->get('session')->set('kinde_authenticated', true);
+        $session = $this->getSession();
+        if ($session) {
+            $session->set('kinde_user', $user);
+            $session->set('kinde_authenticated', true);
+        }
     }
 
     private function clearUser()
     {
-        $this->get('session')->remove('kinde_user');
-        $this->get('session')->remove('kinde_authenticated');
-        $this->get('session')->remove('kinde_permissions');
-        $this->get('session')->remove('kinde_organization');
+        $session = $this->getSession();
+        if ($session) {
+            $session->remove('kinde_user');
+            $session->remove('kinde_authenticated');
+            $session->remove('kinde_permissions');
+            $session->remove('kinde_organization');
+        }
     }
 
     private function getPermissions()
     {
-        return $this->get('session')->get('kinde_permissions', []);
+        return $this->getSession()?->get('kinde_permissions', []);
     }
 
     private function getOrganization()
     {
-        return $this->get('session')->get('kinde_organization');
+        return $this->getSession()?->get('kinde_organization');
     }
 } 
