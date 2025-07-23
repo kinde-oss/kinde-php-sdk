@@ -43,60 +43,6 @@ class KindeController extends AbstractController
         ]);
     }
 
-    #[Route('/auth/login', name: 'kinde_login')]
-    public function login(Request $request): RedirectResponse
-    {
-        $additionalParams = [];
-        if ($request->query->has('org_code')) {
-            $additionalParams['org_code'] = $request->query->get('org_code');
-        }
-        if ($request->query->has('org_name')) {
-            $additionalParams['org_name'] = $request->query->get('org_name');
-        }
-        if ($request->query->has('is_create_org')) {
-            $additionalParams['is_create_org'] = $request->query->get('is_create_org');
-        }
-        
-        try {
-            $result = $this->kindeClient->login($additionalParams);
-            return $this->redirect($result->getAuthUrl());
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
-            return $this->redirectToRoute('home');
-        }
-    }
-
-    #[Route('/auth/callback', name: 'kinde_callback')]
-    public function callback(Request $request): RedirectResponse
-    {
-        try {
-            $result = $this->kindeClient->getToken();
-            if ($result) {
-                $user = $this->kindeClient->getUserDetails();
-                error_log('[KindeController] User details from Kinde: ' . print_r($user, true));
-                $this->setUser($user);
-                // Store permissions and organization info
-                $permissions = $this->kindeClient->getPermissions();
-                $organization = $this->kindeClient->getOrganization();
-                $session = $this->getSession();
-                if ($session) {
-                    $session->set('kinde_permissions', $permissions);
-                    $session->set('kinde_organization', $organization);
-                    error_log('[KindeController] Permissions set in session: ' . print_r($permissions, true));
-                    error_log('[KindeController] Organization set in session: ' . print_r($organization, true));
-                }
-                error_log('[KindeController] User set in session: ' . print_r($this->getKindeUser(), true));
-                $this->addFlash('success', 'Logged in successfully');
-                return $this->redirectToRoute('dashboard');
-            }
-            $this->addFlash('error', 'Authentication failed');
-            return $this->redirectToRoute('home');
-        } catch (OAuthException $e) {
-            $this->addFlash('error', $e->getMessage());
-            return $this->redirectToRoute('home');
-        }
-    }
-
     #[Route('/dashboard', name: 'dashboard')]
     public function dashboard(): Response
     {
@@ -139,66 +85,7 @@ class KindeController extends AbstractController
             'organization' => $organization
         ]);
     }
-
-    #[Route('/auth/portal', name: 'kinde_portal')]
-    public function portal(Request $request): RedirectResponse
-    {
-        $isAuthenticated = $this->getSession()?->get('kinde_authenticated', false);
-        
-        if (!$isAuthenticated) {
-            return $this->redirectToRoute('kinde_login');
-        }
-
-        $returnUrl = $request->query->get('return_url', $this->generateUrl('dashboard', [], \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
-        $subNav = $request->query->get('sub_nav', 'profile');
-
-        try {
-            $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
-            return $this->redirect($portalData['url']);
-        } catch (Exception $e) {
-            $this->addFlash('error', 'Failed to generate portal URL: ' . $e->getMessage());
-            return $this->redirectToRoute('dashboard');
-        }
-    }
-
-    #[Route('/auth/logout', name: 'kinde_logout')]
-    public function logout(): RedirectResponse
-    {
-        $this->clearUser();
-        
-        try {
-            $this->kindeClient->logout();
-        } catch (Exception $e) {
-            // Continue with logout even if Kinde logout fails
-        }
-        
-        $this->addFlash('success', 'Logged out successfully');
-        return $this->redirectToRoute('home');
-    }
-
-    #[Route('/auth/register', name: 'kinde_register')]
-    public function register(Request $request): RedirectResponse
-    {
-        $additionalParams = [];
-        if ($request->query->has('org_code')) {
-            $additionalParams['org_code'] = $request->query->get('org_code');
-        }
-        if ($request->query->has('org_name')) {
-            $additionalParams['org_name'] = $request->query->get('org_name');
-        }
-        if ($request->query->has('is_create_org')) {
-            $additionalParams['is_create_org'] = $request->query->get('is_create_org');
-        }
-        
-        try {
-            $result = $this->kindeClient->register($additionalParams);
-            return $this->redirect($result->getAuthUrl());
-        } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
-            return $this->redirectToRoute('home');
-        }
-    }
-
+    
     #[Route('/auth/create-org', name: 'kinde_create_org')]
     public function createOrg(Request $request): RedirectResponse
     {

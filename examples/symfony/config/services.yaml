@@ -40,3 +40,6 @@ services:
             $clientId: '%env(KINDE_CLIENT_ID)%'
             $clientSecret: '%env(KINDE_CLIENT_SECRET)%'
             $accessToken: '%env(KINDE_MANAGEMENT_ACCESS_TOKEN)%'
+
+imports:
+    - { resource: services/ }
