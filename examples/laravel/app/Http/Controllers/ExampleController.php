@@ -39,51 +39,6 @@ class ExampleController extends Controller
     }
 
     /**
-     * Redirect to Kinde login
-     */
-    public function login(Request $request)
-    {
-        $additionalParams = $request->only(['org_code', 'org_name', 'is_create_org']);
-        
-        try {
-            $result = $this->kindeClient->login($additionalParams);
-            
-            // The login method should handle the redirect internally
-            // This is just a fallback
-            header('Location: ' . $result->getAuthUrl());
-            exit;
-        } catch (Exception $e) {
-            header('Location: /?error=' . urlencode($e->getMessage()));
-            exit;
-        }
-    }
-
-    /**
-     * Handle OAuth callback
-     */
-    public function callback(Request $request)
-    {
-        try {
-            // The callback should be handled automatically by the SDK
-            // This is just for demonstration
-            if ($this->kindeClient->isAuthenticated) {
-                $user = $this->kindeClient->getUserDetails();
-                session(['kinde_user' => $user]);
-                session(['kinde_authenticated' => true]);
-                
-                header('Location: /dashboard?success=Logged+in+successfully');
-                exit;
-            }
-            
-            header('Location: /?error=Authentication+failed');
-            exit;
-        } catch (OAuthException $e) {
-            header('Location: /?error=' . urlencode($e->getMessage()));
-            exit;
-        }
-    }
-
-    /**
      * Show user dashboard
      */
     public function dashboard()
@@ -121,63 +76,6 @@ class ExampleController extends Controller
         $content = ob_get_clean();
         
         return $content;
-    }
-
-    /**
-     * Redirect to Kinde portal
-     */
-    public function portal(Request $request)
-    {
-        if (!$this->kindeClient->isAuthenticated) {
-            header('Location: /');
-            exit;
-        }
-
-        $returnUrl = $request->get('return_url', 'http://localhost:8000/dashboard');
-        $subNav = $request->get('sub_nav', 'profile');
-
-        try {
-            $portalData = $this->kindeClient->generatePortalUrl($returnUrl, $subNav);
-            header('Location: ' . $portalData['url']);
-            exit;
-        } catch (Exception $e) {
-            header('Location: /?error=' . urlencode('Failed to generate portal URL: ' . $e->getMessage()));
-            exit;
-        }
-    }
-
-    /**
-     * Logout user
-     */
-    public function logout()
-    {
-        session()->forget(['kinde_user', 'kinde_authenticated', 'kinde_permissions', 'kinde_organization']);
-        
-        try {
-            $this->kindeClient->logout();
-        } catch (Exception $e) {
-            // Continue with logout even if Kinde logout fails
-        }
-        
-        header('Location: /?success=Logged+out+successfully');
-        exit;
-    }
-
-    /**
-     * Register new user
-     */
-    public function register(Request $request)
-    {
-        $additionalParams = $request->only(['org_code', 'org_name', 'is_create_org']);
-        
-        try {
-            $result = $this->kindeClient->register($additionalParams);
-            header('Location: ' . $result->getAuthUrl());
-            exit;
-        } catch (Exception $e) {
-            header('Location: /?error=' . urlencode($e->getMessage()));
-            exit;
-        }
     }
 
     /**
