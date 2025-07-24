@@ -13,12 +13,21 @@ class KindeAuthController extends Controller
 
     public function __construct()
     {
+        $domain = getenv('KINDE_DOMAIN');
+        $redirectUri = getenv('KINDE_REDIRECT_URI');
+        $clientId = getenv('KINDE_CLIENT_ID');
+        $clientSecret = getenv('KINDE_CLIENT_SECRET');
+        
+        if (!$domain || !$redirectUri || !$clientId || !$clientSecret) {
+            throw new \RuntimeException('Missing required Kinde environment variables');
+        }
+        
         // Initialize Kinde client (you'd configure this in your service)
         $this->kindeClient = new KindeClientSDK(
-            getenv('KINDE_DOMAIN'),
-            getenv('KINDE_REDIRECT_URI'),
-            getenv('KINDE_CLIENT_ID'),
-            getenv('KINDE_CLIENT_SECRET'),
+            $domain,
+            $redirectUri,
+            $clientId,
+            $clientSecret,
             getenv('KINDE_GRANT_TYPE', 'authorization_code'),
             getenv('KINDE_LOGOUT_REDIRECT_URI'),
             getenv('KINDE_SCOPES', 'openid profile email offline')
