@@ -168,10 +168,6 @@ const { kinde } = usePage().props
                 </div>
                 
                 <div class="mt-6 flex space-x-4">
-                    <a href="/auth/profile" 
-                       class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        View Profile
-                    </a>
                     
                     <a href="/auth/logout" 
                        class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
@@ -213,7 +209,6 @@ const { kinde } = usePage().props
                 <div class="flex items-center">
                     <div v-if="kinde.isAuthenticated" class="flex items-center space-x-4">
                         <span class="text-gray-700">{{ kinde.user?.given_name }}</span>
-                        <a href="/auth/profile" class="text-blue-600 hover:text-blue-500">Profile</a>
                         <a href="/auth/logout" class="text-red-600 hover:text-red-500">Logout</a>
                     </div>
                     
