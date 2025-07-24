@@ -63,20 +63,43 @@ class KindeAuthController extends Controller
      */
     public function callback()
     {
+        $errorParam = $this->request->getGet('error');
+        if ($errorParam) {
+            if (strtolower($errorParam) === 'login_link_expired') {
+                $reauthState = $this->request->getGet('reauth_state');
+                if ($reauthState) {
+                    $decodedAuthState = base64_decode($reauthState);
+                    try {
+                        $reauthStateArr = json_decode($decodedAuthState, true);
+                        if ($reauthStateArr && is_array($reauthStateArr)) {
+                            $urlParams = http_build_query($reauthStateArr);
+                            $loginRoute = base_url('/auth/login');
+                            $redirectUrl = $loginRoute . ($urlParams ? ('?' . $urlParams) : '');
+                            return redirect()->to($redirectUrl);
+                        }
+                    } catch (\Exception $ex) {
+                        session()->setFlashdata('error', $ex->getMessage() ?: 'Unknown Error parsing reauth state');
+                        return redirect()->to('/');
+                    }
+                }
+                // If no reauth_state, just return to login
+                return redirect()->to('/auth/login');
+            }
+            // For other errors, redirect to home with error
+            session()->setFlashdata('error', $errorParam);
+            return redirect()->to('/');
+        }
+
         try {
             $token = $this->kindeClient->getToken();
-            
             if ($token) {
                 // Store user session
                 $userDetails = $this->kindeClient->getUserDetails();
-                
-                // Store in session
                 session()->set([
                     'kinde_user' => $userDetails,
                     'kinde_token' => $token,
                     'kinde_authenticated' => true
                 ]);
-
                 session()->setFlashdata('success', 'Successfully logged in!');
                 return redirect()->to('/dashboard');
             }
@@ -85,7 +108,6 @@ class KindeAuthController extends Controller
         } catch (Exception $e) {
             session()->setFlashdata('error', 'An error occurred during authentication');
         }
-
         return redirect()->to('/');
     }
 

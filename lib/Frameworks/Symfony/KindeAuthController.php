@@ -51,6 +51,32 @@ class KindeAuthController extends AbstractController
     #[Route('/auth/callback', name: 'kinde_callback')]
     public function callback(Request $request): RedirectResponse
     {
+        $errorParam = $request->query->get('error');
+        if ($errorParam) {
+            if (strtolower($errorParam) === 'login_link_expired') {
+                $reauthState = $request->query->get('reauth_state');
+                if ($reauthState) {
+                    $decodedAuthState = base64_decode($reauthState);
+                    try {
+                        $reauthStateArr = json_decode($decodedAuthState, true);
+                        if ($reauthStateArr && is_array($reauthStateArr)) {
+                            $urlParams = http_build_query($reauthStateArr);
+                            $loginRoute = $this->generateUrl('kinde_login');
+                            $redirectUrl = $loginRoute . ($urlParams ? ('?' . $urlParams) : '');
+                            return $this->redirect($redirectUrl);
+                        }
+                    } catch (\Exception $ex) {
+                        throw new \Exception($ex->getMessage() ?: 'Unknown Error parsing reauth state');
+                    }
+                }
+                // If no reauth_state, just return to login
+                return $this->redirectToRoute('kinde_login');
+            }
+            // For other errors, redirect to home
+            return $this->redirectToRoute('home');
+        }
+        
+
         try {
             $result = $this->kindeClient->getToken();
             if ($result) {
@@ -176,7 +202,7 @@ class KindeAuthController extends AbstractController
         $request = $this->requestStack->getCurrentRequest();
         return $request?->getSession();
     }
-    
+
     private function getKindeUser()
     {
         return $this->getSession()?->get('kinde_user');

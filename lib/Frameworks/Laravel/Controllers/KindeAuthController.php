@@ -44,6 +44,31 @@ class KindeAuthController extends Controller
      */
     public function callback(Request $request): RedirectResponse
     {
+        $errorParam = $request->query('error');
+        if ($errorParam) {
+            if (strtolower($errorParam) === 'login_link_expired') {
+                $reauthState = $request->query('reauth_state');
+                if ($reauthState) {
+                    $decodedAuthState = base64_decode($reauthState);
+                    try {
+                        $reauthStateArr = json_decode($decodedAuthState, true);
+                        if ($reauthStateArr && is_array($reauthStateArr)) {
+                            $urlParams = http_build_query($reauthStateArr);
+                            $loginRoute = $this->login($request);
+                            $redirectUrl = $loginRoute . ($urlParams ? ('?' . $urlParams) : '');
+                            return redirect()->away($redirectUrl);
+                        }
+                    } catch (\Exception $ex) {
+                        throw new \Exception($ex->getMessage() ?: 'Unknown Error parsing reauth state');
+                    }
+                }
+                // If no reauth_state, just return to login
+                return $this->login($request);
+            }
+            // For other errors, redirect to home
+            return redirect()->route('home');
+        }
+        
         try {
             $token = $this->kindeClient->getToken();
             
@@ -127,7 +152,7 @@ class KindeAuthController extends Controller
     public function userInfo(Request $request)
     {
         if (!$this->kindeClient->isAuthenticated) {
-            return redirect()->route('login');
+            return $this->login($request);
         }
 
         $userDetails = $this->kindeClient->getUserDetails();
@@ -154,7 +179,7 @@ class KindeAuthController extends Controller
     public function portal(Request $request): RedirectResponse
     {
         if (!$this->kindeClient->isAuthenticated) {
-            return redirect()->route('login');
+            return $this->login($request);
         }
 
         $returnUrl = $request->get('return_url', route('dashboard'));
