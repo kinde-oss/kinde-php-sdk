@@ -375,4 +375,43 @@ class KindeManagementClient
     {
         return $this->clientId;
     }
+
+    /**
+     * Get all billing entitlements for a customer, handling pagination.
+     *
+     * @param string $customerId
+     * @param int|null $pageSize
+     * @param string|null $maxValue
+     * @param string|null $expand
+     * @return array All entitlements
+     */
+    public function getAllBillingEntitlements(
+        string $customerId,
+        ?int $pageSize = null,
+        ?string $maxValue = null,
+        ?string $expand = null
+    ): array {
+        $allEntitlements = [];
+        $startingAfter = null;
+        do {
+            $response = $this->billingEntitlements->getBillingEntitlements(
+                $customerId,
+                $pageSize,
+                $startingAfter,
+                null, // ending_before
+                $maxValue,
+                $expand
+            );
+            $entitlements = $response->getEntitlements() ?? [];
+            $allEntitlements = array_merge($allEntitlements, $entitlements);
+            $hasMore = $response->getHasMore();
+            if ($hasMore && count($entitlements) > 0) {
+                $lastEntitlement = end($entitlements);
+                $startingAfter = $lastEntitlement->getId();
+            } else {
+                $startingAfter = null;
+            }
+        } while ($hasMore && $startingAfter);
+        return $allEntitlements;
+    }
 } 
