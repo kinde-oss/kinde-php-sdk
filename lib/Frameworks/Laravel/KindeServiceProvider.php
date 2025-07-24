@@ -76,10 +76,6 @@ class KindeServiceProvider extends ServiceProvider
             __DIR__.'/../../../config/kinde.php' => config_path('kinde.php'),
         ], 'kinde-config');
 
-        $this->publishes([
-            __DIR__.'/../../database/migrations' => database_path('migrations'),
-        ], 'kinde-migrations');
-
         $this->loadRoutesFrom(__DIR__.'/../../../routes/auth.php');
         $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'kinde');
 
