@@ -85,7 +85,20 @@ class InstallKindeCommand extends Command
             'KINDE_SCOPES=openid profile email offline',
         ];
 
-        if (!str_contains($envContent, 'KINDE_DOMAIN')) {
+        // Check if any Kinde environment variable already exists
+        $kindeVarExists = false;
+        foreach ([
+            'KINDE_DOMAIN',
+            'KINDE_CLIENT_ID',
+            'KINDE_CLIENT_SECRET'
+        ] as $var) {
+            if (str_contains($envContent, $var)) {
+                $kindeVarExists = true;
+                break;
+            }
+        }
+
+        if (! $kindeVarExists) {
             File::append($envPath, implode("\n", $kindeVars));
             $this->info('Added Kinde environment variables to .env file.');
         } else {
