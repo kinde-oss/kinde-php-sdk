@@ -66,7 +66,12 @@ class InstallKindeCommand extends Command
             return;
         }
 
-        $envContent = File::get($envPath);
+        try {
+            $envContent = File::get($envPath);
+        } catch (\Exception $e) {
+            $this->error('Failed to read .env file: ' . $e->getMessage());
+            return;
+        }
         
         $kindeVars = [
             '',
