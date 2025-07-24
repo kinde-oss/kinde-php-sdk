@@ -24,6 +24,14 @@ class KindeServiceProvider extends ServiceProvider
         $this->app->singleton(KindeClientSDK::class, function ($app) {
             $config = config('kinde');
             
+            // Validate required configuration
+            $required = ['domain', 'redirect_uri', 'client_id', 'client_secret'];
+            foreach ($required as $key) {
+                if (empty($config[$key])) {
+                    throw new \InvalidArgumentException("Missing required Kinde configuration: {$key}");
+                }
+            }
+
             // Use environment variables by default, with config overrides
             return new KindeClientSDK(
                 domain: $config['domain'] ?? null,
@@ -42,6 +50,14 @@ class KindeServiceProvider extends ServiceProvider
         $this->app->singleton(KindeManagementClient::class, function ($app) {
             $config = config('kinde');
             
+            // Validate required configuration
+            $required = ['domain', 'client_id', 'client_secret', 'management_access_token'];
+            foreach ($required as $key) {
+                if (empty($config[$key])) {
+                    throw new \InvalidArgumentException("Missing required Kinde configuration: {$key}");
+                }
+            }
+
             return new KindeManagementClient(
                 domain: $config['domain'] ?? null,
                 clientId: $config['client_id'] ?? null,
