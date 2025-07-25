@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Framework\Symfony;
+namespace Kinde\KindeSDK\Tests\Framework\Symfony;
 
 use PHPUnit\Framework\TestCase;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;

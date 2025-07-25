@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Framework\CodeIgniter;
+namespace Kinde\KindeSDK\Tests\Framework\CodeIgniter;
 
 use PHPUnit\Framework\TestCase;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
