@@ -36,8 +36,12 @@ try {
         $users = $management->users->getUsers();
         echo "Found " . count($users->getUsers()) . " users\n";
         
-        foreach ($users->getUsers() as $user) {
-            echo "- {$user->getGivenName()} {$user->getFamilyName()} ({$user->getEmail()})\n";
+        $userList = $users->getUsers() ?? [];
+        foreach ($userList as $user) {
+            $givenName = $user->getGivenName() ?? '';
+            $familyName = $user->getFamilyName() ?? '';
+            $email = $user->getEmail() ?? '';
+            echo "- {$givenName} {$familyName} ({$email})\n";
         }
     } catch (ApiException $e) {
         echo "❌ Failed to get users: {$e->getMessage()}\n";
@@ -76,7 +80,9 @@ try {
         echo "Found " . count($featureFlags->getFeatureFlags()) . " feature flags\n";
         
         foreach ($featureFlags->getFeatureFlags() as $flag) {
-            echo "- {$flag->getName()} (Type: {$flag->getType()}, Value: " . ($flag->getValue() ? 'true' : 'false') . ")\n";
+            $value = $flag->getValue();
+            $displayValue = $value === null ? 'null' : ($value ? 'true' : 'false');
+            echo "- {$flag->getName()} (Type: {$flag->getType()}, Value: {$displayValue})\n";
         }
     } catch (ApiException $e) {
         echo "❌ Failed to get feature flags: {$e->getMessage()}\n";

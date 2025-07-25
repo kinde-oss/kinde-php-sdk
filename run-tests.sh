@@ -93,7 +93,6 @@ show_help() {
     echo "Options:"
     echo "  core              Run core SDK tests only (default)"
     echo "  laravel           Run Laravel framework tests only (requires Laravel environment)"
-    echo "  slim              Run Slim framework tests only (requires Slim environment)"
     echo "  symfony           Run Symfony framework tests only (requires Symfony environment)"
     echo "  codeigniter       Run CodeIgniter framework tests only (requires CodeIgniter environment)"
     echo "  integration       Run integration tests only"
@@ -122,10 +121,6 @@ case "${1:-core}" in
         print_warning "Laravel framework tests require a Laravel application environment"
         run_tests "Laravel Framework"
         ;;
-    "slim")
-        print_warning "Slim framework tests require a Slim application environment"
-        run_tests "Slim Framework"
-        ;;
     "symfony")
         print_warning "Symfony framework tests require a Symfony application environment"
         run_tests "Symfony Framework"
@@ -140,7 +135,6 @@ case "${1:-core}" in
     "framework")
         print_warning "Framework tests may fail without proper framework environments"
         run_tests "Laravel Framework"
-        run_tests "Slim Framework"
         run_tests "Symfony Framework"
         run_tests "CodeIgniter Framework"
         ;;

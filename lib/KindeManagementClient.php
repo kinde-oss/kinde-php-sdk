@@ -211,10 +211,10 @@ class KindeManagementClient
         ?string $accessToken = null
     ) {
         // Load from environment variables if parameters are not provided
-        $domain = $domain ?? $_ENV['KINDE_DOMAIN'] ?? $_ENV['KINDE_HOST'] ?? null;
-        $clientId = $clientId ?? $_ENV['KINDE_CLIENT_ID'] ?? null;
-        $clientSecret = $clientSecret ?? $_ENV['KINDE_CLIENT_SECRET'] ?? null;
-        $accessToken = $accessToken ?? $_ENV['KINDE_MANAGEMENT_ACCESS_TOKEN'] ?? null;
+        $domain = $domain ?? getenv('KINDE_DOMAIN') ?: getenv('KINDE_HOST') ?: null;
+        $clientId = $clientId ?? getenv('KINDE_CLIENT_ID') ?: null;
+        $clientSecret = $clientSecret ?? getenv('KINDE_CLIENT_SECRET') ?: null;
+        $accessToken = $accessToken ?? getenv('KINDE_MANAGEMENT_ACCESS_TOKEN') ?: null;
 
         // Validate required parameters
         if (!$domain) {

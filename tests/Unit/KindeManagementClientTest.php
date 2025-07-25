@@ -45,6 +45,11 @@ class KindeManagementClientTest extends TestCase
         parent::setUp();
         
         // Clear any existing environment variables
+        putenv('KINDE_DOMAIN');
+        putenv('KINDE_HOST');
+        putenv('KINDE_CLIENT_ID');
+        putenv('KINDE_CLIENT_SECRET');
+        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN');
         unset($_ENV['KINDE_DOMAIN']);
         unset($_ENV['KINDE_HOST']);
         unset($_ENV['KINDE_CLIENT_ID']);
@@ -55,6 +60,9 @@ class KindeManagementClientTest extends TestCase
     public function testCreateFromEnvWithValidEnvironmentVariables()
     {
         // Set up environment variables
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
@@ -69,6 +77,9 @@ class KindeManagementClientTest extends TestCase
     public function testCreateFromEnvWithKindeHostEnvironmentVariable()
     {
         // Set up environment variables using KINDE_HOST
+        putenv('KINDE_HOST=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
         $_ENV['KINDE_HOST'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
@@ -81,6 +92,10 @@ class KindeManagementClientTest extends TestCase
 
     public function testCreateFromEnvWithMissingDomain()
     {
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
+        unset($_ENV['KINDE_DOMAIN']);
+        unset($_ENV['KINDE_HOST']);
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
 
@@ -92,6 +107,9 @@ class KindeManagementClientTest extends TestCase
 
     public function testCreateFromEnvWithMissingClientId()
     {
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
+        unset($_ENV['KINDE_CLIENT_ID']);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
 
@@ -103,6 +121,9 @@ class KindeManagementClientTest extends TestCase
 
     public function testCreateFromEnvWithMissingClientSecret()
     {
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        unset($_ENV['KINDE_CLIENT_SECRET']);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
 
@@ -129,6 +150,8 @@ class KindeManagementClientTest extends TestCase
     public function testConstructorWithMixedParameters()
     {
         // Set some environment variables
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
 
@@ -147,6 +170,10 @@ class KindeManagementClientTest extends TestCase
 
     public function testConstructorWithAccessTokenFromEnvironment()
     {
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
+        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN=' . $this->testAccessToken);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
@@ -288,6 +315,9 @@ class KindeManagementClientTest extends TestCase
     public function testEmptyConstructor()
     {
         // Set environment variables
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
@@ -302,6 +332,10 @@ class KindeManagementClientTest extends TestCase
     public function testEmptyConstructorWithAccessToken()
     {
         // Set environment variables
+        putenv('KINDE_DOMAIN=' . $this->testDomain);
+        putenv('KINDE_CLIENT_ID=' . $this->testClientId);
+        putenv('KINDE_CLIENT_SECRET=' . $this->testClientSecret);
+        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN=' . $this->testAccessToken);
         $_ENV['KINDE_DOMAIN'] = $this->testDomain;
         $_ENV['KINDE_CLIENT_ID'] = $this->testClientId;
         $_ENV['KINDE_CLIENT_SECRET'] = $this->testClientSecret;
