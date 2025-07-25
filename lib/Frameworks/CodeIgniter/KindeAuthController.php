@@ -54,8 +54,7 @@ class KindeAuthController extends Controller
             }
             return redirect()->to($authUrl);
         } catch (Exception $e) {
-            log_message('error', 'EXCEPTION: ' . $e->getMessage());
-            log_message('error', $e->getTraceAsString());
+            log_message('error', 'Kinde login error: ' . $e->getMessage());
             session()->setFlashdata('error', $e->getMessage());
             return redirect()->to('/');
         }
