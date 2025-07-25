@@ -226,39 +226,4 @@ class ExampleController extends Controller
         }
     }
 
-    /**
-     * Bulk user creation example (Management API)
-     */
-    public function bulkCreateUsers(Request $request)
-    {
-        try {
-            $usersData = $request->all();
-            
-            if (empty($usersData['users']) || !is_array($usersData['users'])) {
-                return ['error' => 'Missing required field: users (array)'];
-            }
-
-            $createdUsers = [];
-            $errors = [];
-
-            foreach ($usersData['users'] as $userData) {
-                try {
-                    $user = $this->management->users->createUser($userData);
-                    $createdUsers[] = $user;
-                } catch (ApiException $e) {
-                    $errors[] = [
-                        'email' => $userData['email'] ?? 'unknown',
-                        'error' => $e->getMessage()
-                    ];
-                }
-            }
-
-            return [
-                'created_users' => $createdUsers,
-                'errors' => $errors
-            ];
-        } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
 } 
