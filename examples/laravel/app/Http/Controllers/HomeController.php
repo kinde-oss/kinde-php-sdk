@@ -16,8 +16,11 @@ class HomeController extends Controller
     {
         $isAuthenticated = $this->kindeClient->isAuthenticated;
         $user = $isAuthenticated ? $this->kindeClient->getUserDetails() : [];
-        $permissionsData = $isAuthenticated ? $this->kindeClient->getPermissions() : [];
-        $permissions = is_array($permissionsData) && isset($permissionsData['permissions']) ? $permissionsData['permissions'] : [];
+        $permissions = [];
+        if ($isAuthenticated) {
+            $permissionsData = $this->kindeClient->getPermissions();
+            $permissions = $permissionsData['permissions'] ?? [];
+        }
         $organization = $isAuthenticated ? $this->kindeClient->getOrganization() : [];
 
         Log::info('HomeController@index variables', [
