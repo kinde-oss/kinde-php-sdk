@@ -89,11 +89,9 @@ class ExampleController extends Controller
         
         try {
             $result = $this->kindeClient->createOrg($additionalParams);
-            header('Location: ' . $result->getAuthUrl());
-            exit;
+            return redirect($result->getAuthUrl());
         } catch (Exception $e) {
-            header('Location: /?error=' . urlencode($e->getMessage()));
-            exit;
+            return redirect('/?error=' . urlencode($e->getMessage()));
         }
     }
 
