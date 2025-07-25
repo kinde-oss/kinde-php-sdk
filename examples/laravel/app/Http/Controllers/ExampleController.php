@@ -52,11 +52,11 @@ class ExampleController extends Controller
         $permissions = session('kinde_permissions', []);
         $organization = session('kinde_organization');
 
-        ob_start();
-        include __DIR__ . '/views/kinde/dashboard.blade.php';
-        $content = ob_get_clean();
-        
-        return $content;
+        return view('kinde.dashboard', [
+            'user' => $user,
+            'permissions' => $permissions,
+            'organization' => $organization
+        ]);
     }
 
     /**
@@ -119,13 +119,13 @@ class ExampleController extends Controller
             $userData = $request->all();
             // Simple validation
             if (empty($userData['given_name']) || empty($userData['family_name']) || empty($userData['email'])) {
-                return ['error' => 'Missing required fields: given_name, family_name, email'];
+                return response()->json(['error' => 'Missing required fields: given_name, family_name, email'], 400);
             }
 
             $user = $this->management->users->createUser($userData);
-            return $user;
+            return response()->json($user);
         } catch (ApiException $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
