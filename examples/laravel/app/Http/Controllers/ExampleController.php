@@ -72,11 +72,11 @@ class ExampleController extends Controller
         $permissions = session('kinde_permissions', []);
         $organization = session('kinde_organization');
 
-        ob_start();
-        include __DIR__ . '/views/kinde/user-info.blade.php';
-        $content = ob_get_clean();
-        
-        return $content;
+        return view('kinde.user-info', [
+            'user' => session('kinde_user'),
+            'permissions' => session('kinde_permissions', []),
+            'organization' => session('kinde_organization')
+        ]);
     }
 
     /**
