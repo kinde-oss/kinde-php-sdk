@@ -34,15 +34,15 @@ class KindeIntegrationTest extends TestCase
         parent::tearDown();
         
         // Clean up environment variables
-        putenv('KINDE_DOMAIN');
-        putenv('KINDE_CLIENT_ID');
-        putenv('KINDE_CLIENT_SECRET');
-        putenv('KINDE_REDIRECT_URI');
-        putenv('KINDE_GRANT_TYPE');
-        putenv('KINDE_LOGOUT_REDIRECT_URI');
-        putenv('KINDE_SCOPES');
-        putenv('KINDE_PROTOCOL');
-        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN');
+        putenv('KINDE_DOMAIN=');
+        putenv('KINDE_CLIENT_ID=');
+        putenv('KINDE_CLIENT_SECRET=');
+        putenv('KINDE_REDIRECT_URI=');
+        putenv('KINDE_GRANT_TYPE=');
+        putenv('KINDE_LOGOUT_REDIRECT_URI=');
+        putenv('KINDE_SCOPES=');
+        putenv('KINDE_PROTOCOL=');
+        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN=');
     }
 
     /**
