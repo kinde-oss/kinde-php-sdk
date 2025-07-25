@@ -21,6 +21,7 @@ node_modules/
 
 # Temporary files
 tmp/
+tmp-frontend/
 
 # Log files
 logs/
