@@ -39,24 +39,18 @@ class KindeAuthController extends Controller
      */
     public function login()
     {
-        // Debug: Log environment variables
-        log_message('error', 'DEBUG: Entered KindeAuthController::login()');
-        log_message('error', 'Env KINDE_CLIENT_ID: ' . getenv('KINDE_CLIENT_ID'));
-        log_message('error', 'Env KINDE_DOMAIN: ' . getenv('KINDE_DOMAIN'));
-        log_message('error', 'Env KINDE_REDIRECT_URI: ' . getenv('KINDE_REDIRECT_URI'));
         $additionalParams = array_filter(
             $this->request->getGet(['org_code', 'org_name', 'is_create_org']),
             function($v) { return $v !== null && $v !== ''; }
         );
         try {
-            log_message('error', print_r($additionalParams, true));
             $result = $this->kindeClient->login($additionalParams);
             $authUrl = $result->getAuthUrl();
-            log_message('error', 'DEBUG: Auth URL: ' . $authUrl);
             if (empty($authUrl)) {
                 log_message('error', 'ERROR: No auth URL generated. Check your Kinde configuration.');
                 log_message('error', print_r($result, true));
-                exit;
+                session()->setFlashdata('error', 'Authentication service unavailable. Please try again later.');
+                return redirect()->to('/');
             }
             return redirect()->to($authUrl);
         } catch (Exception $e) {
