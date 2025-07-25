@@ -75,13 +75,11 @@ class KindeAuthController extends AbstractController
             // For other errors, redirect to home
             return $this->redirectToRoute('home');
         }
-        
 
         try {
             $result = $this->kindeClient->getToken();
             if ($result) {
                 $user = $this->kindeClient->getUserDetails();
-                error_log('[KindeController] User details from Kinde: ' . print_r($user, true));
                 $this->setUser($user);
                 // Store permissions and organization info
                 $permissions = $this->kindeClient->getPermissions();
@@ -90,10 +88,7 @@ class KindeAuthController extends AbstractController
                 if ($session) {
                     $session->set('kinde_permissions', $permissions);
                     $session->set('kinde_organization', $organization);
-                    error_log('[KindeController] Permissions set in session: ' . print_r($permissions, true));
-                    error_log('[KindeController] Organization set in session: ' . print_r($organization, true));
                 }
-                error_log('[KindeController] User set in session: ' . print_r($this->getKindeUser(), true));
                 $this->addFlash('success', 'Logged in successfully');
                 return $this->redirectToRoute('dashboard');
             }
