@@ -1,0 +1,3 @@
+kinde_sdk:
+    resource: '../../../../lib/Frameworks/Symfony/KindeAuthController.php'
+    type: attribute 

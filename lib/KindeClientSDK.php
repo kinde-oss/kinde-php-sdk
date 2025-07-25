@@ -75,28 +75,39 @@ class KindeClientSDK
     public $storage;
 
     function __construct(
-        string $domain,
-        ?string $redirectUri,
-        string $clientId,
-        string $clientSecret,
-        string $grantType,
-        ?string $logoutRedirectUri,
+        ?string $domain = null,
+        ?string $redirectUri = null,
+        ?string $clientId = null,
+        ?string $clientSecret = null,
+        ?string $grantType = null,
+        ?string $logoutRedirectUri = null,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
         string $protocol = ""
     ) {
-        $isNotCCGrantType = $grantType !== GrantType::clientCredentials;
+        // Load from environment variables if parameters are not provided
+        $domain = $domain ?? $_ENV['KINDE_DOMAIN'] ?? $_ENV['KINDE_HOST'] ?? null;
+        $redirectUri = $redirectUri ?? $_ENV['KINDE_REDIRECT_URI'] ?? null;
+        $clientId = $clientId ?? $_ENV['KINDE_CLIENT_ID'] ?? null;
+        $clientSecret = $clientSecret ?? $_ENV['KINDE_CLIENT_SECRET'] ?? null;
+        $grantType = $grantType ?? $_ENV['KINDE_GRANT_TYPE'] ?? GrantType::authorizationCode;
+        $logoutRedirectUri = $logoutRedirectUri ?? $_ENV['KINDE_LOGOUT_REDIRECT_URI'] ?? null;
+        $scopes = $_ENV['KINDE_SCOPES'] ?? $scopes;
+        $protocol = $_ENV['KINDE_PROTOCOL'] ?? $protocol;
 
+        // Validate required parameters
         if (empty($domain)) {
-            throw new InvalidArgumentException("Please provide domain");
+            throw new InvalidArgumentException("Please provide domain via parameter or KINDE_DOMAIN/KINDE_HOST environment variable");
         }
         if (!Utils::validationURL($domain)) {
             throw new InvalidArgumentException("Please provide valid domain");
         }
         $this->domain = $domain;
 
+        $isNotCCGrantType = $grantType !== GrantType::clientCredentials;
+
         if ($isNotCCGrantType && empty($redirectUri)) {
-            throw new InvalidArgumentException("Please provide redirect_uri");
+            throw new InvalidArgumentException("Please provide redirect_uri via parameter or KINDE_REDIRECT_URI environment variable");
         }
         if ($isNotCCGrantType && !Utils::validationURL($redirectUri)) {
             throw new InvalidArgumentException("Please provide valid redirect_uri");
@@ -104,22 +115,22 @@ class KindeClientSDK
         $this->redirectUri = $redirectUri;
 
         if (empty($clientSecret)) {
-            throw new InvalidArgumentException("Please provide client_secret");
+            throw new InvalidArgumentException("Please provide client_secret via parameter or KINDE_CLIENT_SECRET environment variable");
         }
         $this->clientSecret = $clientSecret;
 
         if (empty($clientId)) {
-            throw new InvalidArgumentException("Please provide client_id");
+            throw new InvalidArgumentException("Please provide client_id via parameter or KINDE_CLIENT_ID environment variable");
         }
         $this->clientId = $clientId;
 
         if (empty($grantType)) {
-            throw new InvalidArgumentException("Please provide grant_type");
+            throw new InvalidArgumentException("Please provide grant_type via parameter or KINDE_GRANT_TYPE environment variable");
         }
         $this->grantType = $grantType;
 
         if ($isNotCCGrantType && empty($logoutRedirectUri)) {
-            throw new InvalidArgumentException("Please provide logout_redirect_uri");
+            throw new InvalidArgumentException("Please provide logout_redirect_uri via parameter or KINDE_LOGOUT_REDIRECT_URI environment variable");
         }
         if ($isNotCCGrantType && !Utils::validationURL($logoutRedirectUri)) {
             throw new InvalidArgumentException("Please provide valid logout_redirect_uri");
@@ -138,6 +149,17 @@ class KindeClientSDK
 
         $this->storage = Storage::getInstance();
         $this->storage->setJwksUrl($this->domain . '/.well-known/jwks.json');
+    }
+
+    /**
+     * Create a Kinde client from environment variables only
+     * 
+     * @return self
+     * @throws InvalidArgumentException If required environment variables are missing
+     */
+    public static function createFromEnv(): self
+    {
+        return new self();
     }
 
     /**

@@ -1,0 +1,4 @@
+services:
+    Kinde\KindeSDK\Frameworks\Symfony\KindeAuthController:
+        autowire: true
+        autoconfigure: true 
