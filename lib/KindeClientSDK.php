@@ -14,6 +14,8 @@ use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
+use Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend\BillingApi;
+use Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner;
 use UnexpectedValueException;
 
 class KindeClientSDK
@@ -663,6 +665,113 @@ class KindeClientSDK
     public function clearJwksCache()
     {
         $this->storage->clearCachedJwks();
+    }
+
+    /**
+     * Get all entitlements for the authenticated user, handling pagination automatically.
+     *
+     * @return array All entitlements
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function getAllEntitlements(): array
+    {
+        if (!$this->isAuthenticated()) {
+            throw new Exception('User must be authenticated to get entitlements');
+        }
+
+        $token = $this->storage->getAccessToken();
+        if (empty($token)) {
+            throw new Exception('Access token not found');
+        }
+
+        $allEntitlements = [];
+        $startingAfter = null;
+        
+        do {
+            $response = $this->getEntitlementsFromApi(null, $startingAfter, $token);
+            $entitlements = $response->getData()->getEntitlements() ?? [];
+            $allEntitlements = array_merge($allEntitlements, $entitlements);
+            
+            $metadata = $response->getMetadata();
+            $hasMore = $metadata->getHasMore();
+            
+            if ($hasMore && count($entitlements) > 0) {
+                $startingAfter = $metadata->getNextPageStartingAfter();
+            } else {
+                $startingAfter = null;
+            }
+        } while ($hasMore && $startingAfter);
+        
+        return $allEntitlements;
+    }
+
+    /**
+     * Get a specific entitlement by key.
+     *
+     * @param string $key The entitlement key to retrieve
+     * @return GetEntitlementsResponseDataEntitlementsInner|null The entitlement or null if not found
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function getEntitlement(string $key): ?GetEntitlementsResponseDataEntitlementsInner
+    {
+        $entitlements = $this->getAllEntitlements();
+        
+        foreach ($entitlements as $entitlement) {
+            if ($entitlement->getFeatureKey() === $key) {
+                return $entitlement;
+            }
+        }
+        
+        return null;
+    }
+
+    /**
+     * Check if the user has a specific entitlement.
+     *
+     * @param string $key The entitlement key to check
+     * @return bool True if the user has the entitlement, false otherwise
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function hasEntitlement(string $key): bool
+    {
+        return $this->getEntitlement($key) !== null;
+    }
+
+    /**
+     * Get the maximum limit for a specific entitlement.
+     *
+     * @param string $key The entitlement key
+     * @return int|null The maximum limit or null if not found
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function getEntitlementLimit(string $key): ?int
+    {
+        $entitlement = $this->getEntitlement($key);
+        return $entitlement ? $entitlement->getEntitlementLimitMax() : null;
+    }
+
+    /**
+     * Get entitlements from the frontend API.
+     *
+     * @param int|null $pageSize Number of results per page (uses API default if null)
+     * @param string|null $startingAfter The ID to start after for pagination
+     * @param string $token The access token
+     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse
+     * @throws Exception If the API request fails
+     */
+    private function getEntitlementsFromApi(?int $pageSize, ?string $startingAfter, string $token)
+    {
+        $config = new \Kinde\KindeSDK\Configuration();
+        $config->setHost($this->domain);
+        $config->setAccessToken($token);
+        
+        $billingApi = new BillingApi(null, $config);
+        
+        try {
+            return $billingApi->getEntitlements($pageSize, $startingAfter);
+        } catch (\Kinde\KindeSDK\ApiException $e) {
+            throw new Exception('Failed to get entitlements: ' . $e->getMessage());
+        }
     }
 
     /**

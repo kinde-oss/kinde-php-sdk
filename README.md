@@ -63,6 +63,12 @@ $kindeClient->login();
 if ($kindeClient->isAuthenticated) {
     $user = $kindeClient->getUserDetails();
     echo "Welcome, {$user['given_name']}!";
+    
+    // Check user entitlements
+    if ($kindeClient->hasEntitlement('premium_features')) {
+        $limit = $kindeClient->getEntitlementLimit('premium_features');
+        echo "You have premium features with limit: " . $limit;
+    }
 }
 ```
 
@@ -166,10 +172,12 @@ The `KindeClientSDK` provides OAuth authentication features:
 - User profile access
 - Token management
 - Portal redirects
+- **Entitlements** - Access user billing entitlements and feature limits
 
 ## Documentation
 
 - [Management Client Documentation](MANAGEMENT_CLIENT.md)
+- [Entitlements Documentation](docs/ENTITLEMENTS.md)
 - [Framework Integration](FRAMEWORK_INTEGRATION.md)
 - [Framework Examples](FRAMEWORK_EXAMPLES.md)
 - [Portal Integration](PORTAL_INTEGRATION.md)
