@@ -1,6 +1,6 @@
 <?php
 /**
- * CreateApplicationRequest
+ * ErrorResponse
  *
  * PHP version 8.1
  *
@@ -11,9 +11,9 @@
  */
 
 /**
- * Kinde Management API
+ * Kinde Account API
  *
- * Provides endpoints to manage your Kinde Businesses.  ## Intro  ## How to use  1. [Set up and authorize a machine-to-machine (M2M) application](https://docs.kinde.com/developer-tools/kinde-api/connect-to-kinde-api/).  2. [Generate a test access token](https://docs.kinde.com/developer-tools/kinde-api/access-token-for-api/)  3. Test request any endpoint using the test token
+ * Provides endpoints to operate on an authenticated user.  ## Intro  ## How to use  1. Get a user access token - this can be obtained when a user signs in via the methods you've setup in Kinde (e.g. Google, passwordless, etc).  2. Call one of the endpoints below using the user access token in the Authorization header as a Bearer token. Typically, you can use the `getToken` command in the relevant SDK.
  *
  * The version of the OpenAPI document: 1
  * Contact: support@kinde.com
@@ -27,13 +27,13 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Model;
+namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * CreateApplicationRequest Class Doc Comment
+ * ErrorResponse Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class ErrorResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       *
       * @var string
       */
-    protected static $openAPIModelName = 'createApplication_request';
+    protected static $openAPIModelName = 'error_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,9 +58,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var string[]
       */
     protected static $openAPITypes = [
-        'name' => 'string',
-        'type' => 'string',
-        'org_code' => 'string'
+        'errors' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\Error[]'
     ];
 
     /**
@@ -71,9 +69,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'name' => null,
-        'type' => null,
-        'org_code' => null
+        'errors' => null
     ];
 
     /**
@@ -82,9 +78,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'name' => false,
-        'type' => false,
-        'org_code' => true
+        'errors' => false
     ];
 
     /**
@@ -173,9 +167,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-        'type' => 'type',
-        'org_code' => 'org_code'
+        'errors' => 'errors'
     ];
 
     /**
@@ -184,9 +176,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-        'type' => 'setType',
-        'org_code' => 'setOrgCode'
+        'errors' => 'setErrors'
     ];
 
     /**
@@ -195,9 +185,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-        'type' => 'getType',
-        'org_code' => 'getOrgCode'
+        'errors' => 'getErrors'
     ];
 
     /**
@@ -241,23 +229,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
-    public const TYPE_REG = 'reg';
-    public const TYPE_SPA = 'spa';
-    public const TYPE_M2M = 'm2m';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_REG,
-            self::TYPE_SPA,
-            self::TYPE_M2M,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -274,9 +245,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('org_code', $data ?? [], null);
+        $this->setIfExists('errors', $data ?? [], null);
     }
 
     /**
@@ -306,21 +275,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
-        }
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -337,99 +291,28 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
 
 
     /**
-     * Gets name
+     * Gets errors
      *
-     * @return string
+     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\Error[]|null
      */
-    public function getName()
+    public function getErrors()
     {
-        return $this->container['name'];
+        return $this->container['errors'];
     }
 
     /**
-     * Sets name
+     * Sets errors
      *
-     * @param string $name The application's name.
+     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\Error[]|null $errors errors
      *
      * @return self
      */
-    public function setName($name)
+    public function setErrors($errors)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($errors)) {
+            throw new \InvalidArgumentException('non-nullable errors cannot be null');
         }
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     *
-     * @param string $type The application's type. Use `reg` for regular server rendered applications, `spa` for single-page applications, and `m2m` for machine-to-machine applications.
-     *
-     * @return self
-     */
-    public function setType($type)
-    {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets org_code
-     *
-     * @return string|null
-     */
-    public function getOrgCode()
-    {
-        return $this->container['org_code'];
-    }
-
-    /**
-     * Sets org_code
-     *
-     * @param string|null $org_code Scope an M2M application to an org (Plus plan required).
-     *
-     * @return self
-     */
-    public function setOrgCode($org_code)
-    {
-        if (is_null($org_code)) {
-            array_push($this->openAPINullablesSetToNull, 'org_code');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('org_code', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
-        }
-        $this->container['org_code'] = $org_code;
+        $this->container['errors'] = $errors;
 
         return $this;
     }

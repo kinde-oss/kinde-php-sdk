@@ -1,6 +1,6 @@
 <?php
 /**
- * SubscribersApi
+ * OAuthApi
  * PHP version 8.1
  *
  * @category Class
@@ -10,9 +10,9 @@
  */
 
 /**
- * Kinde Management API
+ * Kinde Account API
  *
- * Provides endpoints to manage your Kinde Businesses.  ## Intro  ## How to use  1. [Set up and authorize a machine-to-machine (M2M) application](https://docs.kinde.com/developer-tools/kinde-api/connect-to-kinde-api/).  2. [Generate a test access token](https://docs.kinde.com/developer-tools/kinde-api/access-token-for-api/)  3. Test request any endpoint using the test token
+ * Provides endpoints to operate on an authenticated user.  ## Intro  ## How to use  1. Get a user access token - this can be obtained when a user signs in via the methods you've setup in Kinde (e.g. Google, passwordless, etc).  2. Call one of the endpoints below using the user access token in the Authorization header as a Bearer token. Typically, you can use the `getToken` command in the relevant SDK.
  *
  * The version of the OpenAPI document: 1
  * Contact: support@kinde.com
@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Api;
+namespace Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -44,14 +44,14 @@ use Kinde\KindeSDK\HeaderSelector;
 use Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * SubscribersApi Class Doc Comment
+ * OAuthApi Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class SubscribersApi
+class OAuthApi
 {
     /**
      * @var ClientInterface
@@ -75,14 +75,14 @@ class SubscribersApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'createSubscriber' => [
+        'getUserProfileV2' => [
             'application/json',
         ],
-        'getSubscriber' => [
-            'application/json',
+        'tokenIntrospection' => [
+            'application/x-www-form-urlencoded',
         ],
-        'getSubscribers' => [
-            'application/json',
+        'tokenRevocation' => [
+            'application/x-www-form-urlencoded',
         ],
     ];
 
@@ -133,42 +133,36 @@ class SubscribersApi
     }
 
     /**
-     * Operation createSubscriber
+     * Operation getUserProfileV2
      *
-     * Create Subscriber
+     * Get user profile
      *
-     * @param  string $first_name Subscriber&#39;s first name. (required)
-     * @param  string $last_name Subscriber&#39;s last name. (required)
-     * @param  string $email The email address of the subscriber. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserProfileV2'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2
      */
-    public function createSubscriber($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
+    public function getUserProfileV2(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
-        list($response) = $this->createSubscriberWithHttpInfo($first_name, $last_name, $email, $contentType);
+        list($response) = $this->getUserProfileV2WithHttpInfo($contentType);
         return $response;
     }
 
     /**
-     * Operation createSubscriberWithHttpInfo
+     * Operation getUserProfileV2WithHttpInfo
      *
-     * Create Subscriber
+     * Get user profile
      *
-     * @param  string $first_name Subscriber&#39;s first name. (required)
-     * @param  string $last_name Subscriber&#39;s last name. (required)
-     * @param  string $email The email address of the subscriber. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserProfileV2'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createSubscriberWithHttpInfo($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
+    public function getUserProfileV2WithHttpInfo(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
-        $request = $this->createSubscriberRequest($first_name, $last_name, $email, $contentType);
+        $request = $this->getUserProfileV2Request($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -194,21 +188,9 @@ class SubscribersApi
 
 
             switch($statusCode) {
-                case 201:
+                case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
-                        $request,
-                        $response,
-                    );
-                case 403:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
                         $request,
                         $response,
                     );
@@ -230,32 +212,16 @@ class SubscribersApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse',
+                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
                 $request,
                 $response,
             );
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
+                case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -268,21 +234,18 @@ class SubscribersApi
     }
 
     /**
-     * Operation createSubscriberAsync
+     * Operation getUserProfileV2Async
      *
-     * Create Subscriber
+     * Get user profile
      *
-     * @param  string $first_name Subscriber&#39;s first name. (required)
-     * @param  string $last_name Subscriber&#39;s last name. (required)
-     * @param  string $email The email address of the subscriber. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserProfileV2'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createSubscriberAsync($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
+    public function getUserProfileV2Async(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
-        return $this->createSubscriberAsyncWithHttpInfo($first_name, $last_name, $email, $contentType)
+        return $this->getUserProfileV2AsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -291,22 +254,19 @@ class SubscribersApi
     }
 
     /**
-     * Operation createSubscriberAsyncWithHttpInfo
+     * Operation getUserProfileV2AsyncWithHttpInfo
      *
-     * Create Subscriber
+     * Get user profile
      *
-     * @param  string $first_name Subscriber&#39;s first name. (required)
-     * @param  string $last_name Subscriber&#39;s last name. (required)
-     * @param  string $email The email address of the subscriber. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserProfileV2'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createSubscriberAsyncWithHttpInfo($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
+    public function getUserProfileV2AsyncWithHttpInfo(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Model\CreateSubscriberSuccessResponse';
-        $request = $this->createSubscriberRequest($first_name, $last_name, $email, $contentType);
+        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2';
+        $request = $this->getUserProfileV2Request($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -345,78 +305,321 @@ class SubscribersApi
     }
 
     /**
-     * Create request for operation 'createSubscriber'
+     * Create request for operation 'getUserProfileV2'
      *
-     * @param  string $first_name Subscriber&#39;s first name. (required)
-     * @param  string $last_name Subscriber&#39;s last name. (required)
-     * @param  string $email The email address of the subscriber. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createSubscriber'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserProfileV2'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createSubscriberRequest($first_name, $last_name, $email, string $contentType = self::contentTypes['createSubscriber'][0])
+    public function getUserProfileV2Request(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
 
-        // verify the required parameter 'first_name' is set
-        if ($first_name === null || (is_array($first_name) && count($first_name) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $first_name when calling createSubscriber'
-            );
-        }
 
-        // verify the required parameter 'last_name' is set
-        if ($last_name === null || (is_array($last_name) && count($last_name) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $last_name when calling createSubscriber'
-            );
-        }
-
-        // verify the required parameter 'email' is set
-        if ($email === null || (is_array($email) && count($email) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $email when calling createSubscriber'
-            );
-        }
-
-
-        $resourcePath = '/api/v1/subscribers';
+        $resourcePath = '/oauth2/v2/user_profile';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $first_name,
-            'first_name', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            true // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $last_name,
-            'last_name', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            true // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $email,
-            'email', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            true // required
-        ) ?? []);
 
 
 
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation tokenIntrospection
+     *
+     * Introspect
+     *
+     * @param  string $token The token to be introspected. (required)
+     * @param  string|null $token_type_hint A hint about the token type being queried in the request. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenIntrospection'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect|\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse
+     */
+    public function tokenIntrospection($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
+    {
+        list($response) = $this->tokenIntrospectionWithHttpInfo($token, $token_type_hint, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation tokenIntrospectionWithHttpInfo
+     *
+     * Introspect
+     *
+     * @param  string $token The token to be introspected. (required)
+     * @param  string|null $token_type_hint A hint about the token type being queried in the request. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenIntrospection'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect|\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function tokenIntrospectionWithHttpInfo($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
+    {
+        $request = $this->tokenIntrospectionRequest($token, $token_type_hint, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
+                        $request,
+                        $response,
+                    );
+                case 401:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation tokenIntrospectionAsync
+     *
+     * Introspect
+     *
+     * @param  string $token The token to be introspected. (required)
+     * @param  string|null $token_type_hint A hint about the token type being queried in the request. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenIntrospection'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function tokenIntrospectionAsync($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
+    {
+        return $this->tokenIntrospectionAsyncWithHttpInfo($token, $token_type_hint, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation tokenIntrospectionAsyncWithHttpInfo
+     *
+     * Introspect
+     *
+     * @param  string $token The token to be introspected. (required)
+     * @param  string|null $token_type_hint A hint about the token type being queried in the request. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenIntrospection'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function tokenIntrospectionAsyncWithHttpInfo($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect';
+        $request = $this->tokenIntrospectionRequest($token, $token_type_hint, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'tokenIntrospection'
+     *
+     * @param  string $token The token to be introspected. (required)
+     * @param  string|null $token_type_hint A hint about the token type being queried in the request. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenIntrospection'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function tokenIntrospectionRequest($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
+    {
+
+        // verify the required parameter 'token' is set
+        if ($token === null || (is_array($token) && count($token) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $token when calling tokenIntrospection'
+            );
+        }
+
+
+
+        $resourcePath = '/oauth2/introspect';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'token' => $token,
+            'token_type_hint' => $token_type_hint,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', 'application/json; charset=utf-8', ],
@@ -476,38 +679,43 @@ class SubscribersApi
     }
 
     /**
-     * Operation getSubscriber
+     * Operation tokenRevocation
      *
-     * Get Subscriber
+     * Revoke token
      *
-     * @param  string $subscriber_id The subscriber&#39;s id. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
+     * @param  string $client_id The &#x60;client_id&#x60; of your application. (required)
+     * @param  string $token The token to be revoked. (required)
+     * @param  string|null $client_secret The &#x60;client_secret&#x60; of your application. Required for backend apps only. (optional)
+     * @param  string|null $token_type_hint The type of token to be revoked. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevocation'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Model\GetSubscriberResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     * @return void
      */
-    public function getSubscriber($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
+    public function tokenRevocation($client_id, $token, $client_secret = null, $token_type_hint = null, string $contentType = self::contentTypes['tokenRevocation'][0])
     {
-        list($response) = $this->getSubscriberWithHttpInfo($subscriber_id, $contentType);
-        return $response;
+        $this->tokenRevocationWithHttpInfo($client_id, $token, $client_secret, $token_type_hint, $contentType);
     }
 
     /**
-     * Operation getSubscriberWithHttpInfo
+     * Operation tokenRevocationWithHttpInfo
      *
-     * Get Subscriber
+     * Revoke token
      *
-     * @param  string $subscriber_id The subscriber&#39;s id. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
+     * @param  string $client_id The &#x60;client_id&#x60; of your application. (required)
+     * @param  string $token The token to be revoked. (required)
+     * @param  string|null $client_secret The &#x60;client_secret&#x60; of your application. Required for backend apps only. (optional)
+     * @param  string|null $token_type_hint The type of token to be revoked. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevocation'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Model\GetSubscriberResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getSubscriberWithHttpInfo($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
+    public function tokenRevocationWithHttpInfo($client_id, $token, $client_secret = null, $token_type_hint = null, string $contentType = self::contentTypes['tokenRevocation'][0])
     {
-        $request = $this->getSubscriberRequest($subscriber_id, $contentType);
+        $request = $this->tokenRevocationRequest($client_id, $token, $client_secret, $token_type_hint, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -532,61 +740,21 @@ class SubscribersApi
             $statusCode = $response->getStatusCode();
 
 
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\GetSubscriberResponse',
-                        $request,
-                        $response,
-                    );
-                case 400:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
-                        $request,
-                        $response,
-                    );
-                case 403:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
-                        $request,
-                        $response,
-                    );
-            }
-
-            
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Model\GetSubscriberResponse',
-                $request,
-                $response,
-            );
+            return [null, $statusCode, $response->getHeaders()];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
+                case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\GetSubscriberResponse',
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
                     throw $e;
-                case 400:
+                case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -594,7 +762,15 @@ class SubscribersApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -607,19 +783,22 @@ class SubscribersApi
     }
 
     /**
-     * Operation getSubscriberAsync
+     * Operation tokenRevocationAsync
      *
-     * Get Subscriber
+     * Revoke token
      *
-     * @param  string $subscriber_id The subscriber&#39;s id. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
+     * @param  string $client_id The &#x60;client_id&#x60; of your application. (required)
+     * @param  string $token The token to be revoked. (required)
+     * @param  string|null $client_secret The &#x60;client_secret&#x60; of your application. Required for backend apps only. (optional)
+     * @param  string|null $token_type_hint The type of token to be revoked. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevocation'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getSubscriberAsync($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
+    public function tokenRevocationAsync($client_id, $token, $client_secret = null, $token_type_hint = null, string $contentType = self::contentTypes['tokenRevocation'][0])
     {
-        return $this->getSubscriberAsyncWithHttpInfo($subscriber_id, $contentType)
+        return $this->tokenRevocationAsyncWithHttpInfo($client_id, $token, $client_secret, $token_type_hint, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -628,39 +807,29 @@ class SubscribersApi
     }
 
     /**
-     * Operation getSubscriberAsyncWithHttpInfo
+     * Operation tokenRevocationAsyncWithHttpInfo
      *
-     * Get Subscriber
+     * Revoke token
      *
-     * @param  string $subscriber_id The subscriber&#39;s id. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
+     * @param  string $client_id The &#x60;client_id&#x60; of your application. (required)
+     * @param  string $token The token to be revoked. (required)
+     * @param  string|null $client_secret The &#x60;client_secret&#x60; of your application. Required for backend apps only. (optional)
+     * @param  string|null $token_type_hint The type of token to be revoked. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevocation'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getSubscriberAsyncWithHttpInfo($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
+    public function tokenRevocationAsyncWithHttpInfo($client_id, $token, $client_secret = null, $token_type_hint = null, string $contentType = self::contentTypes['tokenRevocation'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Model\GetSubscriberResponse';
-        $request = $this->getSubscriberRequest($subscriber_id, $contentType);
+        $returnType = '';
+        $request = $this->tokenRevocationRequest($client_id, $token, $client_secret, $token_type_hint, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -680,26 +849,38 @@ class SubscribersApi
     }
 
     /**
-     * Create request for operation 'getSubscriber'
+     * Create request for operation 'tokenRevocation'
      *
-     * @param  string $subscriber_id The subscriber&#39;s id. (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscriber'] to see the possible values for this operation
+     * @param  string $client_id The &#x60;client_id&#x60; of your application. (required)
+     * @param  string $token The token to be revoked. (required)
+     * @param  string|null $client_secret The &#x60;client_secret&#x60; of your application. Required for backend apps only. (optional)
+     * @param  string|null $token_type_hint The type of token to be revoked. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['tokenRevocation'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getSubscriberRequest($subscriber_id, string $contentType = self::contentTypes['getSubscriber'][0])
+    public function tokenRevocationRequest($client_id, $token, $client_secret = null, $token_type_hint = null, string $contentType = self::contentTypes['tokenRevocation'][0])
     {
 
-        // verify the required parameter 'subscriber_id' is set
-        if ($subscriber_id === null || (is_array($subscriber_id) && count($subscriber_id) === 0)) {
+        // verify the required parameter 'client_id' is set
+        if ($client_id === null || (is_array($client_id) && count($client_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $subscriber_id when calling getSubscriber'
+                'Missing the required parameter $client_id when calling tokenRevocation'
+            );
+        }
+
+        // verify the required parameter 'token' is set
+        if ($token === null || (is_array($token) && count($token) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $token when calling tokenRevocation'
             );
         }
 
 
-        $resourcePath = '/api/v1/subscribers/{subscriber_id}';
+
+
+        $resourcePath = '/oauth2/revoke';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -708,18 +889,22 @@ class SubscribersApi
 
 
 
-        // path params
-        if ($subscriber_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'subscriber_id' . '}',
-                ObjectSerializer::toPathValue($subscriber_id),
-                $resourcePath
-            );
-        }
 
+        // form params
+        $formDataProcessor = new FormDataProcessor();
+
+        $formData = $formDataProcessor->prepare([
+            'client_id' => $client_id,
+            'client_secret' => $client_secret,
+            'token' => $token,
+            'token_type_hint' => $token_type_hint,
+        ]);
+
+        $formParams = $formDataProcessor->flatten($formData);
+        $multipart = $formDataProcessor->has_file;
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', 'application/json; charset=utf-8', ],
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -768,318 +953,7 @@ class SubscribersApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation getSubscribers
-     *
-     * List Subscribers
-     *
-     * @param  string|null $sort Field and order to sort the result by. (optional)
-     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
-     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
-     *
-     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Model\GetSubscribersResponse|\Kinde\KindeSDK\Model\ErrorResponse
-     */
-    public function getSubscribers($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
-    {
-        list($response) = $this->getSubscribersWithHttpInfo($sort, $page_size, $next_token, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation getSubscribersWithHttpInfo
-     *
-     * List Subscribers
-     *
-     * @param  string|null $sort Field and order to sort the result by. (optional)
-     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
-     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
-     *
-     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Model\GetSubscribersResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function getSubscribersWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
-    {
-        $request = $this->getSubscribersRequest($sort, $page_size, $next_token, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            switch($statusCode) {
-                case 200:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\GetSubscribersResponse',
-                        $request,
-                        $response,
-                    );
-                case 403:
-                    return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
-                        $request,
-                        $response,
-                    );
-            }
-
-            
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Model\GetSubscribersResponse',
-                $request,
-                $response,
-            );
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\GetSubscribersResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Model\ErrorResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-        
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation getSubscribersAsync
-     *
-     * List Subscribers
-     *
-     * @param  string|null $sort Field and order to sort the result by. (optional)
-     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
-     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getSubscribersAsync($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
-    {
-        return $this->getSubscribersAsyncWithHttpInfo($sort, $page_size, $next_token, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation getSubscribersAsyncWithHttpInfo
-     *
-     * List Subscribers
-     *
-     * @param  string|null $sort Field and order to sort the result by. (optional)
-     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
-     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getSubscribersAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
-    {
-        $returnType = '\Kinde\KindeSDK\Model\GetSubscribersResponse';
-        $request = $this->getSubscribersRequest($sort, $page_size, $next_token, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'getSubscribers'
-     *
-     * @param  string|null $sort Field and order to sort the result by. (optional)
-     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
-     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSubscribers'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function getSubscribersRequest($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSubscribers'][0])
-    {
-
-
-
-
-
-        $resourcePath = '/api/v1/subscribers';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $sort,
-            'sort', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $page_size,
-            'page_size', // param base name
-            'integer', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $next_token,
-            'next_token', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', 'application/json; charset=utf-8', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-        // this endpoint requires Bearer (JWT) authentication (access token)
-        if (!empty($this->config->getAccessToken())) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

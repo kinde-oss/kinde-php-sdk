@@ -72,7 +72,8 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'last_signed_in' => 'string',
         'created_on' => 'string',
         'organizations' => 'string[]',
-        'identities' => '\Kinde\KindeSDK\Model\UserIdentitiesInner[]'
+        'identities' => '\Kinde\KindeSDK\Model\UserIdentitiesInner[]',
+        'billing' => '\Kinde\KindeSDK\Model\UsersResponseUsersInnerBilling'
     ];
 
     /**
@@ -97,7 +98,8 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'last_signed_in' => null,
         'created_on' => null,
         'organizations' => null,
-        'identities' => null
+        'identities' => null,
+        'billing' => null
     ];
 
     /**
@@ -120,7 +122,8 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'last_signed_in' => true,
         'created_on' => true,
         'organizations' => false,
-        'identities' => false
+        'identities' => false,
+        'billing' => false
     ];
 
     /**
@@ -223,7 +226,8 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'last_signed_in' => 'last_signed_in',
         'created_on' => 'created_on',
         'organizations' => 'organizations',
-        'identities' => 'identities'
+        'identities' => 'identities',
+        'billing' => 'billing'
     ];
 
     /**
@@ -246,7 +250,8 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'last_signed_in' => 'setLastSignedIn',
         'created_on' => 'setCreatedOn',
         'organizations' => 'setOrganizations',
-        'identities' => 'setIdentities'
+        'identities' => 'setIdentities',
+        'billing' => 'setBilling'
     ];
 
     /**
@@ -269,7 +274,8 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'last_signed_in' => 'getLastSignedIn',
         'created_on' => 'getCreatedOn',
         'organizations' => 'getOrganizations',
-        'identities' => 'getIdentities'
+        'identities' => 'getIdentities',
+        'billing' => 'getBilling'
     ];
 
     /**
@@ -344,6 +350,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('created_on', $data ?? [], null);
         $this->setIfExists('organizations', $data ?? [], null);
         $this->setIfExists('identities', $data ?? [], null);
+        $this->setIfExists('billing', $data ?? [], null);
     }
 
     /**
@@ -817,6 +824,33 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable identities cannot be null');
         }
         $this->container['identities'] = $identities;
+
+        return $this;
+    }
+
+    /**
+     * Gets billing
+     *
+     * @return \Kinde\KindeSDK\Model\UsersResponseUsersInnerBilling|null
+     */
+    public function getBilling()
+    {
+        return $this->container['billing'];
+    }
+
+    /**
+     * Sets billing
+     *
+     * @param \Kinde\KindeSDK\Model\UsersResponseUsersInnerBilling|null $billing billing
+     *
+     * @return self
+     */
+    public function setBilling($billing)
+    {
+        if (is_null($billing)) {
+            throw new \InvalidArgumentException('non-nullable billing cannot be null');
+        }
+        $this->container['billing'] = $billing;
 
         return $this;
     }

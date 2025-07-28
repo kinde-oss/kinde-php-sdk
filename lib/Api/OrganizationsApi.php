@@ -5273,15 +5273,16 @@ class OrganizationsApi
      * Get organization
      *
      * @param  string|null $code The organization&#39;s code. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Kinde\KindeSDK\Model\GetOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
-    public function getOrganization($code = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganization($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
-        list($response) = $this->getOrganizationWithHttpInfo($code, $contentType);
+        list($response) = $this->getOrganizationWithHttpInfo($code, $expand, $contentType);
         return $response;
     }
 
@@ -5291,15 +5292,16 @@ class OrganizationsApi
      * Get organization
      *
      * @param  string|null $code The organization&#39;s code. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Kinde\KindeSDK\Model\GetOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getOrganizationWithHttpInfo($code = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationWithHttpInfo($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
-        $request = $this->getOrganizationRequest($code, $contentType);
+        $request = $this->getOrganizationRequest($code, $expand, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5418,14 +5420,15 @@ class OrganizationsApi
      * Get organization
      *
      * @param  string|null $code The organization&#39;s code. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getOrganizationAsync($code = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationAsync($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
-        return $this->getOrganizationAsyncWithHttpInfo($code, $contentType)
+        return $this->getOrganizationAsyncWithHttpInfo($code, $expand, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5439,15 +5442,16 @@ class OrganizationsApi
      * Get organization
      *
      * @param  string|null $code The organization&#39;s code. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getOrganizationAsyncWithHttpInfo($code = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationAsyncWithHttpInfo($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
         $returnType = '\Kinde\KindeSDK\Model\GetOrganizationResponse';
-        $request = $this->getOrganizationRequest($code, $contentType);
+        $request = $this->getOrganizationRequest($code, $expand, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5489,13 +5493,15 @@ class OrganizationsApi
      * Create request for operation 'getOrganization'
      *
      * @param  string|null $code The organization&#39;s code. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getOrganizationRequest($code = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationRequest($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
+
 
 
 
@@ -5510,6 +5516,15 @@ class OrganizationsApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $code,
             'code', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $expand,
+            'expand', // param base name
             'string', // openApiType
             'form', // style
             true, // explode

@@ -1,6 +1,6 @@
 <?php
 /**
- * CreateApplicationRequest
+ * TokenIntrospect
  *
  * PHP version 8.1
  *
@@ -11,9 +11,9 @@
  */
 
 /**
- * Kinde Management API
+ * Kinde Account API
  *
- * Provides endpoints to manage your Kinde Businesses.  ## Intro  ## How to use  1. [Set up and authorize a machine-to-machine (M2M) application](https://docs.kinde.com/developer-tools/kinde-api/connect-to-kinde-api/).  2. [Generate a test access token](https://docs.kinde.com/developer-tools/kinde-api/access-token-for-api/)  3. Test request any endpoint using the test token
+ * Provides endpoints to operate on an authenticated user.  ## Intro  ## How to use  1. Get a user access token - this can be obtained when a user signs in via the methods you've setup in Kinde (e.g. Google, passwordless, etc).  2. Call one of the endpoints below using the user access token in the Authorization header as a Bearer token. Typically, you can use the `getToken` command in the relevant SDK.
  *
  * The version of the OpenAPI document: 1
  * Contact: support@kinde.com
@@ -27,13 +27,13 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Model;
+namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * CreateApplicationRequest Class Doc Comment
+ * TokenIntrospect Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class TokenIntrospect implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       *
       * @var string
       */
-    protected static $openAPIModelName = 'createApplication_request';
+    protected static $openAPIModelName = 'token_introspect';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,9 +58,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var string[]
       */
     protected static $openAPITypes = [
-        'name' => 'string',
-        'type' => 'string',
-        'org_code' => 'string'
+        'active' => 'bool',
+        'aud' => 'string[]',
+        'client_id' => 'string',
+        'exp' => 'int',
+        'iat' => 'int'
     ];
 
     /**
@@ -71,9 +73,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'name' => null,
-        'type' => null,
-        'org_code' => null
+        'active' => null,
+        'aud' => null,
+        'client_id' => null,
+        'exp' => null,
+        'iat' => null
     ];
 
     /**
@@ -82,9 +86,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'name' => false,
-        'type' => false,
-        'org_code' => true
+        'active' => false,
+        'aud' => false,
+        'client_id' => false,
+        'exp' => false,
+        'iat' => false
     ];
 
     /**
@@ -173,9 +179,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-        'type' => 'type',
-        'org_code' => 'org_code'
+        'active' => 'active',
+        'aud' => 'aud',
+        'client_id' => 'client_id',
+        'exp' => 'exp',
+        'iat' => 'iat'
     ];
 
     /**
@@ -184,9 +192,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-        'type' => 'setType',
-        'org_code' => 'setOrgCode'
+        'active' => 'setActive',
+        'aud' => 'setAud',
+        'client_id' => 'setClientId',
+        'exp' => 'setExp',
+        'iat' => 'setIat'
     ];
 
     /**
@@ -195,9 +205,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-        'type' => 'getType',
-        'org_code' => 'getOrgCode'
+        'active' => 'getActive',
+        'aud' => 'getAud',
+        'client_id' => 'getClientId',
+        'exp' => 'getExp',
+        'iat' => 'getIat'
     ];
 
     /**
@@ -241,23 +253,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
-    public const TYPE_REG = 'reg';
-    public const TYPE_SPA = 'spa';
-    public const TYPE_M2M = 'm2m';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_REG,
-            self::TYPE_SPA,
-            self::TYPE_M2M,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -274,9 +269,11 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('org_code', $data ?? [], null);
+        $this->setIfExists('active', $data ?? [], null);
+        $this->setIfExists('aud', $data ?? [], null);
+        $this->setIfExists('client_id', $data ?? [], null);
+        $this->setIfExists('exp', $data ?? [], null);
+        $this->setIfExists('iat', $data ?? [], null);
     }
 
     /**
@@ -306,21 +303,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
-        }
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -337,99 +319,136 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
 
 
     /**
-     * Gets name
+     * Gets active
      *
-     * @return string
+     * @return bool|null
      */
-    public function getName()
+    public function getActive()
     {
-        return $this->container['name'];
+        return $this->container['active'];
     }
 
     /**
-     * Sets name
+     * Sets active
      *
-     * @param string $name The application's name.
+     * @param bool|null $active Indicates the status of the token.
      *
      * @return self
      */
-    public function setName($name)
+    public function setActive($active)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($active)) {
+            throw new \InvalidArgumentException('non-nullable active cannot be null');
         }
-        $this->container['name'] = $name;
+        $this->container['active'] = $active;
 
         return $this;
     }
 
     /**
-     * Gets type
+     * Gets aud
      *
-     * @return string
+     * @return string[]|null
      */
-    public function getType()
+    public function getAud()
     {
-        return $this->container['type'];
+        return $this->container['aud'];
     }
 
     /**
-     * Sets type
+     * Sets aud
      *
-     * @param string $type The application's type. Use `reg` for regular server rendered applications, `spa` for single-page applications, and `m2m` for machine-to-machine applications.
+     * @param string[]|null $aud Array of intended token recipients.
      *
      * @return self
      */
-    public function setType($type)
+    public function setAud($aud)
     {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
+        if (is_null($aud)) {
+            throw new \InvalidArgumentException('non-nullable aud cannot be null');
         }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
+        $this->container['aud'] = $aud;
 
         return $this;
     }
 
     /**
-     * Gets org_code
+     * Gets client_id
      *
      * @return string|null
      */
-    public function getOrgCode()
+    public function getClientId()
     {
-        return $this->container['org_code'];
+        return $this->container['client_id'];
     }
 
     /**
-     * Sets org_code
+     * Sets client_id
      *
-     * @param string|null $org_code Scope an M2M application to an org (Plus plan required).
+     * @param string|null $client_id Identifier for the requesting client.
      *
      * @return self
      */
-    public function setOrgCode($org_code)
+    public function setClientId($client_id)
     {
-        if (is_null($org_code)) {
-            array_push($this->openAPINullablesSetToNull, 'org_code');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('org_code', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+        if (is_null($client_id)) {
+            throw new \InvalidArgumentException('non-nullable client_id cannot be null');
         }
-        $this->container['org_code'] = $org_code;
+        $this->container['client_id'] = $client_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets exp
+     *
+     * @return int|null
+     */
+    public function getExp()
+    {
+        return $this->container['exp'];
+    }
+
+    /**
+     * Sets exp
+     *
+     * @param int|null $exp Token expiration timestamp.
+     *
+     * @return self
+     */
+    public function setExp($exp)
+    {
+        if (is_null($exp)) {
+            throw new \InvalidArgumentException('non-nullable exp cannot be null');
+        }
+        $this->container['exp'] = $exp;
+
+        return $this;
+    }
+
+    /**
+     * Gets iat
+     *
+     * @return int|null
+     */
+    public function getIat()
+    {
+        return $this->container['iat'];
+    }
+
+    /**
+     * Sets iat
+     *
+     * @param int|null $iat Token issuance timestamp.
+     *
+     * @return self
+     */
+    public function setIat($iat)
+    {
+        if (is_null($iat)) {
+            throw new \InvalidArgumentException('non-nullable iat cannot be null');
+        }
+        $this->container['iat'] = $iat;
 
         return $this;
     }

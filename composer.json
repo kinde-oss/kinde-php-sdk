@@ -61,6 +61,11 @@
       "npm run generate",
       "cp -r ./tmp/lib/Api ./tmp/lib/Model lib/",
       "rm -rf ./tmp",
+      "npm run generate-frontend",
+      "mkdir -p lib/Api/Frontend lib/Model/Frontend",
+      "cp -r ./tmp-frontend/lib/Api/Frontend/* lib/Api/Frontend/ || true",
+      "cp -r ./tmp-frontend/lib/Model/Frontend/* lib/Model/Frontend/ || true",
+      "rm -rf ./tmp-frontend",
       "composer dump-autoload"
     ]
   }

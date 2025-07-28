@@ -1447,7 +1447,7 @@ class UsersApi
      * Get user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot;, \&quot;identities\&quot; and/or \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1466,7 +1466,7 @@ class UsersApi
      * Get user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot;, \&quot;identities\&quot; and/or \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -1594,7 +1594,7 @@ class UsersApi
      * Get user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot;, \&quot;identities\&quot; and/or \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1616,7 +1616,7 @@ class UsersApi
      * Get user
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot;, \&quot;identities\&quot; and/or \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1667,7 +1667,7 @@ class UsersApi
      * Create request for operation 'getUserData'
      *
      * @param  string $id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot;, \&quot;identities\&quot; and/or \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUserData'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2711,6 +2711,7 @@ class UsersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string|null $email Filter the results by email address. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $username Filter the results by username. The query string should be comma separated and url encoded. (optional)
+     * @param  string|null $phone Filter the results by phone. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
@@ -2719,9 +2720,9 @@ class UsersApi
      * @throws \InvalidArgumentException
      * @return \Kinde\KindeSDK\Model\UsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
-    public function getUsers($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
+    public function getUsers($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $phone = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
-        list($response) = $this->getUsersWithHttpInfo($page_size, $user_id, $next_token, $email, $username, $expand, $has_organization, $contentType);
+        list($response) = $this->getUsersWithHttpInfo($page_size, $user_id, $next_token, $email, $username, $phone, $expand, $has_organization, $contentType);
         return $response;
     }
 
@@ -2735,6 +2736,7 @@ class UsersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string|null $email Filter the results by email address. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $username Filter the results by username. The query string should be comma separated and url encoded. (optional)
+     * @param  string|null $phone Filter the results by phone. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
@@ -2743,9 +2745,9 @@ class UsersApi
      * @throws \InvalidArgumentException
      * @return array of \Kinde\KindeSDK\Model\UsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getUsersWithHttpInfo($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
+    public function getUsersWithHttpInfo($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $phone = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
-        $request = $this->getUsersRequest($page_size, $user_id, $next_token, $email, $username, $expand, $has_organization, $contentType);
+        $request = $this->getUsersRequest($page_size, $user_id, $next_token, $email, $username, $phone, $expand, $has_organization, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2868,6 +2870,7 @@ class UsersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string|null $email Filter the results by email address. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $username Filter the results by username. The query string should be comma separated and url encoded. (optional)
+     * @param  string|null $phone Filter the results by phone. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
@@ -2875,9 +2878,9 @@ class UsersApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getUsersAsync($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
+    public function getUsersAsync($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $phone = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
-        return $this->getUsersAsyncWithHttpInfo($page_size, $user_id, $next_token, $email, $username, $expand, $has_organization, $contentType)
+        return $this->getUsersAsyncWithHttpInfo($page_size, $user_id, $next_token, $email, $username, $phone, $expand, $has_organization, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2895,6 +2898,7 @@ class UsersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string|null $email Filter the results by email address. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $username Filter the results by username. The query string should be comma separated and url encoded. (optional)
+     * @param  string|null $phone Filter the results by phone. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
@@ -2902,10 +2906,10 @@ class UsersApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getUsersAsyncWithHttpInfo($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
+    public function getUsersAsyncWithHttpInfo($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $phone = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
         $returnType = '\Kinde\KindeSDK\Model\UsersResponse';
-        $request = $this->getUsersRequest($page_size, $user_id, $next_token, $email, $username, $expand, $has_organization, $contentType);
+        $request = $this->getUsersRequest($page_size, $user_id, $next_token, $email, $username, $phone, $expand, $has_organization, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2951,6 +2955,7 @@ class UsersApi
      * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
      * @param  string|null $email Filter the results by email address. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $username Filter the results by username. The query string should be comma separated and url encoded. (optional)
+     * @param  string|null $phone Filter the results by phone. The query string should be comma separated and url encoded. (optional)
      * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
      * @param  bool|null $has_organization Filter the results by if the user has at least one organization assigned. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getUsers'] to see the possible values for this operation
@@ -2958,8 +2963,9 @@ class UsersApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getUsersRequest($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
+    public function getUsersRequest($page_size = null, $user_id = null, $next_token = null, $email = null, $username = null, $phone = null, $expand = null, $has_organization = null, string $contentType = self::contentTypes['getUsers'][0])
     {
+
 
 
 
@@ -3016,6 +3022,15 @@ class UsersApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $username,
             'username', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $phone,
+            'phone', // param base name
             'string', // openApiType
             'form', // style
             true, // explode

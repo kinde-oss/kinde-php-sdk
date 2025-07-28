@@ -1,6 +1,6 @@
 <?php
 /**
- * CreateApplicationRequest
+ * GetUserPropertiesResponseMetadata
  *
  * PHP version 8.1
  *
@@ -11,9 +11,9 @@
  */
 
 /**
- * Kinde Management API
+ * Kinde Account API
  *
- * Provides endpoints to manage your Kinde Businesses.  ## Intro  ## How to use  1. [Set up and authorize a machine-to-machine (M2M) application](https://docs.kinde.com/developer-tools/kinde-api/connect-to-kinde-api/).  2. [Generate a test access token](https://docs.kinde.com/developer-tools/kinde-api/access-token-for-api/)  3. Test request any endpoint using the test token
+ * Provides endpoints to operate on an authenticated user.  ## Intro  ## How to use  1. Get a user access token - this can be obtained when a user signs in via the methods you've setup in Kinde (e.g. Google, passwordless, etc).  2. Call one of the endpoints below using the user access token in the Authorization header as a Bearer token. Typically, you can use the `getToken` command in the relevant SDK.
  *
  * The version of the OpenAPI document: 1
  * Contact: support@kinde.com
@@ -27,13 +27,13 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Model;
+namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * CreateApplicationRequest Class Doc Comment
+ * GetUserPropertiesResponseMetadata Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetUserPropertiesResponseMetadata implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       *
       * @var string
       */
-    protected static $openAPIModelName = 'createApplication_request';
+    protected static $openAPIModelName = 'get_user_properties_response_metadata';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,9 +58,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var string[]
       */
     protected static $openAPITypes = [
-        'name' => 'string',
-        'type' => 'string',
-        'org_code' => 'string'
+        'has_more' => 'bool',
+        'next_page_starting_after' => 'string'
     ];
 
     /**
@@ -71,9 +70,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'name' => null,
-        'type' => null,
-        'org_code' => null
+        'has_more' => null,
+        'next_page_starting_after' => null
     ];
 
     /**
@@ -82,9 +80,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'name' => false,
-        'type' => false,
-        'org_code' => true
+        'has_more' => false,
+        'next_page_starting_after' => false
     ];
 
     /**
@@ -173,9 +170,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-        'type' => 'type',
-        'org_code' => 'org_code'
+        'has_more' => 'has_more',
+        'next_page_starting_after' => 'next_page_starting_after'
     ];
 
     /**
@@ -184,9 +180,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-        'type' => 'setType',
-        'org_code' => 'setOrgCode'
+        'has_more' => 'setHasMore',
+        'next_page_starting_after' => 'setNextPageStartingAfter'
     ];
 
     /**
@@ -195,9 +190,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-        'type' => 'getType',
-        'org_code' => 'getOrgCode'
+        'has_more' => 'getHasMore',
+        'next_page_starting_after' => 'getNextPageStartingAfter'
     ];
 
     /**
@@ -241,23 +235,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
-    public const TYPE_REG = 'reg';
-    public const TYPE_SPA = 'spa';
-    public const TYPE_M2M = 'm2m';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_REG,
-            self::TYPE_SPA,
-            self::TYPE_M2M,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -274,9 +251,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('org_code', $data ?? [], null);
+        $this->setIfExists('has_more', $data ?? [], null);
+        $this->setIfExists('next_page_starting_after', $data ?? [], null);
     }
 
     /**
@@ -306,21 +282,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
-        }
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -337,99 +298,55 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
 
 
     /**
-     * Gets name
+     * Gets has_more
      *
-     * @return string
+     * @return bool|null
      */
-    public function getName()
+    public function getHasMore()
     {
-        return $this->container['name'];
+        return $this->container['has_more'];
     }
 
     /**
-     * Sets name
+     * Sets has_more
      *
-     * @param string $name The application's name.
+     * @param bool|null $has_more Whether more records exist.
      *
      * @return self
      */
-    public function setName($name)
+    public function setHasMore($has_more)
     {
-        if (is_null($name)) {
-            throw new \InvalidArgumentException('non-nullable name cannot be null');
+        if (is_null($has_more)) {
+            throw new \InvalidArgumentException('non-nullable has_more cannot be null');
         }
-        $this->container['name'] = $name;
+        $this->container['has_more'] = $has_more;
 
         return $this;
     }
 
     /**
-     * Gets type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     *
-     * @param string $type The application's type. Use `reg` for regular server rendered applications, `spa` for single-page applications, and `m2m` for machine-to-machine applications.
-     *
-     * @return self
-     */
-    public function setType($type)
-    {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets org_code
+     * Gets next_page_starting_after
      *
      * @return string|null
      */
-    public function getOrgCode()
+    public function getNextPageStartingAfter()
     {
-        return $this->container['org_code'];
+        return $this->container['next_page_starting_after'];
     }
 
     /**
-     * Sets org_code
+     * Sets next_page_starting_after
      *
-     * @param string|null $org_code Scope an M2M application to an org (Plus plan required).
+     * @param string|null $next_page_starting_after The ID of the last record on the current page.
      *
      * @return self
      */
-    public function setOrgCode($org_code)
+    public function setNextPageStartingAfter($next_page_starting_after)
     {
-        if (is_null($org_code)) {
-            array_push($this->openAPINullablesSetToNull, 'org_code');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('org_code', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+        if (is_null($next_page_starting_after)) {
+            throw new \InvalidArgumentException('non-nullable next_page_starting_after cannot be null');
         }
-        $this->container['org_code'] = $org_code;
+        $this->container['next_page_starting_after'] = $next_page_starting_after;
 
         return $this;
     }

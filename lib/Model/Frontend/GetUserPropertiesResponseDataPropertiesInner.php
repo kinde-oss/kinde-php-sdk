@@ -1,6 +1,6 @@
 <?php
 /**
- * CreateApplicationRequest
+ * GetUserPropertiesResponseDataPropertiesInner
  *
  * PHP version 8.1
  *
@@ -11,9 +11,9 @@
  */
 
 /**
- * Kinde Management API
+ * Kinde Account API
  *
- * Provides endpoints to manage your Kinde Businesses.  ## Intro  ## How to use  1. [Set up and authorize a machine-to-machine (M2M) application](https://docs.kinde.com/developer-tools/kinde-api/connect-to-kinde-api/).  2. [Generate a test access token](https://docs.kinde.com/developer-tools/kinde-api/access-token-for-api/)  3. Test request any endpoint using the test token
+ * Provides endpoints to operate on an authenticated user.  ## Intro  ## How to use  1. Get a user access token - this can be obtained when a user signs in via the methods you've setup in Kinde (e.g. Google, passwordless, etc).  2. Call one of the endpoints below using the user access token in the Authorization header as a Bearer token. Typically, you can use the `getToken` command in the relevant SDK.
  *
  * The version of the OpenAPI document: 1
  * Contact: support@kinde.com
@@ -27,13 +27,13 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Model;
+namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * CreateApplicationRequest Class Doc Comment
+ * GetUserPropertiesResponseDataPropertiesInner Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetUserPropertiesResponseDataPropertiesInner implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       *
       * @var string
       */
-    protected static $openAPIModelName = 'createApplication_request';
+    protected static $openAPIModelName = 'get_user_properties_response_data_properties_inner';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,9 +58,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var string[]
       */
     protected static $openAPITypes = [
+        'id' => 'string',
         'name' => 'string',
-        'type' => 'string',
-        'org_code' => 'string'
+        'key' => 'string',
+        'value' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue'
     ];
 
     /**
@@ -71,9 +72,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'id' => null,
         'name' => null,
-        'type' => null,
-        'org_code' => null
+        'key' => null,
+        'value' => null
     ];
 
     /**
@@ -82,9 +84,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       * @var boolean[]
       */
     protected static array $openAPINullables = [
+        'id' => false,
         'name' => false,
-        'type' => false,
-        'org_code' => true
+        'key' => false,
+        'value' => false
     ];
 
     /**
@@ -173,9 +176,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $attributeMap = [
+        'id' => 'id',
         'name' => 'name',
-        'type' => 'type',
-        'org_code' => 'org_code'
+        'key' => 'key',
+        'value' => 'value'
     ];
 
     /**
@@ -184,9 +188,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $setters = [
+        'id' => 'setId',
         'name' => 'setName',
-        'type' => 'setType',
-        'org_code' => 'setOrgCode'
+        'key' => 'setKey',
+        'value' => 'setValue'
     ];
 
     /**
@@ -195,9 +200,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      * @var string[]
      */
     protected static $getters = [
+        'id' => 'getId',
         'name' => 'getName',
-        'type' => 'getType',
-        'org_code' => 'getOrgCode'
+        'key' => 'getKey',
+        'value' => 'getValue'
     ];
 
     /**
@@ -241,23 +247,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
         return self::$openAPIModelName;
     }
 
-    public const TYPE_REG = 'reg';
-    public const TYPE_SPA = 'spa';
-    public const TYPE_M2M = 'm2m';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_REG,
-            self::TYPE_SPA,
-            self::TYPE_M2M,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -274,9 +263,10 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     public function __construct(?array $data = null)
     {
+        $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('org_code', $data ?? [], null);
+        $this->setIfExists('key', $data ?? [], null);
+        $this->setIfExists('value', $data ?? [], null);
     }
 
     /**
@@ -306,21 +296,6 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
-        }
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         return $invalidProperties;
     }
 
@@ -337,9 +312,36 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
 
 
     /**
+     * Gets id
+     *
+     * @return string|null
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     *
+     * @param string|null $id The friendly ID of a property
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        if (is_null($id)) {
+            throw new \InvalidArgumentException('non-nullable id cannot be null');
+        }
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
      * Gets name
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -349,7 +351,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets name
      *
-     * @param string $name The application's name.
+     * @param string|null $name The name of the property
      *
      * @return self
      */
@@ -364,72 +366,55 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     }
 
     /**
-     * Gets type
+     * Gets key
      *
-     * @return string
+     * @return string|null
      */
-    public function getType()
+    public function getKey()
     {
-        return $this->container['type'];
+        return $this->container['key'];
     }
 
     /**
-     * Sets type
+     * Sets key
      *
-     * @param string $type The application's type. Use `reg` for regular server rendered applications, `spa` for single-page applications, and `m2m` for machine-to-machine applications.
+     * @param string|null $key The key of the property
      *
      * @return self
      */
-    public function setType($type)
+    public function setKey($key)
     {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
+        if (is_null($key)) {
+            throw new \InvalidArgumentException('non-nullable key cannot be null');
         }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
+        $this->container['key'] = $key;
 
         return $this;
     }
 
     /**
-     * Gets org_code
+     * Gets value
      *
-     * @return string|null
+     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue|null
      */
-    public function getOrgCode()
+    public function getValue()
     {
-        return $this->container['org_code'];
+        return $this->container['value'];
     }
 
     /**
-     * Sets org_code
+     * Sets value
      *
-     * @param string|null $org_code Scope an M2M application to an org (Plus plan required).
+     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue|null $value value
      *
      * @return self
      */
-    public function setOrgCode($org_code)
+    public function setValue($value)
     {
-        if (is_null($org_code)) {
-            array_push($this->openAPINullablesSetToNull, 'org_code');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('org_code', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+        if (is_null($value)) {
+            throw new \InvalidArgumentException('non-nullable value cannot be null');
         }
-        $this->container['org_code'] = $org_code;
+        $this->container['value'] = $value;
 
         return $this;
     }
