@@ -14,8 +14,8 @@ use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
-use Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend\BillingApi;
-use Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner;
+use Kinde\KindeSDK\Api\Frontend\BillingApi;
+use Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner;
 use UnexpectedValueException;
 
 class KindeClientSDK
@@ -756,7 +756,7 @@ class KindeClientSDK
      * @param int|null $pageSize Number of results per page (uses API default if null)
      * @param string|null $startingAfter The ID to start after for pagination
      * @param string $token The access token
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse
+              * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse
      * @throws Exception If the API request fails
      */
     private function getEntitlementsFromApi(?int $pageSize, ?string $startingAfter, string $token)

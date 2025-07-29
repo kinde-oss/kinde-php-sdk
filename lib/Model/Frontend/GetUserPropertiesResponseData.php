@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,7 +58,7 @@ class GetUserPropertiesResponseData implements ModelInterface, ArrayAccess, \Jso
       * @var string[]
       */
     protected static $openAPITypes = [
-        'properties' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInner[]'
+        'properties' => '\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInner[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class GetUserPropertiesResponseData implements ModelInterface, ArrayAccess, \Jso
     /**
      * Gets properties
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInner[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInner[]|null
      */
     public function getProperties()
     {
@@ -303,7 +303,7 @@ class GetUserPropertiesResponseData implements ModelInterface, ArrayAccess, \Jso
     /**
      * Sets properties
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInner[]|null $properties A list of properties
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInner[]|null $properties A list of properties
      *
      * @return self
      */

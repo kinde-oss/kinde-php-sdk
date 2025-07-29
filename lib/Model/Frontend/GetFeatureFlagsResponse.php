@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,7 +58,7 @@ class GetFeatureFlagsResponse implements ModelInterface, ArrayAccess, \JsonSeria
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseData'
+        'data' => '\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseData'
     ];
 
     /**
@@ -293,7 +293,7 @@ class GetFeatureFlagsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets data
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseData|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseData|null
      */
     public function getData()
     {
@@ -303,7 +303,7 @@ class GetFeatureFlagsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets data
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseData|null $data data
+     * @param \Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseData|null $data data
      *
      * @return self
      */

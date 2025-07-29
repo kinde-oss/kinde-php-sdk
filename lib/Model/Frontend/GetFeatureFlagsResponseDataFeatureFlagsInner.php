@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -62,7 +62,7 @@ class GetFeatureFlagsResponseDataFeatureFlagsInner implements ModelInterface, Ar
         'name' => 'string',
         'key' => 'string',
         'type' => 'string',
-        'value' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInnerValue'
+        'value' => '\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInnerValue'
     ];
 
     /**
@@ -429,7 +429,7 @@ class GetFeatureFlagsResponseDataFeatureFlagsInner implements ModelInterface, Ar
     /**
      * Gets value
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInnerValue|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInnerValue|null
      */
     public function getValue()
     {
@@ -439,7 +439,7 @@ class GetFeatureFlagsResponseDataFeatureFlagsInner implements ModelInterface, Ar
     /**
      * Sets value
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInnerValue|null $value value
+     * @param \Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInnerValue|null $value value
      *
      * @return self
      */

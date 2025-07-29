@@ -234,15 +234,20 @@ class ExampleController extends Controller
     }
 
     /**
-     * Get user profile (Management API)
+     * Get user profile (Frontend API - requires user authentication)
      */
     public function getUserProfile()
     {
+        if (!$this->kindeClient->isAuthenticated) {
+            return $this->response->setJSON(['error' => 'User must be authenticated to get profile'])->setStatusCode(401);
+        }
+
         try {
-            $profile = $this->management->oauth->getUserProfileV2();
+            // Use the KindeClientSDK for frontend API endpoints
+            $profile = $this->kindeClient->getUserDetails();
             return $this->response->setJSON($profile);
-        } catch (ApiException $e) {
-            return $this->response->setJSON(['error' => $e->getMessage()])->setStatusCode($e->getCode());
+        } catch (Exception $e) {
+            return $this->response->setJSON(['error' => $e->getMessage()])->setStatusCode(500);
         }
     }
 

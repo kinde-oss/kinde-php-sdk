@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -59,7 +59,7 @@ class GetUserPermissionsResponseData implements ModelInterface, ArrayAccess, \Js
       */
     protected static $openAPITypes = [
         'org_code' => 'string',
-        'permissions' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseDataPermissionsInner[]'
+        'permissions' => '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseDataPermissionsInner[]'
     ];
 
     /**
@@ -327,7 +327,7 @@ class GetUserPermissionsResponseData implements ModelInterface, ArrayAccess, \Js
     /**
      * Gets permissions
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseDataPermissionsInner[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseDataPermissionsInner[]|null
      */
     public function getPermissions()
     {
@@ -337,7 +337,7 @@ class GetUserPermissionsResponseData implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets permissions
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseDataPermissionsInner[]|null $permissions A list of permissions
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseDataPermissionsInner[]|null $permissions A list of permissions
      *
      * @return self
      */

@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend;
+namespace Kinde\KindeSDK\Api\Frontend;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -141,7 +141,7 @@ class OAuthApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2
+     * @return \Kinde\KindeSDK\Model\Frontend\UserProfileV2
      */
     public function getUserProfileV2(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
@@ -158,7 +158,7 @@ class OAuthApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Frontend\UserProfileV2, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserProfileV2WithHttpInfo(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
@@ -190,7 +190,7 @@ class OAuthApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
+                        '\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
                         $request,
                         $response,
                     );
@@ -212,7 +212,7 @@ class OAuthApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
+                '\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
                 $request,
                 $response,
             );
@@ -221,7 +221,7 @@ class OAuthApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
+                        '\Kinde\KindeSDK\Model\Frontend\UserProfileV2',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -265,7 +265,7 @@ class OAuthApi
      */
     public function getUserProfileV2AsyncWithHttpInfo(string $contentType = self::contentTypes['getUserProfileV2'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\UserProfileV2';
+        $returnType = '\Kinde\KindeSDK\Model\Frontend\UserProfileV2';
         $request = $this->getUserProfileV2Request($contentType);
 
         return $this->client
@@ -395,7 +395,7 @@ class OAuthApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect|\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse
+     * @return \Kinde\KindeSDK\Model\Frontend\TokenIntrospect|\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse
      */
     public function tokenIntrospection($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
     {
@@ -414,7 +414,7 @@ class OAuthApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect|\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Frontend\TokenIntrospect|\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function tokenIntrospectionWithHttpInfo($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
     {
@@ -446,13 +446,13 @@ class OAuthApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
+                        '\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
                         $request,
                         $response,
                     );
                 case 401:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
                         $request,
                         $response,
                     );
@@ -474,7 +474,7 @@ class OAuthApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
+                '\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
                 $request,
                 $response,
             );
@@ -483,7 +483,7 @@ class OAuthApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
+                        '\Kinde\KindeSDK\Model\Frontend\TokenIntrospect',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -491,7 +491,7 @@ class OAuthApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -539,7 +539,7 @@ class OAuthApi
      */
     public function tokenIntrospectionAsyncWithHttpInfo($token, $token_type_hint = null, string $contentType = self::contentTypes['tokenIntrospection'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenIntrospect';
+        $returnType = '\Kinde\KindeSDK\Model\Frontend\TokenIntrospect';
         $request = $this->tokenIntrospectionRequest($token, $token_type_hint, $contentType);
 
         return $this->client
@@ -746,7 +746,7 @@ class OAuthApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -754,7 +754,7 @@ class OAuthApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\TokenErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -762,7 +762,7 @@ class OAuthApi
                 case 403:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -770,7 +770,7 @@ class OAuthApi
                 case 429:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\ErrorResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);

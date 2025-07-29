@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,7 +58,7 @@ class ErrorResponse implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'errors' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\Error[]'
+        'errors' => '\Kinde\KindeSDK\Model\Frontend\Error[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class ErrorResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets errors
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\Error[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\Error[]|null
      */
     public function getErrors()
     {
@@ -303,7 +303,7 @@ class ErrorResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets errors
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\Error[]|null $errors errors
+     * @param \Kinde\KindeSDK\Model\Frontend\Error[]|null $errors errors
      *
      * @return self
      */

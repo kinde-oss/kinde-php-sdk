@@ -5,7 +5,6 @@ namespace Kinde\KindeSDK\Tests\Unit;
 use Kinde\KindeSDK\KindeManagementClient;
 use Kinde\KindeSDK\Api\UsersApi;
 use Kinde\KindeSDK\Api\OrganizationsApi;
-use Kinde\KindeSDK\Api\OAuthApi;
 use Kinde\KindeSDK\Api\ApplicationsApi;
 use Kinde\KindeSDK\Api\RolesApi;
 use Kinde\KindeSDK\Api\PermissionsApi;
@@ -196,7 +195,6 @@ class KindeManagementClientTest extends TestCase
         // Test that all API clients are initialized
         $this->assertInstanceOf(UsersApi::class, $management->users);
         $this->assertInstanceOf(OrganizationsApi::class, $management->organizations);
-        $this->assertInstanceOf(OAuthApi::class, $management->oauth);
         $this->assertInstanceOf(ApplicationsApi::class, $management->applications);
         $this->assertInstanceOf(RolesApi::class, $management->roles);
         $this->assertInstanceOf(PermissionsApi::class, $management->permissions);

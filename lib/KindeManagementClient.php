@@ -4,7 +4,6 @@ namespace Kinde\KindeSDK;
 
 use Kinde\KindeSDK\Api\UsersApi;
 use Kinde\KindeSDK\Api\OrganizationsApi;
-use Kinde\KindeSDK\Api\OAuthApi;
 use Kinde\KindeSDK\Api\ApplicationsApi;
 use Kinde\KindeSDK\Api\RolesApi;
 use Kinde\KindeSDK\Api\PermissionsApi;
@@ -76,10 +75,7 @@ class KindeManagementClient
      */
     public OrganizationsApi $organizations;
 
-    /**
-     * @var OAuthApi
-     */
-    public OAuthApi $oauth;
+
 
     /**
      * @var ApplicationsApi
@@ -270,7 +266,6 @@ class KindeManagementClient
     {
         $this->users = new UsersApi(null, $this->config);
         $this->organizations = new OrganizationsApi(null, $this->config);
-        $this->oauth = new OAuthApi(null, $this->config);
         $this->applications = new ApplicationsApi(null, $this->config);
         $this->roles = new RolesApi(null, $this->config);
         $this->permissions = new PermissionsApi(null, $this->config);

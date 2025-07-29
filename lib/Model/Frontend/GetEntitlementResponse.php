@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,7 +58,7 @@ class GetEntitlementResponse implements ModelInterface, ArrayAccess, \JsonSerial
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponseData',
+        'data' => '\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponseData',
         'metadata' => 'object'
     ];
 
@@ -300,7 +300,7 @@ class GetEntitlementResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets data
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponseData|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementResponseData|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class GetEntitlementResponse implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets data
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponseData|null $data data
+     * @param \Kinde\KindeSDK\Model\Frontend\GetEntitlementResponseData|null $data data
      *
      * @return self
      */

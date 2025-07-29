@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend;
+namespace Kinde\KindeSDK\Api\Frontend;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -137,7 +137,7 @@ class SelfServePortalApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\PortalLink
+     * @return \Kinde\KindeSDK\Model\Frontend\PortalLink
      */
     public function getPortalLink($subnav = null, $return_url = null, string $contentType = self::contentTypes['getPortalLink'][0])
     {
@@ -156,7 +156,7 @@ class SelfServePortalApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\PortalLink, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Frontend\PortalLink, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPortalLinkWithHttpInfo($subnav = null, $return_url = null, string $contentType = self::contentTypes['getPortalLink'][0])
     {
@@ -188,7 +188,7 @@ class SelfServePortalApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\PortalLink',
+                        '\Kinde\KindeSDK\Model\Frontend\PortalLink',
                         $request,
                         $response,
                     );
@@ -210,7 +210,7 @@ class SelfServePortalApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\PortalLink',
+                '\Kinde\KindeSDK\Model\Frontend\PortalLink',
                 $request,
                 $response,
             );
@@ -219,7 +219,7 @@ class SelfServePortalApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\PortalLink',
+                        '\Kinde\KindeSDK\Model\Frontend\PortalLink',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -267,7 +267,7 @@ class SelfServePortalApi
      */
     public function getPortalLinkAsyncWithHttpInfo($subnav = null, $return_url = null, string $contentType = self::contentTypes['getPortalLink'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\PortalLink';
+        $returnType = '\Kinde\KindeSDK\Model\Frontend\PortalLink';
         $request = $this->getPortalLinkRequest($subnav, $return_url, $contentType);
 
         return $this->client

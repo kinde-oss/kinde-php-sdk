@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,8 +58,8 @@ class GetUserPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSer
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseData',
-        'metadata' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseMetadata'
+        'data' => '\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseData',
+        'metadata' => '\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseMetadata'
     ];
 
     /**
@@ -300,7 +300,7 @@ class GetUserPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets data
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseData|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseData|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class GetUserPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets data
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseData|null $data data
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseData|null $data data
      *
      * @return self
      */
@@ -327,7 +327,7 @@ class GetUserPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Gets metadata
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseMetadata|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseMetadata|null
      */
     public function getMetadata()
     {
@@ -337,7 +337,7 @@ class GetUserPropertiesResponse implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets metadata
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseMetadata|null $metadata metadata
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseMetadata|null $metadata metadata
      *
      * @return self
      */

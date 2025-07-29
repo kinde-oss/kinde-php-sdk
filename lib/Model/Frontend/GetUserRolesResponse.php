@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,8 +58,8 @@ class GetUserRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializ
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseData',
-        'metadata' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseMetadata'
+        'data' => '\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseData',
+        'metadata' => '\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseMetadata'
     ];
 
     /**
@@ -300,7 +300,7 @@ class GetUserRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets data
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseData|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseData|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class GetUserRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets data
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseData|null $data data
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseData|null $data data
      *
      * @return self
      */
@@ -327,7 +327,7 @@ class GetUserRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets metadata
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseMetadata|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseMetadata|null
      */
     public function getMetadata()
     {
@@ -337,7 +337,7 @@ class GetUserRolesResponse implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets metadata
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseMetadata|null $metadata metadata
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseMetadata|null $metadata metadata
      *
      * @return self
      */

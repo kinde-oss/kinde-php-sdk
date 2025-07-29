@@ -71,11 +71,40 @@ class ExampleController extends Controller
         $user = session('kinde_user');
         $permissions = session('kinde_permissions', []);
         $organization = session('kinde_organization');
+        
+        // Get entitlements using the new SDK methods
+        $entitlements = [];
+        $entitlementsError = null;
+        $entitlementChecks = [];
+        
+        try {
+            $entitlements = $this->kindeClient->getAllEntitlements();
+            
+            // Demonstrate other entitlements methods
+            if (!empty($entitlements)) {
+                // Get the first entitlement to demonstrate specific methods
+                $firstEntitlement = $entitlements[0];
+                $featureKey = $firstEntitlement->getFeatureKey();
+                
+                $entitlementChecks = [
+                    'has_entitlement' => $this->kindeClient->hasEntitlement($featureKey),
+                    'specific_entitlement' => $this->kindeClient->getEntitlement($featureKey),
+                    'entitlement_limit' => $this->kindeClient->getEntitlementLimit($featureKey),
+                    'non_existent_entitlement' => $this->kindeClient->hasEntitlement('non_existent_feature'),
+                    'non_existent_limit' => $this->kindeClient->getEntitlementLimit('non_existent_feature')
+                ];
+            }
+        } catch (Exception $e) {
+            $entitlementsError = $e->getMessage();
+        }
 
         return view('kinde.user-info', [
-            'user' => session('kinde_user'),
+            'userDetails' => session('kinde_user'),
             'permissions' => session('kinde_permissions', []),
-            'organization' => session('kinde_organization')
+            'organization' => session('kinde_organization'),
+            'entitlements' => $entitlements,
+            'entitlementsError' => $entitlementsError,
+            'entitlementChecks' => $entitlementChecks
         ]);
     }
 
@@ -214,14 +243,19 @@ class ExampleController extends Controller
     }
 
     /**
-     * Get user profile (Management API)
+     * Get user profile (Frontend API - requires user authentication)
      */
     public function getUserProfile()
     {
+        if (!$this->kindeClient->isAuthenticated) {
+            return ['error' => 'User must be authenticated to get profile'];
+        }
+
         try {
-            $profile = $this->management->oauth->getUserProfileV2();
+            // Use the KindeClientSDK for frontend API endpoints
+            $profile = $this->kindeClient->getUserDetails();
             return $profile;
-        } catch (ApiException $e) {
+        } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }

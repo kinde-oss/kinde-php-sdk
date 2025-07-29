@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -59,8 +59,8 @@ class GetEntitlementsResponseData implements ModelInterface, ArrayAccess, \JsonS
       */
     protected static $openAPITypes = [
         'org_code' => 'string',
-        'plans' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataPlansInner[]',
-        'entitlements' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner[]'
+        'plans' => '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataPlansInner[]',
+        'entitlements' => '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner[]'
     ];
 
     /**
@@ -334,7 +334,7 @@ class GetEntitlementsResponseData implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Gets plans
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataPlansInner[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataPlansInner[]|null
      */
     public function getPlans()
     {
@@ -344,7 +344,7 @@ class GetEntitlementsResponseData implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets plans
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataPlansInner[]|null $plans A list of plans the user is subscribed to
+     * @param \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataPlansInner[]|null $plans A list of plans the user is subscribed to
      *
      * @return self
      */
@@ -361,7 +361,7 @@ class GetEntitlementsResponseData implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Gets entitlements
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner[]|null
      */
     public function getEntitlements()
     {
@@ -371,7 +371,7 @@ class GetEntitlementsResponseData implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets entitlements
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner[]|null $entitlements A list of entitlements
+     * @param \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner[]|null $entitlements A list of entitlements
      *
      * @return self
      */

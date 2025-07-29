@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,8 +58,8 @@ class GetUserPermissionsResponse implements ModelInterface, ArrayAccess, \JsonSe
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseData',
-        'metadata' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseMetadata'
+        'data' => '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseData',
+        'metadata' => '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseMetadata'
     ];
 
     /**
@@ -300,7 +300,7 @@ class GetUserPermissionsResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Gets data
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseData|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseData|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class GetUserPermissionsResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets data
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseData|null $data data
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseData|null $data data
      *
      * @return self
      */
@@ -327,7 +327,7 @@ class GetUserPermissionsResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Gets metadata
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseMetadata|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseMetadata|null
      */
     public function getMetadata()
     {
@@ -337,7 +337,7 @@ class GetUserPermissionsResponse implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets metadata
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseMetadata|null $metadata metadata
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponseMetadata|null $metadata metadata
      *
      * @return self
      */

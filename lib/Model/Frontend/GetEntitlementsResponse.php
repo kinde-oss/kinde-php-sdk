@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,8 +58,8 @@ class GetEntitlementsResponse implements ModelInterface, ArrayAccess, \JsonSeria
       * @var string[]
       */
     protected static $openAPITypes = [
-        'data' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseData',
-        'metadata' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseMetadata'
+        'data' => '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseData',
+        'metadata' => '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseMetadata'
     ];
 
     /**
@@ -300,7 +300,7 @@ class GetEntitlementsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets data
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseData|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseData|null
      */
     public function getData()
     {
@@ -310,7 +310,7 @@ class GetEntitlementsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets data
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseData|null $data data
+     * @param \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseData|null $data data
      *
      * @return self
      */
@@ -327,7 +327,7 @@ class GetEntitlementsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets metadata
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseMetadata|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseMetadata|null
      */
     public function getMetadata()
     {
@@ -337,7 +337,7 @@ class GetEntitlementsResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets metadata
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseMetadata|null $metadata metadata
+     * @param \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseMetadata|null $metadata metadata
      *
      * @return self
      */

@@ -158,6 +158,32 @@ class KindeAuthController extends Controller
         $userDetails = $this->kindeClient->getUserDetails();
         $permissions = $this->kindeClient->getPermissions();
         $organization = $this->kindeClient->getOrganization();
+        
+        // Get entitlements using the new SDK methods
+        $entitlements = [];
+        $entitlementsError = null;
+        $entitlementChecks = [];
+        
+        try {
+            $entitlements = $this->kindeClient->getAllEntitlements();
+            
+            // Demonstrate other entitlements methods
+            if (!empty($entitlements)) {
+                // Get the first entitlement to demonstrate specific methods
+                $firstEntitlement = $entitlements[0];
+                $featureKey = $firstEntitlement->getFeatureKey();
+                
+                $entitlementChecks = [
+                    'has_entitlement' => $this->kindeClient->hasEntitlement($featureKey),
+                    'specific_entitlement' => $this->kindeClient->getEntitlement($featureKey),
+                    'entitlement_limit' => $this->kindeClient->getEntitlementLimit($featureKey),
+                    'non_existent_entitlement' => $this->kindeClient->hasEntitlement('non_existent_feature'),
+                    'non_existent_limit' => $this->kindeClient->getEntitlementLimit('non_existent_feature')
+                ];
+            }
+        } catch (Exception $e) {
+            $entitlementsError = $e->getMessage();
+        }
 
         // Check if this is an Inertia request
         if ($request->header('X-Inertia')) {
@@ -165,12 +191,22 @@ class KindeAuthController extends Controller
                 'user' => $userDetails,
                 'permissions' => $permissions,
                 'organization' => $organization,
+                'entitlements' => $entitlements,
+                'entitlementsError' => $entitlementsError,
+                'entitlementChecks' => $entitlementChecks,
                 'isAuthenticated' => true
             ]);
         }
 
         // Fallback to Blade view
-        return view('kinde.user-info', compact('userDetails', 'permissions', 'organization'));
+        return view('kinde.user-info', compact(
+            'userDetails', 
+            'permissions', 
+            'organization', 
+            'entitlements', 
+            'entitlementsError', 
+            'entitlementChecks'
+        ));
     }
 
     /**

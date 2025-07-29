@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -61,7 +61,7 @@ class GetUserPropertiesResponseDataPropertiesInner implements ModelInterface, Ar
         'id' => 'string',
         'name' => 'string',
         'key' => 'string',
-        'value' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue'
+        'value' => '\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue'
     ];
 
     /**
@@ -395,7 +395,7 @@ class GetUserPropertiesResponseDataPropertiesInner implements ModelInterface, Ar
     /**
      * Gets value
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue|null
      */
     public function getValue()
     {
@@ -405,7 +405,7 @@ class GetUserPropertiesResponseDataPropertiesInner implements ModelInterface, Ar
     /**
      * Sets value
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue|null $value value
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserPropertiesResponseDataPropertiesInnerValue|null $value value
      *
      * @return self
      */

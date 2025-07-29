@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend;
+namespace Kinde\KindeSDK\Api\Frontend;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -139,7 +139,7 @@ class BillingApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse
      */
     public function getEntitlement($key, string $contentType = self::contentTypes['getEntitlement'][0])
     {
@@ -157,7 +157,7 @@ class BillingApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEntitlementWithHttpInfo($key, string $contentType = self::contentTypes['getEntitlement'][0])
     {
@@ -189,7 +189,7 @@ class BillingApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse',
                         $request,
                         $response,
                     );
@@ -211,7 +211,7 @@ class BillingApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse',
+                '\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse',
                 $request,
                 $response,
             );
@@ -220,7 +220,7 @@ class BillingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -266,7 +266,7 @@ class BillingApi
      */
     public function getEntitlementAsyncWithHttpInfo($key, string $contentType = self::contentTypes['getEntitlement'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse';
+        $returnType = '\Kinde\KindeSDK\Model\Frontend\GetEntitlementResponse';
         $request = $this->getEntitlementRequest($key, $contentType);
 
         return $this->client
@@ -412,7 +412,7 @@ class BillingApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse
+     * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse
      */
     public function getEntitlements($page_size = null, $starting_after = null, string $contentType = self::contentTypes['getEntitlements'][0])
     {
@@ -431,7 +431,7 @@ class BillingApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getEntitlementsWithHttpInfo($page_size = null, $starting_after = null, string $contentType = self::contentTypes['getEntitlements'][0])
     {
@@ -463,7 +463,7 @@ class BillingApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse',
                         $request,
                         $response,
                     );
@@ -485,7 +485,7 @@ class BillingApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse',
+                '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse',
                 $request,
                 $response,
             );
@@ -494,7 +494,7 @@ class BillingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -542,7 +542,7 @@ class BillingApi
      */
     public function getEntitlementsAsyncWithHttpInfo($page_size = null, $starting_after = null, string $contentType = self::contentTypes['getEntitlements'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse';
         $request = $this->getEntitlementsRequest($page_size, $starting_after, $contentType);
 
         return $this->client

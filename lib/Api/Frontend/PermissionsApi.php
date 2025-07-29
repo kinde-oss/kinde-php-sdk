@@ -26,7 +26,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Api\Frontend;
+namespace Kinde\KindeSDK\Api\Frontend;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -137,7 +137,7 @@ class PermissionsApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse
      */
     public function getUserPermissions($page_size = null, $starting_after = null, string $contentType = self::contentTypes['getUserPermissions'][0])
     {
@@ -156,7 +156,7 @@ class PermissionsApi
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserPermissionsWithHttpInfo($page_size = null, $starting_after = null, string $contentType = self::contentTypes['getUserPermissions'][0])
     {
@@ -188,7 +188,7 @@ class PermissionsApi
             switch($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse',
                         $request,
                         $response,
                     );
@@ -210,7 +210,7 @@ class PermissionsApi
             }
 
             return $this->handleResponseWithDataType(
-                '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse',
+                '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse',
                 $request,
                 $response,
             );
@@ -219,7 +219,7 @@ class PermissionsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse',
+                        '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -267,7 +267,7 @@ class PermissionsApi
      */
     public function getUserPermissionsAsyncWithHttpInfo($page_size = null, $starting_after = null, string $contentType = self::contentTypes['getUserPermissions'][0])
     {
-        $returnType = '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse';
+        $returnType = '\Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse';
         $request = $this->getUserPermissionsRequest($page_size, $starting_after, $contentType);
 
         return $this->client

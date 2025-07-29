@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -59,7 +59,7 @@ class GetUserRolesResponseData implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPITypes = [
         'org_code' => 'string',
-        'roles' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseDataRolesInner[]'
+        'roles' => '\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseDataRolesInner[]'
     ];
 
     /**
@@ -327,7 +327,7 @@ class GetUserRolesResponseData implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets roles
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseDataRolesInner[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseDataRolesInner[]|null
      */
     public function getRoles()
     {
@@ -337,7 +337,7 @@ class GetUserRolesResponseData implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets roles
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseDataRolesInner[]|null $roles A list of roles
+     * @param \Kinde\KindeSDK\Model\Frontend\GetUserRolesResponseDataRolesInner[]|null $roles A list of roles
      *
      * @return self
      */

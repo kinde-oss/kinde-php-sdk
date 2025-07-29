@@ -27,7 +27,7 @@
  * Do not edit the class manually.
  */
 
-namespace Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend;
+namespace Kinde\KindeSDK\Model\Frontend;
 
 use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
@@ -58,7 +58,7 @@ class GetFeatureFlagsResponseData implements ModelInterface, ArrayAccess, \JsonS
       * @var string[]
       */
     protected static $openAPITypes = [
-        'feature_flags' => '\Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInner[]'
+        'feature_flags' => '\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInner[]'
     ];
 
     /**
@@ -293,7 +293,7 @@ class GetFeatureFlagsResponseData implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Gets feature_flags
      *
-     * @return \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInner[]|null
+     * @return \Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInner[]|null
      */
     public function getFeatureFlags()
     {
@@ -303,7 +303,7 @@ class GetFeatureFlagsResponseData implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets feature_flags
      *
-     * @param \Kinde\KindeSDK\Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInner[]|null $feature_flags A list of feature flags
+     * @param \Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponseDataFeatureFlagsInner[]|null $feature_flags A list of feature flags
      *
      * @return self
      */

@@ -213,11 +213,16 @@ class KindeController extends AbstractController
     #[Route('/api/user-profile', name: 'api_user_profile', methods: ['GET'])]
     public function getUserProfile(): JsonResponse
     {
+        if (!$this->kindeClient->isAuthenticated) {
+            return $this->json(['error' => 'User must be authenticated to get profile'], 401);
+        }
+
         try {
-            $profile = $this->management->oauth->getUserProfileV2();
+            // Use the KindeClientSDK for frontend API endpoints
+            $profile = $this->kindeClient->getUserDetails();
             return $this->json($profile);
-        } catch (ApiException $e) {
-            return $this->json(['error' => $e->getMessage()], $e->getCode());
+        } catch (Exception $e) {
+            return $this->json(['error' => $e->getMessage()], 500);
         }
     }
 
