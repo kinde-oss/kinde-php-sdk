@@ -14,6 +14,8 @@ use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
+use Kinde\KindeSDK\Api\Frontend\BillingApi;
+use Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner;
 use UnexpectedValueException;
 
 class KindeClientSDK
@@ -75,28 +77,39 @@ class KindeClientSDK
     public $storage;
 
     function __construct(
-        string $domain,
-        ?string $redirectUri,
-        string $clientId,
-        string $clientSecret,
-        string $grantType,
-        ?string $logoutRedirectUri,
+        ?string $domain = null,
+        ?string $redirectUri = null,
+        ?string $clientId = null,
+        ?string $clientSecret = null,
+        ?string $grantType = null,
+        ?string $logoutRedirectUri = null,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
         string $protocol = ""
     ) {
-        $isNotCCGrantType = $grantType !== GrantType::clientCredentials;
+        // Load from environment variables if parameters are not provided
+        $domain = $domain ?? $_ENV['KINDE_DOMAIN'] ?? $_ENV['KINDE_HOST'] ?? null;
+        $redirectUri = $redirectUri ?? $_ENV['KINDE_REDIRECT_URI'] ?? null;
+        $clientId = $clientId ?? $_ENV['KINDE_CLIENT_ID'] ?? null;
+        $clientSecret = $clientSecret ?? $_ENV['KINDE_CLIENT_SECRET'] ?? null;
+        $grantType = $grantType ?? $_ENV['KINDE_GRANT_TYPE'] ?? GrantType::authorizationCode;
+        $logoutRedirectUri = $logoutRedirectUri ?? $_ENV['KINDE_LOGOUT_REDIRECT_URI'] ?? null;
+        $scopes = $_ENV['KINDE_SCOPES'] ?? $scopes;
+        $protocol = $_ENV['KINDE_PROTOCOL'] ?? $protocol;
 
+        // Validate required parameters
         if (empty($domain)) {
-            throw new InvalidArgumentException("Please provide domain");
+            throw new InvalidArgumentException("Please provide domain via parameter or KINDE_DOMAIN/KINDE_HOST environment variable");
         }
         if (!Utils::validationURL($domain)) {
             throw new InvalidArgumentException("Please provide valid domain");
         }
         $this->domain = $domain;
 
+        $isNotCCGrantType = $grantType !== GrantType::clientCredentials;
+
         if ($isNotCCGrantType && empty($redirectUri)) {
-            throw new InvalidArgumentException("Please provide redirect_uri");
+            throw new InvalidArgumentException("Please provide redirect_uri via parameter or KINDE_REDIRECT_URI environment variable");
         }
         if ($isNotCCGrantType && !Utils::validationURL($redirectUri)) {
             throw new InvalidArgumentException("Please provide valid redirect_uri");
@@ -104,22 +117,22 @@ class KindeClientSDK
         $this->redirectUri = $redirectUri;
 
         if (empty($clientSecret)) {
-            throw new InvalidArgumentException("Please provide client_secret");
+            throw new InvalidArgumentException("Please provide client_secret via parameter or KINDE_CLIENT_SECRET environment variable");
         }
         $this->clientSecret = $clientSecret;
 
         if (empty($clientId)) {
-            throw new InvalidArgumentException("Please provide client_id");
+            throw new InvalidArgumentException("Please provide client_id via parameter or KINDE_CLIENT_ID environment variable");
         }
         $this->clientId = $clientId;
 
         if (empty($grantType)) {
-            throw new InvalidArgumentException("Please provide grant_type");
+            throw new InvalidArgumentException("Please provide grant_type via parameter or KINDE_GRANT_TYPE environment variable");
         }
         $this->grantType = $grantType;
 
         if ($isNotCCGrantType && empty($logoutRedirectUri)) {
-            throw new InvalidArgumentException("Please provide logout_redirect_uri");
+            throw new InvalidArgumentException("Please provide logout_redirect_uri via parameter or KINDE_LOGOUT_REDIRECT_URI environment variable");
         }
         if ($isNotCCGrantType && !Utils::validationURL($logoutRedirectUri)) {
             throw new InvalidArgumentException("Please provide valid logout_redirect_uri");
@@ -138,6 +151,17 @@ class KindeClientSDK
 
         $this->storage = Storage::getInstance();
         $this->storage->setJwksUrl($this->domain . '/.well-known/jwks.json');
+    }
+
+    /**
+     * Create a Kinde client from environment variables only
+     * 
+     * @return self
+     * @throws InvalidArgumentException If required environment variables are missing
+     */
+    public static function createFromEnv(): self
+    {
+        return new self();
     }
 
     /**
@@ -641,6 +665,113 @@ class KindeClientSDK
     public function clearJwksCache()
     {
         $this->storage->clearCachedJwks();
+    }
+
+    /**
+     * Get all entitlements for the authenticated user, handling pagination automatically.
+     *
+     * @return array All entitlements
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function getAllEntitlements(): array
+    {
+        if (!$this->isAuthenticated()) {
+            throw new Exception('User must be authenticated to get entitlements');
+        }
+
+        $token = $this->storage->getAccessToken();
+        if (empty($token)) {
+            throw new Exception('Access token not found');
+        }
+
+        $allEntitlements = [];
+        $startingAfter = null;
+        
+        do {
+            $response = $this->getEntitlementsFromApi(null, $startingAfter, $token);
+            $entitlements = $response->getData()->getEntitlements() ?? [];
+            $allEntitlements = array_merge($allEntitlements, $entitlements);
+            
+            $metadata = $response->getMetadata();
+            $hasMore = $metadata->getHasMore();
+            
+            if ($hasMore && count($entitlements) > 0) {
+                $startingAfter = $metadata->getNextPageStartingAfter();
+            } else {
+                $startingAfter = null;
+            }
+        } while ($hasMore && $startingAfter);
+        
+        return $allEntitlements;
+    }
+
+    /**
+     * Get a specific entitlement by key.
+     *
+     * @param string $key The entitlement key to retrieve
+     * @return GetEntitlementsResponseDataEntitlementsInner|null The entitlement or null if not found
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function getEntitlement(string $key): ?GetEntitlementsResponseDataEntitlementsInner
+    {
+        $entitlements = $this->getAllEntitlements();
+        
+        foreach ($entitlements as $entitlement) {
+            if ($entitlement->getFeatureKey() === $key) {
+                return $entitlement;
+            }
+        }
+        
+        return null;
+    }
+
+    /**
+     * Check if the user has a specific entitlement.
+     *
+     * @param string $key The entitlement key to check
+     * @return bool True if the user has the entitlement, false otherwise
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function hasEntitlement(string $key): bool
+    {
+        return $this->getEntitlement($key) !== null;
+    }
+
+    /**
+     * Get the maximum limit for a specific entitlement.
+     *
+     * @param string $key The entitlement key
+     * @return int|null The maximum limit or null if not found
+     * @throws Exception If the user is not authenticated or API request fails
+     */
+    public function getEntitlementLimit(string $key): ?int
+    {
+        $entitlement = $this->getEntitlement($key);
+        return $entitlement ? $entitlement->getEntitlementLimitMax() : null;
+    }
+
+    /**
+     * Get entitlements from the frontend API.
+     *
+     * @param int|null $pageSize Number of results per page (uses API default if null)
+     * @param string|null $startingAfter The ID to start after for pagination
+     * @param string $token The access token
+              * @return \Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponse
+     * @throws Exception If the API request fails
+     */
+    private function getEntitlementsFromApi(?int $pageSize, ?string $startingAfter, string $token)
+    {
+        $config = new \Kinde\KindeSDK\Configuration();
+        $config->setHost($this->domain);
+        $config->setAccessToken($token);
+        
+        $billingApi = new BillingApi(null, $config);
+        
+        try {
+            return $billingApi->getEntitlements($pageSize, $startingAfter);
+        } catch (\Kinde\KindeSDK\ApiException $e) {
+            throw new Exception('Failed to get entitlements: ' . $e->getMessage());
+        }
     }
 
     /**

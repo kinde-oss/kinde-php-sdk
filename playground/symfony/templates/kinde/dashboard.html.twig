@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Kinde Auth Example{% endblock %}
+
+{% block content %}
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                Welcome to your Dashboard
+            </h2>
+            
+            {% if user %}
+                <!-- User Information -->
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+                    <h3 class="text-md font-medium text-gray-900 dark:text-white mb-3">User Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Name</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">
+                                {{ user.given_name ?? 'N/A' }} {{ user.family_name ?? '' }}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Email</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">
+                                {{ user.email ?? 'N/A' }}
+                            </p>
+                        </div>
+                        {% if user.picture is defined and user.picture %}
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Profile Picture</p>
+                            <img src="{{ user.picture }}" alt="Profile" class="w-10 h-10 rounded-full">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Permissions -->
+                {% if permissions is defined and permissions|length > 0 %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+                    <h3 class="text-md font-medium text-gray-900 dark:text-white mb-3">Your Permissions</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for permission in permissions %}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                {{ permission }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Organization -->
+                {% if organization is defined and organization %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+                    <h3 class="text-md font-medium text-gray-900 dark:text-white mb-3">Organization</h3>
+                    <p class="text-sm text-gray-900 dark:text-white">
+                        {{ organization.name ?? 'N/A' }}
+                    </p>
+                </div>
+                {% endif %}
+
+                <!-- Actions -->
+                <div class="flex space-x-4">
+                    <a href="{{ path('kinde_portal') }}" 
+                       class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        Go to Portal
+                    </a>
+                    <a href="{{ path('kinde_user_info') }}" 
+                       class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        View User Info
+                    </a>
+                </div>
+            {% else %}
+                <div class="text-red-600 dark:text-red-400">
+                    User information not available.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %} 

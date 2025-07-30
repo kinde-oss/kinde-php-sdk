@@ -59,7 +59,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPITypes = [
         'name' => 'string',
-        'type' => 'string'
+        'type' => 'string',
+        'org_code' => 'string'
     ];
 
     /**
@@ -71,7 +72,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPIFormats = [
         'name' => null,
-        'type' => null
+        'type' => null,
+        'org_code' => null
     ];
 
     /**
@@ -81,7 +83,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static array $openAPINullables = [
         'name' => false,
-        'type' => false
+        'type' => false,
+        'org_code' => true
     ];
 
     /**
@@ -171,7 +174,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $attributeMap = [
         'name' => 'name',
-        'type' => 'type'
+        'type' => 'type',
+        'org_code' => 'org_code'
     ];
 
     /**
@@ -181,7 +185,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $setters = [
         'name' => 'setName',
-        'type' => 'setType'
+        'type' => 'setType',
+        'org_code' => 'setOrgCode'
     ];
 
     /**
@@ -191,7 +196,8 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $getters = [
         'name' => 'getName',
-        'type' => 'getType'
+        'type' => 'getType',
+        'org_code' => 'getOrgCode'
     ];
 
     /**
@@ -270,6 +276,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('type', $data ?? [], null);
+        $this->setIfExists('org_code', $data ?? [], null);
     }
 
     /**
@@ -389,6 +396,40 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
             );
         }
         $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets org_code
+     *
+     * @return string|null
+     */
+    public function getOrgCode()
+    {
+        return $this->container['org_code'];
+    }
+
+    /**
+     * Sets org_code
+     *
+     * @param string|null $org_code Scope an M2M application to an org (Plus plan required).
+     *
+     * @return self
+     */
+    public function setOrgCode($org_code)
+    {
+        if (is_null($org_code)) {
+            array_push($this->openAPINullablesSetToNull, 'org_code');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('org_code', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['org_code'] = $org_code;
 
         return $this;
     }

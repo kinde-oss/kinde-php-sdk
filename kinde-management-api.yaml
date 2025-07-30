@@ -685,6 +685,11 @@ paths:
                     - reg
                     - spa
                     - m2m
+                org_code:
+                  description: Scope an M2M application to an org (Plus plan required).
+                  type: string
+                  example: org_1234567890abcdef
+                  nullable: true
               required:
                 - name
                 - type
@@ -3799,6 +3804,12 @@ paths:
           schema:
             type: string
             example: org_1ccfb819462
+        - in: query
+          name: expand
+          description: Specify additional data to retrieve. Use "billing".
+          schema:
+            type: string
+            example: billing
       responses:
         '200':
           description: Organization successfully retrieved.
@@ -7322,6 +7333,14 @@ paths:
           schema:
             type: string
             nullable: true
+        - name: phone
+          in: query
+          description: >-
+            Filter the results by phone. The query string should be comma
+            separated and url encoded.
+          schema:
+            type: string
+            nullable: true
         - name: expand
           in: query
           description: >-
@@ -7429,8 +7448,8 @@ paths:
         - name: expand
           in: query
           description: >-
-            Specify additional data to retrieve. Use "organizations" and/or
-            "identities".
+            Specify additional data to retrieve. Use "organizations",
+            "identities" and/or "billing".
           required: false
           schema:
             type: string
@@ -9314,6 +9333,13 @@ components:
                       type: string
                     identity:
                       type: string
+              billing:
+                type: object
+                properties:
+                  customer_id:
+                    type: string
+                    description: The billing customer id.
+                    example: customer_1245adbc6789
         next_token:
           type: string
           description: Pagination token.

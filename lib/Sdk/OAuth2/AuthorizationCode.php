@@ -38,7 +38,8 @@ class AuthorizationCode
             'response_type' => 'code',
             'scope' => $clientSDK->scopes,
             'state' => $state,
-            'start_page' => 'login'
+            'start_page' => 'login',
+            'supports_reauth' => 'true',
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
