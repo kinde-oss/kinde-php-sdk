@@ -244,6 +244,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     public const TYPE_REG = 'reg';
     public const TYPE_SPA = 'spa';
     public const TYPE_M2M = 'm2m';
+    public const TYPE_DEVICE = 'device';
 
     /**
      * Gets allowable values of the enum
@@ -256,6 +257,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
             self::TYPE_REG,
             self::TYPE_SPA,
             self::TYPE_M2M,
+            self::TYPE_DEVICE,
         ];
     }
 
@@ -376,7 +378,7 @@ class CreateApplicationRequest implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets type
      *
-     * @param string $type The application's type. Use `reg` for regular server rendered applications, `spa` for single-page applications, and `m2m` for machine-to-machine applications.
+     * @param string $type The application's type. Use `reg` for regular server rendered applications, `spa` for single-page applications, `m2m` for machine-to-machine applications, and `device` for devices and IoT.
      *
      * @return self
      */
