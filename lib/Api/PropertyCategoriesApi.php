@@ -701,7 +701,7 @@ class PropertyCategoriesApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json; charset=utf-8', 'application/json', ],
+            ['application/json', 'application/json; charset=utf-8', ],
             $contentType,
             $multipart
         );

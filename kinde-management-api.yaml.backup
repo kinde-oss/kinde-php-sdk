@@ -1155,28 +1155,28 @@ paths:
         '200':
           description: Billing entitlements successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_billing_entitlements_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_billing_entitlements_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -1238,28 +1238,28 @@ paths:
         '200':
           description: Billing agreements successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_billing_agreements_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_billing_agreements_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -2188,28 +2188,28 @@ paths:
         '200':
           description: Connections successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_connections_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_connections_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -3603,28 +3603,28 @@ paths:
         '200':
           description: Identity successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/identity'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/identity'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -6066,28 +6066,28 @@ paths:
         '200':
           description: Properties successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_properties_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_properties_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -6341,28 +6341,28 @@ paths:
         '200':
           description: Categories successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_categories_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_categories_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -7399,10 +7399,10 @@ paths:
         '200':
           description: Claims successfully refreshed.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/success_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/success_response'
         '400':
@@ -7417,10 +7417,10 @@ paths:
         '403':
           description: Bad request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -8337,28 +8337,28 @@ paths:
         '200':
           description: Event successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_event_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_event_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -8381,28 +8381,28 @@ paths:
         '200':
           description: Event types successfully retrieved.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_event_types_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_event_types_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -8433,28 +8433,28 @@ paths:
         '200':
           description: Webhook successfully deleted.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/delete_webhook_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/delete_webhook_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -8506,28 +8506,28 @@ paths:
         '200':
           description: Webhook successfully updated.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/update_webhook_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/update_webhook_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -8550,28 +8550,28 @@ paths:
         '200':
           description: Webhook list successfully returned.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/get_webhooks_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/get_webhooks_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':
@@ -8623,28 +8623,28 @@ paths:
         '200':
           description: Webhook successfully created.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/create_webhook_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/create_webhook_response'
         '400':
           description: Invalid request.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '403':
           description: Invalid credentials.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/error_response'
-            application/json; charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/error_response'
         '429':

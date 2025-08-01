@@ -250,6 +250,7 @@ class GetApiResponseApiApplicationsInner implements ModelInterface, ArrayAccess,
     public const TYPE_MACHINE_TO_MACHINE__M2_M = 'Machine to machine (M2M)';
     public const TYPE_BACK_END_WEB = 'Back-end web';
     public const TYPE_FRONT_END_AND_MOBILE = 'Front-end and mobile';
+    public const TYPE_DEVICE_AND_IO_T = 'Device and IoT';
 
     /**
      * Gets allowable values of the enum
@@ -262,6 +263,7 @@ class GetApiResponseApiApplicationsInner implements ModelInterface, ArrayAccess,
             self::TYPE_MACHINE_TO_MACHINE__M2_M,
             self::TYPE_BACK_END_WEB,
             self::TYPE_FRONT_END_AND_MOBILE,
+            self::TYPE_DEVICE_AND_IO_T,
         ];
     }
 
