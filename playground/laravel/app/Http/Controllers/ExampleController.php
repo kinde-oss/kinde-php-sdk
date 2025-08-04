@@ -134,8 +134,7 @@ class ExampleController extends Controller
 
         // Test 1: Get Users
         $usersResult = $this->safeApiCall(
-            fn() => $this->management->users->getUsers(),
-            'users'
+            fn() => $this->management->users->getUsers()
         );
         $testResults['users'] = $usersResult;
         if (!$usersResult['success']) {
@@ -146,8 +145,7 @@ class ExampleController extends Controller
 
         // Test 2: Get Organizations
         $organizationsResult = $this->safeApiCall(
-            fn() => $this->management->organizations->getOrganizations(),
-            'organizations'
+            fn() => $this->management->organizations->getOrganizations()
         );
         $testResults['organizations'] = $organizationsResult;
         if (!$organizationsResult['success']) {
@@ -158,8 +156,7 @@ class ExampleController extends Controller
 
         // Test 3: Get Applications
         $applicationsResult = $this->safeApiCall(
-            fn() => $this->management->applications->getApplications(),
-            'applications'
+            fn() => $this->management->applications->getApplications()
         );
         $testResults['applications'] = $applicationsResult;
         if (!$applicationsResult['success']) {
@@ -170,8 +167,7 @@ class ExampleController extends Controller
 
         // Test 4: Get Roles
         $rolesResult = $this->safeApiCall(
-            fn() => $this->management->roles->getRoles(),
-            'roles'
+            fn() => $this->management->roles->getRoles()
         );
         $testResults['roles'] = $rolesResult;
         if (!$rolesResult['success']) {
@@ -182,8 +178,7 @@ class ExampleController extends Controller
 
         // Test 5: Get Permissions
         $permissionsResult = $this->safeApiCall(
-            fn() => $this->management->permissions->getPermissions(),
-            'permissions'
+            fn() => $this->management->permissions->getPermissions()
         );
         $testResults['permissions'] = $permissionsResult;
         if (!$permissionsResult['success']) {
@@ -194,8 +189,7 @@ class ExampleController extends Controller
 
         // Test 6: Get Feature Flags (from Environments API)
         $featureFlagsResult = $this->safeApiCall(
-            fn() => $this->management->environments->getEnvironementFeatureFlags(),
-            'feature_flags'
+            fn() => $this->management->environments->getEnvironementFeatureFlags()
         );
         $testResults['feature_flags'] = $featureFlagsResult;
         if (!$featureFlagsResult['success']) {
@@ -206,8 +200,7 @@ class ExampleController extends Controller
 
         // Test 7: Get Environment (singular - this exists)
         $environmentResult = $this->safeApiCall(
-            fn() => $this->management->environments->getEnvironment(),
-            'environment'
+            fn() => $this->management->environments->getEnvironment()
         );
         $testResults['environment'] = $environmentResult;
         if (!$environmentResult['success']) {
@@ -216,8 +209,7 @@ class ExampleController extends Controller
 
         // Test 8: Get Business
         $businessResult = $this->safeApiCall(
-            fn() => $this->management->business->getBusiness(),
-            'business'
+            fn() => $this->management->business->getBusiness()
         );
         $testResults['business'] = $businessResult;
         if (!$businessResult['success']) {
@@ -226,8 +218,7 @@ class ExampleController extends Controller
 
         // Test 9: Get Timezones
         $timezonesResult = $this->safeApiCall(
-            fn() => $this->management->timezones->getTimezones(),
-            'timezones'
+            fn() => $this->management->timezones->getTimezones()
         );
         $testResults['timezones'] = $timezonesResult;
         if (!$timezonesResult['success']) {
@@ -238,8 +229,7 @@ class ExampleController extends Controller
 
         // Test 10: Get Industries
         $industriesResult = $this->safeApiCall(
-            fn() => $this->management->industries->getIndustries(),
-            'industries'
+            fn() => $this->management->industries->getIndustries()
         );
         $testResults['industries'] = $industriesResult;
         if (!$industriesResult['success']) {
@@ -250,8 +240,7 @@ class ExampleController extends Controller
 
         // Test 11: Get Property Categories
         $propertyCategoriesResult = $this->safeApiCall(
-            fn() => $this->management->propertyCategories->getPropertyCategories(),
-            'property_categories'
+            fn() => $this->management->propertyCategories->getPropertyCategories()
         );
         $testResults['property_categories'] = $propertyCategoriesResult;
         if (!$propertyCategoriesResult['success']) {
@@ -262,8 +251,7 @@ class ExampleController extends Controller
 
         // Test 12: Get Properties
         $propertiesResult = $this->safeApiCall(
-            fn() => $this->management->properties->getProperties(),
-            'properties'
+            fn() => $this->management->properties->getProperties()
         );
         $testResults['properties'] = $propertiesResult;
         if (!$propertiesResult['success']) {
@@ -274,8 +262,7 @@ class ExampleController extends Controller
 
         // Test 13: Get APIs
         $apisResult = $this->safeApiCall(
-            fn() => $this->management->apis->getAPIs(),
-            'apis'
+            fn() => $this->management->apis->getAPIs()
         );
         $testResults['apis'] = $apisResult;
         if (!$apisResult['success']) {
@@ -286,8 +273,7 @@ class ExampleController extends Controller
 
         // Test 14: Get Webhooks
         $webhooksResult = $this->safeApiCall(
-            fn() => $this->management->webhooks->getWebhooks(),
-            'webhooks'
+            fn() => $this->management->webhooks->getWebhooks()
         );
         $testResults['webhooks'] = $webhooksResult;
         if (!$webhooksResult['success']) {
@@ -298,8 +284,7 @@ class ExampleController extends Controller
 
         // Test 15: Get Subscribers
         $subscribersResult = $this->safeApiCall(
-            fn() => $this->management->subscribers->getSubscribers(),
-            'subscribers'
+            fn() => $this->management->subscribers->getSubscribers()
         );
         $testResults['subscribers'] = $subscribersResult;
         if (!$subscribersResult['success']) {
@@ -329,7 +314,7 @@ class ExampleController extends Controller
     /**
      * Helper function to safely test API methods with robust error handling
      */
-    private function safeApiCall(callable $apiCall, string $endpointName)
+    private function safeApiCall(callable $apiCall)
     {
         try {
             $result = $apiCall();
