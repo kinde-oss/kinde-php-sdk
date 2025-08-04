@@ -30,6 +30,9 @@ use Kinde\KindeSDK\Api\MFAApi;
 use Kinde\KindeSDK\Configuration;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\RequestException;
 use Exception;
 
 /**
@@ -208,8 +211,10 @@ class KindeManagementClient
     ) {
         // Load from environment variables if parameters are not provided
         $domain = $domain ?? getenv('KINDE_DOMAIN') ?: getenv('KINDE_HOST') ?: null;
-        $clientId = $clientId ?? getenv('KINDE_CLIENT_ID') ?: null;
-        $clientSecret = $clientSecret ?? getenv('KINDE_CLIENT_SECRET') ?: null;
+        
+        // Try Management API credentials first, then fall back to regular credentials
+        $clientId = getenv('KINDE_MANAGEMENT_CLIENT_ID')  ?? $clientId ?: getenv('KINDE_CLIENT_ID') ?: null;
+        $clientSecret = getenv('KINDE_MANAGEMENT_CLIENT_SECRET') ?? $clientSecret ?: getenv('KINDE_CLIENT_SECRET') ?: null;
         $accessToken = $accessToken ?? getenv('KINDE_MANAGEMENT_ACCESS_TOKEN') ?: null;
 
         // Validate required parameters
@@ -218,11 +223,11 @@ class KindeManagementClient
         }
 
         if (!$clientId) {
-            throw new Exception('Please provide client_id via parameter or KINDE_CLIENT_ID environment variable');
+            throw new Exception('Please provide client_id via parameter or KINDE_MANAGEMENT_CLIENT_ID/KINDE_CLIENT_ID environment variable');
         }
 
         if (!$clientSecret) {
-            throw new Exception('Please provide client_secret via parameter or KINDE_CLIENT_SECRET environment variable');
+            throw new Exception('Please provide client_secret via parameter or KINDE_MANAGEMENT_CLIENT_SECRET/KINDE_CLIENT_SECRET environment variable');
         }
 
         $this->domain = $domain;
@@ -246,6 +251,64 @@ class KindeManagementClient
     }
 
     /**
+     * Check if the application is configured for M2M flow
+     * 
+     * @return bool
+     */
+    public function isConfiguredForM2M(): bool
+    {
+        // Basic check - if we can get a token, the app is configured for M2M
+        try {
+            $this->getAccessToken();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get configuration status and recommendations
+     * 
+     * @return array
+     */
+    public function getConfigurationStatus(): array
+    {
+        $status = [
+            'domain' => !empty($this->domain),
+            'client_id' => !empty($this->clientId),
+            'client_secret' => !empty($this->clientSecret),
+            'm2m_configured' => false,
+            'recommendations' => []
+        ];
+
+        if (!$status['domain']) {
+            $status['recommendations'][] = 'Set KINDE_DOMAIN environment variable';
+        }
+        if (!$status['client_id']) {
+            $status['recommendations'][] = 'Set KINDE_MANAGEMENT_CLIENT_ID or KINDE_CLIENT_ID environment variable';
+        }
+        if (!$status['client_secret']) {
+            $status['recommendations'][] = 'Set KINDE_MANAGEMENT_CLIENT_SECRET or KINDE_CLIENT_SECRET environment variable';
+        }
+
+        if ($status['domain'] && $status['client_id'] && $status['client_secret']) {
+            try {
+                $this->getAccessToken();
+                $status['m2m_configured'] = true;
+            } catch (Exception $e) {
+                $status['recommendations'][] = 'Application not configured for M2M flow. In your Kinde dashboard:';
+                $status['recommendations'][] = '  1. Go to Applications';
+                $status['recommendations'][] = '  2. Create or edit an application';
+                $status['recommendations'][] = '  3. Set Application Type to "Machine to Machine"';
+                $status['recommendations'][] = '  4. Enable "Client Credentials" grant type';
+                $status['recommendations'][] = '  5. Add required scopes (openid, profile, email, offline)';
+            }
+        }
+
+        return $status;
+    }
+
+    /**
      * Initialize the configuration
      */
     protected function initializeConfiguration(): void
@@ -253,10 +316,12 @@ class KindeManagementClient
         $this->config = new Configuration();
         $this->config->setHost($this->domain);
         
-        // Set access token if provided
+        // Set access token if provided, otherwise get one automatically
         if ($this->accessToken) {
             $this->config->setAccessToken($this->accessToken);
         }
+        // Note: We'll get the token automatically in initializeApiClients() 
+        // to avoid potential issues during construction
     }
 
     /**
@@ -264,6 +329,9 @@ class KindeManagementClient
      */
     protected function initializeApiClients(): void
     {
+        // Ensure we have an access token before initializing API clients
+        $this->ensureAccessToken();
+        
         $this->users = new UsersApi(null, $this->config);
         $this->organizations = new OrganizationsApi(null, $this->config);
         $this->applications = new ApplicationsApi(null, $this->config);
@@ -292,7 +360,26 @@ class KindeManagementClient
     }
 
     /**
-     * Get an access token using client credentials
+     * Ensure access token is available
+     * 
+     * @throws Exception If token acquisition fails
+     */
+    protected function ensureAccessToken(): void
+    {
+        if (!$this->accessToken) {
+            $this->getAccessToken();
+        }
+        
+        // Verify token is set in configuration
+        $configToken = $this->config->getAccessToken();
+        
+        if (!$configToken) {
+            $this->config->setAccessToken($this->accessToken);
+        }
+    }
+
+    /**
+     * Get an access token using client credentials for Management API
      * 
      * @return string The access token
      * @throws Exception If token acquisition fails
@@ -306,27 +393,55 @@ class KindeManagementClient
         $client = new Client();
         
         try {
-            $response = $client->post($this->domain . '/oauth2/token', [
-                'form_params' => [
-                    'client_id' => $this->clientId,
-                    'client_secret' => $this->clientSecret,
-                    'grant_type' => 'client_credentials',
-                    'scope' => 'openid profile email offline'
-                ]
+            // Basic client credentials flow without audience parameter
+            $requestData = [
+                'client_id' => $this->clientId,
+                'client_secret' => $this->clientSecret,
+                'grant_type' => 'client_credentials',
+                'audience' => $this->domain . '/api'
+            ];
+            
+            $tokenUrl = $this->domain . '/oauth2/token';
+            
+            $response = $client->post($tokenUrl, [
+                'form_params' => $requestData
             ]);
 
-            $data = json_decode($response->getBody()->getContents(), true);
+            $responseBody = $response->getBody()->getContents();
+            $data = json_decode($responseBody, true);
             
             if (!isset($data['access_token'])) {
-                throw new Exception('No access token in response');
+                throw new Exception('No access token in response: ' . json_encode($data));
             }
 
             $this->accessToken = $data['access_token'];
             $this->config->setAccessToken($this->accessToken);
             
             return $this->accessToken;
+            
+        } catch (ClientException $e) {
+            // Handle 4xx client errors
+            $response = $e->getResponse();
+            $responseBody = $response ? $response->getBody()->getContents() : 'No response body';
+            $statusCode = $response ? $response->getStatusCode() : 'Unknown';
+            
+            throw new Exception("Client error (HTTP $statusCode): " . $e->getMessage() . "\nResponse: " . $responseBody);
+            
+        } catch (ServerException $e) {
+            // Handle 5xx server errors
+            $response = $e->getResponse();
+            $responseBody = $response ? $response->getBody()->getContents() : 'No response body';
+            $statusCode = $response ? $response->getStatusCode() : 'Unknown';
+            
+            throw new Exception("Server error (HTTP $statusCode): " . $e->getMessage() . "\nResponse: " . $responseBody);
+            
+        } catch (RequestException $e) {
+            // Handle other request errors
+            throw new Exception("Request error: " . $e->getMessage());
+            
         } catch (Exception $e) {
-            throw new Exception('Failed to get access token: ' . $e->getMessage());
+            // Handle any other exceptions
+            throw new Exception('Failed to get access token for Management API: ' . $e->getMessage());
         }
     }
 
@@ -339,6 +454,21 @@ class KindeManagementClient
     {
         $this->accessToken = $accessToken;
         $this->config->setAccessToken($accessToken);
+    }
+
+    /**
+     * Refresh the access token
+     * 
+     * @return string The new access token
+     * @throws Exception If token refresh fails
+     */
+    public function refreshAccessToken(): string
+    {
+        // Clear existing token to force refresh
+        $this->accessToken = null;
+        $this->config->setAccessToken(null);
+        
+        return $this->getAccessToken();
     }
 
     /**
@@ -369,6 +499,68 @@ class KindeManagementClient
     public function getClientId(): string
     {
         return $this->clientId;
+    }
+
+    /**
+     * Get the client secret
+     * 
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return $this->clientSecret;
+    }
+
+    /**
+     * Get the current access token
+     * 
+     * @return string|null
+     */
+    public function getCurrentAccessToken(): ?string
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Check if the client is using Management API credentials
+     * 
+     * @return bool
+     */
+    public function isUsingManagementCredentials(): bool
+    {
+        $managementClientId = getenv('KINDE_MANAGEMENT_CLIENT_ID');
+        return $managementClientId && $this->clientId === $managementClientId;
+    }
+
+    /**
+     * Get credential source information
+     * 
+     * @return array
+     */
+    public function getCredentialSource(): array
+    {
+        $managementClientId = getenv('KINDE_MANAGEMENT_CLIENT_ID');
+        $regularClientId = getenv('KINDE_CLIENT_ID');
+        
+        if ($managementClientId && $this->clientId === $managementClientId) {
+            return [
+                'type' => 'management_api',
+                'description' => 'Using dedicated Management API credentials',
+                'env_vars' => ['KINDE_MANAGEMENT_CLIENT_ID', 'KINDE_MANAGEMENT_CLIENT_SECRET']
+            ];
+        } elseif ($regularClientId && $this->clientId === $regularClientId) {
+            return [
+                'type' => 'regular_client',
+                'description' => 'Using regular client credentials (fallback)',
+                'env_vars' => ['KINDE_CLIENT_ID', 'KINDE_CLIENT_SECRET']
+            ];
+        } else {
+            return [
+                'type' => 'direct',
+                'description' => 'Credentials passed directly to constructor',
+                'env_vars' => []
+            ];
+        }
     }
 
 

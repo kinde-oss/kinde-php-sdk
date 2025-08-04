@@ -50,8 +50,8 @@ class KindeServiceProvider extends ServiceProvider
         $this->app->singleton(KindeManagementClient::class, function ($app) {
             $config = config('kinde');
             
-            // Validate required configuration
-            $required = ['domain', 'client_id', 'client_secret', 'management_access_token'];
+            // Validate required configuration (management_access_token is optional)
+            $required = ['domain', 'client_id', 'client_secret'];
             foreach ($required as $key) {
                 if (empty($config[$key])) {
                     throw new \InvalidArgumentException("Missing required Kinde configuration: {$key}");
