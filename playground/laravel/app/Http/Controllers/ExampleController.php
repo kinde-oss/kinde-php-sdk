@@ -350,7 +350,7 @@ class ExampleController extends Controller
     {
         try {
             // Make a simple API call and check if it succeeds
-            $users = $this->management->users->getUsers();
+            $this->management->users->getUsers();
             return [
                 'working' => true,
                 'message' => 'Header fix is working - API calls are successful',
