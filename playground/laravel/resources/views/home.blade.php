@@ -116,6 +116,10 @@
                                class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                                 View User Info
                             </a>
+                            <a href="/test-management-api" 
+                               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                                Test Management API
+                            </a>
                         </div>
                     </div>
                 </div>

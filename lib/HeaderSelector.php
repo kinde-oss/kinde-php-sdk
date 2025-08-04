@@ -87,7 +87,14 @@ class HeaderSelector
         if (count($accept) === 0 || (count($accept) === 1 && $accept[0] === '')) {
             return null;
         } elseif ($jsonAccept = preg_grep('~(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$~', $accept)) {
-            return implode(',', $jsonAccept);
+            // Strip out charset=utf-8 from application/json headers
+            $cleanedAccept = [];
+            foreach ($jsonAccept as $header) {
+                // Remove charset=utf-8 or any charset parameter from application/json
+                $cleanedHeader = preg_replace('/application\/json\s*;\s*charset\s*=\s*[^,]+/', 'application/json', $header);
+                $cleanedAccept[] = $cleanedHeader;
+            }
+            return implode(',', $cleanedAccept);
         } else {
             return implode(',', $accept);
         }
@@ -115,4 +122,4 @@ class HeaderSelector
             return implode(',', $contentType);
         }
     }
-}
+} 
