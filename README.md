@@ -112,9 +112,23 @@ $org = $management->organizations->createOrganization([
 ### Laravel
 
 ```bash
-composer require kinde-oss/kinde-auth-laravel
-php artisan kinde:install
+composer require kinde-oss/kinde-auth-php
 ```
+
+**Register the service provider in `config/app.php`:**
+```php
+'providers' => [
+    // ... other providers
+    Kinde\KindeSDK\Frameworks\Laravel\KindeServiceProvider::class,
+],
+```
+
+**Publish the configuration:**
+```bash
+php artisan vendor:publish --tag=kinde-config
+```
+
+> **Security Note**: Environment variables are only accessible to server-side code (controllers, services, etc.) and are not available to client-side code or public assets. This ensures that sensitive configuration like `KINDE_CLIENT_SECRET` remains secure and is never exposed to the browser.
 
 ```php
 // In your controller
@@ -185,7 +199,7 @@ The `KindeClientSDK` provides OAuth authentication features:
 
 ## Examples
 
-See the [examples](examples/) directory for complete working examples.
+See the [playground](playground/) directory for complete working examples.
 
 ## Migration Guide
 
@@ -215,8 +229,7 @@ $users = $management->users->getUsers();
 ## Support
 
 - [Documentation](https://docs.kinde.com)
-- [API Reference](https://docs.kinde.com/api)
-- [Community](https://community.kinde.com)
+- [API Reference](https://docs.kinde.com/kinde-apis/)
 
 ## License
 

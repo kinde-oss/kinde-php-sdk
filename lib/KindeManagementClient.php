@@ -213,8 +213,8 @@ class KindeManagementClient
         $domain = $domain ?? getenv('KINDE_DOMAIN') ?: getenv('KINDE_HOST') ?: null;
         
         // Try Management API credentials first, then fall back to regular credentials
-        $clientId = getenv('KINDE_MANAGEMENT_CLIENT_ID')  ?? $clientId ?: getenv('KINDE_CLIENT_ID') ?: null;
-        $clientSecret = getenv('KINDE_MANAGEMENT_CLIENT_SECRET') ?? $clientSecret ?: getenv('KINDE_CLIENT_SECRET') ?: null;
+        $clientId = $clientId  ?? getenv('KINDE_MANAGEMENT_CLIENT_ID') ?: getenv('KINDE_CLIENT_ID') ?: null;
+        $clientSecret = $clientSecret ?? getenv('KINDE_MANAGEMENT_CLIENT_SECRET') ?: getenv('KINDE_CLIENT_SECRET') ?: null;
         $accessToken = $accessToken ?? getenv('KINDE_MANAGEMENT_ACCESS_TOKEN') ?: null;
 
         // Validate required parameters

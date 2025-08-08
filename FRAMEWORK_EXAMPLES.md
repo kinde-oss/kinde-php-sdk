@@ -6,8 +6,7 @@ This document shows how the Kinde PHP SDK would work with different PHP framewor
 
 ### Installation
 ```bash
-composer require kinde-oss/kinde-auth-laravel
-php artisan kinde:install
+composer require kinde-oss/kinde-auth-php
 ```
 
 ### Configuration
@@ -66,41 +65,39 @@ Route::middleware('kinde.auth:read:users')->group(function () {
 
 ### Installation
 ```bash
-composer require kinde-oss/kinde-auth-symfony
+composer require kinde-oss/kinde-auth-php
 ```
 
-### Configuration
-```yaml
-# config/packages/kinde.yaml
-kinde:
-    domain: '%env(KINDE_DOMAIN)%'
-    client_id: '%env(KINDE_CLIENT_ID)%'
-    client_secret: '%env(KINDE_CLIENT_SECRET)%'
-    redirect_uri: '%env(KINDE_REDIRECT_URI)%'
-    logout_redirect_uri: '%env(KINDE_LOGOUT_REDIRECT_URI)%'
+**Add autoload mapping to `composer.json`:**
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
+        }
+    }
+}
 ```
 
 ### Routes
 ```yaml
 # config/routes.yaml
-kinde_auth:
-    resource: '@KindeAuthBundle/Controller/'
-    type: annotation
-    prefix: /auth
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
 ```
 
-### Security Configuration
 ```yaml
-# config/packages/security.yaml
-security:
-    providers:
-        kinde:
-            id: kinde.user_provider
-    
-    access_control:
-        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/users, roles: [IS_AUTHENTICATED_FULLY, read:users] }
+# config/routes/kinde_sdk.yaml
+kinde_sdk:
+    resource: 'Kinde\KindeSDK\Frameworks\Symfony\KindeAuthController'
+    type: attribute
 ```
+
+
 
 ### Twig Templates
 ```twig
@@ -121,19 +118,21 @@ security:
 
 ### Installation
 ```bash
-composer require kinde-oss/kinde-auth-codeigniter
+composer require kinde-oss/kinde-auth-php
 ```
+
+
 
 ### Routes
 ```php
 // app/Config/Routes.php
-$routes->get('auth/login', 'KindeAuthController::login');
-$routes->get('auth/callback', 'KindeAuthController::callback');
-$routes->get('auth/register', 'KindeAuthController::register');
-$routes->get('auth/create-org', 'KindeAuthController::createOrg');
-$routes->get('auth/logout', 'KindeAuthController::logout');
-$routes->get('auth/user-info', 'KindeAuthController::userInfo');
-$routes->get('auth/portal', 'KindeAuthController::portal');
+$routes->get('auth/login', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::login');
+$routes->get('auth/callback', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::callback');
+$routes->get('auth/register', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::register');
+$routes->get('auth/create-org', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::createOrg');
+$routes->get('auth/logout', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::logout');
+$routes->get('auth/user-info', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::userInfo');
+$routes->get('auth/portal', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::portal');
 ```
 
 ### Middleware

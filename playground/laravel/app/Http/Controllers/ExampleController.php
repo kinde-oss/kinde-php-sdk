@@ -16,9 +16,10 @@ use Exception;
 class ExampleController extends Controller
 {
     public function __construct(
-        private KindeClientSDK $kindeClient,
-        private KindeManagementClient $management
-    ) {}
+        private KindeClientSDK $kindeClient
+    ) {
+        $this->management = KindeManagementClient::createFromEnv();
+    }
 
     /**
      * Show the home page with login/logout buttons

@@ -1,68 +1,230 @@
-# CodeIgniter 4 Application Starter
+# Kinde PHP SDK - CodeIgniter Playground
 
-## What is CodeIgniter?
-
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
-
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
-
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
-
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
-
-## Installation & updates
-
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+A comprehensive playground for testing and exploring the Kinde PHP SDK with CodeIgniter 4.
 
 ## Setup
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### Prerequisites
+- PHP 8.0 or higher
+- Composer
+- CodeIgniter 4
+- Kinde account and application
 
-## Important Change with index.php
+### Installation
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd kinde-php-sdk/playground/codeigniter
+   ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+2. **Install dependencies**
+   ```bash
+   composer install
+   ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+3. **Configure environment**
+   ```bash
+   cp env.example .env
+   ```
 
-## Repository Management
+4. **Set up Kinde credentials**
+   Add your Kinde application credentials to the `.env` file:
+   ```env
+   # Frontend Application
+   KINDE_CLIENT_ID=your_client_id
+   KINDE_CLIENT_SECRET=your_client_secret
+   KINDE_DOMAIN=your_domain.kinde.com
+   KINDE_REDIRECT_URI=http://localhost:8080/auth/callback
+   KINDE_LOGOUT_REDIRECT_URI=http://localhost:8080
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+   # Management API (M2M Application)
+   KINDE_MANAGEMENT_CLIENT_ID=your_m2m_client_id
+   KINDE_MANAGEMENT_CLIENT_SECRET=your_m2m_client_secret
+   KINDE_MANAGEMENT_DOMAIN=your_domain.kinde.com
+   ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+5. **Start the development server**
+   ```bash
+   php spark serve
+   ```
 
-## Server Requirements
+## Usage
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+### Getting Started
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+1. **Visit the home page**: Navigate to `http://localhost:8080`
+2. **Login or Register**: Use the authentication buttons to get started
+3. **Explore the Dashboard**: Access user information and available features
+4. **Test Management APIs**: Use the comprehensive testing dashboard
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+### Management API Testing
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+#### Comprehensive Testing Dashboard
+- **URL**: `/test-management-api`
+- **Features**:
+  - Tests all 15+ Management API endpoints
+  - Provides success/failure statistics
+  - Shows header fix status
+  - Detailed error reporting
+  - Real-time API response data
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+#### Individual Endpoint Testing
+- **Users**: `/api/users` (GET/POST)
+- **Organizations**: `/api/organizations` (GET/POST)
+- **Applications**: `/api/applications` (GET)
+- **Roles**: `/api/roles` (GET)
+- **Permissions**: `/api/permissions` (GET)
+- **Feature Flags**: `/api/feature-flags` (GET)
+
+#### Advanced Testing
+- **Specific Endpoint Testing**: `/api/test-endpoint?endpoint=users&action=list`
+- **Bulk Operations**: `/api/bulk-create-users` (POST)
+- **User Profile**: `/api/user-profile` (GET)
+
+### Authentication Flows
+
+#### Standard Login
+1. Click "Login" on the home page
+2. Redirected to Kinde authentication
+3. Complete authentication
+4. Redirected back to dashboard
+
+#### User Portal
+1. Click "Go to Portal" from dashboard
+2. Redirected to Kinde user portal
+3. Manage account settings
+4. Return to application
+
+### Protected Routes
+
+#### Authentication Required
+- `/dashboard` - User dashboard
+- `/protected` - Example protected route
+- `/auth/user-info` - User information
+- `/auth/portal` - User portal access
+
+#### Permission Required
+- `/admin` - Admin area (requires `admin:read` permission)
+
+## API Response Examples
+
+### Successful API Call
+```json
+{
+  "success": true,
+  "data": {
+    "users": [...],
+    "count": 5
+  }
+}
+```
+
+### Failed API Call
+```json
+{
+  "success": false,
+  "error": "Authentication failed",
+  "code": 401
+}
+```
+
+### Management API Test Results
+```json
+{
+  "testResults": {
+    "users": {
+      "success": true,
+      "count": 5
+    },
+    "organizations": {
+      "success": true,
+      "count": 2
+    }
+  },
+  "summary": {
+    "total": 15,
+    "successful": 14,
+    "failed": 1,
+    "success_rate": 93.33
+  }
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### Authentication Errors
+- **Problem**: "Invalid client credentials"
+- **Solution**: Verify your Kinde application credentials in `.env`
+
+#### API Permission Errors
+- **Problem**: "Insufficient permissions"
+- **Solution**: Ensure your M2M application has the required scopes
+
+#### Header Fix Issues
+- **Problem**: Content-type errors in API calls
+- **Solution**: Check the header fix status in the testing dashboard
+
+#### Session Issues
+- **Problem**: Authentication state not persisting
+- **Solution**: Verify session configuration in CodeIgniter
+
+### Debugging
+
+1. **Check the testing dashboard**: `/test-management-api`
+2. **Review error logs**: Check CodeIgniter logs in `writable/logs/`
+3. **Test individual endpoints**: Use specific endpoint URLs
+4. **Verify credentials**: Ensure all environment variables are set correctly
+
+## Development
+
+### Project Structure
+```
+app/
+├── Controllers/
+│   └── ExampleController.php    # Main controller with all features
+├── Views/
+│   └── kinde/
+│       ├── home.php             # Home page with navigation
+│       ├── dashboard.php        # User dashboard
+│       ├── test-management-api.php  # API testing dashboard
+│       ├── protected.php        # Protected route example
+│       └── admin.php            # Admin area example
+└── Config/
+    └── Routes.php               # Application routes
+```
+
+### Adding New Features
+
+1. **Add controller method** in `ExampleController.php`
+2. **Create view file** in `app/Views/kinde/`
+3. **Add route** in `app/Config/Routes.php`
+4. **Update navigation** in relevant view files
+
+### Testing New APIs
+
+1. **Add API call** to `testManagementApi()` method
+2. **Add individual endpoint** method for direct testing
+3. **Update routes** for new endpoints
+4. **Test via dashboard** and individual URLs
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This playground is part of the Kinde PHP SDK and follows the same license terms.
+
+## Support
+
+For issues and questions:
+- Check the [Kinde Documentation](https://kinde.com/docs/)
+- Review the [PHP SDK Documentation](https://github.com/kinde-oss/kinde-php-sdk)
+- Open an issue in the repository
