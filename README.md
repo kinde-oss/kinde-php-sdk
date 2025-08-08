@@ -128,6 +128,8 @@ composer require kinde-oss/kinde-auth-php
 php artisan vendor:publish --tag=kinde-config
 ```
 
+> **Security Note**: Environment variables are only accessible to server-side code (controllers, services, etc.) and are not available to client-side code or public assets. This ensures that sensitive configuration like `KINDE_CLIENT_SECRET` remains secure and is never exposed to the browser.
+
 ```php
 // In your controller
 use Kinde\KindeSDK\KindeClientSDK;
