@@ -13,6 +13,7 @@ class AdditionalParameters
         'connection_id' => 'string',
         'lang' => 'string',
         'plan_interest' => 'string',
-        'pricing_table_key' => 'string'
+        'pricing_table_key' => 'string',
+        'prompt' => 'string'
     ];
 }

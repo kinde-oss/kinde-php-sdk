@@ -156,11 +156,17 @@ class KindeClientSDK
                     $auth = new ClientCredentials();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::authorizationCode:
+                    if (!isset($additionalParameters['prompt'])) {
+                        $additionalParameters['prompt'] = 'login';
+                    }
                     $auth = new AuthorizationCode();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::PKCE:
+                    if (!isset($additionalParameters['prompt'])) {
+                        $additionalParameters['prompt'] = 'login';
+                    }
                     $auth = new PKCE();
-                    return $auth->authenticate($this, 'login', $additionalParameters);
+                    return $auth->authenticate($this, $additionalParameters);
                 default:
                     throw new InvalidArgumentException("Please provide correct grant_type");
                     break;
@@ -172,7 +178,7 @@ class KindeClientSDK
 
     /**
      * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
-     * state, and the start page set to registration
+     * state, and the prompt set to register
      *
      * @param array additionalParameters The array includes params to pass api.
      */
@@ -180,8 +186,12 @@ class KindeClientSDK
     {
         $this->grantType = 'authorization_code';
 
+        if (!isset($additionalParameters['prompt'])) {
+            $additionalParameters['prompt'] = 'register';
+        }
+
         $auth = new PKCE();
-        return $auth->authenticate($this, 'registration', $additionalParameters);
+        return $auth->authenticate($this, $additionalParameters);
     }
 
     /**

@@ -34,7 +34,7 @@ class PKCE
      * @return A redirect to the authorization endpoint with the parameters needed to start the
      * authorization process.
      */
-    public function authenticate(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
+    public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
         $challenge = Utils::generateChallenge();
@@ -47,8 +47,7 @@ class PKCE
             'scope' => $clientSDK->scopes,
             'code_challenge' => $challenge['codeChallenge'],
             'code_challenge_method' => 'S256',
-            'state' => $state,
-            'start_page' => $startPage
+            'state' => $state
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
