@@ -197,7 +197,7 @@ The `KindeClientSDK` provides OAuth authentication features:
 
 ## Examples
 
-See the [examples](examples/) directory for complete working examples.
+See the [playground](playground/) directory for complete working examples.
 
 ## Migration Guide
 
@@ -227,8 +227,7 @@ $users = $management->users->getUsers();
 ## Support
 
 - [Documentation](https://docs.kinde.com)
-- [API Reference](https://docs.kinde.com/api)
-- [Community](https://community.kinde.com)
+- [API Reference](https://docs.kinde.com/kinde-apis/)
 
 ## License
 

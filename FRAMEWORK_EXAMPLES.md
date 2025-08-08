@@ -65,27 +65,36 @@ Route::middleware('kinde.auth:read:users')->group(function () {
 
 ### Installation
 ```bash
-composer require kinde-oss/kinde-auth-symfony
+composer require kinde-oss/kinde-auth-php
 ```
 
-### Configuration
-```yaml
-# config/packages/kinde.yaml
-kinde:
-    domain: '%env(KINDE_DOMAIN)%'
-    client_id: '%env(KINDE_CLIENT_ID)%'
-    client_secret: '%env(KINDE_CLIENT_SECRET)%'
-    redirect_uri: '%env(KINDE_REDIRECT_URI)%'
-    logout_redirect_uri: '%env(KINDE_LOGOUT_REDIRECT_URI)%'
+**Add autoload mapping to `composer.json`:**
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
+        }
+    }
+}
 ```
 
 ### Routes
 ```yaml
 # config/routes.yaml
-kinde_auth:
-    resource: '@KindeAuthBundle/Controller/'
-    type: annotation
-    prefix: /auth
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+```
+
+```yaml
+# config/routes/kinde_sdk.yaml
+kinde_sdk:
+    resource: 'Kinde\KindeSDK\Frameworks\Symfony\KindeAuthController'
+    type: attribute
 ```
 
 ### Security Configuration

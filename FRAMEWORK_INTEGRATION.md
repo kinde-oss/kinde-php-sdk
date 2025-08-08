@@ -143,6 +143,89 @@ KINDE_SCOPES=openid profile email offline
 <?php endif; ?>
 ```
 
-### 3. Symfony Bundle
+### 3. Symfony Integration
 
-**Package Name**: `
+**Package Name**: `kinde-oss/kinde-auth-php`
+
+**Features**:
+- ✅ Built-in Symfony controller for authentication
+- ✅ Attribute-based routing
+- ✅ Direct file-based routing
+- ✅ Session management
+- ✅ User profile access
+- ✅ Organization management
+- ✅ Portal integration
+- ✅ Security voter for permission checks
+
+**Usage**:
+```bash
+composer require kinde-oss/kinde-auth-php
+```
+
+**Add autoload mapping to `composer.json`:**
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
+        }
+    }
+}
+```
+
+**Register routes in `config/routes.yaml`:**
+```yaml
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+```
+
+**Create `config/routes/kinde_sdk.yaml`:**
+```yaml
+kinde_sdk:
+    resource: 'Kinde\KindeSDK\Frameworks\Symfony\KindeAuthController'
+    type: attribute
+```
+
+**Configuration**:
+Set environment variables in your `.env` file:
+```env
+KINDE_DOMAIN=your-domain.kinde.com
+KINDE_CLIENT_ID=your_client_id
+KINDE_CLIENT_SECRET=your_client_secret
+KINDE_REDIRECT_URI=http://localhost:8000/auth/callback
+KINDE_LOGOUT_REDIRECT_URI=http://localhost:8000/
+KINDE_GRANT_TYPE=authorization_code
+KINDE_SCOPES=openid profile email offline
+```
+
+**Usage in Twig Templates**:
+```twig
+{# Login button #}
+<a href="{{ path('kinde_login') }}" class="btn btn-primary">
+    Login with Kinde
+</a>
+
+{# User info display #}
+{% if app.session.get('kinde_authenticated') %}
+    <div>Welcome, {{ app.session.get('kinde_user').given_name }}</div>
+    <a href="{{ path('kinde_portal') }}" class="btn btn-primary">Manage Account</a>
+    <a href="{{ path('kinde_logout') }}" class="btn btn-danger">Logout</a>
+{% endif %}
+```
+
+**Security Configuration**:
+```yaml
+# config/packages/security.yaml
+security:
+    providers:
+        kinde:
+            id: kinde.user_provider
+    
+    access_control:
+        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/users, roles: [IS_AUTHENTICATED_FULLY, read:users] }
+```
