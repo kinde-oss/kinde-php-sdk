@@ -107,17 +107,7 @@ Route::middleware('kinde.auth:read:users')->group(function () {
 composer require kinde-oss/kinde-auth-php
 ```
 
-**Add autoload mapping to `composer.json`:**
-```json
-{
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
-        }
-    }
-}
-```
+
 
 **Register routes in `app/Config/Routes.php`:**
 ```php
@@ -176,17 +166,7 @@ KINDE_SCOPES=openid profile email offline
 composer require kinde-oss/kinde-auth-php
 ```
 
-**Add autoload mapping to `composer.json`:**
-```json
-{
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/",
-            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
-        }
-    }
-}
-```
+
 
 **Register routes in `config/routes.yaml`:**
 ```yaml

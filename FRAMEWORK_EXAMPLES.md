@@ -121,17 +121,7 @@ kinde_sdk:
 composer require kinde-oss/kinde-auth-php
 ```
 
-**Add autoload mapping to `composer.json`:**
-```json
-{
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
-        }
-    }
-}
-```
+
 
 ### Routes
 ```php
