@@ -1,49 +1,6 @@
 # Kinde PHP SDK - CodeIgniter Playground
 
-A comprehensive playground for testing and exploring the Kinde PHP SDK with CodeIgniter 4, featuring full Management API testing capabilities.
-
-## Features
-
-### 🔐 Authentication
-- **Login/Logout**: Standard OAuth2 authentication flow
-- **Registration**: User registration with Kinde
-- **Organization Creation**: Create new organizations during signup
-- **User Portal**: Access to Kinde's user management portal
-- **Protected Routes**: Authentication-based route protection
-- **Permission-based Access**: Role and permission-based access control
-
-### ⚙️ Management API Testing
-- **Comprehensive API Dashboard**: Test all Management API endpoints with detailed reporting
-- **Header Fix Status**: Monitor and verify API header fix functionality
-- **Individual Endpoint Testing**: Test specific API endpoints with detailed error reporting
-- **Bulk Operations**: Test bulk user creation and other batch operations
-
-### 📊 Available API Endpoints
-
-#### Core Management APIs
-- **Users**: List, create, and manage users
-- **Organizations**: List and create organizations
-- **Applications**: List and manage applications
-- **Roles**: List and manage roles
-- **Permissions**: List and manage permissions
-
-#### Advanced APIs
-- **Feature Flags**: Environment-specific feature flag management
-- **Environment**: Get environment information
-- **Business**: Get business information
-- **Timezones**: List available timezones
-- **Industries**: List available industries
-- **Property Categories**: List property categories
-- **Properties**: List and manage properties
-- **APIs**: List and manage APIs
-- **Webhooks**: List and manage webhooks
-- **Subscribers**: List and manage subscribers
-
-### 🎯 User Interface
-- **Modern Dashboard**: Clean, responsive interface with Tailwind CSS
-- **Real-time Status**: Live authentication and permission status
-- **Navigation**: Easy access to all features and endpoints
-- **Error Handling**: Comprehensive error reporting and debugging
+A comprehensive playground for testing and exploring the Kinde PHP SDK with CodeIgniter 4.
 
 ## Setup
 
@@ -132,12 +89,6 @@ A comprehensive playground for testing and exploring the Kinde PHP SDK with Code
 2. Redirected to Kinde authentication
 3. Complete authentication
 4. Redirected back to dashboard
-
-#### Organization Creation
-1. Click "Create Organization" 
-2. Fill in organization details
-3. Complete authentication flow
-4. Organization created and user added
 
 #### User Portal
 1. Click "Go to Portal" from dashboard

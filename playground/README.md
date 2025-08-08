@@ -35,7 +35,7 @@ This directory contains examples demonstrating how to use the Kinde PHP SDK with
 **Run it**:
 ```bash
 cd kinde-php-sdk
-php examples/management_client_example.php
+php playground/management_client_example.php
 ```
 
 **What it does**:
@@ -70,22 +70,6 @@ Each framework example includes a complete controller/application that demonstra
    Route::get('/user/info', [KindeAuthController::class, 'userInfo']);
    Route::get('/portal', [KindeAuthController::class, 'portal']);
    ```
-
-#### Slim Example
-
-**File**: `slim/ExampleApp.php`
-
-**Description**: Complete Slim application with authentication routes.
-
-**To run standalone**:
-```bash
-cd kinde-php-sdk
-php -S localhost:8000 -t examples/slim
-```
-
-**To use in Slim**:
-1. Copy the routes to your Slim app
-2. Install the Kinde SDK: `composer require kinde/kinde-php-sdk`
 
 #### Symfony Example
 
