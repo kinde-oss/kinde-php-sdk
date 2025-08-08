@@ -27,6 +27,8 @@ Create framework-specific packages that provide ready-to-use authentication hand
 - ✅ Configuration publishing
 - ✅ Session management
 - ✅ Built-in Laravel framework integration
+- ✅ Automatic route registration
+- ✅ Blade components
 
 **Usage**:
 ```bash
@@ -46,6 +48,14 @@ composer require kinde-oss/kinde-auth-php
 php artisan vendor:publish --tag=kinde-config
 ```
 
+**Register middleware in `app/Http/Kernel.php`:**
+```php
+protected $middlewareAliases = [
+    // ... other middleware
+    'kinde.auth' => \Kinde\KindeSDK\Frameworks\Laravel\Middleware\KindeAuthMiddleware::class,
+];
+```
+
 **Configuration**:
 ```php
 // config/kinde.php
@@ -55,8 +65,12 @@ return [
     'client_secret' => env('KINDE_CLIENT_SECRET'),
     'redirect_uri' => env('KINDE_REDIRECT_URI'),
     'logout_redirect_uri' => env('KINDE_LOGOUT_REDIRECT_URI'),
+    'grant_type' => env('KINDE_GRANT_TYPE', 'authorization_code'),
+    'scopes' => env('KINDE_SCOPES', 'openid profile email offline'),
 ];
 ```
+
+> **Security Note**: Environment variables are only accessible to server-side code (controllers, services, etc.) and are not available to client-side code or public assets. This ensures that sensitive configuration like `KINDE_CLIENT_SECRET` remains secure and is never exposed to the browser.
 
 **Route Protection**:
 ```php
@@ -217,15 +231,3 @@ KINDE_SCOPES=openid profile email offline
 {% endif %}
 ```
 
-**Security Configuration**:
-```yaml
-# config/packages/security.yaml
-security:
-    providers:
-        kinde:
-            id: kinde.user_provider
-    
-    access_control:
-        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/users, roles: [IS_AUTHENTICATED_FULLY, read:users] }
-```

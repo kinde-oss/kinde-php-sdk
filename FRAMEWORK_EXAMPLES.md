@@ -97,18 +97,7 @@ kinde_sdk:
     type: attribute
 ```
 
-### Security Configuration
-```yaml
-# config/packages/security.yaml
-security:
-    providers:
-        kinde:
-            id: kinde.user_provider
-    
-    access_control:
-        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/users, roles: [IS_AUTHENTICATED_FULLY, read:users] }
-```
+
 
 ### Twig Templates
 ```twig
