@@ -23,12 +23,11 @@ class PKCE
      * Initiates the authentication process for the Kinde client SDK.
      *
      * @param KindeClientSDK $clientSDK           The Kinde client SDK instance.
-     * @param string         $startPage           The start page for the authentication process (default: 'login').
      * @param array          $additionalParameters An associative array of additional parameters (optional).
      *
      * @return void
      */
-    public function authenticate(KindeClientSDK $clientSDK, string $startPage = 'login', array $additionalParameters = [])
+    public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
         $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
         $challenge = Utils::generateChallenge();
@@ -41,8 +40,7 @@ class PKCE
             'scope' => $clientSDK->scopes,
             'code_challenge' => $challenge['codeChallenge'],
             'code_challenge_method' => 'S256',
-            'state' => $state,
-            'start_page' => $startPage
+            'state' => $state
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);

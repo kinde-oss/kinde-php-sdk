@@ -184,12 +184,18 @@ class KindeClientSDK
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::authorizationCode:
                     $this->cleanStorage();
+                    if (!isset($additionalParameters['prompt'])) {
+                        $additionalParameters['prompt'] = 'login';
+                    }
                     $auth = new AuthorizationCode();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::PKCE:
                     $this->cleanStorage();
+                    if (!isset($additionalParameters['prompt'])) {
+                        $additionalParameters['prompt'] = 'login';
+                    }
                     $auth = new PKCE();
-                    return $auth->authenticate($this, 'login', $additionalParameters);
+                    return $auth->authenticate($this, $additionalParameters);
                 default:
                     throw new InvalidArgumentException("Please provide correct grant_type");
                     break;
@@ -210,8 +216,12 @@ class KindeClientSDK
     {
         $this->grantType = 'authorization_code';
 
+        if (!isset($additionalParameters['prompt'])) {
+            $additionalParameters['prompt'] = 'register';
+        }
+
         $auth = new PKCE();
-        return $auth->authenticate($this, 'registration', $additionalParameters);
+        return $auth->authenticate($this, $additionalParameters);
     }
 
     /**

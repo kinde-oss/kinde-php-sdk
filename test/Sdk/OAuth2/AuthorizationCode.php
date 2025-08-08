@@ -29,8 +29,7 @@ class AuthorizationCode
             'redirect_uri' => $clientSDK->redirectUri,
             'response_type' => 'code',
             'scope' => $clientSDK->scopes,
-            'state' => $state,
-            'start_page' => 'login'
+            'state' => $state
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
