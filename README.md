@@ -112,8 +112,20 @@ $org = $management->organizations->createOrganization([
 ### Laravel
 
 ```bash
-composer require kinde-oss/kinde-auth-laravel
-php artisan kinde:install
+composer require kinde-oss/kinde-auth-php
+```
+
+**Register the service provider in `config/app.php`:**
+```php
+'providers' => [
+    // ... other providers
+    Kinde\KindeSDK\Frameworks\Laravel\KindeServiceProvider::class,
+],
+```
+
+**Publish the configuration:**
+```bash
+php artisan vendor:publish --tag=kinde-config
 ```
 
 ```php

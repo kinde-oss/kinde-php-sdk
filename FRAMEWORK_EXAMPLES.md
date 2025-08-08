@@ -6,8 +6,7 @@ This document shows how the Kinde PHP SDK would work with different PHP framewor
 
 ### Installation
 ```bash
-composer require kinde-oss/kinde-auth-laravel
-php artisan kinde:install
+composer require kinde-oss/kinde-auth-php
 ```
 
 ### Configuration
@@ -121,19 +120,31 @@ security:
 
 ### Installation
 ```bash
-composer require kinde-oss/kinde-auth-codeigniter
+composer require kinde-oss/kinde-auth-php
+```
+
+**Add autoload mapping to `composer.json`:**
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
+        }
+    }
+}
 ```
 
 ### Routes
 ```php
 // app/Config/Routes.php
-$routes->get('auth/login', 'KindeAuthController::login');
-$routes->get('auth/callback', 'KindeAuthController::callback');
-$routes->get('auth/register', 'KindeAuthController::register');
-$routes->get('auth/create-org', 'KindeAuthController::createOrg');
-$routes->get('auth/logout', 'KindeAuthController::logout');
-$routes->get('auth/user-info', 'KindeAuthController::userInfo');
-$routes->get('auth/portal', 'KindeAuthController::portal');
+$routes->get('auth/login', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::login');
+$routes->get('auth/callback', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::callback');
+$routes->get('auth/register', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::register');
+$routes->get('auth/create-org', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::createOrg');
+$routes->get('auth/logout', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::logout');
+$routes->get('auth/user-info', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::userInfo');
+$routes->get('auth/portal', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::portal');
 ```
 
 ### Middleware

@@ -19,21 +19,31 @@ Create framework-specific packages that provide ready-to-use authentication hand
 
 ### 1. Laravel Package (Priority)
 
-**Package Name**: `kinde-oss/kinde-auth-laravel`
+**Package Name**: `kinde-oss/kinde-auth-php`
 
 **Features**:
-- ✅ Automatic route registration (`/auth/login`, `/auth/callback`, etc.)
 - ✅ Service provider for dependency injection
 - ✅ Middleware for route protection
-- ✅ Artisan commands for quick setup
-- ✅ Blade components for login/logout buttons
 - ✅ Configuration publishing
 - ✅ Session management
+- ✅ Built-in Laravel framework integration
 
 **Usage**:
 ```bash
-composer require kinde-oss/kinde-auth-laravel
-php artisan kinde:install
+composer require kinde-oss/kinde-auth-php
+```
+
+**Register the service provider in `config/app.php`:**
+```php
+'providers' => [
+    // ... other providers
+    Kinde\KindeSDK\Frameworks\Laravel\KindeServiceProvider::class,
+],
+```
+
+**Publish the configuration:**
+```bash
+php artisan vendor:publish --tag=kinde-config
 ```
 
 **Configuration**:
@@ -64,6 +74,73 @@ Route::middleware('kinde.auth:read:users')->group(function () {
 ```blade
 <x-kinde::login-button text="Sign in with Kinde" />
 <x-kinde::logout-button />
+```
+
+### 2. CodeIgniter Integration
+
+**Package Name**: `kinde-oss/kinde-auth-php`
+
+**Features**:
+- ✅ Built-in CodeIgniter controller for authentication
+- ✅ Automatic route handling for login, callback, logout
+- ✅ Session management
+- ✅ User profile access
+- ✅ Organization management
+- ✅ Portal integration
+
+**Usage**:
+```bash
+composer require kinde-oss/kinde-auth-php
+```
+
+**Add autoload mapping to `composer.json`:**
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Kinde\\KindeSDK\\": "vendor/kinde-oss/kinde-auth-php/lib/"
+        }
+    }
+}
+```
+
+**Register routes in `app/Config/Routes.php`:**
+```php
+$routes->get('auth/login', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::login');
+$routes->get('auth/callback', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::callback');
+$routes->get('auth/logout', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::logout');
+$routes->get('auth/register', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::register');
+$routes->get('auth/create-org', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::createOrg');
+$routes->get('auth/user-info', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::userInfo');
+$routes->get('auth/portal', '\Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAuthController::portal');
+```
+
+**Configuration**:
+Set environment variables in your `.env` file:
+```env
+KINDE_DOMAIN=your-domain.kinde.com
+KINDE_CLIENT_ID=your_client_id
+KINDE_CLIENT_SECRET=your_client_secret
+KINDE_REDIRECT_URI=http://localhost:8080/auth/callback
+KINDE_LOGOUT_REDIRECT_URI=http://localhost:8080/
+KINDE_GRANT_TYPE=authorization_code
+KINDE_SCOPES=openid profile email offline
+```
+
+**Usage in Views**:
+```php
+<!-- Login button -->
+<a href="<?= base_url('auth/login') ?>" class="btn btn-primary">
+    Login with Kinde
+</a>
+
+<!-- User info display -->
+<?php if (session()->get('kinde_authenticated')): ?>
+    <div>Welcome, <?= session()->get('kinde_user')->given_name ?></div>
+    <a href="<?= base_url('auth/portal') ?>" class="btn btn-primary">Manage Account</a>
+    <a href="<?= base_url('auth/logout') ?>" class="btn btn-danger">Logout</a>
+<?php endif; ?>
 ```
 
 ### 3. Symfony Bundle

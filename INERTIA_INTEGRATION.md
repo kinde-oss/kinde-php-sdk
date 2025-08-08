@@ -6,8 +6,7 @@ This document shows how to use the Kinde Laravel package with Inertia.js for bui
 
 ### 1. Install Kinde Laravel Package
 ```bash
-composer require kinde-oss/kinde-auth-laravel
-php artisan kinde:install --inertia
+composer require kinde-oss/kinde-auth-php
 ```
 
 ### 2. Install Inertia.js (if not already installed)
