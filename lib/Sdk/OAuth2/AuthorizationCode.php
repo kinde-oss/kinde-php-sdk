@@ -31,10 +31,13 @@ class AuthorizationCode
     {
         $state = Utils::randomString();
         $this->storage->setState($state);
+        // Check for redirect_uri in additional parameters first, fall back to client SDK's redirect URI
+        $redirectUri = $additionalParameters['redirect_uri'] ?? $clientSDK->redirectUri;
+        
         $searchParams = [
             'client_id' => $clientSDK->clientId,
             'grant_type' => GrantType::authorizationCode,
-            'redirect_uri' => $clientSDK->redirectUri,
+            'redirect_uri' => $redirectUri,
             'response_type' => 'code',
             'scope' => $clientSDK->scopes,
             'state' => $state,
