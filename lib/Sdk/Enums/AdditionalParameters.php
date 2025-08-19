@@ -14,6 +14,7 @@ class AdditionalParameters
         'lang' => 'string',
         'plan_interest' => 'string',
         'pricing_table_key' => 'string',
-        'prompt' => 'string'
+        'prompt' => 'string',
+        'redirect_uri' => 'string'
     ];
 }
