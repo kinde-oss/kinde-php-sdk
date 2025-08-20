@@ -15,7 +15,13 @@ use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Kinde\KindeSDK\Api\Frontend\BillingApi;
+use Kinde\KindeSDK\Api\Frontend\FeatureFlagsApi;
+use Kinde\KindeSDK\Api\Frontend\PermissionsApi;
+use Kinde\KindeSDK\Api\Frontend\OAuthApi;
 use Kinde\KindeSDK\Model\Frontend\GetEntitlementsResponseDataEntitlementsInner;
+use Kinde\KindeSDK\Model\Frontend\GetUserPermissionsResponse;
+use Kinde\KindeSDK\Model\Frontend\GetFeatureFlagsResponse;
+use Kinde\KindeSDK\Model\Frontend\UserProfileV2;
 use UnexpectedValueException;
 
 class KindeClientSDK
@@ -74,7 +80,14 @@ class KindeClientSDK
     /* A variable that is used to store the protocol that you want to use when the SDK requests to get a token */
     public string $protocol;
 
+    /**
+     * @var bool When set to true, forces the SDK to use API calls instead of token parsing for retrieving claims.
+     */
+    public bool $forceApi;
+
     public $storage;
+
+
 
     function __construct(
         ?string $domain = null,
@@ -85,7 +98,8 @@ class KindeClientSDK
         ?string $logoutRedirectUri = null,
         string $scopes = 'openid profile email offline',
         array $additionalParameters = [],
-        string $protocol = ""
+        string $protocol = "",
+        bool $forceApi = false
     ) {
         // Load from environment variables if parameters are not provided
         $domain = $domain ?? $_ENV['KINDE_DOMAIN'] ?? $_ENV['KINDE_HOST'] ?? null;
@@ -96,6 +110,7 @@ class KindeClientSDK
         $logoutRedirectUri = $logoutRedirectUri ?? $_ENV['KINDE_LOGOUT_REDIRECT_URI'] ?? null;
         $scopes = $_ENV['KINDE_SCOPES'] ?? $scopes;
         $protocol = $_ENV['KINDE_PROTOCOL'] ?? $protocol;
+        $forceApi = $forceApi || ($_ENV['KINDE_FORCE_API'] ?? 'false') === 'true';
 
         // Validate required parameters
         if (empty($domain)) {
@@ -143,6 +158,7 @@ class KindeClientSDK
         $this->logoutRedirectUri = $logoutRedirectUri;
         $this->scopes = $scopes;
         $this->protocol = $protocol;
+        $this->forceApi = $forceApi;
 
         // Other endpoints
         $this->authorizationEndpoint = $this->domain . '/oauth2/auth';
@@ -325,7 +341,7 @@ class KindeClientSDK
     }
 
     /**
-     * Retrieves a specific claim from the token.
+     * Retrieves a specific claim from the token or API.
      *
      * @param string $keyName   The name of the claim to retrieve.
      * @param string $tokenType The type of token to retrieve the claim from (optional, defaults to TokenType::ACCESS_TOKEN).
@@ -334,6 +350,10 @@ class KindeClientSDK
      */
     public function getClaim(string $keyName, string $tokenType = TokenType::ACCESS_TOKEN)
     {
+        if ($this->forceApi) {
+            return $this->getClaimFromApi($keyName);
+        }
+
         $claims = self::getClaims($tokenType);
 
         if (!array_key_exists($keyName, $claims)) {
@@ -346,12 +366,78 @@ class KindeClientSDK
     }
 
     /**
-     * Retrieves the organization code and permissions from the claims.
+     * Gets a claim from API when force_api is enabled.
+     *
+     * @param string $keyName The name of the claim to retrieve
+     * @return array The claim data
+     */
+    private function getClaimFromApi(string $keyName): array
+    {
+        return match ($keyName) {
+            'feature_flags' => [
+                'name' => $keyName,
+                'value' => $this->getFeatureFlagsFromApi()
+            ],
+            'org_code', 'permissions' => [
+                'name' => $keyName,
+                'value' => $this->getPermissionsData()[$keyName === 'org_code' ? 'orgCode' : 'permissions'] ?? ($keyName === 'org_code' ? null : [])
+            ],
+            'org_codes' => [
+                'name' => $keyName,
+                'value' => $this->getUserProfileFromApi()->getOrgCodes() ?? []
+            ],
+            default => [
+                'name' => $keyName,
+                'value' => $this->getProfileClaimValue($keyName)
+            ]
+        };
+    }
+
+    /**
+     * Gets permissions data (org_code and permissions) with optimized caching.
+     *
+     * @return array The permissions data
+     */
+    private function getPermissionsData(): array
+    {
+        return $this->getPermissionsFromApi();
+    }
+
+    /**
+     * Gets a profile claim value by key name.
+     *
+     * @param string $keyName The claim key name
+     * @return mixed The claim value
+     */
+    private function getProfileClaimValue(string $keyName): mixed
+    {
+        $userProfile = $this->getUserProfileFromApi();
+        $profileData = [
+            'id' => $userProfile->getId(),
+            'given_name' => $userProfile->getGivenName(),
+            'family_name' => $userProfile->getFamilyName(),
+            'email' => $userProfile->getEmail(),
+            'picture' => $userProfile->getPicture(),
+            'preferred_username' => $userProfile->getPreferredUsername(),
+            'iss' => $this->domain,
+            'aud' => $this->clientId,
+            'sub' => $userProfile->getId(),
+        ];
+        
+        return $profileData[$keyName] ?? null;
+    }
+
+    /**
+     * Retrieves the organization code and permissions from the claims or API.
      *
      * @return array An associative array containing the organization code and permissions.
      */
     public function getPermissions()
     {
+        if ($this->forceApi) {
+            return $this->getPermissionsFromApi();
+        }
+
         $claims = self::getClaims();
 
         return [
@@ -458,7 +544,7 @@ class KindeClientSDK
      *
      * @return array An associative array containing the flag code, type, value, and a boolean indicating if the default value was used.
      */
-    public function getFlag(string $flagName, array $options = [], string $flagType = null)
+    public function getFlag(string $flagName, array $options = [], ?string $flagType = null)
     {
         $isUsedDefault = false;
         $flag = self::getFeatureFlags($flagName);
@@ -506,9 +592,13 @@ class KindeClientSDK
      * @throws InvalidArgumentException If the feature flag is not found.
      * @return mixed|array|null The feature flags or a specific feature flag value.
      */
-    private function getFeatureFlags(string $name = null)
+    private function getFeatureFlags(?string $name = null)
     {
-        $flags = self::getClaim('feature_flags')['value'];
+        if ($this->forceApi) {
+            $flags = $this->getFeatureFlagsFromApi();
+        } else {
+            $flags = self::getClaim('feature_flags')['value'];
+        }
 
         if (isset($name) && ! array_key_exists($name, $flags)) {
             throw new InvalidArgumentException("The feature flag '{$name}' was not found");
@@ -589,6 +679,120 @@ class KindeClientSDK
     }
 
     
+    /**
+     * Gets the API configuration with the current access token.
+     *
+     * @return \Kinde\KindeSDK\Configuration
+     * @throws Exception If the access token is not found
+     */
+    private function getApiConfig()
+    {
+        $token = $this->storage->getAccessToken();
+        if (empty($token)) {
+            throw new Exception('Access token not found');
+        }
+
+        $config = new \Kinde\KindeSDK\Configuration();
+        $config->setHost($this->domain);
+        $config->setAccessToken($token);
+        
+        return $config;
+    }
+
+    /**
+     * Gets user profile from API.
+     *
+     * @return UserProfileV2
+     * @throws Exception If the API request fails
+     */
+    private function getUserProfileFromApi()
+    {
+        $config = $this->getApiConfig();
+        $oauthApi = new OAuthApi(null, $config);
+        
+        try {
+            return $oauthApi->getUserProfileV2();
+        } catch (\Kinde\KindeSDK\ApiException $e) {
+            throw new Exception('Failed to get user profile: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Gets permissions from API.
+     *
+     * @return array An associative array containing the organization code and permissions
+     * @throws Exception If the API request fails
+     */
+    private function getPermissionsFromApi()
+    {
+        $config = $this->getApiConfig();
+        $permissionsApi = new PermissionsApi(null, $config);
+        
+        try {
+            $permissions = $permissionsApi->getUserPermissions();
+            $data = $permissions->getData();
+            return [
+                'orgCode' => $data->getOrgCode(),
+                'permissions' => array_map(fn($permission) => $permission->getKey(), $data->getPermissions() ?? [])
+            ];
+        } catch (\Kinde\KindeSDK\ApiException $e) {
+            throw new Exception('Failed to get permissions: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Gets feature flags from API.
+     *
+     * @return array An associative array of feature flags
+     * @throws Exception If the API request fails
+     */
+    private function getFeatureFlagsFromApi()
+    {
+        $config = $this->getApiConfig();
+        $featureFlagsApi = new FeatureFlagsApi(null, $config);
+        
+        try {
+            $featureFlags = $featureFlagsApi->getFeatureFlags();
+            return $this->processFeatureFlagsData($featureFlags->getData());
+        } catch (\Kinde\KindeSDK\ApiException $e) {
+            throw new Exception('Failed to get feature flags: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Processes feature flags data into the expected format.
+     *
+     * @param mixed $data The feature flags data
+     * @return array Processed feature flags
+     */
+    private function processFeatureFlagsData($data): array
+    {
+        $flags = [];
+        foreach ($data->getFeatureFlags() ?? [] as $flag) {
+            $flags[$flag->getKey()] = [
+                'v' => $flag->getValue(),
+                't' => $this->getFlagType($flag->getType())
+            ];
+        }
+        return $flags;
+    }
+
+    /**
+     * Converts flag type string to internal type code.
+     *
+     * @param string $type The flag type string
+     * @return string The internal type code
+     */
+    private function getFlagType(string $type): string
+    {
+        return match ($type) {
+            'boolean' => 'b',
+            'string' => 's',
+            'integer' => 'i',
+            default => 's'
+        };
+    }
+
     /**
      * Retrieves the claims from the specified token type.
      *
@@ -676,6 +880,8 @@ class KindeClientSDK
     {
         $this->storage->clearCachedJwks();
     }
+
+
 
     /**
      * Get all entitlements for the authenticated user, handling pagination automatically.
