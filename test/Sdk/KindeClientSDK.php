@@ -506,11 +506,11 @@ class KindeClientSDK
         return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
     }
 
-    private function checkStateAuthentication(string $stateServer)
+    private function checkStateAuthentication(?string $stateServer)
     {
         $storageOAuthState = $this->storage->getState();
 
-        if (empty($storageOAuthState) || $stateServer != $storageOAuthState) {
+        if (empty($stateServer) || empty($storageOAuthState) || $stateServer !== $storageOAuthState) {
             throw new OAuthException("Authentication failed because it tries to validate state");
         }
     }
