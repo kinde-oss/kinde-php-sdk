@@ -9,6 +9,7 @@ use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 use Kinde\KindeSDK\Sdk\Enums\TokenType;
+use Kinde\KindeSDK\Sdk\Enums\AdditionalParameters;
 use Kinde\KindeSDK\Sdk\Enums\PortalPage;
 use Kinde\KindeSDK\Sdk\OAuth2\AuthorizationCode;
 use Kinde\KindeSDK\Sdk\OAuth2\ClientCredentials;
@@ -201,14 +202,14 @@ class KindeClientSDK
                 case GrantType::authorizationCode:
                     $this->cleanStorage();
                     if (!isset($additionalParameters['prompt'])) {
-                        $additionalParameters['prompt'] = 'login';
+                        $additionalParameters['prompt'] = AdditionalParameters::PROMPT_LOGIN;
                     }
                     $auth = new AuthorizationCode();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::PKCE:
                     $this->cleanStorage();
                     if (!isset($additionalParameters['prompt'])) {
-                        $additionalParameters['prompt'] = 'login';
+                        $additionalParameters['prompt'] = AdditionalParameters::PROMPT_LOGIN;
                     }
                     $auth = new PKCE();
                     return $auth->authenticate($this, $additionalParameters);
@@ -230,10 +231,10 @@ class KindeClientSDK
      */
     public function register(array $additionalParameters = [])
     {
-        $this->grantType = 'authorization_code';
-
+        $this->cleanStorage();
+        
         if (!isset($additionalParameters['prompt'])) {
-            $additionalParameters['prompt'] = 'register';
+            $additionalParameters['prompt'] = AdditionalParameters::PROMPT_CREATE;
         }
 
         $auth = new PKCE();

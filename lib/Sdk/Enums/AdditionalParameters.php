@@ -4,6 +4,11 @@ namespace Kinde\KindeSDK\Sdk\Enums;
 
 class AdditionalParameters
 {
+    // Prompt types matching JS Utils SDK
+    const PROMPT_LOGIN = 'login';   // Force user re-authentication
+    const PROMPT_CREATE = 'create'; // Show registration screen  
+    const PROMPT_NONE = 'none';     // Silent authentication
+
     const ADDITIONAL_PARAMETER = [
         'audience' => 'string',
         'org_code' => 'string',
