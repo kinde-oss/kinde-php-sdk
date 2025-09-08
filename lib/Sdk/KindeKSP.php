@@ -12,10 +12,11 @@ class KindeKSP
 {
     private const CIPHER_METHOD = 'aes-256-gcm';
     private const KEY_LENGTH = 32;
-    private const IV_LENGTH = 16;
+    private const IV_LENGTH = 12; // GCM best practice (96-bit)
     
     private static ?self $instance = null;
     private static bool $enabled = false;
+    private static bool $strict = false;
     private static ?string $key = null;
     private static string $keyId = 'default';
 
@@ -26,6 +27,7 @@ class KindeKSP
      *                      - key: string (custom key)
      *                      - env_var: string (env variable name, default: KINDE_KSP_KEY)
      *                      - auto_generate: bool (auto-generate key if missing, default: true)
+     *                      - strict: bool (fail closed if KSP cannot start, default: false)
      */
     public static function enable(array $options = []): bool
     {
@@ -35,6 +37,7 @@ class KindeKSP
 
         $envVar = $options['env_var'] ?? 'KINDE_KSP_KEY';
         $autoGenerate = $options['auto_generate'] ?? true;
+        self::$strict = (bool)($options['strict'] ?? false);
 
         try {
             // Use provided key
@@ -45,23 +48,35 @@ class KindeKSP
             elseif ($envKey = getenv($envVar) ?: ($_ENV[$envVar] ?? null)) {
                 self::$key = self::validateAndPrepareKey($envKey);
             }
-            // Auto-generate if allowed
+            // Auto-generate if allowed (WARNING: process-local unless env is persisted)
             elseif ($autoGenerate) {
                 $newKey = self::generateKey();
                 putenv("{$envVar}={$newKey}");
                 $_ENV[$envVar] = $newKey;
                 self::$key = self::validateAndPrepareKey($newKey);
+                error_log("KSP: Auto-generated ephemeral key. For production, set {$envVar} in your environment.");
             }
 
             if (!self::$key) {
-                throw new \RuntimeException('No encryption key available');
+                $message = 'No encryption key available';
+                if (self::$strict) {
+                    throw new \RuntimeException($message);
+                }
+                error_log("KSP: {$message}");
+                return false;
             }
 
+            // Derive a short, non-secret fingerprint for status/rotation (first 8 hex chars)
+            self::$keyId = substr(bin2hex(hash('sha256', self::$key, true)), 0, 8);
             self::$enabled = true;
             return true;
 
         } catch (\Throwable $e) {
-            error_log("KSP initialization failed: " . $e->getMessage());
+            $message = "KSP initialization failed: " . $e->getMessage();
+            if (self::$strict) {
+                throw new \RuntimeException($message, 0, $e);
+            }
+            error_log($message);
             return false;
         }
     }
@@ -72,6 +87,7 @@ class KindeKSP
     public static function disable(): void
     {
         self::$enabled = false;
+        self::$strict = false;  // Reset strict mode on disable
         self::$key = null;
     }
 
@@ -89,11 +105,15 @@ class KindeKSP
     public static function encrypt(string $data): string
     {
         if (!self::isEnabled()) {
-            return $data; // Graceful fallback
+            if (self::$strict) {
+                throw new \RuntimeException('KSP is disabled - cannot encrypt in strict mode');
+            }
+            return $data; // non-strict fallback
         }
 
         try {
-            $iv = random_bytes(self::IV_LENGTH);
+            $ivLen = openssl_cipher_iv_length(self::CIPHER_METHOD) ?: self::IV_LENGTH;
+            $iv = random_bytes($ivLen);
             $tag = '';
             
             $encrypted = openssl_encrypt($data, self::CIPHER_METHOD, self::$key, OPENSSL_RAW_DATA, $iv, $tag);
@@ -124,7 +144,10 @@ class KindeKSP
     public static function decrypt(string $encryptedData): string
     {
         if (!self::isEnabled()) {
-            return $encryptedData; // Graceful fallback
+            if (self::$strict) {
+                throw new \RuntimeException('KSP is disabled - cannot decrypt in strict mode');
+            }
+            return $encryptedData; // non-strict fallback
         }
 
         if (!self::looksEncrypted($encryptedData)) {
@@ -204,7 +227,8 @@ class KindeKSP
 
         if (!$keyExists && $enabled) {
             $result['key_generated'] = true;
-            $result['key_preview'] = substr($_ENV['KINDE_KSP_KEY'] ?? '', 0, 20) . '...';
+            // Provide non-sensitive fingerprint instead
+            $result['key_fingerprint'] = self::$keyId ?? null;
         }
 
         return $result;

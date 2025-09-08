@@ -6,6 +6,11 @@
  * This example demonstrates how to add enterprise-grade encryption to your Kinde SDK
  * with just one line of code. Perfect for production applications requiring
  * enhanced security for token storage.
+ * 
+ * PRODUCTION SETUP:
+ * 1. Set KINDE_KSP_KEY environment variable with a 256-bit base64-encoded key
+ * 2. Use KindeKSP::enable() without auto_generate option
+ * 3. Consider enabling strict mode for production deployments
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -20,11 +25,20 @@ echo "<h1>🔐 Simple KSP Example</h1>\n";
 // ============================================================================
 
 echo "<h2>Step 1: Enable KSP</h2>\n";
-$enabled = KindeKSP::enable();
+
+// Production recommendation: Set KINDE_KSP_KEY in your environment
+// For demo purposes, we'll allow auto-generation (not recommended for production)
+$enabled = KindeKSP::enable([
+    // Recommended for production: set KINDE_KSP_KEY in your environment
+    'env_var'       => 'KINDE_KSP_KEY',
+    'auto_generate' => true,  // WARNING: creates ephemeral keys - not recommended for production
+    // 'strict' => true,      // uncomment to fail closed if KSP can't start
+]);
 
 if ($enabled) {
     echo "✅ KSP enabled successfully!\n";
-    
+    echo "<p>⚠️  WARNING: Using auto-generated ephemeral key. For production, set KINDE_KSP_KEY environment variable.</p>\n";
+
     // Check the status
     $status = KindeKSP::getStatus();
     echo "<p>📊 Status: " . json_encode($status, JSON_PRETTY_PRINT) . "</p>\n";
