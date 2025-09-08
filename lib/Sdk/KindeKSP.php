@@ -130,7 +130,8 @@ class KindeKSP
                 'data' => base64_encode($encrypted)
             ];
 
-            return base64_encode(json_encode($payload));
+            $json = json_encode($payload, JSON_THROW_ON_ERROR);
+            return base64_encode($json);
 
         } catch (\Throwable $e) {
             $msg = "KSP encryption failed: " . $e->getMessage();
@@ -162,14 +163,18 @@ class KindeKSP
         }
 
         try {
-            $payload = json_decode(base64_decode($encryptedData), true);
-            if (!$payload || !isset($payload['iv'], $payload['tag'], $payload['data'])) {
+            $envelope = base64_decode($encryptedData, true);
+            if ($envelope === false) {
+                throw new \RuntimeException('Invalid base64 envelope');
+            }
+            $payload = json_decode($envelope, true, 512, JSON_THROW_ON_ERROR);
+            if (!isset($payload['iv'], $payload['tag'], $payload['data'])) {
                 throw new \RuntimeException('Invalid encrypted data format');
             }
 
-            $iv = base64_decode($payload['iv']);
-            $tag = base64_decode($payload['tag']);
-            $data = base64_decode($payload['data']);
+            $iv = base64_decode($payload['iv'], true);
+            $tag = base64_decode($payload['tag'], true);
+            $data = base64_decode($payload['data'], true);
             
             // Validate IV/tag lengths for security hardening
             $ivLen = openssl_cipher_iv_length(self::CIPHER_METHOD) ?: self::IV_LENGTH;
