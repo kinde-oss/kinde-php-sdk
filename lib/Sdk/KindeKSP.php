@@ -39,6 +39,18 @@ class KindeKSP
         $autoGenerate = $options['auto_generate'] ?? true;
         self::$strict = (bool)($options['strict'] ?? false);
 
+        // Require system capabilities before proceeding
+        $requirements = self::checkRequirements();
+        if (!$requirements['all_passed']) {
+            $missing = implode(', ', array_keys(array_filter($requirements, fn($v) => $v === false)));
+            $message = "System requirements not met: {$missing}";
+            if (self::$strict) {
+                throw new \RuntimeException($message);
+            }
+            error_log("KSP: {$message}");
+            return false;
+        }
+
         try {
             // Use provided key
             if (isset($options['key'])) {
