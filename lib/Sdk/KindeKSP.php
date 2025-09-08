@@ -61,12 +61,14 @@ class KindeKSP
                 self::$key = self::validateAndPrepareKey($envKey);
             }
             // Auto-generate if allowed (WARNING: process-local unless env is persisted)
-            elseif ($autoGenerate) {
+            elseif ($autoGenerate && !self::$strict) {
                 $newKey = self::generateKey();
                 putenv("{$envVar}={$newKey}");
                 $_ENV[$envVar] = $newKey;
                 self::$key = self::validateAndPrepareKey($newKey);
                 error_log("KSP: Auto-generated ephemeral key. For production, set {$envVar} in your environment.");
+            } elseif ($autoGenerate && self::$strict) {
+                throw new \RuntimeException("No {$envVar} provided in strict mode");
             }
 
             if (!self::$key) {
@@ -193,7 +195,8 @@ class KindeKSP
             if ($iv === false || strlen($iv) !== $ivLen) {
                 throw new \RuntimeException('Invalid IV length');
             }
-            if ($tag === false || strlen($tag) < 12 || strlen($tag) > 16) {
+            $tagLen = is_string($tag) ? strlen($tag) : 0;
+            if ($tag === false || $tagLen < 12 || $tagLen > 16) {
                 throw new \RuntimeException('Invalid tag length');
             }
             if ($data === false || $data === '') {
