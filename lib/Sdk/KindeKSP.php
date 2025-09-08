@@ -133,8 +133,12 @@ class KindeKSP
             return base64_encode(json_encode($payload));
 
         } catch (\Throwable $e) {
-            error_log("KSP encryption failed: " . $e->getMessage());
-            return $data; // Graceful fallback
+            $msg = "KSP encryption failed: " . $e->getMessage();
+            if (self::$strict || self::isEnabled()) {
+                throw new \RuntimeException($msg, 0, $e);
+            }
+            error_log($msg);
+            return $data; // only reachable when not enabled
         }
     }
 
@@ -151,7 +155,10 @@ class KindeKSP
         }
 
         if (!self::looksEncrypted($encryptedData)) {
-            return $encryptedData; // Not encrypted
+            if (self::$strict) {
+                throw new \RuntimeException('Data does not appear encrypted in strict mode');
+            }
+            return $encryptedData; // Not encrypted (non-strict fallback)
         }
 
         try {
@@ -163,6 +170,18 @@ class KindeKSP
             $iv = base64_decode($payload['iv']);
             $tag = base64_decode($payload['tag']);
             $data = base64_decode($payload['data']);
+            
+            // Validate IV/tag lengths for security hardening
+            $ivLen = openssl_cipher_iv_length(self::CIPHER_METHOD) ?: self::IV_LENGTH;
+            if ($iv === false || strlen($iv) !== $ivLen) {
+                throw new \RuntimeException('Invalid IV length');
+            }
+            if ($tag === false || strlen($tag) < 12 || strlen($tag) > 16) {
+                throw new \RuntimeException('Invalid tag length');
+            }
+            if ($data === false || $data === '') {
+                throw new \RuntimeException('Invalid ciphertext');
+            }
 
             $decrypted = openssl_decrypt($data, self::CIPHER_METHOD, self::$key, OPENSSL_RAW_DATA, $iv, $tag);
             if ($decrypted === false) {
@@ -172,8 +191,12 @@ class KindeKSP
             return $decrypted;
 
         } catch (\Throwable $e) {
-            error_log("KSP decryption failed: " . $e->getMessage());
-            return $encryptedData; // Graceful fallback
+            $msg = "KSP decryption failed: " . $e->getMessage();
+            if (self::$strict) {
+                throw new \RuntimeException($msg, 0, $e);
+            }
+            error_log($msg);
+            return $encryptedData; // non-strict fallback
         }
     }
 
@@ -229,6 +252,9 @@ class KindeKSP
             $result['key_generated'] = true;
             // Provide non-sensitive fingerprint instead
             $result['key_fingerprint'] = self::$keyId ?? null;
+        } elseif ($enabled && self::$keyId) {
+            // Always provide fingerprint when enabled
+            $result['key_fingerprint'] = self::$keyId;
         }
 
         return $result;
