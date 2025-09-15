@@ -348,4 +348,24 @@ class HasFeatureFlagsTest extends TestCase
         ]);
         $this->assertTrue($result);
     }
+
+    public function testHasFeatureFlagsGracefullyHandlesMissingClaim()
+    {
+        $this->kindeClient = $this->getMockBuilder(KindeClientSDK::class)
+            ->setConstructorArgs([
+                'https://test.kinde.com',
+                'http://localhost:3000/callback',
+                'test-client-id',
+                'test-client-secret',
+                'authorization_code'
+            ])
+            ->onlyMethods(['getClaim'])
+            ->getMock();
+
+        $this->kindeClient->method('getClaim')
+            ->with('feature_flags')
+            ->willReturn(['value' => null]);
+
+        $this->assertFalse($this->kindeClient->hasFeatureFlags(['any']));
+    }
 }

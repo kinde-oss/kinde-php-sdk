@@ -22,7 +22,7 @@ class HasBillingEntitlementsTest extends TestCase
         );
     }
 
-    private function createMockEntitlement(string $featureKey, int $limitMax = null): GetEntitlementsResponseDataEntitlementsInner
+    private function createMockEntitlement(string $featureKey, ?int $limitMax = null): GetEntitlementsResponseDataEntitlementsInner
     {
         $entitlement = $this->createMock(GetEntitlementsResponseDataEntitlementsInner::class);
         $entitlement->method('getFeatureKey')->willReturn($featureKey);
