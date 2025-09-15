@@ -898,7 +898,7 @@ class KindeClientSDK
             return $this->getRolesFromApi();
         }
 
-        $claims = self::getClaims();
+        $claims = $this->getClaims();
         $roles = $claims['roles'] ?? [];
         
         // Convert roles to consistent format if they're just strings
@@ -1038,7 +1038,12 @@ class KindeClientSDK
         try {
             $useApi = $forceApi ?? $this->forceApi;
             // Use consistent method pattern instead of direct getClaim call
-            $flags = $useApi ? $this->getFeatureFlagsFromApi() : self::getClaim('feature_flags')['value'];
+            $flags = $useApi
+                ? $this->getFeatureFlagsFromApi()
+                : ($this->getClaim('feature_flags')['value'] ?? []);
+            if (!is_array($flags)) {
+                $flags = [];
+            }
 
             foreach ($featureFlags as $featureFlag) {
                 if (is_string($featureFlag)) {
@@ -1119,37 +1124,31 @@ class KindeClientSDK
             return true;
         }
 
-        $checks = [];
-
         // Parse forceApi parameter
         $forceApiSettings = $this->parseForceApiParameter($forceApi);
 
-        if (isset($conditions['roles'])) {
-            $checks[] = $this->hasRoles(
-                $conditions['roles'], 
-                $forceApiSettings['roles'] ?? null
-            );
+        // Early exit pattern for better performance - avoid unnecessary API calls
+        if (isset($conditions['roles']) &&
+            !$this->hasRoles($conditions['roles'], $forceApiSettings['roles'] ?? null)) {
+            return false;
         }
-
-        if (isset($conditions['permissions'])) {
-            $checks[] = $this->hasPermissions(
-                $conditions['permissions'], 
-                $forceApiSettings['permissions'] ?? null
-            );
+        
+        if (isset($conditions['permissions']) &&
+            !$this->hasPermissions($conditions['permissions'], $forceApiSettings['permissions'] ?? null)) {
+            return false;
         }
-
-        if (isset($conditions['featureFlags'])) {
-            $checks[] = $this->hasFeatureFlags(
-                $conditions['featureFlags'], 
-                $forceApiSettings['featureFlags'] ?? null
-            );
+        
+        if (isset($conditions['featureFlags']) &&
+            !$this->hasFeatureFlags($conditions['featureFlags'], $forceApiSettings['featureFlags'] ?? null)) {
+            return false;
         }
-
-        if (isset($conditions['billingEntitlements'])) {
-            $checks[] = $this->hasBillingEntitlements($conditions['billingEntitlements']);
+        
+        if (isset($conditions['billingEntitlements']) &&
+            !$this->hasBillingEntitlements($conditions['billingEntitlements'])) {
+            return false;
         }
-
-        return array_reduce($checks, fn($carry, $result) => $carry && $result, true);
+        
+        return true;
     }
 
     /**

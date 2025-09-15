@@ -71,8 +71,9 @@ class HasTest extends TestCase
 
         $this->kindeClient->method('hasRoles')->willReturn(true);
         $this->kindeClient->method('hasPermissions')->willReturn(false); // This fails
-        $this->kindeClient->method('hasFeatureFlags')->willReturn(true);
-        $this->kindeClient->method('hasBillingEntitlements')->willReturn(true);
+        // With early exit, these methods should never be called after permissions fail
+        $this->kindeClient->expects($this->never())->method('hasFeatureFlags');
+        $this->kindeClient->expects($this->never())->method('hasBillingEntitlements');
 
         $result = $this->kindeClient->has([
             'roles' => ['admin'],

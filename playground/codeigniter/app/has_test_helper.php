@@ -18,7 +18,8 @@ if (!function_exists('getCategoryTitle')) {
             'performance' => '⚡ Performance Tests'
         ];
         
-        return $titles[$categoryName] ?? ucfirst($categoryName) . ' Tests';
+        return $titles[$categoryName]
+            ?? htmlspecialchars(ucfirst((string)$categoryName) . ' Tests', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 }
 
