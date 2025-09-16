@@ -58,12 +58,14 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-            ['id' => '1', 'key' => 'admin', 'name' => 'Administrator'],
-            ['id' => '2', 'key' => 'user', 'name' => 'User']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '1', 'key' => 'admin', 'name' => 'Administrator'],
+                ['id' => '2', 'key' => 'user', 'name' => 'User']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles(['admin']);
@@ -80,11 +82,13 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-            ['id' => '2', 'key' => 'user', 'name' => 'User']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '2', 'key' => 'user', 'name' => 'User']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles(['admin']);
@@ -101,13 +105,15 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-            ['id' => '1', 'key' => 'admin', 'name' => 'Administrator'],
-            ['id' => '2', 'key' => 'user', 'name' => 'User'],
-            ['id' => '3', 'key' => 'manager', 'name' => 'Manager']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '1', 'key' => 'admin', 'name' => 'Administrator'],
+                ['id' => '2', 'key' => 'user', 'name' => 'User'],
+                ['id' => '3', 'key' => 'manager', 'name' => 'Manager']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles(['admin', 'user']);
@@ -124,11 +130,13 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-                    ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles(['admin', 'user']);
@@ -145,11 +153,13 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-                    ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles([
@@ -173,11 +183,13 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-                    ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles([
@@ -201,11 +213,13 @@ class HasRolesTest extends TestCase
                 'test-client-secret',
                 'authorization_code'
             ])
-            ->onlyMethods(['getRoles'])
+            ->onlyMethods(['getClaims'])
             ->getMock();
 
-        $this->kindeClient->method('getRoles')->willReturn([
-                    ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+        $this->kindeClient->method('getClaims')->willReturn([
+            'roles' => [
+                ['id' => '1', 'key' => 'admin', 'name' => 'Administrator']
+            ]
         ]);
 
         $result = $this->kindeClient->hasRoles([

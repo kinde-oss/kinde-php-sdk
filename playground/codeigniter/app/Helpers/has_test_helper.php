@@ -24,7 +24,7 @@ if (!function_exists('getCategoryTitle')) {
 }
 
 if (!function_exists('formatValue')) {
-    function formatValue($value) {
+    function formatValue($value): string {
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
         }
@@ -34,6 +34,15 @@ if (!function_exists('formatValue')) {
         if (is_array($value)) {
             return 'array[' . count($value) . ']';
         }
-        return htmlspecialchars((string)$value);
+        if (is_object($value)) {
+            if (method_exists($value, '__toString')) {
+                return htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            }
+            return 'object(' . get_class($value) . ')';
+        }
+        if (is_resource($value)) {
+            return 'resource(' . get_resource_type($value) . ')';
+        }
+        return htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 }
