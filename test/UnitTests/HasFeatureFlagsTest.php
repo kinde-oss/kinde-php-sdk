@@ -245,7 +245,7 @@ class HasFeatureFlagsTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testHasFeatureFlagsReturnsFalseWhenFlagExistsButValueIsFalse()
+    public function testHasFeatureFlagsReturnsTrueWhenFlagExistsButValueIsFalse()
     {
         $this->kindeClient = $this->getMockBuilder(KindeClientSDK::class)
             ->setConstructorArgs([

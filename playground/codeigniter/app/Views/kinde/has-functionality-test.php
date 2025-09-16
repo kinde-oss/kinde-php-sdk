@@ -81,7 +81,7 @@
                                     </div>
                                     <div>
                                         <h3 class="text-lg font-semibold text-gray-800">
-                                            <?= getCategoryTitle($categoryName) ?>
+                                            <?= htmlspecialchars(getCategoryTitle($categoryName), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>
                                         </h3>
                                         <p class="text-sm text-gray-600">
                                             <?= $categoryResult['passedCount'] ?? 0 ?>/<?= $categoryResult['testCount'] ?? 0 ?> tests passed
