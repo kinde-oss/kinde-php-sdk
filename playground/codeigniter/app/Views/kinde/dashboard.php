@@ -45,7 +45,7 @@
             </div>
 
             <!-- Quick Actions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- User Management -->
                 <div class="bg-white shadow rounded-lg p-6">
                     <h3 class="text-lg font-semibold mb-4 text-blue-600">👤 User Management</h3>
@@ -63,6 +63,17 @@
                         <a href="/test-management-api" class="block text-purple-600 hover:text-purple-800 font-semibold">Test All APIs</a>
                         <a href="/api/users" class="block text-purple-600 hover:text-purple-800">List Users</a>
                         <a href="/api/organizations" class="block text-purple-600 hover:text-purple-800">List Organizations</a>
+                    </div>
+                </div>
+
+                <!-- Session Persistence Testing -->
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-indigo-600">🍪 Session Persistence</h3>
+                    <div class="space-y-2">
+                        <a href="/test-session-persistence" class="block text-indigo-600 hover:text-indigo-800 font-semibold">Test KSP Feature</a>
+                        <div class="text-xs text-gray-600">
+                            Verify session persistence implementation
+                        </div>
                     </div>
                 </div>
 

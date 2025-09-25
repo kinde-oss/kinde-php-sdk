@@ -11,6 +11,8 @@ class Storage extends BaseStorage
     private static $jwksUrl;
     private static $tokenTimeToLive;
 
+    private static $persistentCookieDuration = 2505600; 
+
     public static function getInstance()
     {
         if (empty(self::$instance) || !(self::$instance instanceof Storage)) {
@@ -28,7 +30,28 @@ class Storage extends BaseStorage
 
     static function setToken($token)
     {
-        return self::setItem(StorageEnums::TOKEN, gettype($token) == 'string' ? $token : json_encode($token), self::getTokenTimeToLive());
+        // Get the token string if it's an object
+        $tokenString = gettype($token) == 'string' ? $token : json_encode($token);
+        
+        // Parse the token to determine session persistence
+        $tokenArray = gettype($token) == 'string' ? json_decode($token, true) : $token;
+        $expiration = self::getTokenTimeToLive(); // Default expiration
+        
+        // If we have an access token, check for KSP claim to determine persistence
+        if (is_array($tokenArray) && isset($tokenArray['access_token'])) {
+            $payload = Utils::parseJWT($tokenArray['access_token']);
+            
+            if (!empty($payload) && isset($payload['ksp']) && isset($payload['ksp']['persistent'])) {
+                $isPersistent = (bool) $payload['ksp']['persistent'];
+                if (!$isPersistent) {
+                    $expiration = 0; // Session cookie
+                } else {
+                    $expiration = time() + self::$persistentCookieDuration; // Persistent cookie
+                }
+            }
+        }
+        
+        return self::setItem(StorageEnums::TOKEN, $tokenString, $expiration);
     }
 
     static function getAccessToken()
@@ -187,5 +210,68 @@ class Storage extends BaseStorage
     static function clearCachedJwks()
     {
         self::removeItem(StorageEnums::JWKS_CACHE);
+    }
+
+    /**
+     * Determines if the session should be persistent based on the KSP claim in the access token.
+     * Follows the same logic as TypeScript SDK: payload.ksp?.persistent ?? true
+     * 
+     * @return bool true if session should be persistent, false for session cookies
+     */
+    static function isSessionPersistent()
+    {
+        $accessToken = self::getAccessToken();
+        
+        if (empty($accessToken)) {
+            return true; // Default to persistent if no token
+        }
+
+        $payload = Utils::parseJWT($accessToken);
+        
+        if (empty($payload) || !isset($payload['ksp'])) {
+            return true; // Default to persistent if no ksp claim
+        }
+
+        // Check if the ksp claim has a persistent property
+        if (isset($payload['ksp']['persistent'])) {
+            return (bool) $payload['ksp']['persistent'];
+        }
+
+        return true; // Default to persistent
+    }
+
+    /**
+     * Gets the appropriate cookie expiration time based on session persistence.
+     * Returns 0 for session cookies or timestamp for persistent cookies.
+     * 
+     * @return int Cookie expiration timestamp
+     */
+    static function getCookieExpiration()
+    {
+        if (self::isSessionPersistent()) {
+            return time() + self::$persistentCookieDuration; // Persistent cookie (29 days)
+        } else {
+            return 0; // Session cookie (expires when browser closes)
+        }
+    }
+
+    /**
+     * Gets the persistent cookie duration in seconds
+     * 
+     * @return int Duration in seconds (29 days)
+     */
+    static function getPersistentCookieDuration()
+    {
+        return self::$persistentCookieDuration;
+    }
+
+    /**
+     * Sets the persistent cookie duration
+     * 
+     * @param int $duration Duration in seconds
+     */
+    static function setPersistentCookieDuration(int $duration)
+    {
+        self::$persistentCookieDuration = $duration;
     }
 }
