@@ -96,17 +96,6 @@
                     </div>
                 </div>
 
-                <!-- Session Persistence Testing -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="text-cyan-600 text-2xl mb-4">🍪</div>
-                    <h3 class="text-xl font-semibold mb-3">Session Persistence</h3>
-                    <p class="text-gray-600 mb-4">Test the new KSP (Kinde Session Persistence) feature implementation and cookie behavior.</p>
-                    <div class="space-y-2">
-                        <a href="/test-session-persistence" class="block text-cyan-600 hover:text-cyan-800 font-semibold">Test KSP Feature</a>
-                        <div class="text-xs text-gray-500">Works with or without authentication</div>
-                    </div>
-                </div>
-
                 <!-- Advanced Features -->
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="text-red-600 text-2xl mb-4">🔧</div>
@@ -151,10 +140,9 @@
                 <div class="space-y-3 text-gray-700">
                     <p><strong>1.</strong> Start by logging in or creating an account to test authentication flows</p>
                     <p><strong>2.</strong> Explore the user dashboard to see your profile and permissions</p>
-                    <p><strong>3.</strong> Test the new Session Persistence (KSP) feature to verify cookie behavior</p>
-                    <p><strong>4.</strong> Test the Management API dashboard to verify all endpoints are working</p>
-                    <p><strong>5.</strong> Use individual API endpoints for specific testing scenarios</p>
-                    <p><strong>6.</strong> Check the header fix status to ensure API calls are working correctly</p>
+                    <p><strong>3.</strong> Test the Management API dashboard to verify all endpoints are working</p>
+                    <p><strong>4.</strong> Use individual API endpoints for specific testing scenarios</p>
+                    <p><strong>5.</strong> Check the header fix status to ensure API calls are working correctly</p>
                 </div>
             </div>
         </div>

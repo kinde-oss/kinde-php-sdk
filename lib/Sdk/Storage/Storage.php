@@ -41,13 +41,18 @@ class Storage extends BaseStorage
         if (is_array($tokenArray) && isset($tokenArray['access_token'])) {
             $payload = Utils::parseJWT($tokenArray['access_token']);
             
-            if (!empty($payload) && isset($payload['ksp']) && isset($payload['ksp']['persistent'])) {
-                $isPersistent = (bool) $payload['ksp']['persistent'];
-                if (!$isPersistent) {
-                    $expiration = 0; // Session cookie
-                } else {
-                    $expiration = time() + self::$persistentCookieDuration; // Persistent cookie
+            // Only apply KSP logic if JWT parsing succeeded
+            if ($payload !== null && is_array($payload)) {
+                // Default to persistent if ksp claim or persistent property is missing
+                $isPersistent = true;
+                
+                if (isset($payload['ksp']['persistent'])) {
+                    $isPersistent = (bool) $payload['ksp']['persistent'];
                 }
+                
+                $expiration = $isPersistent 
+                    ? time() + self::$persistentCookieDuration 
+                    : 0;
             }
         }
         
@@ -228,11 +233,12 @@ class Storage extends BaseStorage
 
         $payload = Utils::parseJWT($accessToken);
         
-        if (empty($payload) || !isset($payload['ksp'])) {
-            return true; // Default to persistent if no ksp claim
+        // Default to persistent if JWT parsing failed or no ksp claim
+        if ($payload === null || !is_array($payload) || !isset($payload['ksp'])) {
+            return true;
         }
 
-        // Check if the ksp claim has a persistent property
+        // Check if the ksp claim has a persistent property, default to true if missing
         if (isset($payload['ksp']['persistent'])) {
             return (bool) $payload['ksp']['persistent'];
         }

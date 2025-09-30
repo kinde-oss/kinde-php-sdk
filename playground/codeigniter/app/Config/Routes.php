@@ -22,9 +22,6 @@ $routes->get('protected', 'ExampleController::protectedRoute');
 // Management API Testing Dashboard
 $routes->get('test-management-api', 'ExampleController::testManagementApi');
 
-// Session Persistence Testing
-$routes->get('test-session-persistence', 'ExampleController::testSessionPersistence');
-
 // Individual API endpoints
 $routes->get('api/users', 'ExampleController::listUsers');
 $routes->post('api/users', 'ExampleController::createUser');
