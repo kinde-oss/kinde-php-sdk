@@ -233,7 +233,7 @@ class KindeClientSDK
         $this->grantType = 'authorization_code';
 
         if (!isset($additionalParameters['prompt'])) {
-            $additionalParameters['prompt'] = 'register';
+            $additionalParameters['prompt'] = 'create';
         }
 
         $auth = new PKCE();
