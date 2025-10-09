@@ -884,6 +884,397 @@ class KindeClientSDK
 
 
     /**
+     * Retrieves user roles from token or API.
+     *
+     * @param bool|null $forceApi Force API call instead of using token data
+     * @return array An associative array containing roles
+     * @throws Exception If the API request fails
+     */
+    public function getRoles(?bool $forceApi = null): array
+    {
+        $useApi = $forceApi ?? $this->forceApi;
+        
+        if ($useApi) {
+            return $this->getRolesFromApi();
+        }
+
+        $claims = $this->getClaims();
+        $roles = $claims['roles'] ?? [];
+        
+        // Convert roles to consistent format if they're just strings
+        return array_map(function($role) {
+            if (is_string($role)) {
+                return ['key' => $role, 'id' => null, 'name' => $role];
+            }
+            return $role;
+        }, $roles);
+    }
+
+    /**
+     * Gets user roles from API.
+     *
+     * @return array An array of role objects
+     * @throws Exception If the API request fails
+     */
+    private function getRolesFromApi(): array
+    {
+        $config = $this->getApiConfig();
+        $rolesApi = new \Kinde\KindeSDK\Api\Frontend\RolesApi(null, $config);
+        
+        try {
+            $response = $rolesApi->getUserRoles();
+            $data = $response->getData();
+            $roles = $data->getRoles() ?? [];
+            
+            return array_map(function($role) {
+                return [
+                    'id' => $role->getId(),
+                    'key' => $role->getKey(),
+                    'name' => $role->getName()
+                ];
+            }, $roles);
+        } catch (\Kinde\KindeSDK\ApiException $e) {
+            throw new Exception('Failed to get roles: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Check if the user has specific roles.
+     *
+     * @param array $roles Array of role keys or role condition objects
+     * @param bool|null $forceApi Force API call instead of using token data
+     * @return bool True if user has all specified roles
+     */
+    public function hasRoles(array $roles = [], ?bool $forceApi = null): bool
+    {
+        // Match js-utils parameter validation
+        if (empty($roles)) {
+            return true;
+        }
+
+        try {
+            $userRoles = $this->getRoles($forceApi);
+            $userRoleKeys = array_column($userRoles, 'key');
+
+            // Check all roles - optimize for early exit
+            foreach ($roles as $role) {
+                if (is_string($role)) {
+                    if (!in_array($role, $userRoleKeys)) {
+                        return false;
+                    }
+                } elseif ($this->isCustomRoleCondition($role)) {
+                    $matchingRole = $this->findMatchingRole($userRoles, $role['role']);
+                    if (!$matchingRole || !call_user_func($role['condition'], $matchingRole)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            // Follow js-utils pattern: log error and return false (graceful failure)
+            error_log("[hasRoles] Error getting roles: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Check if the user has specific permissions.
+     *
+     * @param array $permissions Array of permission keys or permission condition objects
+     * @param bool|null $forceApi Force API call instead of using token data
+     * @return bool True if user has all specified permissions
+     */
+    public function hasPermissions(array $permissions = [], ?bool $forceApi = null): bool
+    {
+        if (empty($permissions)) {
+            return true;
+        }
+
+        try {
+            $useApi = $forceApi ?? $this->forceApi;
+            $permissionData = $useApi ? $this->getPermissionsFromApi() : $this->getPermissions();
+            $userPermissions = $permissionData['permissions'] ?? [];
+            $orgCode = $permissionData['orgCode'] ?? null;
+
+            foreach ($permissions as $permission) {
+                if (is_string($permission)) {
+                    if (!in_array($permission, $userPermissions)) {
+                        return false;
+                    }
+                } elseif ($this->isCustomPermissionCondition($permission)) {
+                    if (!in_array($permission['permission'], $userPermissions)) {
+                        return false;
+                    }
+                    if (!call_user_func($permission['condition'], [
+                        'permissionKey' => $permission['permission'],
+                        'orgCode' => $orgCode
+                    ])) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("[hasPermissions] Error getting permissions: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Check if the user has specific feature flags.
+     *
+     * @param array $featureFlags Array of feature flag keys or flag condition objects
+     * @param bool|null $forceApi Force API call instead of using token data
+     * @return bool True if user has all specified feature flags
+     */
+    public function hasFeatureFlags(array $featureFlags = [], ?bool $forceApi = null): bool
+    {
+        if (empty($featureFlags)) {
+            return true;
+        }
+
+        try {
+            $useApi = $forceApi ?? $this->forceApi;
+            // Use consistent method pattern instead of direct getClaim call
+            $flags = $useApi
+                ? $this->getFeatureFlagsFromApi()
+                : ($this->getClaim('feature_flags')['value'] ?? []);
+            if (!is_array($flags)) {
+                $flags = [];
+            }
+
+            foreach ($featureFlags as $featureFlag) {
+                if (is_string($featureFlag)) {
+                    if (!array_key_exists($featureFlag, $flags)) {
+                        return false;
+                    }
+                } elseif ($this->isCustomFeatureFlagCondition($featureFlag)) {
+                    $flagKey = $featureFlag['flag'];
+                    if (!array_key_exists($flagKey, $flags)) {
+                        return false;
+                    }
+                    
+                    // Value-specific check
+                    if (isset($featureFlag['value'])) {
+                        $flagData = $flags[$flagKey];
+                        $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
+                        if ($flagValue !== $featureFlag['value']) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("[hasFeatureFlags] Error getting feature flags: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Check if the user has specific billing entitlements.
+     *
+     * @param array $billingEntitlements Array of entitlement keys or entitlement condition objects
+     * @return bool True if user has all specified entitlements
+     */
+    public function hasBillingEntitlements(array $billingEntitlements = []): bool
+    {
+        if (empty($billingEntitlements)) {
+            return true;
+        }
+
+        try {
+            $userEntitlements = $this->getAllEntitlements();
+            $entitlementKeys = array_map(fn($entitlement) => $entitlement->getFeatureKey(), $userEntitlements);
+
+            foreach ($billingEntitlements as $entitlement) {
+                if (is_string($entitlement)) {
+                    if (!in_array($entitlement, $entitlementKeys)) {
+                        return false;
+                    }
+                } elseif ($this->isCustomEntitlementCondition($entitlement)) {
+                    $matchingEntitlement = $this->findMatchingEntitlement($userEntitlements, $entitlement['entitlement']);
+                    if (!$matchingEntitlement || !call_user_func($entitlement['condition'], $matchingEntitlement)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("[hasBillingEntitlements] Error getting entitlements: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Unified method to check multiple authorization conditions.
+     *
+     * @param array $conditions Array containing roles, permissions, featureFlags, and/or billingEntitlements
+     * @param bool|array|null $forceApi Boolean to force all API calls, or array to specify per-type
+     * @return bool True if user has all specified conditions
+     * @throws Exception If any API request fails
+     */
+    public function has(array $conditions = [], $forceApi = null): bool
+    {
+        if (empty($conditions)) {
+            return true;
+        }
+
+        // Parse forceApi parameter
+        $forceApiSettings = $this->parseForceApiParameter($forceApi);
+
+        // Early exit pattern for better performance - avoid unnecessary API calls
+        if (isset($conditions['roles']) &&
+            !$this->hasRoles($conditions['roles'], $forceApiSettings['roles'] ?? null)) {
+            return false;
+        }
+        
+        if (isset($conditions['permissions']) &&
+            !$this->hasPermissions($conditions['permissions'], $forceApiSettings['permissions'] ?? null)) {
+            return false;
+        }
+        
+        if (isset($conditions['featureFlags']) &&
+            !$this->hasFeatureFlags($conditions['featureFlags'], $forceApiSettings['featureFlags'] ?? null)) {
+            return false;
+        }
+        
+        if (isset($conditions['billingEntitlements']) &&
+            !$this->hasBillingEntitlements($conditions['billingEntitlements'])) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * Parse forceApi parameter for the has method.
+     *
+     * @param bool|array|null $forceApi Force API parameter
+     * @return array Parsed forceApi settings
+     */
+    private function parseForceApiParameter($forceApi): array
+    {
+        if (is_bool($forceApi)) {
+            return [
+                'roles' => $forceApi,
+                'permissions' => $forceApi,
+                'featureFlags' => $forceApi,
+                'billingEntitlements' => true // Always use API for billing entitlements
+            ];
+        }
+
+        if (is_array($forceApi)) {
+            return array_merge([
+                'roles' => null,
+                'permissions' => null,
+                'featureFlags' => null,
+                'billingEntitlements' => true // Always use API for billing entitlements
+            ], $forceApi);
+        }
+
+        return [
+            'roles' => null,
+            'permissions' => null,
+            'featureFlags' => null,
+            'billingEntitlements' => true
+        ];
+    }
+
+    /**
+     * Helper method to check if a role condition is a custom condition.
+     * Matches js-utils isCustomRolesCondition pattern.
+     *
+     * @param mixed $role The role to check
+     * @return bool True if it's a custom condition
+     */
+    private function isCustomRoleCondition($role): bool
+    {
+        return is_array($role) && 
+               isset($role['role']) && 
+               isset($role['condition']) && 
+               is_callable($role['condition']);
+    }
+
+    /**
+     * Helper method to check if a permission condition is a custom condition.
+     * Matches js-utils isCustomPermissionsCondition pattern.
+     *
+     * @param mixed $permission The permission to check
+     * @return bool True if it's a custom condition
+     */
+    private function isCustomPermissionCondition($permission): bool
+    {
+        return is_array($permission) && 
+               isset($permission['permission']) && 
+               isset($permission['condition']) && 
+               is_callable($permission['condition']);
+    }
+
+    /**
+     * Helper method to check if a feature flag condition is a custom condition.
+     *
+     * @param mixed $featureFlag The feature flag to check
+     * @return bool True if it's a custom condition
+     */
+    private function isCustomFeatureFlagCondition($featureFlag): bool
+    {
+        return is_array($featureFlag) && isset($featureFlag['flag']);
+    }
+
+    /**
+     * Helper method to check if an entitlement condition is a custom condition.
+     *
+     * @param mixed $entitlement The entitlement to check
+     * @return bool True if it's a custom condition
+     */
+    private function isCustomEntitlementCondition($entitlement): bool
+    {
+        return is_array($entitlement) && 
+               isset($entitlement['entitlement']) && 
+               isset($entitlement['condition']) && 
+               is_callable($entitlement['condition']);
+    }
+
+    /**
+     * Find matching role by key.
+     *
+     * @param array $userRoles Array of user roles
+     * @param string $roleKey Role key to find
+     * @return array|null The matching role or null
+     */
+    private function findMatchingRole(array $userRoles, string $roleKey): ?array
+    {
+        foreach ($userRoles as $userRole) {
+            if ($userRole['key'] === $roleKey) {
+                return $userRole;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find matching entitlement by key.
+     *
+     * @param array $userEntitlements Array of user entitlements
+     * @param string $entitlementKey Entitlement key to find
+     * @return object|null The matching entitlement or null
+     */
+    private function findMatchingEntitlement(array $userEntitlements, string $entitlementKey)
+    {
+        foreach ($userEntitlements as $userEntitlement) {
+            if ($userEntitlement->getFeatureKey() === $entitlementKey) {
+                return $userEntitlement;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Get all entitlements for the authenticated user, handling pagination automatically.
      *
      * @return array All entitlements
