@@ -12,7 +12,7 @@ The Kinde PHP SDK provides two main clients:
 ## Installation
 
 ```bash
-composer require kinde-oss/kinde-php-sdk
+composer require kinde-oss/kinde-auth-php
 ```
 
 ## Quick Start
