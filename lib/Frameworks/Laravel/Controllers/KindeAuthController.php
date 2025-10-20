@@ -53,12 +53,12 @@ class KindeAuthController extends Controller
                 if ($reauthState) {
                     $decodedAuthState = base64_decode($reauthState);
                     try {
-                        $reauthStateArr = json_decode($decodedAuthState, true);
+                        $reauthStateArr = json_decode($decodedAuthState, true, 512, JSON_THROW_ON_ERROR);
                         if ($reauthStateArr && is_array($reauthStateArr)) {
                             // Pass the decoded parameters directly to the SDK
                             $additionalParams = $reauthStateArr;
                         }
-                    } catch (\Exception $ex) {
+                    } catch (\JsonException $ex) {
                         // Log error but continue with login attempt
                         \Log::warning('Failed to parse reauth_state in callback', [
                             'error' => $ex->getMessage()
