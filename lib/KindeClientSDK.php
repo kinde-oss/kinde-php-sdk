@@ -201,16 +201,10 @@ class KindeClientSDK
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::authorizationCode:
                     $this->cleanStorage();
-                    if (!isset($additionalParameters['prompt'])) {
-                        $additionalParameters['prompt'] = AdditionalParameters::PROMPT_LOGIN;
-                    }
                     $auth = new AuthorizationCode();
                     return $auth->authenticate($this, $additionalParameters);
                 case GrantType::PKCE:
                     $this->cleanStorage();
-                    if (!isset($additionalParameters['prompt'])) {
-                        $additionalParameters['prompt'] = AdditionalParameters::PROMPT_LOGIN;
-                    }
                     $auth = new PKCE();
                     return $auth->authenticate($this, $additionalParameters);
                 default:
