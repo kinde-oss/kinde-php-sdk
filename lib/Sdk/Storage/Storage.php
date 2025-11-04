@@ -30,11 +30,15 @@ class Storage extends BaseStorage
 
     static function setToken($token)
     {
-        // Get the token string if it's an object
-        $tokenString = gettype($token) == 'string' ? $token : json_encode($token);
+        // Normalize token to string for storage
+        $tokenString = is_string($token) ? $token : json_encode($token);
         
-        // Parse the token to determine session persistence
-        $tokenArray = gettype($token) == 'string' ? json_decode($token, true) : $token;
+        // Parse token to determine session persistence - always normalize to array
+        // Handles: string JSON, array, stdClass object
+        $tokenArray = is_string($token) 
+            ? json_decode($token, true) 
+            : json_decode(json_encode($token), true);
+        
         $expiration = self::getTokenTimeToLive(); // Default expiration
         
         // If we have an access token, check for KSP claim to determine persistence

@@ -535,6 +535,72 @@ class SessionPersistenceTest extends TestCase
     }
 
     /**
+     * Critical: Test JWT with token passed as stdClass object
+     * Regression test for CodeRabbit issue: stdClass tokens must be normalized to arrays
+     * Without normalization, is_array() check fails and KSP logic never runs
+     */
+    public function testValidJwtWithTokenAsStdClassObject()
+    {
+        // Create token as stdClass (simulating json_decode($json) without true parameter)
+        $payload = $this->createJwtPayloadWithKsp(['persistent' => false], 'user_stdclass');
+        $accessToken = $this->createMockJWT($payload);
+        
+        // Create stdClass object (mimics json_decode without associative flag)
+        $tokenObject = json_decode(json_encode([
+            'access_token' => $accessToken,
+            'id_token' => 'mock_id_token',
+            'refresh_token' => 'mock_refresh_token',
+        ]));
+        
+        $this->assertInstanceOf(\stdClass::class, $tokenObject, 'Token should be stdClass for this test');
+        
+        Storage::setToken($tokenObject);
+        
+        // Critical: KSP logic MUST run even with stdClass input
+        $this->assertFalse(
+            Storage::isSessionPersistent(),
+            'KSP logic must run for stdClass tokens - persistent=false should result in non-persistent session'
+        );
+        
+        $expiration = Storage::getCookieExpiration();
+        $this->assertEquals(
+            0,
+            $expiration,
+            'stdClass token with ksp.persistent=false must set session cookie (expiration=0)'
+        );
+    }
+
+    /**
+     * Critical: Test JWT with token passed as stdClass with persistent=true
+     * Ensures stdClass normalization works for both true and false cases
+     */
+    public function testValidJwtWithTokenAsStdClassObjectPersistentTrue()
+    {
+        $payload = $this->createJwtPayloadWithKsp(['persistent' => true], 'user_stdclass_persistent');
+        $accessToken = $this->createMockJWT($payload);
+        
+        $tokenObject = json_decode(json_encode([
+            'access_token' => $accessToken,
+            'id_token' => 'mock_id_token',
+            'refresh_token' => 'mock_refresh_token',
+        ]));
+        
+        Storage::setToken($tokenObject);
+        
+        $this->assertTrue(
+            Storage::isSessionPersistent(),
+            'stdClass token with ksp.persistent=true should result in persistent session'
+        );
+        
+        $expiration = Storage::getCookieExpiration();
+        $this->assertGreaterThan(
+            0,
+            $expiration,
+            'stdClass token with ksp.persistent=true must set persistent cookie'
+        );
+    }
+
+    /**
      * Priority 2: End-to-end integration test
      * Tests the complete flow: setToken → JWT parsing → KSP logic → isSessionPersistent → getCookieExpiration
      */
