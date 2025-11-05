@@ -48,22 +48,29 @@ class KindeAuthController extends Controller
         if ($errorParam) {
             if (strtolower($errorParam) === 'login_link_expired') {
                 $reauthState = $request->query('reauth_state');
+                $additionalParams = [];
+                
                 if ($reauthState) {
                     $decodedAuthState = base64_decode($reauthState);
                     try {
-                        $reauthStateArr = json_decode($decodedAuthState, true);
+                        $reauthStateArr = json_decode($decodedAuthState, true, 512, JSON_THROW_ON_ERROR);
                         if ($reauthStateArr && is_array($reauthStateArr)) {
-                            $urlParams = http_build_query($reauthStateArr);
-                            $loginRoute = $this->login($request);
-                            $redirectUrl = $loginRoute . ($urlParams ? ('?' . $urlParams) : '');
-                            return redirect()->away($redirectUrl);
+                            // Pass the decoded parameters directly to the SDK
+                            $additionalParams = $reauthStateArr;
                         }
-                    } catch (\Exception $ex) {
-                        throw new \Exception($ex->getMessage() ?: 'Unknown Error parsing reauth state');
+                    } catch (\JsonException $ex) {
+                        // Log error but continue with login attempt
+                        \Log::warning('Failed to parse reauth_state in callback', [
+                            'error' => $ex->getMessage()
+                        ]);
                     }
                 }
-                // If no reauth_state, just return to login
-                return $this->login($request);
+                
+                // Pass parameters to SDK login, which will call exit() and redirect
+                $this->kindeClient->login($additionalParams);
+                
+                // Fallback return (unreachable due to exit() above, but included for code completeness)
+                return redirect()->route('home');
             }
             // For other errors, redirect to home
             return redirect()->route('home');
