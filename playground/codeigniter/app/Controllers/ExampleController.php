@@ -780,4 +780,737 @@ class ExampleController extends Controller
         
         return view('kinde/admin', $data);
     }
+
+    /**
+     * Comprehensive Has Functionality Testing Dashboard
+     * Tests all aspects of the new has functionality
+     */
+    public function testHasFunctionality()
+    {
+        if (!$this->kindeClient->isAuthenticated) {
+            return redirect()->to('/auth/login');
+        }
+
+        $testResults = [];
+        $errors = [];
+        $startTime = microtime(true);
+
+        // Test 1: Basic hasRoles functionality
+        $testResults['hasRoles'] = $this->testHasRoles();
+        
+        // Test 2: Basic hasPermissions functionality
+        $testResults['hasPermissions'] = $this->testHasPermissions();
+        
+        // Test 3: Basic hasFeatureFlags functionality
+        $testResults['hasFeatureFlags'] = $this->testHasFeatureFlags();
+        
+        // Test 4: Basic hasBillingEntitlements functionality
+        $testResults['hasBillingEntitlements'] = $this->testHasBillingEntitlements();
+        
+        // Test 5: Unified has method
+        $testResults['unifiedHas'] = $this->testUnifiedHas();
+        
+        // Test 6: Custom conditions
+        $testResults['customConditions'] = $this->testCustomConditions();
+        
+        // Test 7: Force API parameter variations
+        $testResults['forceApiTests'] = $this->testForceApiOptions();
+        
+        // Test 8: Edge cases and error handling
+        $testResults['edgeCases'] = $this->testEdgeCases();
+        
+        // Test 9: Performance tests
+        $testResults['performance'] = $this->testPerformance();
+        
+        $executionTime = round((microtime(true) - $startTime) * 1000, 2);
+
+        // Calculate summary statistics
+        $totalCategories = count($testResults);
+        $successfulCategories = 0;
+        $totalIndividualTests = 0;
+        $passedIndividualTests = 0;
+
+        foreach ($testResults as $category => $result) {
+            if ($result['success']) {
+                $successfulCategories++;
+            }
+            $totalIndividualTests += $result['testCount'] ?? 0;
+            $passedIndividualTests += $result['passedCount'] ?? 0;
+        }
+
+        $data = [
+            'testResults' => $testResults,
+            'summary' => [
+                'totalCategories' => $totalCategories,
+                'successfulCategories' => $successfulCategories,
+                'totalIndividualTests' => $totalIndividualTests,
+                'passedIndividualTests' => $passedIndividualTests,
+                'executionTime' => $executionTime,
+                'successRate' => $totalIndividualTests > 0 ? round(($passedIndividualTests / $totalIndividualTests) * 100, 2) : 0
+            ],
+            'user' => session()->get('kinde_user'),
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+
+        // Load helper functions
+        helper('has_test');
+
+        return view('kinde/has-functionality-test', $data);
+    }
+
+    /**
+     * Test hasRoles functionality
+     */
+    private function testHasRoles(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Empty roles array (should return true)
+            $result = $this->kindeClient->hasRoles([]);
+            $tests[] = [
+                'name' => 'Empty roles array',
+                'expected' => true,
+                'actual' => $result,
+                'passed' => $result === true
+            ];
+            if ($result === true) $passed++;
+
+            // Test 2: Single role check
+            $result = $this->kindeClient->hasRoles(['admin']);
+            $tests[] = [
+                'name' => 'Single role check (admin)',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Multiple roles check
+            $result = $this->kindeClient->hasRoles(['admin', 'user']);
+            $tests[] = [
+                'name' => 'Multiple roles check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 4: Force API parameter
+            $result = $this->kindeClient->hasRoles(['admin'], true);
+            $tests[] = [
+                'name' => 'With forceApi = true',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 5: Get actual roles for comparison
+            $userRoles = $this->kindeClient->getRoles();
+            $tests[] = [
+                'name' => 'Get user roles',
+                'expected' => 'array',
+                'actual' => count($userRoles) . ' roles',
+                'passed' => is_array($userRoles)
+            ];
+            if (is_array($userRoles)) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests,
+                'userRoles' => $userRoles
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test hasPermissions functionality
+     */
+    private function testHasPermissions(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Empty permissions array
+            $result = $this->kindeClient->hasPermissions([]);
+            $tests[] = [
+                'name' => 'Empty permissions array',
+                'expected' => true,
+                'actual' => $result,
+                'passed' => $result === true
+            ];
+            if ($result === true) $passed++;
+
+            // Test 2: Single permission check
+            $result = $this->kindeClient->hasPermissions(['read:posts']);
+            $tests[] = [
+                'name' => 'Single permission check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Multiple permissions
+            $result = $this->kindeClient->hasPermissions(['read:posts', 'write:posts']);
+            $tests[] = [
+                'name' => 'Multiple permissions check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 4: Force API parameter
+            $result = $this->kindeClient->hasPermissions(['read:posts'], false);
+            $tests[] = [
+                'name' => 'With forceApi = false',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 5: Get actual permissions
+            $userPermissions = $this->kindeClient->getPermissions();
+            $tests[] = [
+                'name' => 'Get user permissions',
+                'expected' => 'array',
+                'actual' => count($userPermissions['permissions'] ?? []) . ' permissions',
+                'passed' => isset($userPermissions['permissions']) && is_array($userPermissions['permissions'])
+            ];
+            if (isset($userPermissions['permissions']) && is_array($userPermissions['permissions'])) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests,
+                'userPermissions' => $userPermissions
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test hasFeatureFlags functionality
+     */
+    private function testHasFeatureFlags(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Empty feature flags array
+            $result = $this->kindeClient->hasFeatureFlags([]);
+            $tests[] = [
+                'name' => 'Empty feature flags array',
+                'expected' => true,
+                'actual' => $result,
+                'passed' => $result === true
+            ];
+            if ($result === true) $passed++;
+
+            // Test 2: Single feature flag existence
+            $result = $this->kindeClient->hasFeatureFlags(['dark_mode']);
+            $tests[] = [
+                'name' => 'Single feature flag check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Feature flag with specific value
+            $result = $this->kindeClient->hasFeatureFlags([
+                ['flag' => 'theme', 'value' => 'dark']
+            ]);
+            $tests[] = [
+                'name' => 'Feature flag with value check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 4: Mixed simple and value checks
+            $result = $this->kindeClient->hasFeatureFlags([
+                'dark_mode',
+                ['flag' => 'max_users', 'value' => 100]
+            ]);
+            $tests[] = [
+                'name' => 'Mixed simple and value checks',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test hasBillingEntitlements functionality
+     */
+    private function testHasBillingEntitlements(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Empty entitlements array
+            $result = $this->kindeClient->hasBillingEntitlements([]);
+            $tests[] = [
+                'name' => 'Empty entitlements array',
+                'expected' => true,
+                'actual' => $result,
+                'passed' => $result === true
+            ];
+            if ($result === true) $passed++;
+
+            // Test 2: Single entitlement check
+            $result = $this->kindeClient->hasBillingEntitlements(['premium']);
+            $tests[] = [
+                'name' => 'Single entitlement check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Multiple entitlements
+            $result = $this->kindeClient->hasBillingEntitlements(['premium', 'api-access']);
+            $tests[] = [
+                'name' => 'Multiple entitlements check',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 4: Get actual entitlements
+            $userEntitlements = $this->kindeClient->getAllEntitlements();
+            $tests[] = [
+                'name' => 'Get user entitlements',
+                'expected' => 'array',
+                'actual' => count($userEntitlements) . ' entitlements',
+                'passed' => is_array($userEntitlements)
+            ];
+            if (is_array($userEntitlements)) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests,
+                'userEntitlements' => $userEntitlements
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test unified has method
+     */
+    private function testUnifiedHas(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Empty conditions
+            $result = $this->kindeClient->has([]);
+            $tests[] = [
+                'name' => 'Empty conditions',
+                'expected' => true,
+                'actual' => $result,
+                'passed' => $result === true
+            ];
+            if ($result === true) $passed++;
+
+            // Test 2: Single condition type
+            $result = $this->kindeClient->has(['roles' => ['admin']]);
+            $tests[] = [
+                'name' => 'Single condition (roles)',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Multiple condition types
+            $result = $this->kindeClient->has([
+                'roles' => ['admin'],
+                'permissions' => ['read:posts']
+            ]);
+            $tests[] = [
+                'name' => 'Multiple conditions',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 4: All condition types
+            $result = $this->kindeClient->has([
+                'roles' => ['admin'],
+                'permissions' => ['read:posts'],
+                'featureFlags' => ['dark_mode'],
+                'billingEntitlements' => ['premium']
+            ]);
+            $tests[] = [
+                'name' => 'All condition types',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test custom conditions
+     */
+    private function testCustomConditions(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Custom role condition
+            $result = $this->kindeClient->hasRoles([
+                [
+                    'role' => 'admin',
+                    'condition' => function($role) {
+                        return isset($role['key']) && $role['key'] === 'admin';
+                    }
+                ]
+            ]);
+            $tests[] = [
+                'name' => 'Custom role condition',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 2: Custom permission condition
+            $result = $this->kindeClient->hasPermissions([
+                [
+                    'permission' => 'read:posts',
+                    'condition' => function($context) {
+                        return isset($context['orgCode']);
+                    }
+                ]
+            ]);
+            $tests[] = [
+                'name' => 'Custom permission condition',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Custom entitlement condition
+            $result = $this->kindeClient->hasBillingEntitlements([
+                [
+                    'entitlement' => 'premium',
+                    'condition' => function($entitlement) {
+                        return method_exists($entitlement, 'getFeatureKey');
+                    }
+                ]
+            ]);
+            $tests[] = [
+                'name' => 'Custom entitlement condition',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test force API parameter options
+     */
+    private function testForceApiOptions(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Boolean true forceApi
+            $result = $this->kindeClient->has([
+                'roles' => ['admin'],
+                'permissions' => ['read:posts']
+            ], true);
+            $tests[] = [
+                'name' => 'ForceApi = true (boolean)',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 2: Boolean false forceApi
+            $result = $this->kindeClient->has([
+                'roles' => ['admin'],
+                'permissions' => ['read:posts']
+            ], false);
+            $tests[] = [
+                'name' => 'ForceApi = false (boolean)',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 3: Array forceApi (selective)
+            $result = $this->kindeClient->has([
+                'roles' => ['admin'],
+                'permissions' => ['read:posts']
+            ], [
+                'roles' => true,
+                'permissions' => false
+            ]);
+            $tests[] = [
+                'name' => 'ForceApi = array (selective)',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            // Test 4: Null forceApi (default)
+            $result = $this->kindeClient->has([
+                'roles' => ['admin']
+            ], null);
+            $tests[] = [
+                'name' => 'ForceApi = null (default)',
+                'expected' => 'boolean',
+                'actual' => $result,
+                'passed' => is_bool($result)
+            ];
+            if (is_bool($result)) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test edge cases and error handling
+     */
+    private function testEdgeCases(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Non-existent role
+            $result = $this->kindeClient->hasRoles(['non_existent_role_xyz']);
+            $tests[] = [
+                'name' => 'Non-existent role',
+                'expected' => false,
+                'actual' => $result,
+                'passed' => $result === false
+            ];
+            if ($result === false) $passed++;
+
+            // Test 2: Non-existent permission
+            $result = $this->kindeClient->hasPermissions(['non:existent:permission']);
+            $tests[] = [
+                'name' => 'Non-existent permission',
+                'expected' => false,
+                'actual' => $result,
+                'passed' => $result === false
+            ];
+            if ($result === false) $passed++;
+
+            // Test 3: Non-existent feature flag
+            $result = $this->kindeClient->hasFeatureFlags(['non_existent_flag_xyz']);
+            $tests[] = [
+                'name' => 'Non-existent feature flag',
+                'expected' => false,
+                'actual' => $result,
+                'passed' => $result === false
+            ];
+            if ($result === false) $passed++;
+
+            // Test 4: Non-existent entitlement
+            $result = $this->kindeClient->hasBillingEntitlements(['non_existent_entitlement']);
+            $tests[] = [
+                'name' => 'Non-existent entitlement',
+                'expected' => false,
+                'actual' => $result,
+                'passed' => $result === false
+            ];
+            if ($result === false) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
+
+    /**
+     * Test performance characteristics
+     */
+    private function testPerformance(): array
+    {
+        $tests = [];
+        $passed = 0;
+        
+        try {
+            // Test 1: Simple role check timing
+            $start = microtime(true);
+            $result = $this->kindeClient->hasRoles(['admin']);
+            $time1 = round((microtime(true) - $start) * 1000, 2);
+            $tests[] = [
+                'name' => 'Simple role check timing',
+                'expected' => '< 100ms',
+                'actual' => $time1 . 'ms',
+                'passed' => $time1 < 100
+            ];
+            if ($time1 < 100) $passed++;
+
+            // Test 2: Complex unified check timing
+            $start = microtime(true);
+            $result = $this->kindeClient->has([
+                'roles' => ['admin', 'user'],
+                'permissions' => ['read:posts', 'write:posts']
+            ]);
+            $time2 = round((microtime(true) - $start) * 1000, 2);
+            $tests[] = [
+                'name' => 'Complex unified check timing',
+                'expected' => '< 200ms',
+                'actual' => $time2 . 'ms',
+                'passed' => $time2 < 200
+            ];
+            if ($time2 < 200) $passed++;
+
+            // Test 3: Multiple sequential calls
+            $start = microtime(true);
+            for ($i = 0; $i < 5; $i++) {
+                $this->kindeClient->hasRoles(['admin']);
+            }
+            $time3 = round((microtime(true) - $start) * 1000, 2);
+            $tests[] = [
+                'name' => '5 sequential role checks',
+                'expected' => '< 250ms',
+                'actual' => $time3 . 'ms',
+                'passed' => $time3 < 250
+            ];
+            if ($time3 < 250) $passed++;
+
+            return [
+                'success' => true,
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'testCount' => count($tests),
+                'passedCount' => $passed,
+                'tests' => $tests
+            ];
+        }
+    }
 } 
