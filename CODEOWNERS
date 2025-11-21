@@ -1,1 +1,14 @@
+# Default owners for everything
+
 * @kinde-oss/giants-kinde
+
+# Dependency-related files for this repo
+
+/composer.json @kinde-oss/sdk-engineers
+**/composer.json @kinde-oss/sdk-engineers
+/composer.lock @kinde-oss/sdk-engineers
+**/composer.lock @kinde-oss/sdk-engineers
+/package.json @kinde-oss/sdk-engineers
+**/package.json @kinde-oss/sdk-engineers
+/package-lock.json @kinde-oss/sdk-engineers
+**/package-lock.json @kinde-oss/sdk-engineers
