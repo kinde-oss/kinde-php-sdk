@@ -834,15 +834,15 @@ class KindeClientSDK
     /**
      * Checks the authentication state against the provided state from the server.
      *
-     * @param string $stateServer The state received from the server.
+     * @param string|null $stateServer The state received from the server, or null if missing.
      *
      * @throws OAuthException If the authentication state is empty or does not match the provided state.
      */
-    private function checkStateAuthentication(string $stateServer)
+    private function checkStateAuthentication(?string $stateServer)
     {
         $storageOAuthState = $this->storage->getState();
 
-        if (empty($storageOAuthState) || $stateServer != $storageOAuthState) {
+        if (empty($stateServer) || empty($storageOAuthState) || $stateServer !== $storageOAuthState) {
             throw new OAuthException("Authentication failed because it tries to validate state");
         }
     }
