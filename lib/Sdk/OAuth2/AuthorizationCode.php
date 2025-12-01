@@ -46,7 +46,8 @@ class AuthorizationCode
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         if (!headers_sent()) {
-            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
+            header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams));
+            exit();
         }
     }
 }

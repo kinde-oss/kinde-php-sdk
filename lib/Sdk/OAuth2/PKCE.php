@@ -47,7 +47,8 @@ class PKCE
         $this->storage->setCodeVerifier($challenge['codeVerifier']);
 
         if (!headers_sent()) {
-            exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));
+            header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams));
+            exit();
         }
     }
 }
