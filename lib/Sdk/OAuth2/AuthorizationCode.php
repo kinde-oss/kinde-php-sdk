@@ -44,6 +44,12 @@ class AuthorizationCode
             'supports_reauth' => 'true',
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        
+        // Auto-derive is_invitation when invitation_code is present
+        if (!empty($mergedAdditionalParameters['invitation_code'])) {
+            $mergedAdditionalParameters['is_invitation'] = 'true';
+        }
+        
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         if (!headers_sent()) {
             exit(header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams)));

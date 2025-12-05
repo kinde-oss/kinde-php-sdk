@@ -15,6 +15,7 @@ class AdditionalParameters
         'plan_interest' => 'string',
         'pricing_table_key' => 'string',
         'prompt' => 'string',
-        'redirect_uri' => 'string'
+        'redirect_uri' => 'string',
+        'invitation_code' => 'string'
     ];
 }

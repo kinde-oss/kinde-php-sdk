@@ -38,6 +38,16 @@ class KindeAuthController extends AbstractController
         if ($request->query->has('is_create_org')) {
             $additionalParams['is_create_org'] = $request->query->get('is_create_org');
         }
+        if ($request->query->has('invitation_code')) {
+            $invitationCode = $request->query->get('invitation_code');
+            if (!empty($invitationCode)) {
+                $additionalParams['invitation_code'] = $invitationCode;
+                // When invitation_code is present, use registration flow
+                if (!isset($additionalParams['prompt'])) {
+                    $additionalParams['prompt'] = 'create';
+                }
+            }
+        }
         
         try {
             $result = $this->kindeClient->login($additionalParams);
@@ -112,6 +122,12 @@ class KindeAuthController extends AbstractController
         }
         if ($request->query->has('is_create_org')) {
             $additionalParams['is_create_org'] = $request->query->get('is_create_org');
+        }
+        if ($request->query->has('invitation_code')) {
+            $invitationCode = $request->query->get('invitation_code');
+            if (!empty($invitationCode)) {
+                $additionalParams['invitation_code'] = $invitationCode;
+            }
         }
         
         try {
