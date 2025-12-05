@@ -43,6 +43,12 @@ class PKCE
             'state' => $state
         ];
         $mergedAdditionalParameters = Utils::addAdditionalParameters($clientSDK->additionalParameters, $additionalParameters);
+        
+        // Auto-derive is_invitation when invitation_code is present
+        if (!empty($mergedAdditionalParameters['invitation_code'])) {
+            $mergedAdditionalParameters['is_invitation'] = 'true';
+        }
+        
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         $this->storage->setCodeVerifier($challenge['codeVerifier']);
 
