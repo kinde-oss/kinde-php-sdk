@@ -22,6 +22,9 @@ $routes->get('protected', 'ExampleController::protectedRoute');
 // Management API Testing Dashboard
 $routes->get('test-management-api', 'ExampleController::testManagementApi');
 
+// Has Functionality Testing Dashboard
+$routes->get('test-has-functionality', 'ExampleController::testHasFunctionality');
+
 // Individual API endpoints
 $routes->get('api/users', 'ExampleController::listUsers');
 $routes->post('api/users', 'ExampleController::createUser');

@@ -172,7 +172,7 @@ class KindeClientSDK
 
     /**
      * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
-     * state, and the prompt set to register
+     * state, and the prompt set to create
      *
      * @param array additionalParameters The array includes params to pass api.
      */
@@ -181,7 +181,7 @@ class KindeClientSDK
         $this->grantType = 'authorization_code';
 
         if (!isset($additionalParameters['prompt'])) {
-            $additionalParameters['prompt'] = 'register';
+            $additionalParameters['prompt'] = 'create';
         }
 
         $auth = new PKCE();
@@ -190,7 +190,7 @@ class KindeClientSDK
 
     /**
      * It redirects the user to the authorization endpoint with the client id, redirect uri, a random
-     * state, and the start page set to registration and allow an organization to be created
+     * state, and the prompt set to create and allow an organization to be created
      *
      *  @param array additionalParameters The array includes params to pass api.
      */
