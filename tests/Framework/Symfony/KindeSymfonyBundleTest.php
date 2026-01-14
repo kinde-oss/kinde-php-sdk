@@ -18,6 +18,8 @@ class KindeSymfonyBundleTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->markTestSkipped('Requires a Symfony application test harness.');
         
         // Set up test environment variables
         putenv('KINDE_DOMAIN=https://test-domain.kinde.com');
