@@ -104,6 +104,46 @@ class HasPermissionsTest extends KindeTestCase
     }
 
     // =========================================================================
+    // No Token Scenarios (mirrors js-utils "when no token" tests)
+    // =========================================================================
+
+    public function testReturnsFalseWhenNoTokenAndNoMockData(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // No mock data set - simulates no token scenario
+        $result = $freshClient->hasPermissions(['canEdit']);
+
+        $this->assertFalse($result);
+    }
+
+    public function testReturnsTrueWhenNoTokenButEmptyPermissionsRequired(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // Empty permissions array should return true (no permissions required)
+        $result = $freshClient->hasPermissions([]);
+
+        $this->assertTrue($result);
+    }
+
+    // =========================================================================
     // Custom Conditions
     // =========================================================================
 

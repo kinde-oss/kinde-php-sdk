@@ -5,83 +5,79 @@ namespace Tests\Integration;
 use PHPUnit\Framework\TestCase;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\KindeManagementClient;
+use Kinde\KindeSDK\Sdk\Enums\GrantType;
 
 /**
  * Integration tests for Kinde SDK
  * 
  * These tests verify that the SDK components work together correctly.
+ * Full integration tests with real API calls require proper credentials
+ * and should be run separately with the @group integration annotation.
+ * 
+ * @group integration
  */
 class KindeIntegrationTest extends TestCase
 {
-    protected function setUp(): void
+    /**
+     * Test that both client classes are available and can be instantiated.
+     */
+    public function testClientClassesAvailable(): void
     {
-        parent::setUp();
-
-        $this->markTestSkipped('Requires a real integration environment and secrets.');
-        
-        // Set up test environment variables
-        putenv('KINDE_DOMAIN=https://test-domain.kinde.com');
-        putenv('KINDE_CLIENT_ID=test_client_id');
-        putenv('KINDE_CLIENT_SECRET=test_client_secret');
-        putenv('KINDE_REDIRECT_URI=http://localhost:8000/auth/callback');
-        putenv('KINDE_GRANT_TYPE=authorization_code');
-        putenv('KINDE_LOGOUT_REDIRECT_URI=http://localhost:8000');
-        putenv('KINDE_SCOPES=openid profile email offline');
-        putenv('KINDE_PROTOCOL=https');
-        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN=test_management_token');
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        
-        // Clean up environment variables
-        putenv('KINDE_DOMAIN=');
-        putenv('KINDE_CLIENT_ID=');
-        putenv('KINDE_CLIENT_SECRET=');
-        putenv('KINDE_REDIRECT_URI=');
-        putenv('KINDE_GRANT_TYPE=');
-        putenv('KINDE_LOGOUT_REDIRECT_URI=');
-        putenv('KINDE_SCOPES=');
-        putenv('KINDE_PROTOCOL=');
-        putenv('KINDE_MANAGEMENT_ACCESS_TOKEN=');
+        $this->assertTrue(
+            class_exists(KindeClientSDK::class),
+            'KindeClientSDK class should exist'
+        );
+        $this->assertTrue(
+            class_exists(KindeManagementClient::class),
+            'KindeManagementClient class should exist'
+        );
     }
 
     /**
-     * Test that both client types can be instantiated
+     * Test that grant type enum values are available.
      */
-    public function testClientInstantiation(): void
+    public function testGrantTypeEnumAvailable(): void
     {
-        $this->assertTrue(class_exists(KindeClientSDK::class));
-        $this->assertTrue(class_exists(KindeManagementClient::class));
+        $this->assertEquals('authorization_code', GrantType::authorizationCode);
+        $this->assertEquals('client_credentials', GrantType::clientCredentials);
+        $this->assertEquals('authorization_code_flow_pkce', GrantType::PKCE);
     }
 
     /**
-     * Test environment variable integration
+     * Test SDK instantiation with test configuration.
+     * This verifies the constructor works without making API calls.
      */
-    public function testEnvironmentVariableIntegration(): void
+    public function testSdkInstantiationWithTestConfig(): void
     {
-        $this->assertEquals('https://test-domain.kinde.com', getenv('KINDE_DOMAIN'));
-        $this->assertEquals('test_client_id', getenv('KINDE_CLIENT_ID'));
-        $this->assertEquals('test_client_secret', getenv('KINDE_CLIENT_SECRET'));
-        $this->assertEquals('test_management_token', getenv('KINDE_MANAGEMENT_ACCESS_TOKEN'));
+        $client = new KindeClientSDK(
+            'https://test.kinde.com',
+            'http://localhost:8000/callback',
+            'test_client_id',
+            'test_client_secret',
+            GrantType::authorizationCode,
+            'http://localhost:8000'
+        );
+
+        $this->assertInstanceOf(KindeClientSDK::class, $client);
+        $this->assertEquals('https://test.kinde.com', $client->domain);
+        $this->assertEquals('test_client_id', $client->clientId);
     }
 
     /**
-     * Test that SDK components are properly integrated
+     * Test management client instantiation with test configuration.
+     * This verifies the constructor works when an access token is provided.
      */
-    public function testSDKComponentIntegration(): void
+    public function testManagementClientInstantiationWithTestConfig(): void
     {
-        // This test verifies that all SDK components are available and can work together
-        $this->assertTrue(true, 'SDK component integration test passed');
-    }
+        $management = new KindeManagementClient(
+            'https://test.kinde.com',
+            'test_client_id',
+            'test_client_secret',
+            'test_access_token'
+        );
 
-    /**
-     * Test configuration integration
-     */
-    public function testConfigurationIntegration(): void
-    {
-        // This test verifies that configuration is properly integrated across components
-        $this->assertTrue(true, 'Configuration integration test passed');
+        $this->assertInstanceOf(KindeManagementClient::class, $management);
+        $this->assertEquals('https://test.kinde.com', $management->getDomain());
+        $this->assertEquals('test_client_id', $management->getClientId());
     }
-} 
+}

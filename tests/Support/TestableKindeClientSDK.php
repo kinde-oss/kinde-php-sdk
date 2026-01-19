@@ -219,6 +219,103 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
+     * Override hasPermissions to properly handle forceApi in test mode.
+     * Uses mock data regardless of forceApi setting.
+     *
+     * @param array $permissions Array of permission keys or permission condition objects
+     * @param bool|null $forceApi Force API call (recorded but uses mock data)
+     * @return bool True if user has all specified permissions
+     */
+    public function hasPermissions(array $permissions = [], ?bool $forceApi = null): bool
+    {
+        $this->recordMethodCall('hasPermissions', ['forceApi' => $forceApi]);
+
+        if (empty($permissions)) {
+            return true;
+        }
+
+        try {
+            // In test mode, always use mock data (getPermissions returns mock)
+            $permissionData = $this->getPermissions();
+            $userPermissions = $permissionData['permissions'] ?? [];
+            $orgCode = $permissionData['orgCode'] ?? null;
+
+            foreach ($permissions as $permission) {
+                if (is_string($permission)) {
+                    if (!in_array($permission, $userPermissions)) {
+                        return false;
+                    }
+                } elseif (is_array($permission) && isset($permission['permission']) && isset($permission['condition'])) {
+                    if (!in_array($permission['permission'], $userPermissions)) {
+                        return false;
+                    }
+                    if (!call_user_func($permission['condition'], [
+                        'permissionKey' => $permission['permission'],
+                        'orgCode' => $orgCode
+                    ])) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Override hasFeatureFlags to properly handle forceApi in test mode.
+     * Uses mock data regardless of forceApi setting.
+     *
+     * @param array $featureFlags Array of feature flag keys or flag condition objects
+     * @param bool|null $forceApi Force API call (recorded but uses mock data)
+     * @return bool True if user has all specified feature flags
+     */
+    public function hasFeatureFlags(array $featureFlags = [], ?bool $forceApi = null): bool
+    {
+        $this->recordMethodCall('hasFeatureFlags', ['forceApi' => $forceApi]);
+
+        if (empty($featureFlags)) {
+            return true;
+        }
+
+        try {
+            // In test mode, use mock claims for feature flags
+            $flags = $this->getClaim('feature_flags')['value'] ?? [];
+            if (!is_array($flags)) {
+                $flags = [];
+            }
+
+            foreach ($featureFlags as $featureFlag) {
+                if (is_string($featureFlag)) {
+                    if (!array_key_exists($featureFlag, $flags)) {
+                        return false;
+                    }
+                } elseif (is_array($featureFlag) && isset($featureFlag['flag'])) {
+                    $flagKey = $featureFlag['flag'];
+                    if (!array_key_exists($flagKey, $flags)) {
+                        return false;
+                    }
+                    
+                    // Value-specific check
+                    if (isset($featureFlag['value'])) {
+                        $flagData = $flags[$flagKey];
+                        $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
+                        if ($flagValue !== $featureFlag['value']) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Override getClaim to use mock data.
      *
      * @param string $keyName Claim key name

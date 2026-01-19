@@ -95,6 +95,46 @@ class HasRolesTest extends KindeTestCase
     }
 
     // =========================================================================
+    // No Token Scenarios (mirrors js-utils "when no token" tests)
+    // =========================================================================
+
+    public function testReturnsFalseWhenNoTokenAndNoMockData(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // No mock data set - simulates no token scenario
+        $result = $freshClient->hasRoles(['admin']);
+
+        $this->assertFalse($result);
+    }
+
+    public function testReturnsTrueWhenNoTokenButEmptyRolesRequired(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // Empty roles array should return true (no roles required)
+        $result = $freshClient->hasRoles([]);
+
+        $this->assertTrue($result);
+    }
+
+    // =========================================================================
     // Custom Conditions
     // =========================================================================
 

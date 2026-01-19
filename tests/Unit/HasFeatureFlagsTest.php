@@ -109,6 +109,46 @@ class HasFeatureFlagsTest extends KindeTestCase
     }
 
     // =========================================================================
+    // No Token Scenarios (mirrors js-utils "when no token" tests)
+    // =========================================================================
+
+    public function testReturnsFalseWhenNoTokenAndNoMockData(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // No mock data set - simulates no token scenario
+        $result = $freshClient->hasFeatureFlags(['darkMode']);
+
+        $this->assertFalse($result);
+    }
+
+    public function testReturnsTrueWhenNoTokenButEmptyFeatureFlagsRequired(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // Empty feature flags array should return true (no flags required)
+        $result = $freshClient->hasFeatureFlags([]);
+
+        $this->assertTrue($result);
+    }
+
+    // =========================================================================
     // Feature Flag Exists with Different Value Types
     // =========================================================================
 

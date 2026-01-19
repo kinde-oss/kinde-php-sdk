@@ -32,6 +32,49 @@ class HasCombinedTest extends KindeTestCase
     }
 
     // =========================================================================
+    // No Token Scenarios (mirrors js-utils "when no token" tests)
+    // =========================================================================
+
+    public function testReturnsFalseWhenNoTokenAndRolesRequired(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // No mock data set - simulates no token scenario
+        $result = $freshClient->has([
+            'roles' => ['admin'],
+            'permissions' => ['canEdit'],
+        ]);
+
+        $this->assertFalse($result);
+    }
+
+    public function testReturnsTrueWhenNoTokenButNoConditionsRequired(): void
+    {
+        // Create a fresh client without any mock data set
+        $freshClient = new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            GrantType::authorizationCode,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+
+        // Empty conditions should return true
+        $result = $freshClient->has([]);
+
+        $this->assertTrue($result);
+    }
+
+    // =========================================================================
     // Basic Combined Checks
     // =========================================================================
 
@@ -720,6 +763,196 @@ class HasCombinedTest extends KindeTestCase
         ], []);
 
         $this->assertTrue($result);
+    }
+
+    public function testForceApiAsObjectWithSpecificFlagsForEachType(): void
+    {
+        // Set up mock data for token-based checks
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'tokenFlag' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+        // Roles and permissions will be "from API" (mocked)
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
+        ]);
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['apiCanEdit'],
+        ]);
+
+        $result = $this->client->has([
+            'roles' => ['apiAdmin'],
+            'permissions' => ['apiCanEdit'],
+            'featureFlags' => ['tokenFlag'],
+        ], [
+            'roles' => true,
+            'permissions' => true,
+            'featureFlags' => false,
+        ]);
+
+        $this->assertTrue($result);
+
+        // Verify forceApi settings were passed correctly
+        $rolesCalls = $this->client->getMethodCalls('getRoles');
+        $this->assertTrue($rolesCalls[0]['forceApi']);
+    }
+
+    public function testForceApiObjectWithMixedBooleanValues(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
+        ]);
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['tokenCanEdit'],
+        ]);
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'tokenFlag' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+
+        $result = $this->client->has([
+            'roles' => ['apiAdmin'],
+            'permissions' => ['tokenCanEdit'],
+            'featureFlags' => ['tokenFlag'],
+        ], [
+            'roles' => true,      // Force API for roles
+            'permissions' => false, // Use token for permissions
+            'featureFlags' => false, // Use token for feature flags
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testForceApiObjectWithUndefinedValuesUsesDefault(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'tokenAdmin', 'name' => 'Token Administrator'],
+        ]);
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['tokenCanEdit'],
+        ]);
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'tokenFlag' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+
+        // Pass an object with no explicit values - should use defaults (token behavior)
+        $result = $this->client->has([
+            'roles' => ['tokenAdmin'],
+            'permissions' => ['tokenCanEdit'],
+            'featureFlags' => ['tokenFlag'],
+        ], [
+            // No explicit values set, should use default (false/token behavior)
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testForceApiObjectWithCustomConditions(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
+        ]);
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_456',
+            'permissions' => ['apiCanManage'],
+        ]);
+
+        $result = $this->client->has([
+            'roles' => [
+                [
+                    'role' => 'apiAdmin',
+                    'condition' => fn(array $role) => str_contains($role['name'], 'Administrator'),
+                ],
+            ],
+            'permissions' => [
+                [
+                    'permission' => 'apiCanManage',
+                    'condition' => fn(array $context) => $context['orgCode'] === 'org_456',
+                ],
+            ],
+        ], [
+            'roles' => true,
+            'permissions' => true,
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testForceApiObjectWhenOneApiCheckFails(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'apiUser', 'name' => 'API User'], // User doesn't have admin role
+        ]);
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['apiCanEdit'],
+        ]);
+
+        $result = $this->client->has([
+            'roles' => ['apiAdmin'], // User doesn't have this role
+            'permissions' => ['apiCanEdit'],
+        ], [
+            'roles' => true,
+            'permissions' => true,
+        ]);
+
+        $this->assertFalse($result);
+    }
+
+    public function testForceApiObjectWithBillingEntitlements(): void
+    {
+        // Billing entitlements always use API, but forceApi object should still work
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'tokenAdmin', 'name' => 'Token Administrator'],
+        ]);
+        $this->client->setMockEntitlements([
+            MockEntitlement::simple('pro_gym'),
+        ]);
+
+        $result = $this->client->has([
+            'roles' => ['tokenAdmin'],
+            'billingEntitlements' => ['pro_gym'],
+        ], [
+            'roles' => false, // Use token for roles
+            'billingEntitlements' => true, // Redundant but allowed
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testForceApiAsBooleanTrue(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
+        ]);
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['apiCanEdit'],
+        ]);
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'apiFlag' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+
+        $result = $this->client->has([
+            'roles' => ['apiAdmin'],
+            'permissions' => ['apiCanEdit'],
+            'featureFlags' => ['apiFlag'],
+        ], true);
+
+        $this->assertTrue($result);
+
+        // Verify forceApi was passed to getRoles as true
+        $calls = $this->client->getMethodCalls('getRoles');
+        $this->assertTrue($calls[0]['forceApi']);
     }
 
     // =========================================================================
