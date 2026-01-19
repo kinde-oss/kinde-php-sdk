@@ -264,11 +264,11 @@ class HasPermissionsTest extends KindeTestCase
         $result = $this->client->hasPermissions([
             [
                 'permission' => 'canEdit',
-                'condition' => fn(array $context) => str_contains($context['permissionKey'], 'Edit'),
+                'condition' => fn(array $context) => strpos($context['permissionKey'], 'Edit') !== false,
             ],
             [
                 'permission' => 'canView',
-                'condition' => fn(array $context) => str_contains($context['permissionKey'], 'View'),
+                'condition' => fn(array $context) => strpos($context['permissionKey'], 'View') !== false,
             ],
         ]);
 
@@ -361,6 +361,23 @@ class HasPermissionsTest extends KindeTestCase
         $result = $this->client->hasPermissions(['canEdit']);
 
         $this->assertTrue($result);
+    }
+
+    public function testForceApiTrueUsesApiData(): void
+    {
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['tokenCanEdit'],
+        ]);
+        $this->client->setMockApiPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['apiCanEdit'],
+        ]);
+
+        $result = $this->client->hasPermissions(['apiCanEdit'], true);
+
+        $this->assertTrue($result);
+        $this->assertTrue($this->client->wasMethodCalled('getPermissionsFromApi'));
     }
 
     // =========================================================================

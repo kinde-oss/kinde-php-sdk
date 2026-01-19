@@ -429,6 +429,23 @@ class HasFeatureFlagsTest extends KindeTestCase
         $this->assertTrue($result);
     }
 
+    public function testForceApiTrueUsesApiData(): void
+    {
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'tokenFlag' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+        $this->client->setMockApiFeatureFlags([
+            'apiFlag' => ['v' => true, 't' => 'b'],
+        ]);
+
+        $result = $this->client->hasFeatureFlags(['apiFlag'], true);
+
+        $this->assertTrue($result);
+        $this->assertTrue($this->client->wasMethodCalled('getFeatureFlagsFromApi'));
+    }
+
     // =========================================================================
     // Edge Cases
     // =========================================================================

@@ -203,12 +203,12 @@ class KindeClientSDKTest extends KindeTestCase
 
         // Override some parameters
         $client = new KindeClientSDK(
-            domain: null, // Use from environment
-            redirectUri: self::TEST_REDIRECT_URI, // Override
-            clientId: null, // Use from environment
-            clientSecret: null, // Use from environment
-            grantType: GrantType::authorizationCode, // Override
-            logoutRedirectUri: self::TEST_LOGOUT_REDIRECT_URI // Override
+            null, // Use from environment
+            self::TEST_REDIRECT_URI, // Override
+            null, // Use from environment
+            null, // Use from environment
+            GrantType::authorizationCode, // Override
+            self::TEST_LOGOUT_REDIRECT_URI // Override
         );
 
         $this->assertInstanceOf(KindeClientSDK::class, $client);

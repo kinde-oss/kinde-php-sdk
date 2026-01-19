@@ -40,7 +40,7 @@ class HasBillingEntitlementsTest extends KindeTestCase
     public function testReturnsTrueWhenNoEntitlementsProvided(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
         ]);
 
         $this->assertTrue($this->client->hasBillingEntitlements([]));
@@ -49,21 +49,21 @@ class HasBillingEntitlementsTest extends KindeTestCase
     public function testReturnsTrueWhenUserHasAllRequiredEntitlements(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
             MockEntitlement::simple('premium_features'),
             MockEntitlement::simple('advanced_analytics'),
         ]);
 
-        $this->assertTrue($this->client->hasBillingEntitlements(['pro_gym', 'premium_features']));
+        $this->assertTrue($this->client->hasBillingEntitlements(['pro_plan', 'premium_features']));
     }
 
     public function testReturnsFalseWhenUserHasSomeButNotAllRequiredEntitlements(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
         ]);
 
-        $this->assertFalse($this->client->hasBillingEntitlements(['pro_gym', 'premium_features']));
+        $this->assertFalse($this->client->hasBillingEntitlements(['pro_plan', 'premium_features']));
     }
 
     public function testReturnsFalseWhenUserHasNoRequiredEntitlements(): void
@@ -72,23 +72,23 @@ class HasBillingEntitlementsTest extends KindeTestCase
             MockEntitlement::simple('basic_plan'),
         ]);
 
-        $this->assertFalse($this->client->hasBillingEntitlements(['pro_gym', 'premium_features']));
+        $this->assertFalse($this->client->hasBillingEntitlements(['pro_plan', 'premium_features']));
     }
 
     public function testReturnsTrueWhenUserHasSingleRequiredEntitlement(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
         ]);
 
-        $this->assertTrue($this->client->hasBillingEntitlements(['pro_gym']));
+        $this->assertTrue($this->client->hasBillingEntitlements(['pro_plan']));
     }
 
     public function testReturnsFalseWhenEntitlementsIsEmpty(): void
     {
         $this->client->setMockEntitlements([]);
 
-        $this->assertFalse($this->client->hasBillingEntitlements(['pro_gym']));
+        $this->assertFalse($this->client->hasBillingEntitlements(['pro_plan']));
     }
 
     // =========================================================================
@@ -108,7 +108,7 @@ class HasBillingEntitlementsTest extends KindeTestCase
         );
 
         // No mock data set - simulates no token scenario
-        $result = $freshClient->hasBillingEntitlements(['pro_gym']);
+        $result = $freshClient->hasBillingEntitlements(['pro_plan']);
 
         $this->assertFalse($result);
     }
@@ -139,18 +139,18 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35,
-                priceName: 'Pro gym'
+                'pro_plan',
+                'Pro Plan',
+                'ent_1',
+                35,
+                'Pro gym'
             ),
         ]);
 
         $result = $this->client->hasBillingEntitlements([
             [
-                'entitlement' => 'pro_gym',
-                'condition' => fn($entitlement) => $entitlement->getFeatureKey() === 'pro_gym',
+                'entitlement' => 'pro_plan',
+                'condition' => fn($entitlement) => $entitlement->getFeatureKey() === 'pro_plan',
             ],
         ]);
 
@@ -161,16 +161,16 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35
+                'pro_plan',
+                'Pro Plan',
+                'ent_1',
+                35
             ),
         ]);
 
         $result = $this->client->hasBillingEntitlements([
             [
-                'entitlement' => 'pro_gym',
+                'entitlement' => 'pro_plan',
                 'condition' => fn() => false, // Always fails
             ],
         ]);
@@ -182,19 +182,20 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35,
-                priceName: 'Pro gym',
-                entitlementLimitMax: 100,
-                entitlementLimitMin: 1
+                'pro_plan',
+                'Pro Plan',
+                'ent_1',
+                35,
+                'Pro gym',
+                null,
+                100,
+                1
             ),
         ]);
 
         $result = $this->client->hasBillingEntitlements([
             [
-                'entitlement' => 'pro_gym',
+                'entitlement' => 'pro_plan',
                 'condition' => function ($entitlement) {
                     return $entitlement->getFixedCharge() >= 30 &&
                            $entitlement->getPriceName() === 'Pro gym' &&
@@ -211,18 +212,18 @@ class HasBillingEntitlementsTest extends KindeTestCase
         $this->client->setMockEntitlements([
             MockEntitlement::simple('premium_features'),
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35
+                'pro_plan',
+                'Pro Plan',
+                'ent_1',
+                35
             ),
         ]);
 
         $result = $this->client->hasBillingEntitlements([
             'premium_features', // string entitlement
             [
-                'entitlement' => 'pro_gym',
-                'condition' => fn($entitlement) => $entitlement->getFeatureKey() === 'pro_gym',
+                'entitlement' => 'pro_plan',
+                'condition' => fn($entitlement) => $entitlement->getFeatureKey() === 'pro_plan',
             ],
         ]);
 
@@ -238,7 +239,7 @@ class HasBillingEntitlementsTest extends KindeTestCase
         $result = $this->client->hasBillingEntitlements([
             'premium_features', // passes
             [
-                'entitlement' => 'pro_gym',
+                'entitlement' => 'pro_plan',
                 'condition' => fn() => true, // Won't be called because entitlement doesn't exist
             ],
         ]);
@@ -250,22 +251,22 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35
+                'pro_plan',
+                'Pro Plan',
+                'ent_1',
+                35
             ),
             new MockEntitlement(
-                featureKey: 'premium_features',
-                featureName: 'Premium Features',
-                id: 'ent_2',
-                fixedCharge: 50
+                'premium_features',
+                'Premium Features',
+                'ent_2',
+                50
             ),
         ]);
 
         $result = $this->client->hasBillingEntitlements([
             [
-                'entitlement' => 'pro_gym',
+                'entitlement' => 'pro_plan',
                 'condition' => fn($e) => $e->getFixedCharge() === 35,
             ],
             [
@@ -281,22 +282,22 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35
+                'pro_plan',
+                'Pro Plan',
+                'ent_1',
+                35
             ),
             new MockEntitlement(
-                featureKey: 'premium_features',
-                featureName: 'Premium Features',
-                id: 'ent_2',
-                fixedCharge: 50
+                'premium_features',
+                'Premium Features',
+                'ent_2',
+                50
             ),
         ]);
 
         $result = $this->client->hasBillingEntitlements([
             [
-                'entitlement' => 'pro_gym',
+                'entitlement' => 'pro_plan',
                 'condition' => fn($e) => $e->getFixedCharge() === 35, // passes
             ],
             [
@@ -316,7 +317,7 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setEntitlementsException(new Exception('API Error'));
 
-        $this->assertFalse($this->client->hasBillingEntitlements(['pro_gym']));
+        $this->assertFalse($this->client->hasBillingEntitlements(['pro_plan']));
     }
 
     public function testGracefullyHandlesApiFailure(): void
@@ -324,7 +325,7 @@ class HasBillingEntitlementsTest extends KindeTestCase
         $this->client->setEntitlementsException(new Exception('Network timeout'));
 
         // Should not throw, should return false
-        $result = $this->client->hasBillingEntitlements(['pro_gym', 'premium_features']);
+        $result = $this->client->hasBillingEntitlements(['pro_plan', 'premium_features']);
         
         $this->assertFalse($result);
     }
@@ -339,7 +340,7 @@ class HasBillingEntitlementsTest extends KindeTestCase
             MockEntitlement::simple('Pro_Gym'),
         ]);
 
-        $this->assertFalse($this->client->hasBillingEntitlements(['pro_gym']));
+        $this->assertFalse($this->client->hasBillingEntitlements(['pro_plan']));
         $this->assertTrue($this->client->hasBillingEntitlements(['Pro_Gym']));
     }
 
@@ -394,14 +395,14 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'basic_plan',
-                featureName: 'Basic Plan',
-                id: 'ent_1',
-                fixedCharge: null,
-                priceName: null,
-                unitAmount: null,
-                entitlementLimitMax: null,
-                entitlementLimitMin: null
+                'basic_plan',
+                'Basic Plan',
+                'ent_1',
+                null,
+                null,
+                null,
+                null,
+                null
             ),
         ]);
 
@@ -419,12 +420,14 @@ class HasBillingEntitlementsTest extends KindeTestCase
     {
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'free_tier',
-                featureName: 'Free Tier',
-                id: 'ent_1',
-                fixedCharge: 0,
-                entitlementLimitMax: 0,
-                entitlementLimitMin: 0
+                'free_tier',
+                'Free Tier',
+                'ent_1',
+                0,
+                null,
+                null,
+                0,
+                0
             ),
         ]);
 
@@ -446,10 +449,10 @@ class HasBillingEntitlementsTest extends KindeTestCase
     public function testMethodCallIsRecorded(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
         ]);
 
-        $this->client->hasBillingEntitlements(['pro_gym']);
+        $this->client->hasBillingEntitlements(['pro_plan']);
 
         $this->assertTrue($this->client->wasMethodCalled('hasBillingEntitlements'));
         $this->assertTrue($this->client->wasMethodCalled('getAllEntitlements'));
@@ -458,10 +461,10 @@ class HasBillingEntitlementsTest extends KindeTestCase
     public function testMethodCallRecordsEntitlementsList(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
         ]);
 
-        $entitlements = ['pro_gym', 'premium_features'];
+        $entitlements = ['pro_plan', 'premium_features'];
         $this->client->hasBillingEntitlements($entitlements);
 
         $calls = $this->client->getMethodCalls('hasBillingEntitlements');
@@ -472,11 +475,11 @@ class HasBillingEntitlementsTest extends KindeTestCase
     public function testMultipleCallsAreRecorded(): void
     {
         $this->client->setMockEntitlements([
-            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('pro_plan'),
             MockEntitlement::simple('premium'),
         ]);
 
-        $this->client->hasBillingEntitlements(['pro_gym']);
+        $this->client->hasBillingEntitlements(['pro_plan']);
         $this->client->hasBillingEntitlements(['premium']);
 
         $this->assertEquals(2, $this->client->getMethodCallCount('hasBillingEntitlements'));

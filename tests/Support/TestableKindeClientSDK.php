@@ -22,8 +22,11 @@ class TestableKindeClientSDK extends KindeClientSDK
      * Mock data for various methods.
      */
     private ?array $mockRoles = null;
+    private ?array $mockApiRoles = null;
     private ?array $mockPermissions = null;
+    private ?array $mockApiPermissions = null;
     private ?array $mockFeatureFlags = null;
+    private ?array $mockApiFeatureFlags = null;
     private ?array $mockEntitlements = null;
 
     /**
@@ -76,6 +79,18 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
+     * Set mock roles data for API path.
+     *
+     * @param array $roles Array of role objects
+     * @return self
+     */
+    public function setMockApiRoles(array $roles): self
+    {
+        $this->mockApiRoles = $roles;
+        return $this;
+    }
+
+    /**
      * Set mock permissions data.
      *
      * @param array $permissions Permissions response array
@@ -88,6 +103,18 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
+     * Set mock permissions data for API path.
+     *
+     * @param array $permissions Permissions response array
+     * @return self
+     */
+    public function setMockApiPermissions(array $permissions): self
+    {
+        $this->mockApiPermissions = $permissions;
+        return $this;
+    }
+
+    /**
      * Set mock feature flags data.
      *
      * @param array $featureFlags Feature flags array
@@ -96,6 +123,18 @@ class TestableKindeClientSDK extends KindeClientSDK
     public function setMockFeatureFlags(array $featureFlags): self
     {
         $this->mockFeatureFlags = $featureFlags;
+        return $this;
+    }
+
+    /**
+     * Set mock feature flags data for API path.
+     *
+     * @param array $featureFlags Feature flags array
+     * @return self
+     */
+    public function setMockApiFeatureFlags(array $featureFlags): self
+    {
+        $this->mockApiFeatureFlags = $featureFlags;
         return $this;
     }
 
@@ -169,6 +208,16 @@ class TestableKindeClientSDK extends KindeClientSDK
     {
         $this->recordMethodCall('getRoles', ['forceApi' => $forceApi]);
 
+        $useApi = $forceApi ?? $this->forceApi;
+        if ($useApi) {
+            if ($this->mockApiRoles !== null) {
+                return $this->mockApiRoles;
+            }
+            if ($this->mockRoles !== null) {
+                return $this->mockRoles;
+            }
+        }
+
         if ($this->rolesException) {
             throw $this->rolesException;
         }
@@ -219,11 +268,11 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
-     * Override hasPermissions to properly handle forceApi in test mode.
-     * Uses mock data regardless of forceApi setting.
+     * Override hasPermissions to handle forceApi in test mode.
+     * Uses mock data for token or API path based on forceApi settings.
      *
      * @param array $permissions Array of permission keys or permission condition objects
-     * @param bool|null $forceApi Force API call (recorded but uses mock data)
+     * @param bool|null $forceApi Force API call (recorded and handled)
      * @return bool True if user has all specified permissions
      */
     public function hasPermissions(array $permissions = [], ?bool $forceApi = null): bool
@@ -235,8 +284,10 @@ class TestableKindeClientSDK extends KindeClientSDK
         }
 
         try {
-            // In test mode, always use mock data (getPermissions returns mock)
-            $permissionData = $this->getPermissions();
+            $useApi = $forceApi ?? $this->forceApi;
+            $permissionData = $useApi
+                ? $this->getPermissionsFromApiTest()
+                : $this->getPermissions();
             $userPermissions = $permissionData['permissions'] ?? [];
             $orgCode = $permissionData['orgCode'] ?? null;
 
@@ -265,11 +316,11 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
-     * Override hasFeatureFlags to properly handle forceApi in test mode.
-     * Uses mock data regardless of forceApi setting.
+     * Override hasFeatureFlags to handle forceApi in test mode.
+     * Uses mock data for token or API path based on forceApi settings.
      *
      * @param array $featureFlags Array of feature flag keys or flag condition objects
-     * @param bool|null $forceApi Force API call (recorded but uses mock data)
+     * @param bool|null $forceApi Force API call (recorded and handled)
      * @return bool True if user has all specified feature flags
      */
     public function hasFeatureFlags(array $featureFlags = [], ?bool $forceApi = null): bool
@@ -281,10 +332,15 @@ class TestableKindeClientSDK extends KindeClientSDK
         }
 
         try {
-            // In test mode, use mock claims for feature flags
-            $flags = $this->getClaim('feature_flags')['value'] ?? [];
+            $useApi = $forceApi ?? $this->forceApi;
+            $flags = $useApi
+                ? $this->getFeatureFlagsFromApiTest()
+                : ($this->getClaim('feature_flags')['value'] ?? []);
             if (!is_array($flags)) {
-                $flags = [];
+                $flags = $this->mockFeatureFlags ?? [];
+            }
+            if (empty($flags) && $this->mockFeatureFlags !== null) {
+                $flags = $this->mockFeatureFlags;
             }
 
             foreach ($featureFlags as $featureFlag) {
@@ -479,8 +535,11 @@ class TestableKindeClientSDK extends KindeClientSDK
         $this->mockAccessTokenClaims = null;
         $this->mockIdTokenClaims = null;
         $this->mockRoles = null;
+        $this->mockApiRoles = null;
         $this->mockPermissions = null;
+        $this->mockApiPermissions = null;
         $this->mockFeatureFlags = null;
+        $this->mockApiFeatureFlags = null;
         $this->mockEntitlements = null;
         $this->rolesException = null;
         $this->permissionsException = null;
@@ -488,6 +547,40 @@ class TestableKindeClientSDK extends KindeClientSDK
         $this->entitlementsException = null;
         $this->methodCalls = [];
         return $this;
+    }
+
+    /**
+     * Mock API path for permissions.
+     *
+     * @return array
+     */
+    private function getPermissionsFromApiTest(): array
+    {
+        $this->recordMethodCall('getPermissionsFromApi');
+        if ($this->mockApiPermissions !== null) {
+            return $this->mockApiPermissions;
+        }
+        if ($this->mockPermissions !== null) {
+            return $this->mockPermissions;
+        }
+        return ['orgCode' => null, 'permissions' => []];
+    }
+
+    /**
+     * Mock API path for feature flags.
+     *
+     * @return array
+     */
+    private function getFeatureFlagsFromApiTest(): array
+    {
+        $this->recordMethodCall('getFeatureFlagsFromApi');
+        if ($this->mockApiFeatureFlags !== null) {
+            return $this->mockApiFeatureFlags;
+        }
+        if ($this->mockFeatureFlags !== null) {
+            return $this->mockFeatureFlags;
+        }
+        return [];
     }
 }
 

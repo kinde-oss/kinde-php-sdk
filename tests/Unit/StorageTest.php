@@ -5,6 +5,7 @@ namespace Kinde\KindeSDK\Tests\Unit;
 use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Kinde\KindeSDK\Tests\Support\KindeTestCase;
+use Kinde\KindeSDK\Tests\Support\MockTokenGenerator;
 
 /**
  * Unit tests for Storage class.
@@ -17,6 +18,24 @@ use Kinde\KindeSDK\Tests\Support\KindeTestCase;
  */
 class StorageTest extends KindeTestCase
 {
+    private function seedJwksCache(): void
+    {
+        Storage::setJwksUrl('https://example.com/jwks.json');
+        $secret = MockTokenGenerator::getSecretKey();
+        $encodedSecret = rtrim(strtr(base64_encode($secret), '+/', '-_'), '=');
+        $jwks = [
+            'keys' => [
+                [
+                    'kty' => 'oct',
+                    'k' => $encodedSecret,
+                    'alg' => MockTokenGenerator::getAlgorithm(),
+                    'use' => 'sig',
+                ],
+            ],
+        ];
+        Storage::setCachedJwks($jwks, 3600);
+    }
+
     // =========================================================================
     // JWKS Caching Tests (Read-only, no cookie writes)
     // =========================================================================
@@ -41,6 +60,32 @@ class StorageTest extends KindeTestCase
         $result = Storage::isSessionPersistent();
         
         $this->assertTrue($result);
+    }
+
+    public function testIsSessionPersistentFalseWhenKspClaimIsFalse(): void
+    {
+        $this->seedJwksCache();
+        $tokenResponse = MockTokenGenerator::createTokenResponse([
+            'ksp' => ['persistent' => false],
+        ]);
+
+        Storage::setToken($tokenResponse);
+
+        $this->assertFalse(Storage::isSessionPersistent());
+        $this->assertSame(0, Storage::getCookieExpiration());
+    }
+
+    public function testIsSessionPersistentTrueWhenKspClaimIsTrue(): void
+    {
+        $this->seedJwksCache();
+        $tokenResponse = MockTokenGenerator::createTokenResponse([
+            'ksp' => ['persistent' => true],
+        ]);
+
+        Storage::setToken($tokenResponse);
+
+        $this->assertTrue(Storage::isSessionPersistent());
+        $this->assertGreaterThan(time(), Storage::getCookieExpiration());
     }
 
     public function testGetCookieExpirationReturnsFutureTimestamp(): void
@@ -73,7 +118,7 @@ class StorageTest extends KindeTestCase
     }
 
     // =========================================================================
-    // Token Storage Tests (Read-only, no cookie writes)
+    // Token Storage Tests
     // =========================================================================
 
     public function testGetTokenReturnsNullWhenEmpty(): void
@@ -83,6 +128,21 @@ class StorageTest extends KindeTestCase
         $result = Storage::getToken();
         
         $this->assertNull($result);
+    }
+
+    public function testSetTokenStoresCookieAndRetrievesToken(): void
+    {
+        $this->seedJwksCache();
+        $tokenResponse = MockTokenGenerator::createTokenResponse();
+
+        Storage::setToken($tokenResponse);
+
+        $cookieKey = 'kinde_' . StorageEnums::TOKEN;
+        $this->assertNotEmpty($_COOKIE[$cookieKey] ?? null);
+
+        $stored = Storage::getToken();
+        $this->assertIsArray($stored);
+        $this->assertEquals($tokenResponse['access_token'], $stored['access_token']);
     }
 
     public function testGetAccessTokenReturnsNullWhenEmpty(): void

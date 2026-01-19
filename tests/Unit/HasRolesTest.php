@@ -183,8 +183,8 @@ class HasRolesTest extends KindeTestCase
             [
                 'role' => 'superAdmin',
                 'condition' => function (array $role) {
-                    return str_contains($role['key'], 'Admin') &&
-                           str_contains($role['name'], 'Administrator');
+                    return strpos($role['key'], 'Admin') !== false &&
+                           strpos($role['name'], 'Administrator') !== false;
                 },
             ],
         ]);

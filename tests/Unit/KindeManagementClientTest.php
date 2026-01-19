@@ -190,10 +190,10 @@ class KindeManagementClientTest extends KindeTestCase
         putenv('KINDE_CLIENT_ID=' . self::TEST_CLIENT_ID);
 
         $management = new KindeManagementClient(
-            domain: null, // Use from environment
-            clientId: null, // Use from environment
-            clientSecret: self::TEST_CLIENT_SECRET, // Override
-            accessToken: self::TEST_ACCESS_TOKEN // Override
+            null, // Use from environment
+            null, // Use from environment
+            self::TEST_CLIENT_SECRET, // Override
+            self::TEST_ACCESS_TOKEN // Override
         );
 
         $this->assertInstanceOf(KindeManagementClient::class, $management);

@@ -482,11 +482,11 @@ class HasCombinedTest extends KindeTestCase
         ]);
         $this->client->setMockEntitlements([
             new MockEntitlement(
-                featureKey: 'pro_gym',
-                featureName: 'Pro Gym',
-                id: 'ent_1',
-                fixedCharge: 35,
-                priceName: 'Pro gym'
+                'pro_gym',
+                'Pro Gym',
+                'ent_1',
+                35,
+                'Pro gym'
             ),
         ]);
 
@@ -785,6 +785,10 @@ class HasCombinedTest extends KindeTestCase
         ]);
         $this->client->setMockPermissions([
             'orgCode' => 'org_123',
+            'permissions' => ['tokenCanEdit'],
+        ]);
+        $this->client->setMockApiPermissions([
+            'orgCode' => 'org_123',
             'permissions' => ['apiCanEdit'],
         ]);
 
@@ -803,6 +807,8 @@ class HasCombinedTest extends KindeTestCase
         // Verify forceApi settings were passed correctly
         $rolesCalls = $this->client->getMethodCalls('getRoles');
         $this->assertTrue($rolesCalls[0]['forceApi']);
+        $this->assertTrue($this->client->wasMethodCalled('getPermissionsFromApi'));
+        $this->assertCount(0, $this->client->getMethodCalls('getFeatureFlagsFromApi'));
     }
 
     public function testForceApiObjectWithMixedBooleanValues(): void
@@ -874,7 +880,7 @@ class HasCombinedTest extends KindeTestCase
             'roles' => [
                 [
                     'role' => 'apiAdmin',
-                    'condition' => fn(array $role) => str_contains($role['name'], 'Administrator'),
+                    'condition' => fn(array $role) => strpos($role['name'], 'Administrator') !== false,
                 ],
             ],
             'permissions' => [
