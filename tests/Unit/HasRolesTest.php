@@ -137,6 +137,13 @@ class HasRolesTest extends KindeTestCase
         $this->assertTrue($result);
     }
 
+    public function testReturnsFalseWhenNoTokenUsingRealClient(): void
+    {
+        $client = $this->createClient();
+
+        $this->assertFalse($client->hasRoles(['admin']));
+    }
+
     // =========================================================================
     // Custom Conditions
     // =========================================================================

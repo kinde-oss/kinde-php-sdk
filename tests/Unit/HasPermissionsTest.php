@@ -146,6 +146,13 @@ class HasPermissionsTest extends KindeTestCase
         $this->assertTrue($result);
     }
 
+    public function testReturnsFalseWhenNoTokenUsingRealClient(): void
+    {
+        $client = $this->createClient();
+
+        $this->assertFalse($client->hasPermissions(['canEdit']));
+    }
+
     // =========================================================================
     // Custom Conditions
     // =========================================================================

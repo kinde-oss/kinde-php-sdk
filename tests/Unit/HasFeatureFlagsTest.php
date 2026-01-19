@@ -151,6 +151,13 @@ class HasFeatureFlagsTest extends KindeTestCase
         $this->assertTrue($result);
     }
 
+    public function testReturnsFalseWhenNoTokenUsingRealClient(): void
+    {
+        $client = $this->createClient();
+
+        $this->assertFalse($client->hasFeatureFlags(['darkMode']));
+    }
+
     // =========================================================================
     // Feature Flag Exists with Different Value Types
     // =========================================================================
