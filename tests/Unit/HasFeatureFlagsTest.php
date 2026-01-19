@@ -4,7 +4,9 @@ namespace Kinde\KindeSDK\Tests\Unit;
 
 use Exception;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 use Kinde\KindeSDK\Tests\Support\KindeTestCase;
+use Kinde\KindeSDK\Tests\Support\MockTokenGenerator;
 use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
 
 /**
@@ -158,6 +160,38 @@ class HasFeatureFlagsTest extends KindeTestCase
         $this->assertFalse($client->hasFeatureFlags(['darkMode']));
     }
 
+    public function testUsesRealTokenClaimsForFeatureFlags(): void
+    {
+        $secret = MockTokenGenerator::getSecretKey();
+        $encodedSecret = rtrim(strtr(base64_encode($secret), '+/', '-_'), '=');
+        $jwks = [
+            'keys' => [
+                [
+                    'kty' => 'oct',
+                    'k' => $encodedSecret,
+                    'alg' => MockTokenGenerator::getAlgorithm(),
+                    'use' => 'sig',
+                    'kid' => MockTokenGenerator::getKeyId(),
+                ],
+            ],
+        ];
+        $_COOKIE['kinde_' . StorageEnums::JWKS_CACHE] = json_encode([
+            'jwks' => $jwks,
+            'expires_at' => time() + 3600,
+        ]);
+
+        $tokenResponse = MockTokenGenerator::createTokenResponse([
+            'feature_flags' => [
+                'darkMode' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+        $_COOKIE['kinde_' . StorageEnums::TOKEN] = json_encode($tokenResponse);
+
+        $client = $this->createClient();
+
+        $this->assertTrue($client->hasFeatureFlags(['darkMode']));
+    }
+
     // =========================================================================
     // Feature Flag Exists with Different Value Types
     // =========================================================================
@@ -240,6 +274,21 @@ class HasFeatureFlagsTest extends KindeTestCase
         ]);
 
         $this->assertFalse($result);
+    }
+
+    public function testFlagObjectWithoutValueChecksExistenceOnly(): void
+    {
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'darkMode' => ['v' => false, 't' => 'b'],
+            ],
+        ]);
+
+        $result = $this->client->hasFeatureFlags([
+            ['flag' => 'darkMode'],
+        ]);
+
+        $this->assertTrue($result);
     }
 
     public function testMixingStringFlagsAndKvConditions(): void

@@ -1219,8 +1219,7 @@ class KindeClientSDK
     private function isCustomFeatureFlagCondition($featureFlag): bool
     {
         return is_array($featureFlag) &&
-               array_key_exists('flag', $featureFlag) &&
-               array_key_exists('value', $featureFlag);
+               array_key_exists('flag', $featureFlag);
     }
 
     /**
