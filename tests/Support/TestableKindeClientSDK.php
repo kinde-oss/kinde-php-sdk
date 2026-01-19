@@ -268,8 +268,8 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
-     * Override hasPermissions to handle forceApi in test mode.
-     * Uses mock data for token or API path based on forceApi settings.
+     * Override hasPermissions to record calls while exercising real logic.
+     * For forceApi=true, use mocked API data to avoid network calls.
      *
      * @param array $permissions Array of permission keys or permission condition objects
      * @param bool|null $forceApi Force API call (recorded and handled)
@@ -279,45 +279,17 @@ class TestableKindeClientSDK extends KindeClientSDK
     {
         $this->recordMethodCall('hasPermissions', ['forceApi' => $forceApi]);
 
-        if (empty($permissions)) {
-            return true;
+        $useApi = $forceApi ?? $this->forceApi;
+        if ($useApi) {
+            return $this->hasPermissionsFromApiTest($permissions);
         }
 
-        try {
-            $useApi = $forceApi ?? $this->forceApi;
-            $permissionData = $useApi
-                ? $this->getPermissionsFromApiTest()
-                : $this->getPermissions();
-            $userPermissions = $permissionData['permissions'] ?? [];
-            $orgCode = $permissionData['orgCode'] ?? null;
-
-            foreach ($permissions as $permission) {
-                if (is_string($permission)) {
-                    if (!in_array($permission, $userPermissions)) {
-                        return false;
-                    }
-                } elseif (is_array($permission) && isset($permission['permission']) && isset($permission['condition'])) {
-                    if (!in_array($permission['permission'], $userPermissions)) {
-                        return false;
-                    }
-                    if (!call_user_func($permission['condition'], [
-                        'permissionKey' => $permission['permission'],
-                        'orgCode' => $orgCode
-                    ])) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        return parent::hasPermissions($permissions, $forceApi);
     }
 
     /**
-     * Override hasFeatureFlags to handle forceApi in test mode.
-     * Uses mock data for token or API path based on forceApi settings.
+     * Override hasFeatureFlags to record calls while exercising real logic.
+     * For forceApi=true, use mocked API data to avoid network calls.
      *
      * @param array $featureFlags Array of feature flag keys or flag condition objects
      * @param bool|null $forceApi Force API call (recorded and handled)
@@ -327,48 +299,12 @@ class TestableKindeClientSDK extends KindeClientSDK
     {
         $this->recordMethodCall('hasFeatureFlags', ['forceApi' => $forceApi]);
 
-        if (empty($featureFlags)) {
-            return true;
+        $useApi = $forceApi ?? $this->forceApi;
+        if ($useApi) {
+            return $this->hasFeatureFlagsFromApiTest($featureFlags);
         }
 
-        try {
-            $useApi = $forceApi ?? $this->forceApi;
-            $flags = $useApi
-                ? $this->getFeatureFlagsFromApiTest()
-                : ($this->getClaim('feature_flags')['value'] ?? []);
-            if (!is_array($flags)) {
-                $flags = $this->mockFeatureFlags ?? [];
-            }
-            if (empty($flags) && $this->mockFeatureFlags !== null) {
-                $flags = $this->mockFeatureFlags;
-            }
-
-            foreach ($featureFlags as $featureFlag) {
-                if (is_string($featureFlag)) {
-                    if (!array_key_exists($featureFlag, $flags)) {
-                        return false;
-                    }
-                } elseif (is_array($featureFlag) && isset($featureFlag['flag'])) {
-                    $flagKey = $featureFlag['flag'];
-                    if (!array_key_exists($flagKey, $flags)) {
-                        return false;
-                    }
-                    
-                    // Value-specific check
-                    if (isset($featureFlag['value'])) {
-                        $flagData = $flags[$flagKey];
-                        $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
-                        if ($flagValue !== $featureFlag['value']) {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        return parent::hasFeatureFlags($featureFlags, $forceApi);
     }
 
     /**
@@ -418,8 +354,8 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
-     * Override hasBillingEntitlements to properly record method calls in test mode.
-     * Uses mock data from getAllEntitlements.
+     * Override hasBillingEntitlements to record method calls in test mode.
+     * Uses parent logic with mocked entitlements.
      *
      * @param array $billingEntitlements Array of entitlement keys or entitlement condition objects
      * @return bool True if user has all specified billing entitlements
@@ -428,51 +364,92 @@ class TestableKindeClientSDK extends KindeClientSDK
     {
         $this->recordMethodCall('hasBillingEntitlements', ['billingEntitlements' => $billingEntitlements]);
 
-        if (empty($billingEntitlements)) {
+        return parent::hasBillingEntitlements($billingEntitlements);
+    }
+
+    /**
+     * Test-only API path for permissions (mirrors production logic with mock data).
+     *
+     * @param array $permissions Array of permission keys or permission condition objects
+     * @return bool
+     */
+    private function hasPermissionsFromApiTest(array $permissions = []): bool
+    {
+        if (empty($permissions)) {
             return true;
         }
 
         try {
-            $userEntitlements = $this->getAllEntitlements();
-            $entitlementKeys = array_map(fn($entitlement) => $entitlement->getFeatureKey(), $userEntitlements);
+            $permissionData = $this->getPermissionsFromApiTest();
+            $userPermissions = $permissionData['permissions'] ?? [];
+            $orgCode = $permissionData['orgCode'] ?? null;
 
-            foreach ($billingEntitlements as $entitlement) {
-                if (is_string($entitlement)) {
-                    if (!in_array($entitlement, $entitlementKeys)) {
+            foreach ($permissions as $permission) {
+                if (is_string($permission)) {
+                    if (!in_array($permission, $userPermissions)) {
                         return false;
                     }
-                } elseif (is_array($entitlement) && isset($entitlement['entitlement'])) {
-                    $matchingEntitlement = $this->findMatchingEntitlementInTest($userEntitlements, $entitlement['entitlement']);
-                    if (!$matchingEntitlement) {
+                } elseif (is_array($permission) && isset($permission['permission']) && isset($permission['condition'])) {
+                    if (!in_array($permission['permission'], $userPermissions)) {
                         return false;
                     }
-                    if (isset($entitlement['condition']) && !call_user_func($entitlement['condition'], $matchingEntitlement)) {
+                    if (!call_user_func($permission['condition'], [
+                        'permissionKey' => $permission['permission'],
+                        'orgCode' => $orgCode
+                    ])) {
                         return false;
                     }
                 }
             }
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
 
     /**
-     * Find a matching entitlement by feature key.
+     * Test-only API path for feature flags (mirrors production logic with mock data).
      *
-     * @param array $entitlements Array of entitlement objects
-     * @param string $featureKey The feature key to match
-     * @return object|null The matching entitlement or null
+     * @param array $featureFlags Array of feature flag keys or flag condition objects
+     * @return bool
      */
-    private function findMatchingEntitlementInTest(array $entitlements, string $featureKey)
+    private function hasFeatureFlagsFromApiTest(array $featureFlags = []): bool
     {
-        foreach ($entitlements as $entitlement) {
-            if ($entitlement->getFeatureKey() === $featureKey) {
-                return $entitlement;
-            }
+        if (empty($featureFlags)) {
+            return true;
         }
-        return null;
+
+        try {
+            $flags = $this->getFeatureFlagsFromApiTest();
+            if (!is_array($flags)) {
+                $flags = [];
+            }
+
+            foreach ($featureFlags as $featureFlag) {
+                if (is_string($featureFlag)) {
+                    if (!array_key_exists($featureFlag, $flags)) {
+                        return false;
+                    }
+                } elseif (is_array($featureFlag) && isset($featureFlag['flag'])) {
+                    $flagKey = $featureFlag['flag'];
+                    if (!array_key_exists($flagKey, $flags)) {
+                        return false;
+                    }
+                    if (isset($featureFlag['value'])) {
+                        $flagData = $flags[$flagKey];
+                        $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
+                        if ($flagValue !== $featureFlag['value']) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**

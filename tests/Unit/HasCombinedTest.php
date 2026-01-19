@@ -780,12 +780,8 @@ class HasCombinedTest extends KindeTestCase
             ],
         ]);
         // Roles and permissions will be "from API" (mocked)
-        $this->client->setMockRoles([
+        $this->client->setMockApiRoles([
             ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
-        ]);
-        $this->client->setMockPermissions([
-            'orgCode' => 'org_123',
-            'permissions' => ['tokenCanEdit'],
         ]);
         $this->client->setMockApiPermissions([
             'orgCode' => 'org_123',
@@ -813,7 +809,7 @@ class HasCombinedTest extends KindeTestCase
 
     public function testForceApiObjectWithMixedBooleanValues(): void
     {
-        $this->client->setMockRoles([
+        $this->client->setMockApiRoles([
             ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
         ]);
         $this->client->setMockPermissions([
@@ -868,10 +864,10 @@ class HasCombinedTest extends KindeTestCase
 
     public function testForceApiObjectWithCustomConditions(): void
     {
-        $this->client->setMockRoles([
+        $this->client->setMockApiRoles([
             ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
         ]);
-        $this->client->setMockPermissions([
+        $this->client->setMockApiPermissions([
             'orgCode' => 'org_456',
             'permissions' => ['apiCanManage'],
         ]);
@@ -899,10 +895,10 @@ class HasCombinedTest extends KindeTestCase
 
     public function testForceApiObjectWhenOneApiCheckFails(): void
     {
-        $this->client->setMockRoles([
+        $this->client->setMockApiRoles([
             ['id' => '1', 'key' => 'apiUser', 'name' => 'API User'], // User doesn't have admin role
         ]);
-        $this->client->setMockPermissions([
+        $this->client->setMockApiPermissions([
             'orgCode' => 'org_123',
             'permissions' => ['apiCanEdit'],
         ]);
@@ -941,17 +937,15 @@ class HasCombinedTest extends KindeTestCase
 
     public function testForceApiAsBooleanTrue(): void
     {
-        $this->client->setMockRoles([
+        $this->client->setMockApiRoles([
             ['id' => '1', 'key' => 'apiAdmin', 'name' => 'API Administrator'],
         ]);
-        $this->client->setMockPermissions([
+        $this->client->setMockApiPermissions([
             'orgCode' => 'org_123',
             'permissions' => ['apiCanEdit'],
         ]);
-        $this->client->setMockAccessTokenClaims([
-            'feature_flags' => [
-                'apiFlag' => ['v' => true, 't' => 'b'],
-            ],
+        $this->client->setMockApiFeatureFlags([
+            'apiFlag' => ['v' => true, 't' => 'b'],
         ]);
 
         $result = $this->client->has([

@@ -18,6 +18,24 @@ use Kinde\KindeSDK\Tests\Support\MockTokenGenerator;
  */
 class StorageTest extends KindeTestCase
 {
+    private int $originalErrorReporting;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->originalErrorReporting = error_reporting();
+        // Ignore deprecation warnings from BaseStorage (out of scope for this PR).
+        error_reporting($this->originalErrorReporting & ~E_DEPRECATED);
+    }
+
+    protected function tearDown(): void
+    {
+        error_reporting($this->originalErrorReporting);
+        // Reset static TTL to avoid test order dependency.
+        Storage::setTokenTimeToLive(0);
+        parent::tearDown();
+    }
+
     private function seedJwksCache(): void
     {
         Storage::setJwksUrl('https://example.com/jwks.json');
@@ -30,6 +48,7 @@ class StorageTest extends KindeTestCase
                     'k' => $encodedSecret,
                     'alg' => MockTokenGenerator::getAlgorithm(),
                     'use' => 'sig',
+                    'kid' => MockTokenGenerator::getKeyId(),
                 ],
             ],
         ];
@@ -62,6 +81,10 @@ class StorageTest extends KindeTestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testIsSessionPersistentFalseWhenKspClaimIsFalse(): void
     {
         $this->seedJwksCache();
@@ -75,6 +98,10 @@ class StorageTest extends KindeTestCase
         $this->assertSame(0, Storage::getCookieExpiration());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testIsSessionPersistentTrueWhenKspClaimIsTrue(): void
     {
         $this->seedJwksCache();
@@ -130,6 +157,10 @@ class StorageTest extends KindeTestCase
         $this->assertNull($result);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
     public function testSetTokenStoresCookieAndRetrievesToken(): void
     {
         $this->seedJwksCache();

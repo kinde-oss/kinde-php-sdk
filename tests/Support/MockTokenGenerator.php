@@ -12,6 +12,7 @@ class MockTokenGenerator
 {
     private const SECRET_KEY = 'test-secret-key-for-unit-tests';
     private const ALGORITHM = 'HS256';
+    private const KEY_ID = 'test-key-id';
 
     /**
      * Base mock access token payload.
@@ -60,7 +61,7 @@ class MockTokenGenerator
             $claims
         );
 
-        return JWT::encode($payload, self::SECRET_KEY, self::ALGORITHM);
+        return JWT::encode($payload, self::SECRET_KEY, self::ALGORITHM, self::KEY_ID);
     }
 
     /**
@@ -80,7 +81,7 @@ class MockTokenGenerator
             $claims
         );
 
-        return JWT::encode($payload, self::SECRET_KEY, self::ALGORITHM);
+        return JWT::encode($payload, self::SECRET_KEY, self::ALGORITHM, self::KEY_ID);
     }
 
     /**
@@ -246,6 +247,16 @@ class MockTokenGenerator
     public static function getAlgorithm(): string
     {
         return self::ALGORITHM;
+    }
+
+    /**
+     * Get the key ID used for signing.
+     *
+     * @return string The key ID
+     */
+    public static function getKeyId(): string
+    {
+        return self::KEY_ID;
     }
 
     /**
