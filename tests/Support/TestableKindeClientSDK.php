@@ -380,6 +380,9 @@ class TestableKindeClientSDK extends KindeClientSDK
         }
 
         try {
+            if ($this->permissionsException) {
+                throw $this->permissionsException;
+            }
             $permissionData = $this->getPermissionsFromApiTest();
             $userPermissions = $permissionData['permissions'] ?? [];
             $orgCode = $permissionData['orgCode'] ?? null;
@@ -421,6 +424,9 @@ class TestableKindeClientSDK extends KindeClientSDK
         }
 
         try {
+            if ($this->featureFlagsException) {
+                throw $this->featureFlagsException;
+            }
             $flags = $this->getFeatureFlagsFromApiTest();
             if (!is_array($flags)) {
                 $flags = [];

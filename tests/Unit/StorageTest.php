@@ -36,7 +36,7 @@ class StorageTest extends KindeTestCase
         parent::tearDown();
     }
 
-    private function seedJwksCache(): void
+    protected function seedJwksCache(): void
     {
         Storage::setJwksUrl('https://example.com/jwks.json');
         $secret = MockTokenGenerator::getSecretKey();

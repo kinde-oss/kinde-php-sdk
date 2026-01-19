@@ -112,12 +112,35 @@ abstract class KindeTestCase extends TestCase
         array $accessTokenClaims = [],
         array $idTokenClaims = []
     ): void {
+        $this->seedJwksCache();
         $tokenResponse = MockTokenGenerator::createTokenResponse(
             $accessTokenClaims,
             $idTokenClaims
         );
 
         $_COOKIE['kinde_' . StorageEnums::TOKEN] = json_encode($tokenResponse);
+    }
+
+    /**
+     * Seed JWKS cache for JWT parsing in tests.
+     */
+    protected function seedJwksCache(): void
+    {
+        Storage::setJwksUrl(self::TEST_DOMAIN . '/.well-known/jwks.json');
+        $secret = MockTokenGenerator::getSecretKey();
+        $encodedSecret = rtrim(strtr(base64_encode($secret), '+/', '-_'), '=');
+        $jwks = [
+            'keys' => [
+                [
+                    'kty' => 'oct',
+                    'k' => $encodedSecret,
+                    'alg' => MockTokenGenerator::getAlgorithm(),
+                    'use' => 'sig',
+                    'kid' => MockTokenGenerator::getKeyId(),
+                ],
+            ],
+        ];
+        Storage::setCachedJwks($jwks, 3600);
     }
 
     /**
