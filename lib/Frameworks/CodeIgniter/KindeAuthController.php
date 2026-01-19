@@ -40,9 +40,15 @@ class KindeAuthController extends Controller
     public function login()
     {
         $additionalParams = array_filter(
-            $this->request->getGet(['org_code', 'org_name', 'is_create_org']),
+            $this->request->getGet(['org_code', 'org_name', 'is_create_org', 'invitation_code']),
             function($v) { return $v !== null && $v !== ''; }
         );
+        
+        // When invitation_code is present, use registration flow
+        if (!empty($additionalParams['invitation_code']) && !isset($additionalParams['prompt'])) {
+            $additionalParams['prompt'] = 'create';
+        }
+        
         try {
             $result = $this->kindeClient->login($additionalParams);
             $authUrl = $result->getAuthUrl();
@@ -119,7 +125,7 @@ class KindeAuthController extends Controller
     public function register()
     {
         $additionalParams = array_filter(
-            $this->request->getGet(['org_code', 'org_name', 'is_create_org']),
+            $this->request->getGet(['org_code', 'org_name', 'is_create_org', 'invitation_code']),
             function($v) { return $v !== null && $v !== ''; }
         );
         
