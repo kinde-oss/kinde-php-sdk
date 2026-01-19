@@ -124,6 +124,7 @@ class KindeManagementClientTest extends KindeTestCase
         $config = $management->getConfig();
         $this->assertInstanceOf(Configuration::class, $config);
         $this->assertEquals(self::TEST_DOMAIN, $config->getHost());
+        $this->assertEquals(self::TEST_ACCESS_TOKEN, $config->getAccessToken());
     }
 
     // =========================================================================

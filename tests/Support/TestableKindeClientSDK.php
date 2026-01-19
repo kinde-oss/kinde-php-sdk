@@ -308,6 +308,10 @@ class TestableKindeClientSDK extends KindeClientSDK
             throw $this->featureFlagsException;
         }
 
+        if ($keyName === 'feature_flags' && $this->mockFeatureFlags !== null) {
+            return ['name' => $keyName, 'value' => $this->mockFeatureFlags];
+        }
+
         $claims = $tokenType === TokenType::ACCESS_TOKEN 
             ? $this->mockAccessTokenClaims 
             : $this->mockIdTokenClaims;

@@ -459,17 +459,27 @@ class HasRolesTest extends KindeTestCase
 
     public function testEarlyExitOnFirstFailure(): void
     {
-        $callCount = 0;
-        
         $this->client->setMockRoles([
             ['id' => '1', 'key' => 'admin', 'name' => 'Admin'],
         ]);
 
-        // Check for 'admin' (exists) and 'missing' (doesn't exist)
+        $callCount = 0;
+
+        // Check for 'missing' first, then a custom condition that shouldn't run
         // Should stop checking after 'missing' fails
-        $result = $this->client->hasRoles(['missing', 'admin']);
+        $result = $this->client->hasRoles([
+            'missing',
+            [
+                'role' => 'admin',
+                'condition' => function () use (&$callCount) {
+                    $callCount++;
+                    return true;
+                },
+            ],
+        ]);
 
         $this->assertFalse($result);
+        $this->assertSame(0, $callCount);
     }
 
     public function testRolesFromClaimsWhenMockRolesNotSet(): void
