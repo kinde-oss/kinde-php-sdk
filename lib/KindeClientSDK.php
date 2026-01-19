@@ -718,7 +718,7 @@ class KindeClientSDK
      * @return array An associative array containing the organization code and permissions
      * @throws Exception If the API request fails
      */
-    private function getPermissionsFromApi()
+    protected function getPermissionsFromApi()
     {
         $config = $this->getApiConfig();
         $permissionsApi = new PermissionsApi(null, $config);
@@ -741,7 +741,7 @@ class KindeClientSDK
      * @return array An associative array of feature flags
      * @throws Exception If the API request fails
      */
-    private function getFeatureFlagsFromApi()
+    protected function getFeatureFlagsFromApi()
     {
         $config = $this->getApiConfig();
         $featureFlagsApi = new FeatureFlagsApi(null, $config);
@@ -760,7 +760,7 @@ class KindeClientSDK
      * @param mixed $data The feature flags data
      * @return array Processed feature flags
      */
-    private function processFeatureFlagsData($data): array
+    protected function processFeatureFlagsData($data): array
     {
         $flags = [];
         foreach ($data->getFeatureFlags() ?? [] as $flag) {
@@ -778,7 +778,7 @@ class KindeClientSDK
      * @param string $type The flag type string
      * @return string The internal type code
      */
-    private function getFlagType(string $type): string
+    protected function getFlagType(string $type): string
     {
         return match ($type) {
             'boolean' => 'b',

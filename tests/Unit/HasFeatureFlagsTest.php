@@ -530,5 +530,48 @@ class HasFeatureFlagsTest extends KindeTestCase
 
         $this->assertFalse($result);
     }
+
+    public function testApiFeatureFlagsAreMappedToInternalFormat(): void
+    {
+        $flags = [
+            new class {
+                public function getKey() { return 'apiFlag'; }
+                public function getValue() { return true; }
+                public function getType() { return 'boolean'; }
+            },
+            new class {
+                public function getKey() { return 'apiTheme'; }
+                public function getValue() { return 'dark'; }
+                public function getType() { return 'string'; }
+            },
+            new class {
+                public function getKey() { return 'apiMaxUsers'; }
+                public function getValue() { return 100; }
+                public function getType() { return 'integer'; }
+            },
+        ];
+
+        $data = new class($flags) {
+            private array $flags;
+
+            public function __construct(array $flags)
+            {
+                $this->flags = $flags;
+            }
+
+            public function getFeatureFlags(): array
+            {
+                return $this->flags;
+            }
+        };
+
+        $mapped = $this->client->mapFeatureFlagsDataForTest($data);
+
+        $this->assertSame([
+            'apiFlag' => ['v' => true, 't' => 'b'],
+            'apiTheme' => ['v' => 'dark', 't' => 's'],
+            'apiMaxUsers' => ['v' => 100, 't' => 'i'],
+        ], $mapped);
+    }
 }
 
