@@ -446,6 +446,18 @@ class HasFeatureFlagsTest extends KindeTestCase
         $this->assertTrue($this->client->wasMethodCalled('getFeatureFlagsFromApi'));
     }
 
+    public function testForceApiDoesNotFallBackToTokenFlags(): void
+    {
+        $this->client->setMockAccessTokenClaims([
+            'feature_flags' => [
+                'tokenFlag' => ['v' => true, 't' => 'b'],
+            ],
+        ]);
+
+        $this->assertFalse($this->client->hasFeatureFlags(['tokenFlag'], true));
+        $this->assertTrue($this->client->wasMethodCalled('getFeatureFlagsFromApi'));
+    }
+
     // =========================================================================
     // Edge Cases
     // =========================================================================

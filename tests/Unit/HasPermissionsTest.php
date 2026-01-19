@@ -380,6 +380,17 @@ class HasPermissionsTest extends KindeTestCase
         $this->assertTrue($this->client->wasMethodCalled('getPermissionsFromApi'));
     }
 
+    public function testForceApiDoesNotFallBackToTokenPermissions(): void
+    {
+        $this->client->setMockPermissions([
+            'orgCode' => 'org_123',
+            'permissions' => ['tokenCanEdit'],
+        ]);
+
+        $this->assertFalse($this->client->hasPermissions(['tokenCanEdit'], true));
+        $this->assertTrue($this->client->wasMethodCalled('getPermissionsFromApi'));
+    }
+
     // =========================================================================
     // Edge Cases
     // =========================================================================

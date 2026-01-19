@@ -213,9 +213,7 @@ class TestableKindeClientSDK extends KindeClientSDK
             if ($this->mockApiRoles !== null) {
                 return $this->mockApiRoles;
             }
-            if ($this->mockRoles !== null) {
-                return $this->mockRoles;
-            }
+            return [];
         }
 
         if ($this->rolesException) {
@@ -441,9 +439,6 @@ class TestableKindeClientSDK extends KindeClientSDK
         if ($this->mockApiPermissions !== null) {
             return $this->mockApiPermissions;
         }
-        if ($this->mockPermissions !== null) {
-            return $this->mockPermissions;
-        }
         return ['orgCode' => null, 'permissions' => []];
     }
 
@@ -457,9 +452,6 @@ class TestableKindeClientSDK extends KindeClientSDK
         $this->recordMethodCall('getFeatureFlagsFromApi');
         if ($this->mockApiFeatureFlags !== null) {
             return $this->mockApiFeatureFlags;
-        }
-        if ($this->mockFeatureFlags !== null) {
-            return $this->mockFeatureFlags;
         }
         return [];
     }

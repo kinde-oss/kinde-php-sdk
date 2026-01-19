@@ -1052,7 +1052,7 @@ class KindeClientSDK
                     }
                     
                     // Value-specific check
-                    if (isset($featureFlag['value'])) {
+                    if (array_key_exists('value', $featureFlag)) {
                         $flagData = $flags[$flagKey];
                         $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
                         if ($flagValue !== $featureFlag['value']) {
@@ -1218,7 +1218,9 @@ class KindeClientSDK
      */
     private function isCustomFeatureFlagCondition($featureFlag): bool
     {
-        return is_array($featureFlag) && isset($featureFlag['flag']);
+        return is_array($featureFlag) &&
+               array_key_exists('flag', $featureFlag) &&
+               array_key_exists('value', $featureFlag);
     }
 
     /**

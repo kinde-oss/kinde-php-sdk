@@ -349,6 +349,28 @@ class HasRolesTest extends KindeTestCase
         $this->assertNull($calls[0]['forceApi']);
     }
 
+    public function testForceApiUsesApiRolesWhenProvided(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'admin', 'name' => 'Admin'],
+        ]);
+        $this->client->setMockApiRoles([
+            ['id' => '2', 'key' => 'apiAdmin', 'name' => 'API Admin'],
+        ]);
+
+        $this->assertTrue($this->client->hasRoles(['apiAdmin'], true));
+        $this->assertTrue($this->client->wasMethodCalled('getRoles'));
+    }
+
+    public function testForceApiDoesNotFallBackToTokenRoles(): void
+    {
+        $this->client->setMockRoles([
+            ['id' => '1', 'key' => 'admin', 'name' => 'Admin'],
+        ]);
+
+        $this->assertFalse($this->client->hasRoles(['admin'], true));
+    }
+
     // =========================================================================
     // Edge Cases
     // =========================================================================
