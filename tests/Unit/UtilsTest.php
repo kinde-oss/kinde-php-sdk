@@ -9,6 +9,8 @@ use Kinde\KindeSDK\Tests\Support\KindeTestCase;
 /**
  * Unit tests for Utils class.
  * Tests utility functions for URL validation, parameter checking, and encoding.
+ *
+ * @covers \Kinde\KindeSDK\Sdk\Utils\Utils
  */
 class UtilsTest extends KindeTestCase
 {

@@ -11,6 +11,9 @@ use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
 /**
  * Comprehensive tests for hasBillingEntitlements method.
  * Mirrors js-utils hasBillingEntitlements.test.ts test coverage.
+ *
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasBillingEntitlements
+ * @covers \Kinde\KindeSDK\KindeClientSDK::getAllEntitlements
  */
 class HasBillingEntitlementsTest extends KindeTestCase
 {
@@ -434,6 +437,49 @@ class HasBillingEntitlementsTest extends KindeTestCase
         ]);
 
         $this->assertTrue($result);
+    }
+
+    // =========================================================================
+    // Method Call Verification
+    // =========================================================================
+
+    public function testMethodCallIsRecorded(): void
+    {
+        $this->client->setMockEntitlements([
+            MockEntitlement::simple('pro_gym'),
+        ]);
+
+        $this->client->hasBillingEntitlements(['pro_gym']);
+
+        $this->assertTrue($this->client->wasMethodCalled('hasBillingEntitlements'));
+        $this->assertTrue($this->client->wasMethodCalled('getAllEntitlements'));
+    }
+
+    public function testMethodCallRecordsEntitlementsList(): void
+    {
+        $this->client->setMockEntitlements([
+            MockEntitlement::simple('pro_gym'),
+        ]);
+
+        $entitlements = ['pro_gym', 'premium_features'];
+        $this->client->hasBillingEntitlements($entitlements);
+
+        $calls = $this->client->getMethodCalls('hasBillingEntitlements');
+        $this->assertCount(1, $calls);
+        $this->assertEquals($entitlements, $calls[0]['billingEntitlements']);
+    }
+
+    public function testMultipleCallsAreRecorded(): void
+    {
+        $this->client->setMockEntitlements([
+            MockEntitlement::simple('pro_gym'),
+            MockEntitlement::simple('premium'),
+        ]);
+
+        $this->client->hasBillingEntitlements(['pro_gym']);
+        $this->client->hasBillingEntitlements(['premium']);
+
+        $this->assertEquals(2, $this->client->getMethodCallCount('hasBillingEntitlements'));
     }
 }
 

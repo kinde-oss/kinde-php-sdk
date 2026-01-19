@@ -36,6 +36,8 @@ use Exception;
  * Unit tests for KindeManagementClient.
  * Tests constructor, environment variable handling, API client initialization,
  * and access token management.
+ *
+ * @covers \Kinde\KindeSDK\KindeManagementClient
  */
 class KindeManagementClientTest extends KindeTestCase
 {

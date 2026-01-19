@@ -10,6 +10,9 @@ use InvalidArgumentException;
 /**
  * Unit tests for KindeClientSDK initialization and configuration.
  * Tests constructor behavior, environment variable handling, and endpoint generation.
+ *
+ * @covers \Kinde\KindeSDK\KindeClientSDK::__construct
+ * @covers \Kinde\KindeSDK\KindeClientSDK::createFromEnv
  */
 class KindeClientSDKTest extends KindeTestCase
 {

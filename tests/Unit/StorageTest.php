@@ -12,6 +12,8 @@ use Kinde\KindeSDK\Tests\Support\KindeTestCase;
  * 
  * Note: Tests that require actual cookie operations are limited in CLI environment.
  * Cookie-based tests should be run in integration tests with proper HTTP context.
+ *
+ * @covers \Kinde\KindeSDK\Sdk\Storage\Storage
  */
 class StorageTest extends KindeTestCase
 {

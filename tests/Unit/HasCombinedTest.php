@@ -12,6 +12,12 @@ use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
  * Comprehensive tests for the combined has() method.
  * Mirrors js-utils has.test.ts test coverage.
  * Tests the unified method that checks roles, permissions, feature flags, and billing entitlements.
+ *
+ * @covers \Kinde\KindeSDK\KindeClientSDK::has
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasRoles
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasPermissions
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasFeatureFlags
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasBillingEntitlements
  */
 class HasCombinedTest extends KindeTestCase
 {

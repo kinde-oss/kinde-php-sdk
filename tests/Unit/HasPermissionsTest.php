@@ -10,6 +10,9 @@ use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
 /**
  * Comprehensive tests for hasPermissions method.
  * Mirrors js-utils hasPermissions.test.ts test coverage.
+ *
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasPermissions
+ * @covers \Kinde\KindeSDK\KindeClientSDK::getPermissions
  */
 class HasPermissionsTest extends KindeTestCase
 {

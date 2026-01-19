@@ -10,6 +10,9 @@ use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
 /**
  * Comprehensive tests for hasRoles method.
  * Mirrors js-utils hasRoles.test.ts test coverage.
+ *
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasRoles
+ * @covers \Kinde\KindeSDK\KindeClientSDK::getRoles
  */
 class HasRolesTest extends KindeTestCase
 {

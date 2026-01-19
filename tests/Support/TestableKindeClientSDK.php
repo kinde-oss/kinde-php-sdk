@@ -362,6 +362,64 @@ class TestableKindeClientSDK extends KindeClientSDK
     }
 
     /**
+     * Override hasBillingEntitlements to properly record method calls in test mode.
+     * Uses mock data from getAllEntitlements.
+     *
+     * @param array $billingEntitlements Array of entitlement keys or entitlement condition objects
+     * @return bool True if user has all specified billing entitlements
+     */
+    public function hasBillingEntitlements(array $billingEntitlements = []): bool
+    {
+        $this->recordMethodCall('hasBillingEntitlements', ['billingEntitlements' => $billingEntitlements]);
+
+        if (empty($billingEntitlements)) {
+            return true;
+        }
+
+        try {
+            $userEntitlements = $this->getAllEntitlements();
+            $entitlementKeys = array_map(fn($entitlement) => $entitlement->getFeatureKey(), $userEntitlements);
+
+            foreach ($billingEntitlements as $entitlement) {
+                if (is_string($entitlement)) {
+                    if (!in_array($entitlement, $entitlementKeys)) {
+                        return false;
+                    }
+                } elseif (is_array($entitlement) && isset($entitlement['entitlement'])) {
+                    $matchingEntitlement = $this->findMatchingEntitlementInTest($userEntitlements, $entitlement['entitlement']);
+                    if (!$matchingEntitlement) {
+                        return false;
+                    }
+                    if (isset($entitlement['condition']) && !call_user_func($entitlement['condition'], $matchingEntitlement)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Find a matching entitlement by feature key.
+     *
+     * @param array $entitlements Array of entitlement objects
+     * @param string $featureKey The feature key to match
+     * @return object|null The matching entitlement or null
+     */
+    private function findMatchingEntitlementInTest(array $entitlements, string $featureKey)
+    {
+        foreach ($entitlements as $entitlement) {
+            if ($entitlement->getFeatureKey() === $featureKey) {
+                return $entitlement;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Record a method call for verification.
      *
      * @param string $method Method name

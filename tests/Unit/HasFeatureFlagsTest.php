@@ -10,6 +10,9 @@ use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
 /**
  * Comprehensive tests for hasFeatureFlags method.
  * Mirrors js-utils hasFeatureFlags.test.ts test coverage.
+ *
+ * @covers \Kinde\KindeSDK\KindeClientSDK::hasFeatureFlags
+ * @covers \Kinde\KindeSDK\KindeClientSDK::getFlag
  */
 class HasFeatureFlagsTest extends KindeTestCase
 {
