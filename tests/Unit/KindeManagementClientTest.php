@@ -281,6 +281,7 @@ class KindeManagementClientTest extends KindeTestCase
         // The access token should be set in the configuration
         $config = $management->getConfig();
         $this->assertInstanceOf(Configuration::class, $config);
+        $this->assertEquals(self::TEST_ACCESS_TOKEN, $config->getAccessToken());
     }
 
     public function testGetAccessTokenReturnsSetValue(): void
