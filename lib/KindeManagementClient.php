@@ -29,6 +29,7 @@ use Kinde\KindeSDK\Api\IdentitiesApi;
 use Kinde\KindeSDK\Api\MFAApi;
 use Kinde\KindeSDK\Configuration;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Sdk\Storage\Storage;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
@@ -316,6 +317,12 @@ class KindeManagementClient
         $this->config = new Configuration();
         $this->config->setHost($this->domain);
         
+        // Initialize JWKS URL for token validation caching
+        // This ensures JWK caching is available when using the Management client,
+        // providing consistency with KindeClientSDK and enabling shared caching
+        // when both clients are used together
+        Storage::getInstance()->setJwksUrl($this->domain . '/.well-known/jwks.json');
+        
         // Set access token if provided, otherwise get one automatically
         if ($this->accessToken) {
             $this->config->setAccessToken($this->accessToken);
@@ -472,6 +479,19 @@ class KindeManagementClient
     }
 
     /**
+     * Clear the cached JWKS data.
+     * 
+     * This can be useful when JWKS keys are rotated or for testing purposes.
+     * The JWKS will be automatically re-fetched on the next token validation.
+     *
+     * @return void
+     */
+    public function clearJwksCache(): void
+    {
+        Storage::getInstance()->clearCachedJwks();
+    }
+
+    /**
      * Get the configuration object
      * 
      * @return Configuration
@@ -562,6 +582,4 @@ class KindeManagementClient
             ];
         }
     }
-
-
 } 
