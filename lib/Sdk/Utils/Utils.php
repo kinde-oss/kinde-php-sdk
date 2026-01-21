@@ -122,12 +122,12 @@ class Utils
             // If parsing fails with cached JWKS, try to refresh from server
             if ($jwks !== null) {
                 try {
-                        Storage::getInstance()->clearCachedJwks($jwks_url);
+                    Storage::getInstance()->clearCachedJwks($jwks_url);
                     $jwks_json = file_get_contents($jwks_url);
                     $jwks = json_decode($jwks_json, true);
                     
                     if ($jwks && isset($jwks['keys'])) {
-                            Storage::getInstance()->setCachedJwks($jwks, 3600, $jwks_url);
+                        Storage::getInstance()->setCachedJwks($jwks, 3600, $jwks_url);
                         return json_decode(json_encode(JWT::decode($token, JWK::parseKeySet($jwks))), true);
                     }
                 } catch (Exception $refreshException) {
