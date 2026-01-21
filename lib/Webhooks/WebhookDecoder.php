@@ -37,8 +37,7 @@ final class WebhookDecoder
         $jwksUrl = $normalizedDomain . '/.well-known/jwks.json';
 
         try {
-            Storage::getInstance()->setJwksUrl($jwksUrl);
-            $payload = Utils::parseJWT($token);
+            $payload = Utils::parseJWT($token, $jwksUrl);
 
             return is_array($payload) ? $payload : null;
         } catch (\Throwable $e) {
