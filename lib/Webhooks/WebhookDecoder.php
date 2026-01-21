@@ -27,8 +27,13 @@ final class WebhookDecoder
             return null;
         }
 
-        // Normalise and set JWKS URL so Utils::parseJWT can verify signature.
+        // Basic domain validation: require HTTPS scheme and host, strip path/query.
         $normalizedDomain = rtrim($domain, '/');
+        $parts = parse_url($normalizedDomain);
+        if ($parts === false || empty($parts['scheme']) || empty($parts['host']) || strtolower($parts['scheme']) !== 'https') {
+            return null;
+        }
+        $normalizedDomain = $parts['scheme'] . '://' . $parts['host'] . (isset($parts['port']) ? ':' . $parts['port'] : '');
         $jwksUrl = $normalizedDomain . '/.well-known/jwks.json';
 
         try {
@@ -40,4 +45,5 @@ final class WebhookDecoder
             return null;
         }
     }
+
 }
