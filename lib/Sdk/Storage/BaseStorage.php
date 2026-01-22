@@ -29,10 +29,10 @@ class BaseStorage
         string $key,
         string $value,
         int $expires = 0,
-        string $path = null,
-        string $domain = null,
+        ?string $path = null,
+        ?string $domain = null,
         bool $secure = true,
-        bool $httpOnly = null
+        ?bool $httpOnly = null
     ) {
 
         $newKey = self::getKey($key);
