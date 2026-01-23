@@ -96,8 +96,16 @@ class Utils
      */
     static public function parseJWT(string $token, ?string $jwksUrl = null)
     {
+        $jwks = null;
+        $jwks_url = $jwksUrl;
+
         try {
-            $jwks_url = $jwksUrl ?? Storage::getInstance()->getJwksUrl();
+            if ($jwks_url === null) {
+                $jwks_url = Storage::getInstance()->getJwksUrl();
+            }
+
+            // Prevent fetching JWKS from an unexpected domain
+            $jwks_url = self::validateTrustedJwksUrl($jwks_url);
             
             // Try to get cached JWKS first
             $jwks = Storage::getInstance()->getCachedJwks($jwks_url);
@@ -137,6 +145,43 @@ class Utils
             }
             return null;
         }
+    }
+
+    /**
+     * Validates that the JWKS URL uses HTTPS and matches the configured domain.
+     *
+     * @param string $jwksUrl The JWKS URL to validate.
+     *
+     * @return string The validated JWKS URL.
+     *
+     * @throws InvalidArgumentException If the URL is invalid, uses a non-HTTPS scheme,
+     *                                  or does not match the configured JWKS host.
+     */
+    static public function validateTrustedJwksUrl(string $jwksUrl): string
+    {
+        $parts = parse_url($jwksUrl);
+
+        if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
+            throw new InvalidArgumentException('Invalid JWKS URL');
+        }
+
+        if (strtolower($parts['scheme']) !== 'https') {
+            throw new InvalidArgumentException('JWKS URL must use https');
+        }
+
+        // Only enforce host match when a trusted JWKS URL has been set
+        try {
+            $trustedJwksUrl = Storage::getInstance()->getJwksUrl();
+            $trustedHost = parse_url($trustedJwksUrl, PHP_URL_HOST);
+        } catch (\LogicException $e) {
+            $trustedHost = null;
+        }
+
+        if (!empty($trustedHost) && strcasecmp($parts['host'], $trustedHost) !== 0) {
+            throw new InvalidArgumentException('Untrusted JWKS domain');
+        }
+
+        return $jwksUrl;
     }
 
     /**
