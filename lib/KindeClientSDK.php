@@ -722,7 +722,7 @@ class KindeClientSDK
      * @return array An associative array containing the organization code and permissions
      * @throws Exception If the API request fails
      */
-    private function getPermissionsFromApi()
+    protected function getPermissionsFromApi()
     {
         $config = $this->getApiConfig();
         $permissionsApi = new PermissionsApi(null, $config);
@@ -745,7 +745,7 @@ class KindeClientSDK
      * @return array An associative array of feature flags
      * @throws Exception If the API request fails
      */
-    private function getFeatureFlagsFromApi()
+    protected function getFeatureFlagsFromApi()
     {
         $config = $this->getApiConfig();
         $featureFlagsApi = new FeatureFlagsApi(null, $config);
@@ -764,7 +764,7 @@ class KindeClientSDK
      * @param mixed $data The feature flags data
      * @return array Processed feature flags
      */
-    private function processFeatureFlagsData($data): array
+    protected function processFeatureFlagsData($data): array
     {
         $flags = [];
         foreach ($data->getFeatureFlags() ?? [] as $flag) {
@@ -782,7 +782,7 @@ class KindeClientSDK
      * @param string $type The flag type string
      * @return string The internal type code
      */
-    private function getFlagType(string $type): string
+    protected function getFlagType(string $type): string
     {
         $typeMap = [
             'boolean' => 'b',
@@ -1056,7 +1056,7 @@ class KindeClientSDK
                     }
                     
                     // Value-specific check
-                    if (isset($featureFlag['value'])) {
+                    if (array_key_exists('value', $featureFlag)) {
                         $flagData = $flags[$flagKey];
                         $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
                         if ($flagValue !== $featureFlag['value']) {
@@ -1222,7 +1222,8 @@ class KindeClientSDK
      */
     private function isCustomFeatureFlagCondition($featureFlag): bool
     {
-        return is_array($featureFlag) && isset($featureFlag['flag']);
+        return is_array($featureFlag) &&
+               array_key_exists('flag', $featureFlag);
     }
 
     /**
