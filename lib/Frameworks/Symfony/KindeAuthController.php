@@ -17,15 +17,19 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class KindeAuthController extends AbstractController
 {
     protected KindeClientSDK $kindeClient;
+    private RequestStack $requestStack;
 
     public function __construct(
         KindeClientSDK $kindeClient,
-        private RequestStack $requestStack)
+        RequestStack $requestStack)
     {
         $this->kindeClient = $kindeClient;
+        $this->requestStack = $requestStack;
     }
 
-    #[Route('/auth/login', name: 'kinde_login')]
+    /**
+     * @Route("/auth/login", name="kinde_login")
+     */
     public function login(Request $request): RedirectResponse
     {
         $additionalParams = [];
@@ -58,7 +62,9 @@ class KindeAuthController extends AbstractController
         }
     }
 
-    #[Route('/auth/callback', name: 'kinde_callback')]
+    /**
+     * @Route("/auth/callback", name="kinde_callback")
+     */
     public function callback(Request $request): RedirectResponse
     {
         $errorParam = $request->query->get('error');
@@ -110,7 +116,9 @@ class KindeAuthController extends AbstractController
         }
     }
 
-    #[Route('/auth/register', name: 'kinde_register')]
+    /**
+     * @Route("/auth/register", name="kinde_register")
+     */
     public function register(Request $request): RedirectResponse
     {
         $additionalParams = [];
@@ -140,7 +148,9 @@ class KindeAuthController extends AbstractController
     }
 
     
-    #[Route('/auth/logout', name: 'kinde_logout')]
+    /**
+     * @Route("/auth/logout", name="kinde_logout")
+     */
     public function logout(): RedirectResponse
     {
         $this->clearUser();
@@ -175,10 +185,13 @@ class KindeAuthController extends AbstractController
         ]);
     }
 
-    #[Route('/auth/portal', name: 'kinde_portal')]
+    /**
+     * @Route("/auth/portal", name="kinde_portal")
+     */
     public function portal(Request $request): RedirectResponse
     {
-        $isAuthenticated = $this->getSession()?->get('kinde_authenticated', false);
+        $session = $this->getSession();
+        $isAuthenticated = $session ? $session->get('kinde_authenticated', false) : false;
         
         if (!$isAuthenticated) {
             return $this->redirectToRoute('kinde_login');
@@ -211,12 +224,16 @@ class KindeAuthController extends AbstractController
     private function getSession(): ?SessionInterface
     {
         $request = $this->requestStack->getCurrentRequest();
-        return $request?->getSession();
+        if (!$request) {
+            return null;
+        }
+        return $request->getSession();
     }
 
     private function getKindeUser()
     {
-        return $this->getSession()?->get('kinde_user');
+        $session = $this->getSession();
+        return $session ? $session->get('kinde_user') : null;
     }
 
     private function setUser($user)
@@ -230,11 +247,13 @@ class KindeAuthController extends AbstractController
 
     private function getPermissions()
     {
-        return $this->getSession()?->get('kinde_permissions', []);
+        $session = $this->getSession();
+        return $session ? $session->get('kinde_permissions', []) : [];
     }
 
     private function getOrganization()
     {
-        return $this->getSession()?->get('kinde_organization');
+        $session = $this->getSession();
+        return $session ? $session->get('kinde_organization') : null;
     }
 } 

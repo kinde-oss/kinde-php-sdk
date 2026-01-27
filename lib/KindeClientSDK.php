@@ -368,24 +368,28 @@ class KindeClientSDK
      */
     private function getClaimFromApi(string $keyName): array
     {
-        return match ($keyName) {
-            'feature_flags' => [
+        if ($keyName === 'feature_flags') {
+            return [
                 'name' => $keyName,
                 'value' => $this->getFeatureFlagsFromApi()
-            ],
-            'org_code', 'permissions' => [
+            ];
+        }
+        if ($keyName === 'org_code' || $keyName === 'permissions') {
+            return [
                 'name' => $keyName,
                 'value' => $this->getPermissionsData()[$keyName === 'org_code' ? 'orgCode' : 'permissions'] ?? ($keyName === 'org_code' ? null : [])
-            ],
-            'org_codes' => [
+            ];
+        }
+        if ($keyName === 'org_codes') {
+            return [
                 'name' => $keyName,
                 'value' => $this->getUserProfileFromApi()->getOrgCodes() ?? []
-            ],
-            default => [
-                'name' => $keyName,
-                'value' => $this->getProfileClaimValue($keyName)
-            ]
-        };
+            ];
+        }
+        return [
+            'name' => $keyName,
+            'value' => $this->getProfileClaimValue($keyName)
+        ];
     }
 
     /**
@@ -404,7 +408,7 @@ class KindeClientSDK
      * @param string $keyName The claim key name
      * @return mixed The claim value
      */
-    private function getProfileClaimValue(string $keyName): mixed
+    private function getProfileClaimValue(string $keyName)
     {
         $userProfile = $this->getUserProfileFromApi();
         $profileData = [
@@ -780,12 +784,12 @@ class KindeClientSDK
      */
     private function getFlagType(string $type): string
     {
-        return match ($type) {
+        $typeMap = [
             'boolean' => 'b',
             'string' => 's',
-            'integer' => 'i',
-            default => 's'
-        };
+            'integer' => 'i'
+        ];
+        return $typeMap[$type] ?? 's';
     }
 
     /**

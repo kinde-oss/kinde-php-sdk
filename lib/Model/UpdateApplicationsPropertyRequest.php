@@ -338,7 +338,6 @@ class UpdateApplicationsPropertyRequest implements ModelInterface, ArrayAccess, 
      *
      * @return mixed|null
      */
-    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->container[$offset] ?? null;
@@ -380,7 +379,6 @@ class UpdateApplicationsPropertyRequest implements ModelInterface, ArrayAccess, 
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
      * of any type other than a resource.
      */
-    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
        return ObjectSerializer::sanitizeForSerialization($this);
