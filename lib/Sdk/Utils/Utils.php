@@ -169,15 +169,17 @@ class Utils
             throw new InvalidArgumentException('JWKS URL must use https');
         }
 
-        // Only enforce host match when a trusted JWKS URL has been set
+        // Enforce host match; fail closed when no trusted domain is configured
         try {
             $trustedJwksUrl = Storage::getInstance()->getJwksUrl();
             $trustedHost = parse_url($trustedJwksUrl, PHP_URL_HOST);
         } catch (\LogicException $e) {
-            $trustedHost = null;
+            throw new InvalidArgumentException(
+                'Cannot validate JWKS URL: no trusted domain configured. Initialize the SDK first or provide a pre-validated URL.'
+            );
         }
 
-        if (!empty($trustedHost) && strcasecmp($parts['host'], $trustedHost) !== 0) {
+        if (empty($trustedHost) || strcasecmp($parts['host'], $trustedHost) !== 0) {
             throw new InvalidArgumentException('Untrusted JWKS domain');
         }
 
