@@ -37,9 +37,8 @@ final class WebhookDecoder
         $jwksUrl = $normalizedDomain . '/.well-known/jwks.json';
 
         try {
-            // Seed the trusted JWKS URL so validation can enforce host matching
-            Storage::getInstance()->setJwksUrl($jwksUrl);
-            $payload = Utils::parseJWT($token, $jwksUrl);
+            // Use the normalized host to enforce JWKS domain matching without mutating shared state.
+            $payload = Utils::parseJWT($token, $jwksUrl, parse_url($jwksUrl, PHP_URL_HOST));
 
             return is_array($payload) ? $payload : null;
         } catch (\Throwable $e) {
