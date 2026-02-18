@@ -368,24 +368,28 @@ class KindeClientSDK
      */
     private function getClaimFromApi(string $keyName): array
     {
-        return match ($keyName) {
-            'feature_flags' => [
+        if ($keyName === 'feature_flags') {
+            return [
                 'name' => $keyName,
                 'value' => $this->getFeatureFlagsFromApi()
-            ],
-            'org_code', 'permissions' => [
+            ];
+        }
+        if ($keyName === 'org_code' || $keyName === 'permissions') {
+            return [
                 'name' => $keyName,
                 'value' => $this->getPermissionsData()[$keyName === 'org_code' ? 'orgCode' : 'permissions'] ?? ($keyName === 'org_code' ? null : [])
-            ],
-            'org_codes' => [
+            ];
+        }
+        if ($keyName === 'org_codes') {
+            return [
                 'name' => $keyName,
                 'value' => $this->getUserProfileFromApi()->getOrgCodes() ?? []
-            ],
-            default => [
-                'name' => $keyName,
-                'value' => $this->getProfileClaimValue($keyName)
-            ]
-        };
+            ];
+        }
+        return [
+            'name' => $keyName,
+            'value' => $this->getProfileClaimValue($keyName)
+        ];
     }
 
     /**
@@ -404,7 +408,7 @@ class KindeClientSDK
      * @param string $keyName The claim key name
      * @return mixed The claim value
      */
-    private function getProfileClaimValue(string $keyName): mixed
+    private function getProfileClaimValue(string $keyName)
     {
         $userProfile = $this->getUserProfileFromApi();
         $profileData = [
@@ -718,7 +722,7 @@ class KindeClientSDK
      * @return array An associative array containing the organization code and permissions
      * @throws Exception If the API request fails
      */
-    private function getPermissionsFromApi()
+    protected function getPermissionsFromApi()
     {
         $config = $this->getApiConfig();
         $permissionsApi = new PermissionsApi(null, $config);
@@ -741,7 +745,7 @@ class KindeClientSDK
      * @return array An associative array of feature flags
      * @throws Exception If the API request fails
      */
-    private function getFeatureFlagsFromApi()
+    protected function getFeatureFlagsFromApi()
     {
         $config = $this->getApiConfig();
         $featureFlagsApi = new FeatureFlagsApi(null, $config);
@@ -760,7 +764,7 @@ class KindeClientSDK
      * @param mixed $data The feature flags data
      * @return array Processed feature flags
      */
-    private function processFeatureFlagsData($data): array
+    protected function processFeatureFlagsData($data): array
     {
         $flags = [];
         foreach ($data->getFeatureFlags() ?? [] as $flag) {
@@ -778,14 +782,14 @@ class KindeClientSDK
      * @param string $type The flag type string
      * @return string The internal type code
      */
-    private function getFlagType(string $type): string
+    protected function getFlagType(string $type): string
     {
-        return match ($type) {
+        $typeMap = [
             'boolean' => 'b',
             'string' => 's',
-            'integer' => 'i',
-            default => 's'
-        };
+            'integer' => 'i'
+        ];
+        return $typeMap[$type] ?? 's';
     }
 
     /**
@@ -1052,7 +1056,7 @@ class KindeClientSDK
                     }
                     
                     // Value-specific check
-                    if (isset($featureFlag['value'])) {
+                    if (array_key_exists('value', $featureFlag)) {
                         $flagData = $flags[$flagKey];
                         $flagValue = is_array($flagData) ? $flagData['v'] : $flagData;
                         if ($flagValue !== $featureFlag['value']) {
@@ -1218,7 +1222,8 @@ class KindeClientSDK
      */
     private function isCustomFeatureFlagCondition($featureFlag): bool
     {
-        return is_array($featureFlag) && isset($featureFlag['flag']);
+        return is_array($featureFlag) &&
+               array_key_exists('flag', $featureFlag);
     }
 
     /**

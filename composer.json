@@ -37,7 +37,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Kinde\\KindeSDK\\Test\\": "test/"
+      "Kinde\\KindeSDK\\Tests\\": "tests/",
+      "Kinde\\KindeSDK\\Tests\\Support\\": "tests/Support/"
     }
   },
   "config": {

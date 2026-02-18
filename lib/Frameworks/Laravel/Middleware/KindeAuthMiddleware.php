@@ -19,7 +19,7 @@ class KindeAuthMiddleware
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next, string $permission = null): mixed
+    public function handle(Request $request, Closure $next, string $permission = null)
     {
         // Check if user is authenticated
         if (!$this->kindeClient->isAuthenticated) {
