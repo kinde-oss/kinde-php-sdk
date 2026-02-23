@@ -90,12 +90,12 @@ class Utils
     /**
      * Parses a JSON Web Token (JWT) and returns the decoded payload.
      *
-     * @param string $token The JWT to parse.
+     * @param string      $token   The JWT to parse.
+     * @param string|null $jwksUrl JWKS endpoint URL. Falls back to the configured URL when null.
      *
      * @return array|null The decoded payload as an associative array, or null if the token is invalid.
      */
-    // Decode a JWT using JWKS, with optional per-call trusted host override.
-    static public function parseJWT(string $token, ?string $jwksUrl = null, ?string $trustedHostOverride = null)
+    static public function parseJWT(string $token, ?string $jwksUrl = null)
     {
         $jwks = null;
         $jwks_url = $jwksUrl;
@@ -104,9 +104,6 @@ class Utils
             if ($jwks_url === null) {
                 $jwks_url = Storage::getInstance()->getJwksUrl();
             }
-
-            // Prevent fetching JWKS from an unexpected domain (uses override when provided)
-            $jwks_url = self::validateTrustedJwksUrl($jwks_url, $trustedHostOverride);
             
             // Try to get cached JWKS first
             $jwks = Storage::getInstance()->getCachedJwks($jwks_url);
@@ -146,50 +143,6 @@ class Utils
             }
             return null;
         }
-    }
-
-    /**
-     * Validates that the JWKS URL uses HTTPS and matches the configured domain.
-     *
-     * @param string $jwksUrl The JWKS URL to validate.
-     *
-     * @return string The validated JWKS URL.
-     *
-     * @throws InvalidArgumentException If the URL is invalid, uses a non-HTTPS scheme,
-     *                                  or does not match the configured JWKS host.
-     */
-    // Enforce HTTPS and host matching against configured or overridden trusted host.
-    static public function validateTrustedJwksUrl(string $jwksUrl, ?string $trustedHostOverride = null): string
-    {
-        $parts = parse_url($jwksUrl);
-
-        if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
-            throw new InvalidArgumentException('Invalid JWKS URL');
-        }
-
-        if (strtolower($parts['scheme']) !== 'https') {
-            throw new InvalidArgumentException('JWKS URL must use https');
-        }
-
-        // Determine trusted host: prefer explicit override, otherwise require configured JWKS URL
-        if ($trustedHostOverride !== null) {
-            $trustedHost = $trustedHostOverride;
-        } else {
-            try {
-                $trustedJwksUrl = Storage::getInstance()->getJwksUrl();
-                $trustedHost = parse_url($trustedJwksUrl, PHP_URL_HOST);
-            } catch (\LogicException $e) {
-                throw new InvalidArgumentException(
-                    'Cannot validate JWKS URL: no trusted domain configured. Initialize the SDK first or provide a pre-validated URL.'
-                );
-            }
-        }
-
-        if (empty($trustedHost) || strcasecmp($parts['host'], $trustedHost) !== 0) {
-            throw new InvalidArgumentException('Untrusted JWKS domain');
-        }
-
-        return $jwksUrl;
     }
 
     /**

@@ -36,9 +36,18 @@ final class WebhookDecoder
         $normalizedDomain = $parts['scheme'] . '://' . $parts['host'] . (isset($parts['port']) ? ':' . $parts['port'] : '');
         $jwksUrl = $normalizedDomain . '/.well-known/jwks.json';
 
+        // If the SDK is initialized, reject webhook domains that don't match the configured host.
         try {
-            // Use the normalized host to enforce JWKS domain matching without mutating shared state.
-            $payload = Utils::parseJWT($token, $jwksUrl, parse_url($jwksUrl, PHP_URL_HOST));
+            $trustedHost = parse_url(Storage::getInstance()->getJwksUrl(), PHP_URL_HOST);
+            if (!empty($trustedHost) && strcasecmp($parts['host'], $trustedHost) !== 0) {
+                return null;
+            }
+        } catch (\LogicException $e) {
+            // SDK not initialized; proceed with HTTPS-validated domain above.
+        }
+
+        try {
+            $payload = Utils::parseJWT($token, $jwksUrl);
 
             return is_array($payload) ? $payload : null;
         } catch (\Throwable $e) {
