@@ -16,10 +16,6 @@ final class WebhookSource
      */
     public static function all(): array
     {
-        return [
-            self::ADMIN,
-            self::API,
-            self::USER,
-        ];
+        return array_values((new \ReflectionClass(static::class))->getConstants());
     }
 }

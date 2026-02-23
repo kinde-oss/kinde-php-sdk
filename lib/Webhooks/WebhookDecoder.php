@@ -7,6 +7,10 @@ use Kinde\KindeSDK\Sdk\Utils\Utils;
 
 /**
  * Decode and validate webhook JWTs using the SDK's JWKS handling.
+ *
+ * When the SDK is initialized the webhook domain is checked against the
+ * configured host. When it is not, any HTTPS domain is accepted — $domain
+ * must be a hardcoded trusted value, never derived from request input.
  */
 final class WebhookDecoder
 {
@@ -18,6 +22,7 @@ final class WebhookDecoder
      *
      * @param string|null $token   The webhook JWT.
      * @param string|null $domain  The Kinde domain (e.g. https://your-subdomain.kinde.com).
+     *                             Must be a hardcoded trusted value; see class-level security note.
      *
      * @return array|null
      */

@@ -9,12 +9,12 @@ final class WebhookEventType
 {
     public const ORGANIZATION_CREATED = 'organization.created';
     public const ORGANIZATION_UPDATED = 'organization.updated';
+    public const ORGANIZATION_DELETED = 'organization.deleted';
     public const USER_CREATED = 'user.created';
     public const USER_UPDATED = 'user.updated';
     public const USER_DELETED = 'user.deleted';
     public const USER_AUTHENTICATION_FAILED = 'user.authentication_failed';
     public const USER_AUTHENTICATED = 'user.authenticated';
-    public const ORGANIZATION_DELETED = 'organization.deleted';
     public const ROLE_CREATED = 'role.created';
     public const ROLE_UPDATED = 'role.updated';
     public const ROLE_DELETED = 'role.deleted';
@@ -29,23 +29,6 @@ final class WebhookEventType
      */
     public static function all(): array
     {
-        return [
-            self::ORGANIZATION_CREATED,
-            self::ORGANIZATION_UPDATED,
-            self::USER_CREATED,
-            self::USER_UPDATED,
-            self::USER_DELETED,
-            self::USER_AUTHENTICATION_FAILED,
-            self::USER_AUTHENTICATED,
-            self::ORGANIZATION_DELETED,
-            self::ROLE_CREATED,
-            self::ROLE_UPDATED,
-            self::ROLE_DELETED,
-            self::PERMISSION_CREATED,
-            self::PERMISSION_UPDATED,
-            self::PERMISSION_DELETED,
-            self::SUBSCRIBER_CREATED,
-            self::ACCESS_REQUEST_CREATED,
-        ];
+        return array_values((new \ReflectionClass(static::class))->getConstants());
     }
 }
