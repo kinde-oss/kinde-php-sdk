@@ -171,11 +171,13 @@ class Storage extends BaseStorage
     /**
      * Gets cached JWKS data if available and not expired
      *
+     * @param string|null $jwksUrl Optional JWKS URL to namespace the cache
      * @return array|null The cached JWKS data or null if not available/expired
      */
-    static function getCachedJwks()
+    static function getCachedJwks(?string $jwksUrl = null)
     {
-        $cachedData = self::getItem(StorageEnums::JWKS_CACHE);
+        $cacheKey = self::getJwksCacheKey($jwksUrl);
+        $cachedData = self::getItem($cacheKey);
         if (empty($cachedData)) {
             return null;
         }
@@ -187,7 +189,7 @@ class Storage extends BaseStorage
 
         // Check if cache has expired
         if ($data['expires_at'] < time()) {
-            self::removeItem(StorageEnums::JWKS_CACHE);
+            self::removeItem($cacheKey);
             return null;
         }
 
@@ -199,26 +201,30 @@ class Storage extends BaseStorage
      *
      * @param array $jwks The JWKS data to cache
      * @param int $ttlSeconds TTL in seconds (default: 1 hour)
+     * @param string|null $jwksUrl Optional JWKS URL to namespace the cache
      * @return void
      */
-    static function setCachedJwks(array $jwks, int $ttlSeconds = 3600)
+    static function setCachedJwks(array $jwks, int $ttlSeconds = 3600, ?string $jwksUrl = null)
     {
+        $cacheKey = self::getJwksCacheKey($jwksUrl);
         $cacheData = [
             'jwks' => $jwks,
             'expires_at' => time() + $ttlSeconds
         ];
 
-        self::setItem(StorageEnums::JWKS_CACHE, json_encode($cacheData), time() + $ttlSeconds);
+        self::setItem($cacheKey, json_encode($cacheData), time() + $ttlSeconds);
     }
 
     /**
      * Clears the cached JWKS data
      *
+     * @param string|null $jwksUrl Optional JWKS URL to namespace the cache
      * @return void
      */
-    static function clearCachedJwks()
+    static function clearCachedJwks(?string $jwksUrl = null)
     {
-        self::removeItem(StorageEnums::JWKS_CACHE);
+        $cacheKey = self::getJwksCacheKey($jwksUrl);
+        self::removeItem($cacheKey);
     }
 
     /**
@@ -283,5 +289,17 @@ class Storage extends BaseStorage
     static function setPersistentCookieDuration(int $duration)
     {
         self::$persistentCookieDuration = $duration;
+    }
+
+    /**
+     * Build a cache key for JWKS, optionally namespaced by URL.
+     */
+    private static function getJwksCacheKey(?string $jwksUrl = null): string
+    {
+        if (empty($jwksUrl)) {
+            return StorageEnums::JWKS_CACHE;
+        }
+
+        return StorageEnums::JWKS_CACHE . '_' . md5($jwksUrl);
     }
 }
