@@ -1,6 +1,6 @@
 {
   "name": "kinde-oss/kinde-auth-php",
-  "version": "2.3.4",
+  "version": "2.4.0",
   "description": "Kinde PHP SDK for authentication",
   "license": "MIT",
   "keywords": [
