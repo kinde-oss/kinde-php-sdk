@@ -99,6 +99,7 @@ class Utils
     {
         $jwks = null;
         $jwks_url = $jwksUrl;
+        $streamContext = stream_context_create(['http' => ['timeout' => 5]]);
 
         try {
             if ($jwks_url === null) {
@@ -110,7 +111,7 @@ class Utils
             
             if ($jwks === null) {
                 // Cache miss - fetch from server
-                $jwks_json = file_get_contents($jwks_url);
+                $jwks_json = file_get_contents($jwks_url, false, $streamContext);
                 $jwks = json_decode($jwks_json, true);
                 
                 if ($jwks && isset($jwks['keys'])) {
@@ -129,7 +130,7 @@ class Utils
             if ($jwks !== null) {
                 try {
                     Storage::getInstance()->clearCachedJwks($jwks_url);
-                    $jwks_json = file_get_contents($jwks_url);
+                    $jwks_json = file_get_contents($jwks_url, false, $streamContext);
                     $jwks = json_decode($jwks_json, true);
                     
                     if ($jwks && isset($jwks['keys'])) {
