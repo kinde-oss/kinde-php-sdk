@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e40e589e85c8859a8e6152d1cfcf7c2",
+    "content-hash": "66955d44cd0bc54a7bf5e01a8ab9c5f0",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -3296,26 +3296,26 @@
         },
         {
             "name": "twig/extra-bundle",
-            "version": "v3.21.0",
+            "version": "v3.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/twig-extra-bundle.git",
-                "reference": "62d1cf47a1aa009cbd07b21045b97d3d5cb79896"
+                "reference": "7a27e784dc56eddfef5e9295829b290ce06f1682"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/62d1cf47a1aa009cbd07b21045b97d3d5cb79896",
-                "reference": "62d1cf47a1aa009cbd07b21045b97d3d5cb79896",
+                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/7a27e784dc56eddfef5e9295829b290ce06f1682",
+                "reference": "7a27e784dc56eddfef5e9295829b290ce06f1682",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1.0",
-                "symfony/framework-bundle": "^5.4|^6.4|^7.0",
-                "symfony/twig-bundle": "^5.4|^6.4|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.4|^7.0|^8.0",
+                "symfony/twig-bundle": "^5.4|^6.4|^7.0|^8.0",
                 "twig/twig": "^3.2|^4.0"
             },
             "require-dev": {
-                "league/commonmark": "^1.0|^2.0",
+                "league/commonmark": "^2.7",
                 "symfony/phpunit-bridge": "^6.4|^7.0",
                 "twig/cache-extra": "^3.0",
                 "twig/cssinliner-extra": "^3.0",
@@ -3354,7 +3354,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.21.0"
+                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.23.0"
             },
             "funding": [
                 {
@@ -3366,20 +3366,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-19T14:29:33+00:00"
+            "time": "2025-12-18T20:46:15+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v3.21.1",
+            "version": "v3.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "285123877d4dd97dd7c11842ac5fb7e86e60d81d"
+                "reference": "a64dc5d2cc7d6cafb9347f6cd802d0d06d0351c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/285123877d4dd97dd7c11842ac5fb7e86e60d81d",
-                "reference": "285123877d4dd97dd7c11842ac5fb7e86e60d81d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a64dc5d2cc7d6cafb9347f6cd802d0d06d0351c9",
+                "reference": "a64dc5d2cc7d6cafb9347f6cd802d0d06d0351c9",
                 "shasum": ""
             },
             "require": {
@@ -3433,7 +3433,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.21.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.23.0"
             },
             "funding": [
                 {
@@ -3445,7 +3445,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-03T07:21:55+00:00"
+            "time": "2026-01-23T21:00:41+00:00"
         }
     ],
     "packages-dev": [],
@@ -3460,5 +3460,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
