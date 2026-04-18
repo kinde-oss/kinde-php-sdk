@@ -7,7 +7,7 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "firebase/php-jwt": "^6.11",
+        "firebase/php-jwt": "^7.0",
         "guzzlehttp/guzzle": "^7.9",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
