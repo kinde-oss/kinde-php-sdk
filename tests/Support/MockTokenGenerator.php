@@ -10,7 +10,7 @@ use Firebase\JWT\JWT;
  */
 class MockTokenGenerator
 {
-    private const SECRET_KEY = 'test-secret-key-for-unit-tests';
+    private const SECRET_KEY = 'test-secret-key-for-unit-tests!!';
     private const ALGORITHM = 'HS256';
     private const KEY_ID = 'test-key-id';
 
