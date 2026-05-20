@@ -12,7 +12,7 @@
     "fix-headers": "php fix-headers.php"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.33.1"
+    "@openapitools/openapi-generator-cli": "2.34.0"
   },
   "openapi-generator-cli": {
     "version": "2.7.0",
