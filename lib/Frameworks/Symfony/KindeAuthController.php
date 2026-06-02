@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\OAuthException;
 use Exception;
@@ -27,7 +27,9 @@ class KindeAuthController extends AbstractController
         $this->requestStack = $requestStack;
     }
 
-    #[Route('/auth/login', name: 'kinde_login')]
+    /**
+     * @Route("/auth/login", name="kinde_login")
+     */
     public function login(Request $request): RedirectResponse
     {
         $additionalParams = [];
@@ -60,7 +62,9 @@ class KindeAuthController extends AbstractController
         }
     }
 
-    #[Route('/auth/callback', name: 'kinde_callback')]
+    /**
+     * @Route("/auth/callback", name="kinde_callback")
+     */
     public function callback(Request $request): RedirectResponse
     {
         $errorParam = $request->query->get('error');
@@ -112,7 +116,9 @@ class KindeAuthController extends AbstractController
         }
     }
 
-    #[Route('/auth/register', name: 'kinde_register')]
+    /**
+     * @Route("/auth/register", name="kinde_register")
+     */
     public function register(Request $request): RedirectResponse
     {
         $additionalParams = [];
@@ -142,7 +148,9 @@ class KindeAuthController extends AbstractController
     }
 
     
-    #[Route('/auth/logout', name: 'kinde_logout')]
+    /**
+     * @Route("/auth/logout", name="kinde_logout")
+     */
     public function logout(): RedirectResponse
     {
         $this->clearUser();
@@ -157,7 +165,9 @@ class KindeAuthController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    #[Route('/auth/user-info', name: 'kinde_user_info')]
+    /**
+     * @Route("/auth/user-info", name="kinde_user_info")
+     */
     public function userInfo(Request $request): Response
     {
         if (!$this->kindeClient->isAuthenticated) {
@@ -175,7 +185,9 @@ class KindeAuthController extends AbstractController
         ]);
     }
 
-    #[Route('/auth/portal', name: 'kinde_portal')]
+    /**
+     * @Route("/auth/portal", name="kinde_portal")
+     */
     public function portal(Request $request): RedirectResponse
     {
         $session = $this->getSession();
