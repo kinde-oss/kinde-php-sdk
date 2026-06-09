@@ -67,7 +67,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.3.*"
+            "require": "8.1.*"
         }
     }
 }
