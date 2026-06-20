@@ -78,6 +78,11 @@ abstract class KindeTestCase extends TestCase
             $cookieName = 'kinde_' . $key;
             unset($_COOKIE[$cookieName]);
         }
+
+        // The JWKS cache is namespaced by md5(jwksUrl) when a URL is configured,
+        // so the bare key above does not cover it.
+        $namespacedJwks = 'kinde_' . StorageEnums::JWKS_CACHE . '_' . md5(self::TEST_DOMAIN . '/.well-known/jwks.json');
+        unset($_COOKIE[$namespacedJwks]);
     }
 
     /**
@@ -140,7 +145,7 @@ abstract class KindeTestCase extends TestCase
                 ],
             ],
         ];
-        Storage::setCachedJwks($jwks, 3600);
+        Storage::setCachedJwks($jwks, 3600, self::TEST_DOMAIN . '/.well-known/jwks.json');
     }
 
     /**

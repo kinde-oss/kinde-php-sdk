@@ -39,6 +39,18 @@ fi
 mkdir -p coverage
 mkdir -p logs
 
+# Detect whether a code coverage driver (Xdebug or PCOV) is available.
+# PHPUnit 13 aborts with "No tests executed!" if coverage is requested without
+# a driver, so we only add coverage flags when one is present.
+COVERAGE_AVAILABLE=0
+if php -r 'exit((extension_loaded("pcov") || extension_loaded("xdebug")) ? 0 : 1);' >/dev/null 2>&1; then
+    COVERAGE_AVAILABLE=1
+    # Xdebug needs coverage mode explicitly enabled.
+    export XDEBUG_MODE=coverage
+else
+    print_warning "No code coverage driver (Xdebug or PCOV) found; running tests without coverage."
+fi
+
 # Function to run tests
 run_tests() {
     local suite=$1
@@ -46,7 +58,12 @@ run_tests() {
     
     print_status "Running $suite tests..."
     
-    if php vendor/bin/phpunit --testsuite="$suite" --coverage-html="coverage/${suite// /_}" --coverage-clover="coverage/${suite// /_}_clover.xml" > "$output_file" 2>&1; then
+    local coverage_flags=()
+    if [ "$COVERAGE_AVAILABLE" -eq 1 ]; then
+        coverage_flags=(--coverage-html="coverage/${suite// /_}" --coverage-clover="coverage/${suite// /_}_clover.xml")
+    fi
+
+    if php vendor/bin/phpunit --testsuite="$suite" "${coverage_flags[@]}" > "$output_file" 2>&1; then
         print_success "$suite tests passed"
         return 0
     else
@@ -59,7 +76,12 @@ run_tests() {
 run_all_tests() {
     print_status "Running all tests..."
     
-    if php vendor/bin/phpunit --coverage-html="coverage/all" --coverage-clover="coverage/all_clover.xml" > "logs/all_test_results.txt" 2>&1; then
+    local coverage_flags=()
+    if [ "$COVERAGE_AVAILABLE" -eq 1 ]; then
+        coverage_flags=(--coverage-html="coverage/all" --coverage-clover="coverage/all_clover.xml")
+    fi
+
+    if php vendor/bin/phpunit "${coverage_flags[@]}" > "logs/all_test_results.txt" 2>&1; then
         print_success "All tests passed"
         return 0
     else

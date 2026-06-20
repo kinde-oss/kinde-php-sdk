@@ -38,7 +38,8 @@ class StorageTest extends KindeTestCase
 
     protected function seedJwksCache(): void
     {
-        Storage::setJwksUrl('https://example.com/jwks.json');
+        $jwksUrl = 'https://example.com/jwks.json';
+        Storage::setJwksUrl($jwksUrl);
         $secret = MockTokenGenerator::getSecretKey();
         $encodedSecret = rtrim(strtr(base64_encode($secret), '+/', '-_'), '=');
         $jwks = [
@@ -52,7 +53,7 @@ class StorageTest extends KindeTestCase
                 ],
             ],
         ];
-        Storage::setCachedJwks($jwks, 3600);
+        Storage::setCachedJwks($jwks, 3600, $jwksUrl);
     }
 
     // =========================================================================
