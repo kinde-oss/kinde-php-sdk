@@ -63,7 +63,7 @@ run_tests() {
         coverage_flags=(--coverage-html="coverage/${suite// /_}" --coverage-clover="coverage/${suite// /_}_clover.xml")
     fi
 
-    if php vendor/bin/phpunit --testsuite="$suite" "${coverage_flags[@]}" > "$output_file" 2>&1; then
+    if php -d memory_limit=-1 vendor/bin/phpunit --testsuite="$suite" "${coverage_flags[@]}" > "$output_file" 2>&1; then
         print_success "$suite tests passed"
         return 0
     else
@@ -81,7 +81,7 @@ run_all_tests() {
         coverage_flags=(--coverage-html="coverage/all" --coverage-clover="coverage/all_clover.xml")
     fi
 
-    if php vendor/bin/phpunit "${coverage_flags[@]}" > "logs/all_test_results.txt" 2>&1; then
+    if php -d memory_limit=-1 vendor/bin/phpunit "${coverage_flags[@]}" > "logs/all_test_results.txt" 2>&1; then
         print_success "All tests passed"
         return 0
     else
