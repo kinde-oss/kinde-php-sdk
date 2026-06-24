@@ -351,6 +351,10 @@ class KindeClientSDK
 
         $claims = self::getClaims($tokenType);
 
+        if (!is_array($claims)) {
+            $claims = [];
+        }
+
         if (!array_key_exists($keyName, $claims)) {
             error_log("The value of '{$keyName}' claimed does not exist in your token");
         }

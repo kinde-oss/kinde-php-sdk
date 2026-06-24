@@ -170,7 +170,7 @@ class HasPermissionsTest extends KindeTestCase
                 ],
             ],
         ];
-        $_COOKIE['kinde_' . StorageEnums::JWKS_CACHE] = json_encode([
+        $_COOKIE['kinde_' . StorageEnums::JWKS_CACHE . '_' . md5(self::TEST_DOMAIN . '/.well-known/jwks.json')] = json_encode([
             'jwks' => $jwks,
             'expires_at' => time() + 3600,
         ]);
