@@ -87,6 +87,9 @@ class OrganizationsApi
         'createOrganization' => [
             'application/json',
         ],
+        'createOrganizationInvite' => [
+            'application/json',
+        ],
         'createOrganizationUserPermission' => [
             'application/json',
         ],
@@ -103,6 +106,9 @@ class OrganizationsApi
             'application/json',
         ],
         'deleteOrganizationHandle' => [
+            'application/json',
+        ],
+        'deleteOrganizationInvite' => [
             'application/json',
         ],
         'deleteOrganizationLogo' => [
@@ -132,7 +138,19 @@ class OrganizationsApi
         'getOrganizationFeatureFlags' => [
             'application/json',
         ],
+        'getOrganizationInvite' => [
+            'application/json',
+        ],
+        'getOrganizationInvites' => [
+            'application/json',
+        ],
+        'getOrganizationPasskey' => [
+            'application/json',
+        ],
         'getOrganizationPropertyValues' => [
+            'application/json',
+        ],
+        'getOrganizationRoleUsers' => [
             'application/json',
         ],
         'getOrganizationUserPermissions' => [
@@ -169,6 +187,9 @@ class OrganizationsApi
             'application/json',
         ],
         'updateOrganizationFeatureFlagOverride' => [
+            'application/json',
+        ],
+        'updateOrganizationPasskey' => [
             'application/json',
         ],
         'updateOrganizationProperties' => [
@@ -1482,6 +1503,339 @@ class OrganizationsApi
                 $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($create_organization_request));
             } else {
                 $httpBody = $create_organization_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation createOrganizationInvite
+     *
+     * Create organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationInviteRequest $create_organization_invite_request Invitation details. &#x60;email&#x60; is capped at 254 characters (RFC 5321). &#x60;first_name&#x60; and &#x60;last_name&#x60; are capped at 64 characters each. Inputs over these limits are rejected with &#x60;EMAIL_TOO_LONG&#x60;, &#x60;FIRST_NAME_TOO_LONG&#x60;, or &#x60;LAST_NAME_TOO_LONG&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\CreateOrganizationInviteResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function createOrganizationInvite($org_code, $create_organization_invite_request, string $contentType = self::contentTypes['createOrganizationInvite'][0])
+    {
+        list($response) = $this->createOrganizationInviteWithHttpInfo($org_code, $create_organization_invite_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation createOrganizationInviteWithHttpInfo
+     *
+     * Create organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationInviteRequest $create_organization_invite_request Invitation details. &#x60;email&#x60; is capped at 254 characters (RFC 5321). &#x60;first_name&#x60; and &#x60;last_name&#x60; are capped at 64 characters each. Inputs over these limits are rejected with &#x60;EMAIL_TOO_LONG&#x60;, &#x60;FIRST_NAME_TOO_LONG&#x60;, or &#x60;LAST_NAME_TOO_LONG&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\CreateOrganizationInviteResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createOrganizationInviteWithHttpInfo($org_code, $create_organization_invite_request, string $contentType = self::contentTypes['createOrganizationInvite'][0])
+    {
+        $request = $this->createOrganizationInviteRequest($org_code, $create_organization_invite_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 201:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\CreateOrganizationInviteResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\CreateOrganizationInviteResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\CreateOrganizationInviteResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createOrganizationInviteAsync
+     *
+     * Create organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationInviteRequest $create_organization_invite_request Invitation details. &#x60;email&#x60; is capped at 254 characters (RFC 5321). &#x60;first_name&#x60; and &#x60;last_name&#x60; are capped at 64 characters each. Inputs over these limits are rejected with &#x60;EMAIL_TOO_LONG&#x60;, &#x60;FIRST_NAME_TOO_LONG&#x60;, or &#x60;LAST_NAME_TOO_LONG&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createOrganizationInviteAsync($org_code, $create_organization_invite_request, string $contentType = self::contentTypes['createOrganizationInvite'][0])
+    {
+        return $this->createOrganizationInviteAsyncWithHttpInfo($org_code, $create_organization_invite_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createOrganizationInviteAsyncWithHttpInfo
+     *
+     * Create organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationInviteRequest $create_organization_invite_request Invitation details. &#x60;email&#x60; is capped at 254 characters (RFC 5321). &#x60;first_name&#x60; and &#x60;last_name&#x60; are capped at 64 characters each. Inputs over these limits are rejected with &#x60;EMAIL_TOO_LONG&#x60;, &#x60;FIRST_NAME_TOO_LONG&#x60;, or &#x60;LAST_NAME_TOO_LONG&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createOrganizationInviteAsyncWithHttpInfo($org_code, $create_organization_invite_request, string $contentType = self::contentTypes['createOrganizationInvite'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\CreateOrganizationInviteResponse';
+        $request = $this->createOrganizationInviteRequest($org_code, $create_organization_invite_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createOrganizationInvite'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateOrganizationInviteRequest $create_organization_invite_request Invitation details. &#x60;email&#x60; is capped at 254 characters (RFC 5321). &#x60;first_name&#x60; and &#x60;last_name&#x60; are capped at 64 characters each. Inputs over these limits are rejected with &#x60;EMAIL_TOO_LONG&#x60;, &#x60;FIRST_NAME_TOO_LONG&#x60;, or &#x60;LAST_NAME_TOO_LONG&#x60;. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function createOrganizationInviteRequest($org_code, $create_organization_invite_request, string $contentType = self::contentTypes['createOrganizationInvite'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling createOrganizationInvite'
+            );
+        }
+
+        // verify the required parameter 'create_organization_invite_request' is set
+        if ($create_organization_invite_request === null || (is_array($create_organization_invite_request) && count($create_organization_invite_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $create_organization_invite_request when calling createOrganizationInvite'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organization/{org_code}/invites';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($create_organization_invite_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($create_organization_invite_request));
+            } else {
+                $httpBody = $create_organization_invite_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -3306,6 +3660,354 @@ class OrganizationsApi
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteOrganizationInvite
+     *
+     * Delete organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function deleteOrganizationInvite($org_code, $invite_code, string $contentType = self::contentTypes['deleteOrganizationInvite'][0])
+    {
+        list($response) = $this->deleteOrganizationInviteWithHttpInfo($org_code, $invite_code, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation deleteOrganizationInviteWithHttpInfo
+     *
+     * Delete organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteOrganizationInviteWithHttpInfo($org_code, $invite_code, string $contentType = self::contentTypes['deleteOrganizationInvite'][0])
+    {
+        $request = $this->deleteOrganizationInviteRequest($org_code, $invite_code, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\SuccessResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteOrganizationInviteAsync
+     *
+     * Delete organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteOrganizationInviteAsync($org_code, $invite_code, string $contentType = self::contentTypes['deleteOrganizationInvite'][0])
+    {
+        return $this->deleteOrganizationInviteAsyncWithHttpInfo($org_code, $invite_code, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteOrganizationInviteAsyncWithHttpInfo
+     *
+     * Delete organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteOrganizationInviteAsyncWithHttpInfo($org_code, $invite_code, string $contentType = self::contentTypes['deleteOrganizationInvite'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
+        $request = $this->deleteOrganizationInviteRequest($org_code, $invite_code, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteOrganizationInvite'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function deleteOrganizationInviteRequest($org_code, $invite_code, string $contentType = self::contentTypes['deleteOrganizationInvite'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling deleteOrganizationInvite'
+            );
+        }
+
+        // verify the required parameter 'invite_code' is set
+        if ($invite_code === null || (is_array($invite_code) && count($invite_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $invite_code when calling deleteOrganizationInvite'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organization/{org_code}/invites/{invite_code}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($invite_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'invite_code' . '}',
+                ObjectSerializer::toPathValue($invite_code),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -5272,15 +5974,15 @@ class OrganizationsApi
      *
      * Get organization
      *
-     * @param  string|null $code The organization&#39;s code. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string $code The organization&#39;s code. (required)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Kinde\KindeSDK\Model\GetOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
-    public function getOrganization($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganization($code, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
         list($response) = $this->getOrganizationWithHttpInfo($code, $expand, $contentType);
         return $response;
@@ -5291,15 +5993,15 @@ class OrganizationsApi
      *
      * Get organization
      *
-     * @param  string|null $code The organization&#39;s code. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string $code The organization&#39;s code. (required)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Kinde\KindeSDK\Model\GetOrganizationResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getOrganizationWithHttpInfo($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationWithHttpInfo($code, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
         $request = $this->getOrganizationRequest($code, $expand, $contentType);
 
@@ -5419,14 +6121,14 @@ class OrganizationsApi
      *
      * Get organization
      *
-     * @param  string|null $code The organization&#39;s code. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string $code The organization&#39;s code. (required)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getOrganizationAsync($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationAsync($code, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
         return $this->getOrganizationAsyncWithHttpInfo($code, $expand, $contentType)
             ->then(
@@ -5441,14 +6143,14 @@ class OrganizationsApi
      *
      * Get organization
      *
-     * @param  string|null $code The organization&#39;s code. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string $code The organization&#39;s code. (required)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getOrganizationAsyncWithHttpInfo($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationAsyncWithHttpInfo($code, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
         $returnType = '\Kinde\KindeSDK\Model\GetOrganizationResponse';
         $request = $this->getOrganizationRequest($code, $expand, $contentType);
@@ -5492,16 +6194,22 @@ class OrganizationsApi
     /**
      * Create request for operation 'getOrganization'
      *
-     * @param  string|null $code The organization&#39;s code. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string $code The organization&#39;s code. (required)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganization'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getOrganizationRequest($code = null, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
+    public function getOrganizationRequest($code, $expand = null, string $contentType = self::contentTypes['getOrganization'][0])
     {
 
+        // verify the required parameter 'code' is set
+        if ($code === null || (is_array($code) && count($code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $code when calling getOrganization'
+            );
+        }
 
 
 
@@ -5519,7 +6227,7 @@ class OrganizationsApi
             'string', // openApiType
             'form', // style
             true, // explode
-            false // required
+            true // required
         ) ?? []);
         // query params
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
@@ -6192,6 +6900,1057 @@ class OrganizationsApi
     }
 
     /**
+     * Operation getOrganizationInvite
+     *
+     * Get organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetOrganizationInviteResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getOrganizationInvite($org_code, $invite_code, string $contentType = self::contentTypes['getOrganizationInvite'][0])
+    {
+        list($response) = $this->getOrganizationInviteWithHttpInfo($org_code, $invite_code, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getOrganizationInviteWithHttpInfo
+     *
+     * Get organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationInviteResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\NotFoundResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getOrganizationInviteWithHttpInfo($org_code, $invite_code, string $contentType = self::contentTypes['getOrganizationInvite'][0])
+    {
+        $request = $this->getOrganizationInviteRequest($org_code, $invite_code, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetOrganizationInviteResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetOrganizationInviteResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetOrganizationInviteResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\NotFoundResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getOrganizationInviteAsync
+     *
+     * Get organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationInviteAsync($org_code, $invite_code, string $contentType = self::contentTypes['getOrganizationInvite'][0])
+    {
+        return $this->getOrganizationInviteAsyncWithHttpInfo($org_code, $invite_code, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getOrganizationInviteAsyncWithHttpInfo
+     *
+     * Get organization invite
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationInviteAsyncWithHttpInfo($org_code, $invite_code, string $contentType = self::contentTypes['getOrganizationInvite'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationInviteResponse';
+        $request = $this->getOrganizationInviteRequest($org_code, $invite_code, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getOrganizationInvite'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $invite_code The invitation&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvite'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getOrganizationInviteRequest($org_code, $invite_code, string $contentType = self::contentTypes['getOrganizationInvite'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling getOrganizationInvite'
+            );
+        }
+
+        // verify the required parameter 'invite_code' is set
+        if ($invite_code === null || (is_array($invite_code) && count($invite_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $invite_code when calling getOrganizationInvite'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organization/{org_code}/invites/{invite_code}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($invite_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'invite_code' . '}',
+                ObjectSerializer::toPathValue($invite_code),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getOrganizationInvites
+     *
+     * Get organization invites
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  bool|null $include_revoked Include revoked invitations in the results. (optional, default to false)
+     * @param  bool|null $include_accepted Include accepted invitations in the results. (optional, default to false)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvites'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetOrganizationInvitesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getOrganizationInvites($org_code, $sort = null, $page_size = null, $next_token = null, $include_revoked = false, $include_accepted = false, string $contentType = self::contentTypes['getOrganizationInvites'][0])
+    {
+        list($response) = $this->getOrganizationInvitesWithHttpInfo($org_code, $sort, $page_size, $next_token, $include_revoked, $include_accepted, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getOrganizationInvitesWithHttpInfo
+     *
+     * Get organization invites
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  bool|null $include_revoked Include revoked invitations in the results. (optional, default to false)
+     * @param  bool|null $include_accepted Include accepted invitations in the results. (optional, default to false)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvites'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationInvitesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getOrganizationInvitesWithHttpInfo($org_code, $sort = null, $page_size = null, $next_token = null, $include_revoked = false, $include_accepted = false, string $contentType = self::contentTypes['getOrganizationInvites'][0])
+    {
+        $request = $this->getOrganizationInvitesRequest($org_code, $sort, $page_size, $next_token, $include_revoked, $include_accepted, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetOrganizationInvitesResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetOrganizationInvitesResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetOrganizationInvitesResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getOrganizationInvitesAsync
+     *
+     * Get organization invites
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  bool|null $include_revoked Include revoked invitations in the results. (optional, default to false)
+     * @param  bool|null $include_accepted Include accepted invitations in the results. (optional, default to false)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvites'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationInvitesAsync($org_code, $sort = null, $page_size = null, $next_token = null, $include_revoked = false, $include_accepted = false, string $contentType = self::contentTypes['getOrganizationInvites'][0])
+    {
+        return $this->getOrganizationInvitesAsyncWithHttpInfo($org_code, $sort, $page_size, $next_token, $include_revoked, $include_accepted, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getOrganizationInvitesAsyncWithHttpInfo
+     *
+     * Get organization invites
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  bool|null $include_revoked Include revoked invitations in the results. (optional, default to false)
+     * @param  bool|null $include_accepted Include accepted invitations in the results. (optional, default to false)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvites'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationInvitesAsyncWithHttpInfo($org_code, $sort = null, $page_size = null, $next_token = null, $include_revoked = false, $include_accepted = false, string $contentType = self::contentTypes['getOrganizationInvites'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationInvitesResponse';
+        $request = $this->getOrganizationInvitesRequest($org_code, $sort, $page_size, $next_token, $include_revoked, $include_accepted, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getOrganizationInvites'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  bool|null $include_revoked Include revoked invitations in the results. (optional, default to false)
+     * @param  bool|null $include_accepted Include accepted invitations in the results. (optional, default to false)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationInvites'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getOrganizationInvitesRequest($org_code, $sort = null, $page_size = null, $next_token = null, $include_revoked = false, $include_accepted = false, string $contentType = self::contentTypes['getOrganizationInvites'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling getOrganizationInvites'
+            );
+        }
+
+
+
+
+
+
+
+        $resourcePath = '/api/v1/organization/{org_code}/invites';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page_size,
+            'page_size', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $next_token,
+            'next_token', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $include_revoked,
+            'include_revoked', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $include_accepted,
+            'include_accepted', // param base name
+            'boolean', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getOrganizationPasskey
+     *
+     * Get organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetOrganizationPasskey200Response|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getOrganizationPasskey($org_code, string $contentType = self::contentTypes['getOrganizationPasskey'][0])
+    {
+        list($response) = $this->getOrganizationPasskeyWithHttpInfo($org_code, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getOrganizationPasskeyWithHttpInfo
+     *
+     * Get organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationPasskey200Response|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getOrganizationPasskeyWithHttpInfo($org_code, string $contentType = self::contentTypes['getOrganizationPasskey'][0])
+    {
+        $request = $this->getOrganizationPasskeyRequest($org_code, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetOrganizationPasskey200Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetOrganizationPasskey200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetOrganizationPasskey200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getOrganizationPasskeyAsync
+     *
+     * Get organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationPasskeyAsync($org_code, string $contentType = self::contentTypes['getOrganizationPasskey'][0])
+    {
+        return $this->getOrganizationPasskeyAsyncWithHttpInfo($org_code, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getOrganizationPasskeyAsyncWithHttpInfo
+     *
+     * Get organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationPasskeyAsyncWithHttpInfo($org_code, string $contentType = self::contentTypes['getOrganizationPasskey'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationPasskey200Response';
+        $request = $this->getOrganizationPasskeyRequest($org_code, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getOrganizationPasskey'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getOrganizationPasskeyRequest($org_code, string $contentType = self::contentTypes['getOrganizationPasskey'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling getOrganizationPasskey'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organizations/{org_code}/passkey';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getOrganizationPropertyValues
      *
      * Get Organization Property Values
@@ -6478,13 +8237,349 @@ class OrganizationsApi
     }
 
     /**
+     * Operation getOrganizationRoleUsers
+     *
+     * List organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetOrganizationRoleUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getOrganizationRoleUsers($org_code, $role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizationRoleUsers'][0])
+    {
+        list($response) = $this->getOrganizationRoleUsersWithHttpInfo($org_code, $role_id, $page_size, $next_token, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersWithHttpInfo
+     *
+     * List organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationRoleUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getOrganizationRoleUsersWithHttpInfo($org_code, $role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizationRoleUsers'][0])
+    {
+        $request = $this->getOrganizationRoleUsersRequest($org_code, $role_id, $page_size, $next_token, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersAsync
+     *
+     * List organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationRoleUsersAsync($org_code, $role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizationRoleUsers'][0])
+    {
+        return $this->getOrganizationRoleUsersAsyncWithHttpInfo($org_code, $role_id, $page_size, $next_token, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersAsyncWithHttpInfo
+     *
+     * List organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationRoleUsersAsyncWithHttpInfo($org_code, $role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizationRoleUsers'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersResponse';
+        $request = $this->getOrganizationRoleUsersRequest($org_code, $role_id, $page_size, $next_token, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getOrganizationRoleUsers'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getOrganizationRoleUsersRequest($org_code, $role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getOrganizationRoleUsers'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling getOrganizationRoleUsers'
+            );
+        }
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling getOrganizationRoleUsers'
+            );
+        }
+
+
+
+
+        $resourcePath = '/api/v1/organizations/{org_code}/roles/{role_id}/users';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page_size,
+            'page_size', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $next_token,
+            'next_token', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getOrganizationUserPermissions
      *
      * List Organization User Permissions
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -6504,7 +8599,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -6591,7 +8686,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -6614,7 +8709,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -6666,7 +8761,7 @@ class OrganizationsApi
      *
      * @param  string $org_code The organization&#39;s code. (required)
      * @param  string $user_id The user&#39;s id. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;roles\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;roles\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationUserPermissions'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -9813,7 +11908,7 @@ class OrganizationsApi
      * Update Organization
      *
      * @param  string $org_code The identifier for the organization. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
@@ -9833,7 +11928,7 @@ class OrganizationsApi
      * Update Organization
      *
      * @param  string $org_code The identifier for the organization. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
@@ -9962,7 +12057,7 @@ class OrganizationsApi
      * Update Organization
      *
      * @param  string $org_code The identifier for the organization. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
@@ -9985,7 +12080,7 @@ class OrganizationsApi
      * Update Organization
      *
      * @param  string $org_code The identifier for the organization. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
@@ -10037,7 +12132,7 @@ class OrganizationsApi
      * Create request for operation 'updateOrganization'
      *
      * @param  string $org_code The identifier for the organization. (required)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;billing\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;billing\&quot;. (optional)
      * @param  \Kinde\KindeSDK\Model\UpdateOrganizationRequest|null $update_organization_request Organization details. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganization'] to see the possible values for this operation
      *
@@ -10470,6 +12565,339 @@ class OrganizationsApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateOrganizationPasskey
+     *
+     * Update organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPasskeyRequest $update_organization_passkey_request Organization passkey settings. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\UpdateOrganizationPasskey200Response|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function updateOrganizationPasskey($org_code, $update_organization_passkey_request, string $contentType = self::contentTypes['updateOrganizationPasskey'][0])
+    {
+        list($response) = $this->updateOrganizationPasskeyWithHttpInfo($org_code, $update_organization_passkey_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation updateOrganizationPasskeyWithHttpInfo
+     *
+     * Update organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPasskeyRequest $update_organization_passkey_request Organization passkey settings. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\UpdateOrganizationPasskey200Response|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateOrganizationPasskeyWithHttpInfo($org_code, $update_organization_passkey_request, string $contentType = self::contentTypes['updateOrganizationPasskey'][0])
+    {
+        $request = $this->updateOrganizationPasskeyRequest($org_code, $update_organization_passkey_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\UpdateOrganizationPasskey200Response',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\UpdateOrganizationPasskey200Response',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\UpdateOrganizationPasskey200Response',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateOrganizationPasskeyAsync
+     *
+     * Update organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPasskeyRequest $update_organization_passkey_request Organization passkey settings. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateOrganizationPasskeyAsync($org_code, $update_organization_passkey_request, string $contentType = self::contentTypes['updateOrganizationPasskey'][0])
+    {
+        return $this->updateOrganizationPasskeyAsyncWithHttpInfo($org_code, $update_organization_passkey_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateOrganizationPasskeyAsyncWithHttpInfo
+     *
+     * Update organization passkey settings
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPasskeyRequest $update_organization_passkey_request Organization passkey settings. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateOrganizationPasskeyAsyncWithHttpInfo($org_code, $update_organization_passkey_request, string $contentType = self::contentTypes['updateOrganizationPasskey'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\UpdateOrganizationPasskey200Response';
+        $request = $this->updateOrganizationPasskeyRequest($org_code, $update_organization_passkey_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateOrganizationPasskey'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateOrganizationPasskeyRequest $update_organization_passkey_request Organization passkey settings. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateOrganizationPasskey'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function updateOrganizationPasskeyRequest($org_code, $update_organization_passkey_request, string $contentType = self::contentTypes['updateOrganizationPasskey'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling updateOrganizationPasskey'
+            );
+        }
+
+        // verify the required parameter 'update_organization_passkey_request' is set
+        if ($update_organization_passkey_request === null || (is_array($update_organization_passkey_request) && count($update_organization_passkey_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $update_organization_passkey_request when calling updateOrganizationPasskey'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organizations/{org_code}/passkey';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($update_organization_passkey_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($update_organization_passkey_request));
+            } else {
+                $httpBody = $update_organization_passkey_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PUT',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

@@ -66,6 +66,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         'picture' => 'string',
         'joined_on' => 'string',
         'last_accessed_on' => 'string',
+        'is_suspended' => 'bool',
         'roles' => 'string[]'
     ];
 
@@ -85,6 +86,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         'picture' => null,
         'joined_on' => null,
         'last_accessed_on' => null,
+        'is_suspended' => null,
         'roles' => null
     ];
 
@@ -102,6 +104,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         'picture' => true,
         'joined_on' => false,
         'last_accessed_on' => true,
+        'is_suspended' => false,
         'roles' => false
     ];
 
@@ -199,6 +202,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         'picture' => 'picture',
         'joined_on' => 'joined_on',
         'last_accessed_on' => 'last_accessed_on',
+        'is_suspended' => 'is_suspended',
         'roles' => 'roles'
     ];
 
@@ -216,6 +220,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         'picture' => 'setPicture',
         'joined_on' => 'setJoinedOn',
         'last_accessed_on' => 'setLastAccessedOn',
+        'is_suspended' => 'setIsSuspended',
         'roles' => 'setRoles'
     ];
 
@@ -233,6 +238,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         'picture' => 'getPicture',
         'joined_on' => 'getJoinedOn',
         'last_accessed_on' => 'getLastAccessedOn',
+        'is_suspended' => 'getIsSuspended',
         'roles' => 'getRoles'
     ];
 
@@ -301,6 +307,7 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('picture', $data ?? [], null);
         $this->setIfExists('joined_on', $data ?? [], null);
         $this->setIfExists('last_accessed_on', $data ?? [], null);
+        $this->setIfExists('is_suspended', $data ?? [], null);
         $this->setIfExists('roles', $data ?? [], null);
     }
 
@@ -600,6 +607,33 @@ class OrganizationUser implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['last_accessed_on'] = $last_accessed_on;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_suspended
+     *
+     * @return bool|null
+     */
+    public function getIsSuspended()
+    {
+        return $this->container['is_suspended'];
+    }
+
+    /**
+     * Sets is_suspended
+     *
+     * @param bool|null $is_suspended Whether the user is currently suspended or not.
+     *
+     * @return self
+     */
+    public function setIsSuspended($is_suspended)
+    {
+        if (is_null($is_suspended)) {
+            throw new \InvalidArgumentException('non-nullable is_suspended cannot be null');
+        }
+        $this->container['is_suspended'] = $is_suspended;
 
         return $this;
     }

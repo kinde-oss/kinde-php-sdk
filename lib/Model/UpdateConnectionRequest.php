@@ -61,7 +61,7 @@ class UpdateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
         'name' => 'string',
         'display_name' => 'string',
         'enabled_applications' => 'string[]',
-        'options' => '\Kinde\KindeSDK\Model\ReplaceConnectionRequestOptions'
+        'options' => '\Kinde\KindeSDK\Model\UpdateConnectionRequestOptions'
     ];
 
     /**
@@ -395,7 +395,7 @@ class UpdateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets options
      *
-     * @return \Kinde\KindeSDK\Model\ReplaceConnectionRequestOptions|null
+     * @return \Kinde\KindeSDK\Model\UpdateConnectionRequestOptions|null
      */
     public function getOptions()
     {
@@ -405,7 +405,7 @@ class UpdateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets options
      *
-     * @param \Kinde\KindeSDK\Model\ReplaceConnectionRequestOptions|null $options options
+     * @param \Kinde\KindeSDK\Model\UpdateConnectionRequestOptions|null $options options
      *
      * @return self
      */

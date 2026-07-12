@@ -87,7 +87,7 @@ class APIsApi
         'deleteAPI' => [
             'application/json',
         ],
-        'deleteAPIAppliationScope' => [
+        'deleteAPIApplicationScope' => [
             'application/json',
         ],
         'deleteAPIScope' => [
@@ -1406,41 +1406,81 @@ class APIsApi
     }
 
     /**
-     * Operation deleteAPIAppliationScope
+     * Operation deleteAPIApplicationScope
      *
      * Delete API application scope
      *
      * @param  string $api_id API ID (required)
      * @param  string $application_id Application ID (required)
      * @param  string $scope_id Scope ID (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIAppliationScope'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIApplicationScope'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteAPIAppliationScope($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIAppliationScope'][0])
+    public function deleteAPIApplicationScope($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
     {
-        $this->deleteAPIAppliationScopeWithHttpInfo($api_id, $application_id, $scope_id, $contentType);
+        $this->deleteAPIApplicationScopeWithHttpInfo($api_id, $application_id, $scope_id, $contentType);
     }
 
     /**
-     * Operation deleteAPIAppliationScopeWithHttpInfo
+     * @deprecated Misspelled operation name retained for backward compatibility. Use deleteAPIApplicationScope() instead.
+     */
+    public function deleteAPIAppliationScope($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
+    {
+        $this->deleteAPIApplicationScope($api_id, $application_id, $scope_id, $contentType);
+    }
+
+    /**
+     * @deprecated Misspelled operation name retained for backward compatibility. Use deleteAPIApplicationScopeWithHttpInfo() instead.
+     */
+    public function deleteAPIAppliationScopeWithHttpInfo($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
+    {
+        return $this->deleteAPIApplicationScopeWithHttpInfo($api_id, $application_id, $scope_id, $contentType);
+    }
+
+    /**
+     * @deprecated Misspelled operation name retained for backward compatibility. Use deleteAPIApplicationScopeAsync() instead.
+     */
+    public function deleteAPIAppliationScopeAsync($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
+    {
+        return $this->deleteAPIApplicationScopeAsync($api_id, $application_id, $scope_id, $contentType);
+    }
+
+    /**
+     * @deprecated Misspelled operation name retained for backward compatibility. Use deleteAPIApplicationScopeAsyncWithHttpInfo() instead.
+     */
+    public function deleteAPIAppliationScopeAsyncWithHttpInfo($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
+    {
+        return $this->deleteAPIApplicationScopeAsyncWithHttpInfo($api_id, $application_id, $scope_id, $contentType);
+    }
+
+    /**
+     * @deprecated Misspelled operation name retained for backward compatibility. Use deleteAPIApplicationScopeRequest() instead.
+     */
+    public function deleteAPIAppliationScopeRequest($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
+    {
+        return $this->deleteAPIApplicationScopeRequest($api_id, $application_id, $scope_id, $contentType);
+    }
+
+    /**
+     * Operation deleteAPIApplicationScopeWithHttpInfo
      *
      * Delete API application scope
      *
      * @param  string $api_id API ID (required)
      * @param  string $application_id Application ID (required)
      * @param  string $scope_id Scope ID (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIAppliationScope'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIApplicationScope'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteAPIAppliationScopeWithHttpInfo($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIAppliationScope'][0])
+    public function deleteAPIApplicationScopeWithHttpInfo($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
     {
-        $request = $this->deleteAPIAppliationScopeRequest($api_id, $application_id, $scope_id, $contentType);
+        $request = $this->deleteAPIApplicationScopeRequest($api_id, $application_id, $scope_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1500,21 +1540,21 @@ class APIsApi
     }
 
     /**
-     * Operation deleteAPIAppliationScopeAsync
+     * Operation deleteAPIApplicationScopeAsync
      *
      * Delete API application scope
      *
      * @param  string $api_id API ID (required)
      * @param  string $application_id Application ID (required)
      * @param  string $scope_id Scope ID (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIAppliationScope'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIApplicationScope'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAPIAppliationScopeAsync($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIAppliationScope'][0])
+    public function deleteAPIApplicationScopeAsync($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
     {
-        return $this->deleteAPIAppliationScopeAsyncWithHttpInfo($api_id, $application_id, $scope_id, $contentType)
+        return $this->deleteAPIApplicationScopeAsyncWithHttpInfo($api_id, $application_id, $scope_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1523,22 +1563,22 @@ class APIsApi
     }
 
     /**
-     * Operation deleteAPIAppliationScopeAsyncWithHttpInfo
+     * Operation deleteAPIApplicationScopeAsyncWithHttpInfo
      *
      * Delete API application scope
      *
      * @param  string $api_id API ID (required)
      * @param  string $application_id Application ID (required)
      * @param  string $scope_id Scope ID (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIAppliationScope'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIApplicationScope'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteAPIAppliationScopeAsyncWithHttpInfo($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIAppliationScope'][0])
+    public function deleteAPIApplicationScopeAsyncWithHttpInfo($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
     {
         $returnType = '';
-        $request = $this->deleteAPIAppliationScopeRequest($api_id, $application_id, $scope_id, $contentType);
+        $request = $this->deleteAPIApplicationScopeRequest($api_id, $application_id, $scope_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1564,37 +1604,37 @@ class APIsApi
     }
 
     /**
-     * Create request for operation 'deleteAPIAppliationScope'
+     * Create request for operation 'deleteAPIApplicationScope'
      *
      * @param  string $api_id API ID (required)
      * @param  string $application_id Application ID (required)
      * @param  string $scope_id Scope ID (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIAppliationScope'] to see the possible values for this operation
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAPIApplicationScope'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteAPIAppliationScopeRequest($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIAppliationScope'][0])
+    public function deleteAPIApplicationScopeRequest($api_id, $application_id, $scope_id, string $contentType = self::contentTypes['deleteAPIApplicationScope'][0])
     {
 
         // verify the required parameter 'api_id' is set
         if ($api_id === null || (is_array($api_id) && count($api_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $api_id when calling deleteAPIAppliationScope'
+                'Missing the required parameter $api_id when calling deleteAPIApplicationScope'
             );
         }
 
         // verify the required parameter 'application_id' is set
         if ($application_id === null || (is_array($application_id) && count($application_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $application_id when calling deleteAPIAppliationScope'
+                'Missing the required parameter $application_id when calling deleteAPIApplicationScope'
             );
         }
 
         // verify the required parameter 'scope_id' is set
         if ($scope_id === null || (is_array($scope_id) && count($scope_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $scope_id when calling deleteAPIAppliationScope'
+                'Missing the required parameter $scope_id when calling deleteAPIApplicationScope'
             );
         }
 
@@ -2924,7 +2964,7 @@ class APIsApi
      *
      * Get APIs
      *
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;scopes\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;scopes\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAPIs'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -2942,7 +2982,7 @@ class APIsApi
      *
      * Get APIs
      *
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;scopes\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;scopes\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAPIs'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -3069,7 +3109,7 @@ class APIsApi
      *
      * Get APIs
      *
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;scopes\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;scopes\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAPIs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3090,7 +3130,7 @@ class APIsApi
      *
      * Get APIs
      *
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;scopes\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;scopes\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAPIs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -3140,7 +3180,7 @@ class APIsApi
     /**
      * Create request for operation 'getAPIs'
      *
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;scopes\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. Allowed value: \&quot;scopes\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAPIs'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

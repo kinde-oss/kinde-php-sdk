@@ -96,13 +96,25 @@ class RolesApi
         'getRoleScopes' => [
             'application/json',
         ],
+        'getRoleSystemPermissions' => [
+            'application/json',
+        ],
+        'getRoleUsers' => [
+            'application/json',
+        ],
         'getRoles' => [
+            'application/json',
+        ],
+        'getSystemPermissions' => [
             'application/json',
         ],
         'removeRolePermission' => [
             'application/json',
         ],
         'updateRolePermissions' => [
+            'application/json',
+        ],
+        'updateRoleSystemPermissions' => [
             'application/json',
         ],
         'updateRoles' => [
@@ -2376,6 +2388,653 @@ class RolesApi
     }
 
     /**
+     * Operation getRoleSystemPermissions
+     *
+     * Get role system permissions
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\RoleSystemPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getRoleSystemPermissions($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleSystemPermissions'][0])
+    {
+        list($response) = $this->getRoleSystemPermissionsWithHttpInfo($role_id, $sort, $page_size, $next_token, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getRoleSystemPermissionsWithHttpInfo
+     *
+     * Get role system permissions
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\RoleSystemPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getRoleSystemPermissionsWithHttpInfo($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleSystemPermissions'][0])
+    {
+        $request = $this->getRoleSystemPermissionsRequest($role_id, $sort, $page_size, $next_token, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\RoleSystemPermissionsResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\RoleSystemPermissionsResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\RoleSystemPermissionsResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getRoleSystemPermissionsAsync
+     *
+     * Get role system permissions
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getRoleSystemPermissionsAsync($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleSystemPermissions'][0])
+    {
+        return $this->getRoleSystemPermissionsAsyncWithHttpInfo($role_id, $sort, $page_size, $next_token, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getRoleSystemPermissionsAsyncWithHttpInfo
+     *
+     * Get role system permissions
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getRoleSystemPermissionsAsyncWithHttpInfo($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleSystemPermissions'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\RoleSystemPermissionsResponse';
+        $request = $this->getRoleSystemPermissionsRequest($role_id, $sort, $page_size, $next_token, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getRoleSystemPermissions'
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getRoleSystemPermissionsRequest($role_id, $sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleSystemPermissions'][0])
+    {
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling getRoleSystemPermissions'
+            );
+        }
+
+
+
+
+
+        $resourcePath = '/api/v1/roles/{role_id}/system_permissions';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page_size,
+            'page_size', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $next_token,
+            'next_token', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getRoleUsers
+     *
+     * List role users
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetRoleUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getRoleUsers($role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleUsers'][0])
+    {
+        list($response) = $this->getRoleUsersWithHttpInfo($role_id, $page_size, $next_token, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getRoleUsersWithHttpInfo
+     *
+     * List role users
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetRoleUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getRoleUsersWithHttpInfo($role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleUsers'][0])
+    {
+        $request = $this->getRoleUsersRequest($role_id, $page_size, $next_token, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetRoleUsersResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetRoleUsersResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetRoleUsersResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getRoleUsersAsync
+     *
+     * List role users
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getRoleUsersAsync($role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleUsers'][0])
+    {
+        return $this->getRoleUsersAsyncWithHttpInfo($role_id, $page_size, $next_token, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getRoleUsersAsyncWithHttpInfo
+     *
+     * List role users
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getRoleUsersAsyncWithHttpInfo($role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleUsers'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetRoleUsersResponse';
+        $request = $this->getRoleUsersRequest($role_id, $page_size, $next_token, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getRoleUsers'
+     *
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRoleUsers'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getRoleUsersRequest($role_id, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getRoleUsers'][0])
+    {
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling getRoleUsers'
+            );
+        }
+
+
+
+
+        $resourcePath = '/api/v1/roles/{role_id}/users';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page_size,
+            'page_size', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $next_token,
+            'next_token', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getRoles
      *
      * List roles
@@ -2659,6 +3318,317 @@ class RolesApi
 
         $headers = $this->headerSelector->selectHeaders(
             ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getSystemPermissions
+     *
+     * List system permissions
+     *
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetSystemPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getSystemPermissions($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSystemPermissions'][0])
+    {
+        list($response) = $this->getSystemPermissionsWithHttpInfo($sort, $page_size, $next_token, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getSystemPermissionsWithHttpInfo
+     *
+     * List system permissions
+     *
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetSystemPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getSystemPermissionsWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSystemPermissions'][0])
+    {
+        $request = $this->getSystemPermissionsRequest($sort, $page_size, $next_token, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetSystemPermissionsResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetSystemPermissionsResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetSystemPermissionsResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getSystemPermissionsAsync
+     *
+     * List system permissions
+     *
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getSystemPermissionsAsync($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSystemPermissions'][0])
+    {
+        return $this->getSystemPermissionsAsyncWithHttpInfo($sort, $page_size, $next_token, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getSystemPermissionsAsyncWithHttpInfo
+     *
+     * List system permissions
+     *
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getSystemPermissionsAsyncWithHttpInfo($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSystemPermissions'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetSystemPermissionsResponse';
+        $request = $this->getSystemPermissionsRequest($sort, $page_size, $next_token, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getSystemPermissions'
+     *
+     * @param  string|null $sort Field and order to sort the result by. (optional)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $next_token A string to get the next page of results if there are more results. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getSystemPermissionsRequest($sort = null, $page_size = null, $next_token = null, string $contentType = self::contentTypes['getSystemPermissions'][0])
+    {
+
+
+
+
+
+        $resourcePath = '/api/v1/system_permissions';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page_size,
+            'page_size', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $next_token,
+            'next_token', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
             $contentType,
             $multipart
         );
@@ -3274,6 +4244,325 @@ class RolesApi
                 $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($update_role_permissions_request));
             } else {
                 $httpBody = $update_role_permissions_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateRoleSystemPermissions
+     *
+     * Update role system permissions
+     *
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsRequest $update_role_system_permissions_request update_role_system_permissions_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function updateRoleSystemPermissions($role_id, $update_role_system_permissions_request, string $contentType = self::contentTypes['updateRoleSystemPermissions'][0])
+    {
+        list($response) = $this->updateRoleSystemPermissionsWithHttpInfo($role_id, $update_role_system_permissions_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation updateRoleSystemPermissionsWithHttpInfo
+     *
+     * Update role system permissions
+     *
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsRequest $update_role_system_permissions_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateRoleSystemPermissionsWithHttpInfo($role_id, $update_role_system_permissions_request, string $contentType = self::contentTypes['updateRoleSystemPermissions'][0])
+    {
+        $request = $this->updateRoleSystemPermissionsRequest($role_id, $update_role_system_permissions_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateRoleSystemPermissionsAsync
+     *
+     * Update role system permissions
+     *
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsRequest $update_role_system_permissions_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateRoleSystemPermissionsAsync($role_id, $update_role_system_permissions_request, string $contentType = self::contentTypes['updateRoleSystemPermissions'][0])
+    {
+        return $this->updateRoleSystemPermissionsAsyncWithHttpInfo($role_id, $update_role_system_permissions_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateRoleSystemPermissionsAsyncWithHttpInfo
+     *
+     * Update role system permissions
+     *
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsRequest $update_role_system_permissions_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateRoleSystemPermissionsAsyncWithHttpInfo($role_id, $update_role_system_permissions_request, string $contentType = self::contentTypes['updateRoleSystemPermissions'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsResponse';
+        $request = $this->updateRoleSystemPermissionsRequest($role_id, $update_role_system_permissions_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateRoleSystemPermissions'
+     *
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  \Kinde\KindeSDK\Model\UpdateRoleSystemPermissionsRequest $update_role_system_permissions_request (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['updateRoleSystemPermissions'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function updateRoleSystemPermissionsRequest($role_id, $update_role_system_permissions_request, string $contentType = self::contentTypes['updateRoleSystemPermissions'][0])
+    {
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling updateRoleSystemPermissions'
+            );
+        }
+
+        // verify the required parameter 'update_role_system_permissions_request' is set
+        if ($update_role_system_permissions_request === null || (is_array($update_role_system_permissions_request) && count($update_role_system_permissions_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $update_role_system_permissions_request when calling updateRoleSystemPermissions'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/roles/{role_id}/system_permissions';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($update_role_system_permissions_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($update_role_system_permissions_request));
+            } else {
+                $httpBody = $update_role_system_permissions_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {

@@ -59,7 +59,8 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPITypes = [
         'policy' => 'string',
-        'enabled_factors' => 'string[]'
+        'enabled_factors' => 'string[]',
+        'is_recovery_codes_enabled' => 'bool'
     ];
 
     /**
@@ -71,7 +72,8 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static $openAPIFormats = [
         'policy' => null,
-        'enabled_factors' => null
+        'enabled_factors' => null,
+        'is_recovery_codes_enabled' => null
     ];
 
     /**
@@ -81,7 +83,8 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       */
     protected static array $openAPINullables = [
         'policy' => false,
-        'enabled_factors' => false
+        'enabled_factors' => false,
+        'is_recovery_codes_enabled' => false
     ];
 
     /**
@@ -171,7 +174,8 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $attributeMap = [
         'policy' => 'policy',
-        'enabled_factors' => 'enabled_factors'
+        'enabled_factors' => 'enabled_factors',
+        'is_recovery_codes_enabled' => 'is_recovery_codes_enabled'
     ];
 
     /**
@@ -181,7 +185,8 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $setters = [
         'policy' => 'setPolicy',
-        'enabled_factors' => 'setEnabledFactors'
+        'enabled_factors' => 'setEnabledFactors',
+        'is_recovery_codes_enabled' => 'setIsRecoveryCodesEnabled'
     ];
 
     /**
@@ -191,7 +196,8 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     protected static $getters = [
         'policy' => 'getPolicy',
-        'enabled_factors' => 'getEnabledFactors'
+        'enabled_factors' => 'getEnabledFactors',
+        'is_recovery_codes_enabled' => 'getIsRecoveryCodesEnabled'
     ];
 
     /**
@@ -287,6 +293,7 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
     {
         $this->setIfExists('policy', $data ?? [], null);
         $this->setIfExists('enabled_factors', $data ?? [], null);
+        $this->setIfExists('is_recovery_codes_enabled', $data ?? [], true);
     }
 
     /**
@@ -415,6 +422,33 @@ class ReplaceMFARequest implements ModelInterface, ArrayAccess, \JsonSerializabl
             );
         }
         $this->container['enabled_factors'] = $enabled_factors;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_recovery_codes_enabled
+     *
+     * @return bool|null
+     */
+    public function getIsRecoveryCodesEnabled()
+    {
+        return $this->container['is_recovery_codes_enabled'];
+    }
+
+    /**
+     * Sets is_recovery_codes_enabled
+     *
+     * @param bool|null $is_recovery_codes_enabled Determines whether recovery codes are shown to users during MFA setup for the environment.
+     *
+     * @return self
+     */
+    public function setIsRecoveryCodesEnabled($is_recovery_codes_enabled)
+    {
+        if (is_null($is_recovery_codes_enabled)) {
+            throw new \InvalidArgumentException('non-nullable is_recovery_codes_enabled cannot be null');
+        }
+        $this->container['is_recovery_codes_enabled'] = $is_recovery_codes_enabled;
 
         return $this;
     }

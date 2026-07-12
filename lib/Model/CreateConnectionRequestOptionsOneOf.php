@@ -61,7 +61,8 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
     protected static $openAPITypes = [
         'client_id' => 'string',
         'client_secret' => 'string',
-        'is_use_custom_domain' => 'bool'
+        'is_use_custom_domain' => 'bool',
+        'is_trusted' => 'bool'
     ];
 
     /**
@@ -74,7 +75,8 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
     protected static $openAPIFormats = [
         'client_id' => null,
         'client_secret' => null,
-        'is_use_custom_domain' => null
+        'is_use_custom_domain' => null,
+        'is_trusted' => null
     ];
 
     /**
@@ -85,7 +87,8 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
     protected static array $openAPINullables = [
         'client_id' => false,
         'client_secret' => false,
-        'is_use_custom_domain' => false
+        'is_use_custom_domain' => false,
+        'is_trusted' => false
     ];
 
     /**
@@ -176,7 +179,8 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'client_id' => 'client_id',
         'client_secret' => 'client_secret',
-        'is_use_custom_domain' => 'is_use_custom_domain'
+        'is_use_custom_domain' => 'is_use_custom_domain',
+        'is_trusted' => 'is_trusted'
     ];
 
     /**
@@ -187,7 +191,8 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
     protected static $setters = [
         'client_id' => 'setClientId',
         'client_secret' => 'setClientSecret',
-        'is_use_custom_domain' => 'setIsUseCustomDomain'
+        'is_use_custom_domain' => 'setIsUseCustomDomain',
+        'is_trusted' => 'setIsTrusted'
     ];
 
     /**
@@ -198,7 +203,8 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
     protected static $getters = [
         'client_id' => 'getClientId',
         'client_secret' => 'getClientSecret',
-        'is_use_custom_domain' => 'getIsUseCustomDomain'
+        'is_use_custom_domain' => 'getIsUseCustomDomain',
+        'is_trusted' => 'getIsTrusted'
     ];
 
     /**
@@ -261,6 +267,7 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
         $this->setIfExists('client_id', $data ?? [], null);
         $this->setIfExists('client_secret', $data ?? [], null);
         $this->setIfExists('is_use_custom_domain', $data ?? [], null);
+        $this->setIfExists('is_trusted', $data ?? [], null);
     }
 
     /**
@@ -382,6 +389,33 @@ class CreateConnectionRequestOptionsOneOf implements ModelInterface, ArrayAccess
             throw new \InvalidArgumentException('non-nullable is_use_custom_domain cannot be null');
         }
         $this->container['is_use_custom_domain'] = $is_use_custom_domain;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_trusted
+     *
+     * @return bool|null
+     */
+    public function getIsTrusted()
+    {
+        return $this->container['is_trusted'];
+    }
+
+    /**
+     * Sets is_trusted
+     *
+     * @param bool|null $is_trusted Trust this connection for account merging.
+     *
+     * @return self
+     */
+    public function setIsTrusted($is_trusted)
+    {
+        if (is_null($is_trusted)) {
+            throw new \InvalidArgumentException('non-nullable is_trusted cannot be null');
+        }
+        $this->container['is_trusted'] = $is_trusted;
 
         return $this;
     }

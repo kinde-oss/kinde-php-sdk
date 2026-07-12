@@ -68,6 +68,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => 'string',
         'favicon_svg' => 'string',
         'favicon_fallback' => 'string',
+        'allowed_domains' => 'string[]',
         'link_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
         'background_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentBackgroundColor',
         'button_color' => '\Kinde\KindeSDK\Model\GetEnvironmentResponseEnvironmentLinkColor',
@@ -85,6 +86,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => 'bool',
         'sender_name' => 'string',
         'sender_email' => 'string',
+        'is_suspended' => 'bool',
+        'suspended_on' => 'string',
         'billing' => '\Kinde\KindeSDK\Model\GetOrganizationResponseBilling'
     ];
 
@@ -106,6 +109,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => null,
         'favicon_svg' => null,
         'favicon_fallback' => null,
+        'allowed_domains' => null,
         'link_color' => null,
         'background_color' => null,
         'button_color' => null,
@@ -123,6 +127,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => null,
         'sender_name' => null,
         'sender_email' => null,
+        'is_suspended' => null,
+        'suspended_on' => null,
         'billing' => null
     ];
 
@@ -142,6 +148,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => true,
         'favicon_svg' => true,
         'favicon_fallback' => true,
+        'allowed_domains' => false,
         'link_color' => true,
         'background_color' => true,
         'button_color' => true,
@@ -159,6 +166,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => true,
         'sender_name' => true,
         'sender_email' => true,
+        'is_suspended' => false,
+        'suspended_on' => true,
         'billing' => false
     ];
 
@@ -258,6 +267,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => 'logo_dark',
         'favicon_svg' => 'favicon_svg',
         'favicon_fallback' => 'favicon_fallback',
+        'allowed_domains' => 'allowed_domains',
         'link_color' => 'link_color',
         'background_color' => 'background_color',
         'button_color' => 'button_color',
@@ -275,6 +285,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => 'is_allow_registrations',
         'sender_name' => 'sender_name',
         'sender_email' => 'sender_email',
+        'is_suspended' => 'is_suspended',
+        'suspended_on' => 'suspended_on',
         'billing' => 'billing'
     ];
 
@@ -294,6 +306,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => 'setLogoDark',
         'favicon_svg' => 'setFaviconSvg',
         'favicon_fallback' => 'setFaviconFallback',
+        'allowed_domains' => 'setAllowedDomains',
         'link_color' => 'setLinkColor',
         'background_color' => 'setBackgroundColor',
         'button_color' => 'setButtonColor',
@@ -311,6 +324,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => 'setIsAllowRegistrations',
         'sender_name' => 'setSenderName',
         'sender_email' => 'setSenderEmail',
+        'is_suspended' => 'setIsSuspended',
+        'suspended_on' => 'setSuspendedOn',
         'billing' => 'setBilling'
     ];
 
@@ -330,6 +345,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'logo_dark' => 'getLogoDark',
         'favicon_svg' => 'getFaviconSvg',
         'favicon_fallback' => 'getFaviconFallback',
+        'allowed_domains' => 'getAllowedDomains',
         'link_color' => 'getLinkColor',
         'background_color' => 'getBackgroundColor',
         'button_color' => 'getButtonColor',
@@ -347,6 +363,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         'is_allow_registrations' => 'getIsAllowRegistrations',
         'sender_name' => 'getSenderName',
         'sender_email' => 'getSenderEmail',
+        'is_suspended' => 'getIsSuspended',
+        'suspended_on' => 'getSuspendedOn',
         'billing' => 'getBilling'
     ];
 
@@ -451,6 +469,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('logo_dark', $data ?? [], null);
         $this->setIfExists('favicon_svg', $data ?? [], null);
         $this->setIfExists('favicon_fallback', $data ?? [], null);
+        $this->setIfExists('allowed_domains', $data ?? [], null);
         $this->setIfExists('link_color', $data ?? [], null);
         $this->setIfExists('background_color', $data ?? [], null);
         $this->setIfExists('button_color', $data ?? [], null);
@@ -468,6 +487,8 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('is_allow_registrations', $data ?? [], null);
         $this->setIfExists('sender_name', $data ?? [], null);
         $this->setIfExists('sender_email', $data ?? [], null);
+        $this->setIfExists('is_suspended', $data ?? [], null);
+        $this->setIfExists('suspended_on', $data ?? [], null);
         $this->setIfExists('billing', $data ?? [], null);
     }
 
@@ -822,7 +843,7 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets favicon_fallback
      *
-     * @param string|null $favicon_fallback The favicon URL to be used as a fallback in browsers that don’t support SVG, add a PNG
+     * @param string|null $favicon_fallback The favicon URL to be used as a fallback in browsers that don't support SVG, add a PNG
      *
      * @return self
      */
@@ -839,6 +860,33 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
             }
         }
         $this->container['favicon_fallback'] = $favicon_fallback;
+
+        return $this;
+    }
+
+    /**
+     * Gets allowed_domains
+     *
+     * @return string[]|null
+     */
+    public function getAllowedDomains()
+    {
+        return $this->container['allowed_domains'];
+    }
+
+    /**
+     * Sets allowed_domains
+     *
+     * @param string[]|null $allowed_domains Domains allowed for self-sign up to this environment.  Empty array means no restrictions.
+     *
+     * @return self
+     */
+    public function setAllowedDomains($allowed_domains)
+    {
+        if (is_null($allowed_domains)) {
+            throw new \InvalidArgumentException('non-nullable allowed_domains cannot be null');
+        }
+        $this->container['allowed_domains'] = $allowed_domains;
 
         return $this;
     }
@@ -1418,6 +1466,67 @@ class GetOrganizationResponse implements ModelInterface, ArrayAccess, \JsonSeria
             }
         }
         $this->container['sender_email'] = $sender_email;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_suspended
+     *
+     * @return bool|null
+     */
+    public function getIsSuspended()
+    {
+        return $this->container['is_suspended'];
+    }
+
+    /**
+     * Sets is_suspended
+     *
+     * @param bool|null $is_suspended Whether the organization is currently suspended or not.
+     *
+     * @return self
+     */
+    public function setIsSuspended($is_suspended)
+    {
+        if (is_null($is_suspended)) {
+            throw new \InvalidArgumentException('non-nullable is_suspended cannot be null');
+        }
+        $this->container['is_suspended'] = $is_suspended;
+
+        return $this;
+    }
+
+    /**
+     * Gets suspended_on
+     *
+     * @return string|null
+     */
+    public function getSuspendedOn()
+    {
+        return $this->container['suspended_on'];
+    }
+
+    /**
+     * Sets suspended_on
+     *
+     * @param string|null $suspended_on The date the organization was suspended in ISO 8601 format. Null if not suspended.
+     *
+     * @return self
+     */
+    public function setSuspendedOn($suspended_on)
+    {
+        if (is_null($suspended_on)) {
+            array_push($this->openAPINullablesSetToNull, 'suspended_on');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('suspended_on', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['suspended_on'] = $suspended_on;
 
         return $this;
     }

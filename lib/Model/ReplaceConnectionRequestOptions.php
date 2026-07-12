@@ -61,19 +61,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'client_id' => 'string',
         'client_secret' => 'string',
         'is_use_custom_domain' => 'bool',
+        'is_trusted' => 'bool',
         'home_realm_domains' => 'string[]',
         'entra_id_domain' => 'string',
         'is_use_common_endpoint' => 'bool',
         'is_sync_user_profile_on_login' => 'bool',
         'is_retrieve_provider_user_groups' => 'bool',
         'is_extended_attributes_required' => 'bool',
+        'is_create_missing_user' => 'bool',
+        'is_force_show_sso_button' => 'bool',
+        'upstream_params' => 'array<string,mixed>',
         'saml_entity_id' => 'string',
-        'saml_acs_url' => 'string',
         'saml_idp_metadata_url' => 'string',
+        'sign_request_algorithm' => 'string',
+        'protocol_binding' => 'string',
+        'name_id_format' => 'string',
         'saml_email_key_attr' => 'string',
+        'saml_user_id_key_attr' => 'string',
         'saml_first_name_key_attr' => 'string',
         'saml_last_name_key_attr' => 'string',
-        'is_create_missing_user' => 'bool',
         'saml_signing_certificate' => 'string',
         'saml_signing_private_key' => 'string'
     ];
@@ -89,19 +95,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'client_id' => null,
         'client_secret' => null,
         'is_use_custom_domain' => null,
+        'is_trusted' => null,
         'home_realm_domains' => null,
         'entra_id_domain' => null,
         'is_use_common_endpoint' => null,
         'is_sync_user_profile_on_login' => null,
         'is_retrieve_provider_user_groups' => null,
         'is_extended_attributes_required' => null,
+        'is_create_missing_user' => null,
+        'is_force_show_sso_button' => null,
+        'upstream_params' => null,
         'saml_entity_id' => null,
-        'saml_acs_url' => null,
         'saml_idp_metadata_url' => null,
+        'sign_request_algorithm' => null,
+        'protocol_binding' => null,
+        'name_id_format' => null,
         'saml_email_key_attr' => null,
+        'saml_user_id_key_attr' => null,
         'saml_first_name_key_attr' => null,
         'saml_last_name_key_attr' => null,
-        'is_create_missing_user' => null,
         'saml_signing_certificate' => null,
         'saml_signing_private_key' => null
     ];
@@ -115,19 +127,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'client_id' => false,
         'client_secret' => false,
         'is_use_custom_domain' => false,
+        'is_trusted' => false,
         'home_realm_domains' => false,
         'entra_id_domain' => false,
         'is_use_common_endpoint' => false,
         'is_sync_user_profile_on_login' => false,
         'is_retrieve_provider_user_groups' => false,
         'is_extended_attributes_required' => false,
+        'is_create_missing_user' => false,
+        'is_force_show_sso_button' => false,
+        'upstream_params' => false,
         'saml_entity_id' => false,
-        'saml_acs_url' => false,
         'saml_idp_metadata_url' => false,
+        'sign_request_algorithm' => false,
+        'protocol_binding' => false,
+        'name_id_format' => false,
         'saml_email_key_attr' => false,
+        'saml_user_id_key_attr' => false,
         'saml_first_name_key_attr' => false,
         'saml_last_name_key_attr' => false,
-        'is_create_missing_user' => false,
         'saml_signing_certificate' => false,
         'saml_signing_private_key' => false
     ];
@@ -221,19 +239,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'client_id' => 'client_id',
         'client_secret' => 'client_secret',
         'is_use_custom_domain' => 'is_use_custom_domain',
+        'is_trusted' => 'is_trusted',
         'home_realm_domains' => 'home_realm_domains',
         'entra_id_domain' => 'entra_id_domain',
         'is_use_common_endpoint' => 'is_use_common_endpoint',
         'is_sync_user_profile_on_login' => 'is_sync_user_profile_on_login',
         'is_retrieve_provider_user_groups' => 'is_retrieve_provider_user_groups',
         'is_extended_attributes_required' => 'is_extended_attributes_required',
+        'is_create_missing_user' => 'is_create_missing_user',
+        'is_force_show_sso_button' => 'is_force_show_sso_button',
+        'upstream_params' => 'upstream_params',
         'saml_entity_id' => 'saml_entity_id',
-        'saml_acs_url' => 'saml_acs_url',
         'saml_idp_metadata_url' => 'saml_idp_metadata_url',
+        'sign_request_algorithm' => 'sign_request_algorithm',
+        'protocol_binding' => 'protocol_binding',
+        'name_id_format' => 'name_id_format',
         'saml_email_key_attr' => 'saml_email_key_attr',
+        'saml_user_id_key_attr' => 'saml_user_id_key_attr',
         'saml_first_name_key_attr' => 'saml_first_name_key_attr',
         'saml_last_name_key_attr' => 'saml_last_name_key_attr',
-        'is_create_missing_user' => 'is_create_missing_user',
         'saml_signing_certificate' => 'saml_signing_certificate',
         'saml_signing_private_key' => 'saml_signing_private_key'
     ];
@@ -247,19 +271,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'client_id' => 'setClientId',
         'client_secret' => 'setClientSecret',
         'is_use_custom_domain' => 'setIsUseCustomDomain',
+        'is_trusted' => 'setIsTrusted',
         'home_realm_domains' => 'setHomeRealmDomains',
         'entra_id_domain' => 'setEntraIdDomain',
         'is_use_common_endpoint' => 'setIsUseCommonEndpoint',
         'is_sync_user_profile_on_login' => 'setIsSyncUserProfileOnLogin',
         'is_retrieve_provider_user_groups' => 'setIsRetrieveProviderUserGroups',
         'is_extended_attributes_required' => 'setIsExtendedAttributesRequired',
+        'is_create_missing_user' => 'setIsCreateMissingUser',
+        'is_force_show_sso_button' => 'setIsForceShowSsoButton',
+        'upstream_params' => 'setUpstreamParams',
         'saml_entity_id' => 'setSamlEntityId',
-        'saml_acs_url' => 'setSamlAcsUrl',
         'saml_idp_metadata_url' => 'setSamlIdpMetadataUrl',
+        'sign_request_algorithm' => 'setSignRequestAlgorithm',
+        'protocol_binding' => 'setProtocolBinding',
+        'name_id_format' => 'setNameIdFormat',
         'saml_email_key_attr' => 'setSamlEmailKeyAttr',
+        'saml_user_id_key_attr' => 'setSamlUserIdKeyAttr',
         'saml_first_name_key_attr' => 'setSamlFirstNameKeyAttr',
         'saml_last_name_key_attr' => 'setSamlLastNameKeyAttr',
-        'is_create_missing_user' => 'setIsCreateMissingUser',
         'saml_signing_certificate' => 'setSamlSigningCertificate',
         'saml_signing_private_key' => 'setSamlSigningPrivateKey'
     ];
@@ -273,19 +303,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'client_id' => 'getClientId',
         'client_secret' => 'getClientSecret',
         'is_use_custom_domain' => 'getIsUseCustomDomain',
+        'is_trusted' => 'getIsTrusted',
         'home_realm_domains' => 'getHomeRealmDomains',
         'entra_id_domain' => 'getEntraIdDomain',
         'is_use_common_endpoint' => 'getIsUseCommonEndpoint',
         'is_sync_user_profile_on_login' => 'getIsSyncUserProfileOnLogin',
         'is_retrieve_provider_user_groups' => 'getIsRetrieveProviderUserGroups',
         'is_extended_attributes_required' => 'getIsExtendedAttributesRequired',
+        'is_create_missing_user' => 'getIsCreateMissingUser',
+        'is_force_show_sso_button' => 'getIsForceShowSsoButton',
+        'upstream_params' => 'getUpstreamParams',
         'saml_entity_id' => 'getSamlEntityId',
-        'saml_acs_url' => 'getSamlAcsUrl',
         'saml_idp_metadata_url' => 'getSamlIdpMetadataUrl',
+        'sign_request_algorithm' => 'getSignRequestAlgorithm',
+        'protocol_binding' => 'getProtocolBinding',
+        'name_id_format' => 'getNameIdFormat',
         'saml_email_key_attr' => 'getSamlEmailKeyAttr',
+        'saml_user_id_key_attr' => 'getSamlUserIdKeyAttr',
         'saml_first_name_key_attr' => 'getSamlFirstNameKeyAttr',
         'saml_last_name_key_attr' => 'getSamlLastNameKeyAttr',
-        'is_create_missing_user' => 'getIsCreateMissingUser',
         'saml_signing_certificate' => 'getSamlSigningCertificate',
         'saml_signing_private_key' => 'getSamlSigningPrivateKey'
     ];
@@ -331,6 +367,55 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         return self::$openAPIModelName;
     }
 
+    public const SIGN_REQUEST_ALGORITHM_RSA_SHA256 = 'RSA-SHA256';
+    public const SIGN_REQUEST_ALGORITHM_RSA_SHA1 = 'RSA-SHA1';
+    public const PROTOCOL_BINDING_HTTP_REDIRECT = 'HTTP-REDIRECT';
+    public const PROTOCOL_BINDING_HTTP_POST = 'HTTP-POST';
+    public const NAME_ID_FORMAT_PERSISTENT = 'Persistent';
+    public const NAME_ID_FORMAT_TRANSIENT = 'Transient';
+    public const NAME_ID_FORMAT_EMAIL_ADDRESS = 'Email address';
+    public const NAME_ID_FORMAT_UNSPECIFIED = 'Unspecified';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getSignRequestAlgorithmAllowableValues()
+    {
+        return [
+            self::SIGN_REQUEST_ALGORITHM_RSA_SHA256,
+            self::SIGN_REQUEST_ALGORITHM_RSA_SHA1,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getProtocolBindingAllowableValues()
+    {
+        return [
+            self::PROTOCOL_BINDING_HTTP_REDIRECT,
+            self::PROTOCOL_BINDING_HTTP_POST,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getNameIdFormatAllowableValues()
+    {
+        return [
+            self::NAME_ID_FORMAT_PERSISTENT,
+            self::NAME_ID_FORMAT_TRANSIENT,
+            self::NAME_ID_FORMAT_EMAIL_ADDRESS,
+            self::NAME_ID_FORMAT_UNSPECIFIED,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -350,19 +435,25 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         $this->setIfExists('client_id', $data ?? [], null);
         $this->setIfExists('client_secret', $data ?? [], null);
         $this->setIfExists('is_use_custom_domain', $data ?? [], null);
+        $this->setIfExists('is_trusted', $data ?? [], null);
         $this->setIfExists('home_realm_domains', $data ?? [], null);
         $this->setIfExists('entra_id_domain', $data ?? [], null);
         $this->setIfExists('is_use_common_endpoint', $data ?? [], null);
         $this->setIfExists('is_sync_user_profile_on_login', $data ?? [], null);
         $this->setIfExists('is_retrieve_provider_user_groups', $data ?? [], null);
         $this->setIfExists('is_extended_attributes_required', $data ?? [], null);
+        $this->setIfExists('is_create_missing_user', $data ?? [], null);
+        $this->setIfExists('is_force_show_sso_button', $data ?? [], null);
+        $this->setIfExists('upstream_params', $data ?? [], null);
         $this->setIfExists('saml_entity_id', $data ?? [], null);
-        $this->setIfExists('saml_acs_url', $data ?? [], null);
         $this->setIfExists('saml_idp_metadata_url', $data ?? [], null);
+        $this->setIfExists('sign_request_algorithm', $data ?? [], null);
+        $this->setIfExists('protocol_binding', $data ?? [], null);
+        $this->setIfExists('name_id_format', $data ?? [], null);
         $this->setIfExists('saml_email_key_attr', $data ?? [], null);
+        $this->setIfExists('saml_user_id_key_attr', $data ?? [], null);
         $this->setIfExists('saml_first_name_key_attr', $data ?? [], null);
         $this->setIfExists('saml_last_name_key_attr', $data ?? [], null);
-        $this->setIfExists('is_create_missing_user', $data ?? [], null);
         $this->setIfExists('saml_signing_certificate', $data ?? [], null);
         $this->setIfExists('saml_signing_private_key', $data ?? [], null);
     }
@@ -393,6 +484,33 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getSignRequestAlgorithmAllowableValues();
+        if (!is_null($this->container['sign_request_algorithm']) && !in_array($this->container['sign_request_algorithm'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'sign_request_algorithm', must be one of '%s'",
+                $this->container['sign_request_algorithm'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getProtocolBindingAllowableValues();
+        if (!is_null($this->container['protocol_binding']) && !in_array($this->container['protocol_binding'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'protocol_binding', must be one of '%s'",
+                $this->container['protocol_binding'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getNameIdFormatAllowableValues();
+        if (!is_null($this->container['name_id_format']) && !in_array($this->container['name_id_format'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'name_id_format', must be one of '%s'",
+                $this->container['name_id_format'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -486,6 +604,33 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable is_use_custom_domain cannot be null');
         }
         $this->container['is_use_custom_domain'] = $is_use_custom_domain;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_trusted
+     *
+     * @return bool|null
+     */
+    public function getIsTrusted()
+    {
+        return $this->container['is_trusted'];
+    }
+
+    /**
+     * Sets is_trusted
+     *
+     * @param bool|null $is_trusted Trust this connection for account merging.
+     *
+     * @return self
+     */
+    public function setIsTrusted($is_trusted)
+    {
+        if (is_null($is_trusted)) {
+            throw new \InvalidArgumentException('non-nullable is_trusted cannot be null');
+        }
+        $this->container['is_trusted'] = $is_trusted;
 
         return $this;
     }
@@ -653,6 +798,87 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     }
 
     /**
+     * Gets is_create_missing_user
+     *
+     * @return bool|null
+     */
+    public function getIsCreateMissingUser()
+    {
+        return $this->container['is_create_missing_user'];
+    }
+
+    /**
+     * Sets is_create_missing_user
+     *
+     * @param bool|null $is_create_missing_user Create user if they don't exist.
+     *
+     * @return self
+     */
+    public function setIsCreateMissingUser($is_create_missing_user)
+    {
+        if (is_null($is_create_missing_user)) {
+            throw new \InvalidArgumentException('non-nullable is_create_missing_user cannot be null');
+        }
+        $this->container['is_create_missing_user'] = $is_create_missing_user;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_force_show_sso_button
+     *
+     * @return bool|null
+     */
+    public function getIsForceShowSsoButton()
+    {
+        return $this->container['is_force_show_sso_button'];
+    }
+
+    /**
+     * Sets is_force_show_sso_button
+     *
+     * @param bool|null $is_force_show_sso_button Force showing the SSO button for this connection.
+     *
+     * @return self
+     */
+    public function setIsForceShowSsoButton($is_force_show_sso_button)
+    {
+        if (is_null($is_force_show_sso_button)) {
+            throw new \InvalidArgumentException('non-nullable is_force_show_sso_button cannot be null');
+        }
+        $this->container['is_force_show_sso_button'] = $is_force_show_sso_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets upstream_params
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getUpstreamParams()
+    {
+        return $this->container['upstream_params'];
+    }
+
+    /**
+     * Sets upstream_params
+     *
+     * @param array<string,mixed>|null $upstream_params Additional upstream parameters to pass to the identity provider.
+     *
+     * @return self
+     */
+    public function setUpstreamParams($upstream_params)
+    {
+        if (is_null($upstream_params)) {
+            throw new \InvalidArgumentException('non-nullable upstream_params cannot be null');
+        }
+        $this->container['upstream_params'] = $upstream_params;
+
+        return $this;
+    }
+
+    /**
      * Gets saml_entity_id
      *
      * @return string|null
@@ -675,33 +901,6 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable saml_entity_id cannot be null');
         }
         $this->container['saml_entity_id'] = $saml_entity_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets saml_acs_url
-     *
-     * @return string|null
-     */
-    public function getSamlAcsUrl()
-    {
-        return $this->container['saml_acs_url'];
-    }
-
-    /**
-     * Sets saml_acs_url
-     *
-     * @param string|null $saml_acs_url Assertion Consumer Service URL.
-     *
-     * @return self
-     */
-    public function setSamlAcsUrl($saml_acs_url)
-    {
-        if (is_null($saml_acs_url)) {
-            throw new \InvalidArgumentException('non-nullable saml_acs_url cannot be null');
-        }
-        $this->container['saml_acs_url'] = $saml_acs_url;
 
         return $this;
     }
@@ -734,6 +933,117 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     }
 
     /**
+     * Gets sign_request_algorithm
+     *
+     * @return string|null
+     */
+    public function getSignRequestAlgorithm()
+    {
+        return $this->container['sign_request_algorithm'];
+    }
+
+    /**
+     * Sets sign_request_algorithm
+     *
+     * @param string|null $sign_request_algorithm Algorithm used to sign SAML requests.
+     *
+     * @return self
+     */
+    public function setSignRequestAlgorithm($sign_request_algorithm)
+    {
+        if (is_null($sign_request_algorithm)) {
+            throw new \InvalidArgumentException('non-nullable sign_request_algorithm cannot be null');
+        }
+        $allowedValues = $this->getSignRequestAlgorithmAllowableValues();
+        if (!in_array($sign_request_algorithm, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'sign_request_algorithm', must be one of '%s'",
+                    $sign_request_algorithm,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['sign_request_algorithm'] = $sign_request_algorithm;
+
+        return $this;
+    }
+
+    /**
+     * Gets protocol_binding
+     *
+     * @return string|null
+     */
+    public function getProtocolBinding()
+    {
+        return $this->container['protocol_binding'];
+    }
+
+    /**
+     * Sets protocol_binding
+     *
+     * @param string|null $protocol_binding Protocol binding used to send SAML requests.
+     *
+     * @return self
+     */
+    public function setProtocolBinding($protocol_binding)
+    {
+        if (is_null($protocol_binding)) {
+            throw new \InvalidArgumentException('non-nullable protocol_binding cannot be null');
+        }
+        $allowedValues = $this->getProtocolBindingAllowableValues();
+        if (!in_array($protocol_binding, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'protocol_binding', must be one of '%s'",
+                    $protocol_binding,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['protocol_binding'] = $protocol_binding;
+
+        return $this;
+    }
+
+    /**
+     * Gets name_id_format
+     *
+     * @return string|null
+     */
+    public function getNameIdFormat()
+    {
+        return $this->container['name_id_format'];
+    }
+
+    /**
+     * Sets name_id_format
+     *
+     * @param string|null $name_id_format Format for the Name ID used to identify users in SAML responses.
+     *
+     * @return self
+     */
+    public function setNameIdFormat($name_id_format)
+    {
+        if (is_null($name_id_format)) {
+            throw new \InvalidArgumentException('non-nullable name_id_format cannot be null');
+        }
+        $allowedValues = $this->getNameIdFormatAllowableValues();
+        if (!in_array($name_id_format, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'name_id_format', must be one of '%s'",
+                    $name_id_format,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['name_id_format'] = $name_id_format;
+
+        return $this;
+    }
+
+    /**
      * Gets saml_email_key_attr
      *
      * @return string|null
@@ -746,7 +1056,7 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     /**
      * Sets saml_email_key_attr
      *
-     * @param string|null $saml_email_key_attr Attribute key for the user’s email.
+     * @param string|null $saml_email_key_attr Attribute key for the user's email.
      *
      * @return self
      */
@@ -756,6 +1066,33 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable saml_email_key_attr cannot be null');
         }
         $this->container['saml_email_key_attr'] = $saml_email_key_attr;
+
+        return $this;
+    }
+
+    /**
+     * Gets saml_user_id_key_attr
+     *
+     * @return string|null
+     */
+    public function getSamlUserIdKeyAttr()
+    {
+        return $this->container['saml_user_id_key_attr'];
+    }
+
+    /**
+     * Sets saml_user_id_key_attr
+     *
+     * @param string|null $saml_user_id_key_attr Attribute key for the user's ID.
+     *
+     * @return self
+     */
+    public function setSamlUserIdKeyAttr($saml_user_id_key_attr)
+    {
+        if (is_null($saml_user_id_key_attr)) {
+            throw new \InvalidArgumentException('non-nullable saml_user_id_key_attr cannot be null');
+        }
+        $this->container['saml_user_id_key_attr'] = $saml_user_id_key_attr;
 
         return $this;
     }
@@ -773,7 +1110,7 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     /**
      * Sets saml_first_name_key_attr
      *
-     * @param string|null $saml_first_name_key_attr Attribute key for the user’s first name.
+     * @param string|null $saml_first_name_key_attr Attribute key for the user's first name.
      *
      * @return self
      */
@@ -800,7 +1137,7 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     /**
      * Sets saml_last_name_key_attr
      *
-     * @param string|null $saml_last_name_key_attr Attribute key for the user’s last name.
+     * @param string|null $saml_last_name_key_attr Attribute key for the user's last name.
      *
      * @return self
      */
@@ -810,33 +1147,6 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable saml_last_name_key_attr cannot be null');
         }
         $this->container['saml_last_name_key_attr'] = $saml_last_name_key_attr;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_create_missing_user
-     *
-     * @return bool|null
-     */
-    public function getIsCreateMissingUser()
-    {
-        return $this->container['is_create_missing_user'];
-    }
-
-    /**
-     * Sets is_create_missing_user
-     *
-     * @param bool|null $is_create_missing_user Create user if they don’t exist.
-     *
-     * @return self
-     */
-    public function setIsCreateMissingUser($is_create_missing_user)
-    {
-        if (is_null($is_create_missing_user)) {
-            throw new \InvalidArgumentException('non-nullable is_create_missing_user cannot be null');
-        }
-        $this->container['is_create_missing_user'] = $is_create_missing_user;
 
         return $this;
     }

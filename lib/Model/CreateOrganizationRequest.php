@@ -72,6 +72,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'string',
         'handle' => 'string',
         'is_allow_registrations' => 'bool',
+        'is_auto_membership_enabled' => 'bool',
         'sender_name' => 'string',
         'sender_email' => 'string',
         'is_create_billing_customer' => 'bool',
@@ -101,6 +102,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => null,
         'handle' => null,
         'is_allow_registrations' => null,
+        'is_auto_membership_enabled' => null,
         'sender_name' => null,
         'sender_email' => null,
         'is_create_billing_customer' => null,
@@ -128,6 +130,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => false,
         'handle' => false,
         'is_allow_registrations' => false,
+        'is_auto_membership_enabled' => false,
         'sender_name' => true,
         'sender_email' => true,
         'is_create_billing_customer' => false,
@@ -235,6 +238,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'theme_code',
         'handle' => 'handle',
         'is_allow_registrations' => 'is_allow_registrations',
+        'is_auto_membership_enabled' => 'is_auto_membership_enabled',
         'sender_name' => 'sender_name',
         'sender_email' => 'sender_email',
         'is_create_billing_customer' => 'is_create_billing_customer',
@@ -262,6 +266,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'setThemeCode',
         'handle' => 'setHandle',
         'is_allow_registrations' => 'setIsAllowRegistrations',
+        'is_auto_membership_enabled' => 'setIsAutoMembershipEnabled',
         'sender_name' => 'setSenderName',
         'sender_email' => 'setSenderEmail',
         'is_create_billing_customer' => 'setIsCreateBillingCustomer',
@@ -289,6 +294,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'getThemeCode',
         'handle' => 'getHandle',
         'is_allow_registrations' => 'getIsAllowRegistrations',
+        'is_auto_membership_enabled' => 'getIsAutoMembershipEnabled',
         'sender_name' => 'getSenderName',
         'sender_email' => 'getSenderEmail',
         'is_create_billing_customer' => 'getIsCreateBillingCustomer',
@@ -384,6 +390,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         $this->setIfExists('theme_code', $data ?? [], null);
         $this->setIfExists('handle', $data ?? [], null);
         $this->setIfExists('is_allow_registrations', $data ?? [], null);
+        $this->setIfExists('is_auto_membership_enabled', $data ?? [], null);
         $this->setIfExists('sender_name', $data ?? [], null);
         $this->setIfExists('sender_email', $data ?? [], null);
         $this->setIfExists('is_create_billing_customer', $data ?? [], null);
@@ -800,6 +807,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
      * Gets is_allow_registrations
      *
      * @return bool|null
+     * @deprecated
      */
     public function getIsAllowRegistrations()
     {
@@ -809,9 +817,10 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets is_allow_registrations
      *
-     * @param bool|null $is_allow_registrations If users become members of this organization when the org code is supplied during authentication.
+     * @param bool|null $is_allow_registrations Deprecated - Use 'is_auto_membership_enabled' instead.
      *
      * @return self
+     * @deprecated
      */
     public function setIsAllowRegistrations($is_allow_registrations)
     {
@@ -819,6 +828,33 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
             throw new \InvalidArgumentException('non-nullable is_allow_registrations cannot be null');
         }
         $this->container['is_allow_registrations'] = $is_allow_registrations;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_auto_membership_enabled
+     *
+     * @return bool|null
+     */
+    public function getIsAutoMembershipEnabled()
+    {
+        return $this->container['is_auto_membership_enabled'];
+    }
+
+    /**
+     * Sets is_auto_membership_enabled
+     *
+     * @param bool|null $is_auto_membership_enabled If users become members of this organization when the org code is supplied during authentication.
+     *
+     * @return self
+     */
+    public function setIsAutoMembershipEnabled($is_auto_membership_enabled)
+    {
+        if (is_null($is_auto_membership_enabled)) {
+            throw new \InvalidArgumentException('non-nullable is_auto_membership_enabled cannot be null');
+        }
+        $this->container['is_auto_membership_enabled'] = $is_auto_membership_enabled;
 
         return $this;
     }

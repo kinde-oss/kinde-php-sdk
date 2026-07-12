@@ -248,7 +248,7 @@ class UpdateOrganizationSessionsRequest implements ModelInterface, ArrayAccess, 
     }
 
     public const SSO_SESSION_PERSISTENCE_MODE_PERSISTENT = 'persistent';
-    public const SSO_SESSION_PERSISTENCE_MODE_NON_PERSISTENT = 'non-persistent';
+    public const SSO_SESSION_PERSISTENCE_MODE_NON_PERSISTENT = 'non_persistent';
 
     /**
      * Gets allowable values of the enum

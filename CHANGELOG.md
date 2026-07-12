@@ -6,9 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [2.5.0] - Since v2.4.0
 
+### Added
+
+- Regenerated the Management API client from the current Kinde API specification, adding endpoints for API keys (create, get, list, rotate, delete, verify), directories (create, get, list, update, delete), organization invites (create, get, list, delete), passkeys (get and update), and role and system permissions.
+
 ### Changed
 
 - Updated the required `firebase/php-jwt` dependency from `^6.10` to `^7.0`. Projects that also depend on `firebase/php-jwt` directly may need to align their constraint to v7.
+- Corrected the misspelled `deleteAPIAppliationScope` operation to `deleteAPIApplicationScope`. The old method names are retained as deprecated aliases so existing code continues to work without changes.
 
 ### Fixed
 

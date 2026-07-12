@@ -71,12 +71,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'string',
         'handle' => 'string',
         'is_allow_registrations' => 'bool',
+        'is_auto_membership_enabled' => 'bool',
         'is_auto_join_domain_list' => 'bool',
         'allowed_domains' => 'string[]',
         'is_enable_advanced_orgs' => 'bool',
         'is_enforce_mfa' => 'bool',
         'sender_name' => 'string',
-        'sender_email' => 'string'
+        'sender_email' => 'string',
+        'is_suspended' => 'bool'
     ];
 
     /**
@@ -100,12 +102,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => null,
         'handle' => null,
         'is_allow_registrations' => null,
+        'is_auto_membership_enabled' => null,
         'is_auto_join_domain_list' => null,
         'allowed_domains' => null,
         'is_enable_advanced_orgs' => null,
         'is_enforce_mfa' => null,
         'sender_name' => null,
-        'sender_email' => null
+        'sender_email' => null,
+        'is_suspended' => null
     ];
 
     /**
@@ -127,12 +131,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => false,
         'handle' => false,
         'is_allow_registrations' => false,
+        'is_auto_membership_enabled' => false,
         'is_auto_join_domain_list' => false,
         'allowed_domains' => false,
         'is_enable_advanced_orgs' => false,
         'is_enforce_mfa' => false,
         'sender_name' => true,
-        'sender_email' => true
+        'sender_email' => true,
+        'is_suspended' => false
     ];
 
     /**
@@ -234,12 +240,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'theme_code',
         'handle' => 'handle',
         'is_allow_registrations' => 'is_allow_registrations',
+        'is_auto_membership_enabled' => 'is_auto_membership_enabled',
         'is_auto_join_domain_list' => 'is_auto_join_domain_list',
         'allowed_domains' => 'allowed_domains',
         'is_enable_advanced_orgs' => 'is_enable_advanced_orgs',
         'is_enforce_mfa' => 'is_enforce_mfa',
         'sender_name' => 'sender_name',
-        'sender_email' => 'sender_email'
+        'sender_email' => 'sender_email',
+        'is_suspended' => 'is_suspended'
     ];
 
     /**
@@ -261,12 +269,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'setThemeCode',
         'handle' => 'setHandle',
         'is_allow_registrations' => 'setIsAllowRegistrations',
+        'is_auto_membership_enabled' => 'setIsAutoMembershipEnabled',
         'is_auto_join_domain_list' => 'setIsAutoJoinDomainList',
         'allowed_domains' => 'setAllowedDomains',
         'is_enable_advanced_orgs' => 'setIsEnableAdvancedOrgs',
         'is_enforce_mfa' => 'setIsEnforceMfa',
         'sender_name' => 'setSenderName',
-        'sender_email' => 'setSenderEmail'
+        'sender_email' => 'setSenderEmail',
+        'is_suspended' => 'setIsSuspended'
     ];
 
     /**
@@ -288,12 +298,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         'theme_code' => 'getThemeCode',
         'handle' => 'getHandle',
         'is_allow_registrations' => 'getIsAllowRegistrations',
+        'is_auto_membership_enabled' => 'getIsAutoMembershipEnabled',
         'is_auto_join_domain_list' => 'getIsAutoJoinDomainList',
         'allowed_domains' => 'getAllowedDomains',
         'is_enable_advanced_orgs' => 'getIsEnableAdvancedOrgs',
         'is_enforce_mfa' => 'getIsEnforceMfa',
         'sender_name' => 'getSenderName',
-        'sender_email' => 'getSenderEmail'
+        'sender_email' => 'getSenderEmail',
+        'is_suspended' => 'getIsSuspended'
     ];
 
     /**
@@ -383,12 +395,14 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
         $this->setIfExists('theme_code', $data ?? [], null);
         $this->setIfExists('handle', $data ?? [], null);
         $this->setIfExists('is_allow_registrations', $data ?? [], null);
+        $this->setIfExists('is_auto_membership_enabled', $data ?? [], null);
         $this->setIfExists('is_auto_join_domain_list', $data ?? [], null);
         $this->setIfExists('allowed_domains', $data ?? [], null);
         $this->setIfExists('is_enable_advanced_orgs', $data ?? [], null);
         $this->setIfExists('is_enforce_mfa', $data ?? [], null);
         $this->setIfExists('sender_name', $data ?? [], null);
         $this->setIfExists('sender_email', $data ?? [], null);
+        $this->setIfExists('is_suspended', $data ?? [], null);
     }
 
     /**
@@ -806,6 +820,33 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
     }
 
     /**
+     * Gets is_auto_membership_enabled
+     *
+     * @return bool|null
+     */
+    public function getIsAutoMembershipEnabled()
+    {
+        return $this->container['is_auto_membership_enabled'];
+    }
+
+    /**
+     * Sets is_auto_membership_enabled
+     *
+     * @param bool|null $is_auto_membership_enabled If users become members of this organization when the org code is supplied during authentication.
+     *
+     * @return self
+     */
+    public function setIsAutoMembershipEnabled($is_auto_membership_enabled)
+    {
+        if (is_null($is_auto_membership_enabled)) {
+            throw new \InvalidArgumentException('non-nullable is_auto_membership_enabled cannot be null');
+        }
+        $this->container['is_auto_membership_enabled'] = $is_auto_membership_enabled;
+
+        return $this;
+    }
+
+    /**
      * Gets is_auto_join_domain_list
      *
      * @return bool|null
@@ -977,6 +1018,33 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
             }
         }
         $this->container['sender_email'] = $sender_email;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_suspended
+     *
+     * @return bool|null
+     */
+    public function getIsSuspended()
+    {
+        return $this->container['is_suspended'];
+    }
+
+    /**
+     * Sets is_suspended
+     *
+     * @param bool|null $is_suspended Whether to suspend or unsuspend the organization. Setting to true suspends the organization; setting to false unsuspends it. The default organization cannot be suspended.
+     *
+     * @return self
+     */
+    public function setIsSuspended($is_suspended)
+    {
+        if (is_null($is_suspended)) {
+            throw new \InvalidArgumentException('non-nullable is_suspended cannot be null');
+        }
+        $this->container['is_suspended'] = $is_suspended;
 
         return $this;
     }
