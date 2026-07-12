@@ -104,7 +104,7 @@ class HeaderSelector
     */
     public function isJsonMime(string $searchString): bool
     {
-        return preg_match('~^application/(json|[\w!#$&.+-^_]+\+json)\s*(;|$)~', $searchString) === 1;
+        return preg_match('~^application/(json|[\w!#$&.+-^_]+\+json)\s*(;|$)~i', $searchString) === 1;
     }
     
     /**
@@ -140,11 +140,17 @@ class HeaderSelector
             'withoutJson' => [],
         ];
 
+        # headers with an explicit q=0 are excluded by the client; keep them out of the
+        # positive reweighting below and serialize each exactly once as "q=0".
+        $excludedHeaders = [];
+
         foreach ($accept as $header) {
 
             $headerData = $this->getHeaderAndWeight($header);
 
-            if (stripos($headerData['header'], 'application/json') === 0) {
+            if ($headerData['weight'] === 0) {
+                $excludedHeaders[] = $headerData['header'] . ';q=0';
+            } elseif (preg_match('~^application/json\s*(;|$)~i', $headerData['header']) === 1) {
                 $processedHeaders['withApplicationJson'][] = $headerData;
             } elseif (in_array($header, $headersWithJson, true)) {
                 $processedHeaders['withJson'][] = $headerData;
@@ -164,7 +170,8 @@ class HeaderSelector
             }
         }
 
-        $acceptHeaders = array_merge(...$acceptHeaders);
+        $acceptHeaders = $acceptHeaders === [] ? [] : array_merge(...$acceptHeaders);
+        $acceptHeaders = array_merge($acceptHeaders, $excludedHeaders);
 
         return implode(',', $acceptHeaders);
     }
@@ -178,11 +185,12 @@ class HeaderSelector
      */
     private function getHeaderAndWeight(string $header): array
     {
-        # matches headers with weight, splitting the header and the weight in $outputArray
-        if (preg_match('/(.*);\s*q=(1(?:\.0+)?|0\.\d+)$/', $header, $outputArray) === 1) {
+        # matches headers with weight, splitting the header and the weight in $outputArray.
+        # a qvalue (RFC 9110) ranges from 0 to 1 with up to 3 decimals, so q=0 is valid.
+        if (preg_match('/(.*);\s*q=(1(?:\.0{1,3})?|0(?:\.\d{1,3})?)$/', $header, $outputArray) === 1) {
             $headerData = [
-                'header' => $outputArray[1],
-                'weight' => (int)($outputArray[2] * 1000),
+                'header' => trim($outputArray[1]),
+                'weight' => (int) ((float) $outputArray[2] * 1000),
             ];
         } else {
             $headerData = [
@@ -196,11 +204,11 @@ class HeaderSelector
 
     /**
      * @param array[] $headers
-     * @param float   $currentWeight
+     * @param int     $currentWeight
      * @param bool    $hasMoreThan28Headers
      * @return string[] array of adjusted "Accept" headers
      */
-    private function adjustWeight(array $headers, float &$currentWeight, bool $hasMoreThan28Headers): array
+    private function adjustWeight(array $headers, int &$currentWeight, bool $hasMoreThan28Headers): array
     {
         usort($headers, function (array $a, array $b) {
             return $b['weight'] - $a['weight'];
