@@ -58,7 +58,8 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
       * @var string[]
       */
     protected static $openAPITypes = [
-        'enabled_factors' => 'string[]'
+        'enabled_factors' => 'string[]',
+        'is_recovery_codes_enabled' => 'bool'
     ];
 
     /**
@@ -69,7 +70,8 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'enabled_factors' => null
+        'enabled_factors' => null,
+        'is_recovery_codes_enabled' => null
     ];
 
     /**
@@ -78,7 +80,8 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'enabled_factors' => false
+        'enabled_factors' => false,
+        'is_recovery_codes_enabled' => false
     ];
 
     /**
@@ -167,7 +170,8 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
      * @var string[]
      */
     protected static $attributeMap = [
-        'enabled_factors' => 'enabled_factors'
+        'enabled_factors' => 'enabled_factors',
+        'is_recovery_codes_enabled' => 'is_recovery_codes_enabled'
     ];
 
     /**
@@ -176,7 +180,8 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
      * @var string[]
      */
     protected static $setters = [
-        'enabled_factors' => 'setEnabledFactors'
+        'enabled_factors' => 'setEnabledFactors',
+        'is_recovery_codes_enabled' => 'setIsRecoveryCodesEnabled'
     ];
 
     /**
@@ -185,7 +190,8 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
      * @var string[]
      */
     protected static $getters = [
-        'enabled_factors' => 'getEnabledFactors'
+        'enabled_factors' => 'getEnabledFactors',
+        'is_recovery_codes_enabled' => 'getIsRecoveryCodesEnabled'
     ];
 
     /**
@@ -263,6 +269,7 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
     public function __construct(?array $data = null)
     {
         $this->setIfExists('enabled_factors', $data ?? [], null);
+        $this->setIfExists('is_recovery_codes_enabled', $data ?? [], true);
     }
 
     /**
@@ -342,6 +349,33 @@ class ReplaceOrganizationMFARequest implements ModelInterface, ArrayAccess, \Jso
             );
         }
         $this->container['enabled_factors'] = $enabled_factors;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_recovery_codes_enabled
+     *
+     * @return bool|null
+     */
+    public function getIsRecoveryCodesEnabled()
+    {
+        return $this->container['is_recovery_codes_enabled'];
+    }
+
+    /**
+     * Sets is_recovery_codes_enabled
+     *
+     * @param bool|null $is_recovery_codes_enabled Determines whether recovery codes are shown to users during MFA setup for this specific organization. This overrides the environment-level setting.
+     *
+     * @return self
+     */
+    public function setIsRecoveryCodesEnabled($is_recovery_codes_enabled)
+    {
+        if (is_null($is_recovery_codes_enabled)) {
+            throw new \InvalidArgumentException('non-nullable is_recovery_codes_enabled cannot be null');
+        }
+        $this->container['is_recovery_codes_enabled'] = $is_recovery_codes_enabled;
 
         return $this;
     }

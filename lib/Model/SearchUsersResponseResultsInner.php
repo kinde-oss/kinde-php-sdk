@@ -72,7 +72,8 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'created_on' => 'string',
         'organizations' => 'string[]',
         'identities' => '\Kinde\KindeSDK\Model\UserIdentitiesInner[]',
-        'properties' => 'array<string,string>'
+        'properties' => 'array<string,string>',
+        'api_scopes' => '\Kinde\KindeSDK\Model\SearchUsersResponseResultsInnerApiScopesInner[]'
     ];
 
     /**
@@ -97,7 +98,8 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'created_on' => null,
         'organizations' => null,
         'identities' => null,
-        'properties' => null
+        'properties' => null,
+        'api_scopes' => null
     ];
 
     /**
@@ -120,7 +122,8 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'created_on' => true,
         'organizations' => false,
         'identities' => false,
-        'properties' => false
+        'properties' => false,
+        'api_scopes' => false
     ];
 
     /**
@@ -223,7 +226,8 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'created_on' => 'created_on',
         'organizations' => 'organizations',
         'identities' => 'identities',
-        'properties' => 'properties'
+        'properties' => 'properties',
+        'api_scopes' => 'api_scopes'
     ];
 
     /**
@@ -246,7 +250,8 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'created_on' => 'setCreatedOn',
         'organizations' => 'setOrganizations',
         'identities' => 'setIdentities',
-        'properties' => 'setProperties'
+        'properties' => 'setProperties',
+        'api_scopes' => 'setApiScopes'
     ];
 
     /**
@@ -269,7 +274,8 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         'created_on' => 'getCreatedOn',
         'organizations' => 'getOrganizations',
         'identities' => 'getIdentities',
-        'properties' => 'getProperties'
+        'properties' => 'getProperties',
+        'api_scopes' => 'getApiScopes'
     ];
 
     /**
@@ -344,6 +350,7 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
         $this->setIfExists('organizations', $data ?? [], null);
         $this->setIfExists('identities', $data ?? [], null);
         $this->setIfExists('properties', $data ?? [], null);
+        $this->setIfExists('api_scopes', $data ?? [], null);
     }
 
     /**
@@ -845,6 +852,33 @@ class SearchUsersResponseResultsInner implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable properties cannot be null');
         }
         $this->container['properties'] = $properties;
+
+        return $this;
+    }
+
+    /**
+     * Gets api_scopes
+     *
+     * @return \Kinde\KindeSDK\Model\SearchUsersResponseResultsInnerApiScopesInner[]|null
+     */
+    public function getApiScopes()
+    {
+        return $this->container['api_scopes'];
+    }
+
+    /**
+     * Sets api_scopes
+     *
+     * @param \Kinde\KindeSDK\Model\SearchUsersResponseResultsInnerApiScopesInner[]|null $api_scopes Array of api scopes belonging to the user.
+     *
+     * @return self
+     */
+    public function setApiScopes($api_scopes)
+    {
+        if (is_null($api_scopes)) {
+            throw new \InvalidArgumentException('non-nullable api_scopes cannot be null');
+        }
+        $this->container['api_scopes'] = $api_scopes;
 
         return $this;
     }

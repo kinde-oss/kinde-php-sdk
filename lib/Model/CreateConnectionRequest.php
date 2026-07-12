@@ -276,6 +276,10 @@ class CreateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
     public const STRATEGY_OAUTH2_TWITTER = 'oauth2:twitter';
     public const STRATEGY_OAUTH2_XERO = 'oauth2:xero';
     public const STRATEGY_SAML_CUSTOM = 'saml:custom';
+    public const STRATEGY_SAML_CLOUDFLARE = 'saml:cloudflare';
+    public const STRATEGY_SAML_OKTA = 'saml:okta';
+    public const STRATEGY_SAML_MICROSOFT = 'saml:microsoft';
+    public const STRATEGY_SAML_GOOGLE = 'saml:google';
     public const STRATEGY_WSFED_AZURE_AD = 'wsfed:azure_ad';
 
     /**
@@ -303,6 +307,10 @@ class CreateConnectionRequest implements ModelInterface, ArrayAccess, \JsonSeria
             self::STRATEGY_OAUTH2_TWITTER,
             self::STRATEGY_OAUTH2_XERO,
             self::STRATEGY_SAML_CUSTOM,
+            self::STRATEGY_SAML_CLOUDFLARE,
+            self::STRATEGY_SAML_OKTA,
+            self::STRATEGY_SAML_MICROSOFT,
+            self::STRATEGY_SAML_GOOGLE,
             self::STRATEGY_WSFED_AZURE_AD,
         ];
     }

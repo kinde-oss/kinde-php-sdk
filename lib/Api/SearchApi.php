@@ -133,19 +133,20 @@ class SearchApi
      *
      * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
      * @param  string|null $query Search the users by email or name. Use &#39;*&#39; to search all. (optional)
+     * @param  string|null $api_scopes Search the users by api scopes. (optional)
      * @param  array<string,string[]>|null $properties properties (optional)
      * @param  string|null $starting_after The ID of the user to start after. (optional)
      * @param  string|null $ending_before The ID of the user to end before. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. One or more of (comma-separated): \&quot;organizations\&quot;, \&quot;identities\&quot;, \&quot;properties\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchUsers'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Kinde\KindeSDK\Model\SearchUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
      */
-    public function searchUsers($page_size = null, $query = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
+    public function searchUsers($page_size = null, $query = null, $api_scopes = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
     {
-        list($response) = $this->searchUsersWithHttpInfo($page_size, $query, $properties, $starting_after, $ending_before, $expand, $contentType);
+        list($response) = $this->searchUsersWithHttpInfo($page_size, $query, $api_scopes, $properties, $starting_after, $ending_before, $expand, $contentType);
         return $response;
     }
 
@@ -156,19 +157,20 @@ class SearchApi
      *
      * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
      * @param  string|null $query Search the users by email or name. Use &#39;*&#39; to search all. (optional)
+     * @param  string|null $api_scopes Search the users by api scopes. (optional)
      * @param  array<string,string[]>|null $properties (optional)
      * @param  string|null $starting_after The ID of the user to start after. (optional)
      * @param  string|null $ending_before The ID of the user to end before. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. One or more of (comma-separated): \&quot;organizations\&quot;, \&quot;identities\&quot;, \&quot;properties\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchUsers'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Kinde\KindeSDK\Model\SearchUsersResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function searchUsersWithHttpInfo($page_size = null, $query = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
+    public function searchUsersWithHttpInfo($page_size = null, $query = null, $api_scopes = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
     {
-        $request = $this->searchUsersRequest($page_size, $query, $properties, $starting_after, $ending_before, $expand, $contentType);
+        $request = $this->searchUsersRequest($page_size, $query, $api_scopes, $properties, $starting_after, $ending_before, $expand, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -288,18 +290,19 @@ class SearchApi
      *
      * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
      * @param  string|null $query Search the users by email or name. Use &#39;*&#39; to search all. (optional)
+     * @param  string|null $api_scopes Search the users by api scopes. (optional)
      * @param  array<string,string[]>|null $properties (optional)
      * @param  string|null $starting_after The ID of the user to start after. (optional)
      * @param  string|null $ending_before The ID of the user to end before. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. One or more of (comma-separated): \&quot;organizations\&quot;, \&quot;identities\&quot;, \&quot;properties\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function searchUsersAsync($page_size = null, $query = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
+    public function searchUsersAsync($page_size = null, $query = null, $api_scopes = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
     {
-        return $this->searchUsersAsyncWithHttpInfo($page_size, $query, $properties, $starting_after, $ending_before, $expand, $contentType)
+        return $this->searchUsersAsyncWithHttpInfo($page_size, $query, $api_scopes, $properties, $starting_after, $ending_before, $expand, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -314,19 +317,20 @@ class SearchApi
      *
      * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
      * @param  string|null $query Search the users by email or name. Use &#39;*&#39; to search all. (optional)
+     * @param  string|null $api_scopes Search the users by api scopes. (optional)
      * @param  array<string,string[]>|null $properties (optional)
      * @param  string|null $starting_after The ID of the user to start after. (optional)
      * @param  string|null $ending_before The ID of the user to end before. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. One or more of (comma-separated): \&quot;organizations\&quot;, \&quot;identities\&quot;, \&quot;properties\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function searchUsersAsyncWithHttpInfo($page_size = null, $query = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
+    public function searchUsersAsyncWithHttpInfo($page_size = null, $query = null, $api_scopes = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
     {
         $returnType = '\Kinde\KindeSDK\Model\SearchUsersResponse';
-        $request = $this->searchUsersRequest($page_size, $query, $properties, $starting_after, $ending_before, $expand, $contentType);
+        $request = $this->searchUsersRequest($page_size, $query, $api_scopes, $properties, $starting_after, $ending_before, $expand, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -369,17 +373,19 @@ class SearchApi
      *
      * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
      * @param  string|null $query Search the users by email or name. Use &#39;*&#39; to search all. (optional)
+     * @param  string|null $api_scopes Search the users by api scopes. (optional)
      * @param  array<string,string[]>|null $properties (optional)
      * @param  string|null $starting_after The ID of the user to start after. (optional)
      * @param  string|null $ending_before The ID of the user to end before. (optional)
-     * @param  string|null $expand Specify additional data to retrieve. Use \&quot;organizations\&quot; and/or \&quot;identities\&quot;. (optional)
+     * @param  string|null $expand Additional data to include in the response. One or more of (comma-separated): \&quot;organizations\&quot;, \&quot;identities\&quot;, \&quot;properties\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['searchUsers'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function searchUsersRequest($page_size = null, $query = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
+    public function searchUsersRequest($page_size = null, $query = null, $api_scopes = null, $properties = null, $starting_after = null, $ending_before = null, $expand = null, string $contentType = self::contentTypes['searchUsers'][0])
     {
+
 
 
 
@@ -408,6 +414,15 @@ class SearchApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $query,
             'query', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $api_scopes,
+            'api_scopes', // param base name
             'string', // openApiType
             'form', // style
             true, // explode

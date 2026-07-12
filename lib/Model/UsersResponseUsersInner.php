@@ -71,8 +71,9 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'failed_sign_ins' => 'int',
         'last_signed_in' => 'string',
         'created_on' => 'string',
+        'last_organization_sign_ins' => '\Kinde\KindeSDK\Model\UsersResponseUsersInnerLastOrganizationSignInsInner[]',
         'organizations' => 'string[]',
-        'identities' => '\Kinde\KindeSDK\Model\UserIdentitiesInner[]',
+        'identities' => '\Kinde\KindeSDK\Model\UsersResponseUsersInnerIdentitiesInner[]',
         'billing' => '\Kinde\KindeSDK\Model\UsersResponseUsersInnerBilling'
     ];
 
@@ -97,6 +98,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'failed_sign_ins' => null,
         'last_signed_in' => null,
         'created_on' => null,
+        'last_organization_sign_ins' => null,
         'organizations' => null,
         'identities' => null,
         'billing' => null
@@ -121,6 +123,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'failed_sign_ins' => true,
         'last_signed_in' => true,
         'created_on' => true,
+        'last_organization_sign_ins' => true,
         'organizations' => false,
         'identities' => false,
         'billing' => false
@@ -225,6 +228,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'failed_sign_ins' => 'failed_sign_ins',
         'last_signed_in' => 'last_signed_in',
         'created_on' => 'created_on',
+        'last_organization_sign_ins' => 'last_organization_sign_ins',
         'organizations' => 'organizations',
         'identities' => 'identities',
         'billing' => 'billing'
@@ -249,6 +253,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'failed_sign_ins' => 'setFailedSignIns',
         'last_signed_in' => 'setLastSignedIn',
         'created_on' => 'setCreatedOn',
+        'last_organization_sign_ins' => 'setLastOrganizationSignIns',
         'organizations' => 'setOrganizations',
         'identities' => 'setIdentities',
         'billing' => 'setBilling'
@@ -273,6 +278,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         'failed_sign_ins' => 'getFailedSignIns',
         'last_signed_in' => 'getLastSignedIn',
         'created_on' => 'getCreatedOn',
+        'last_organization_sign_ins' => 'getLastOrganizationSignIns',
         'organizations' => 'getOrganizations',
         'identities' => 'getIdentities',
         'billing' => 'getBilling'
@@ -348,6 +354,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('failed_sign_ins', $data ?? [], null);
         $this->setIfExists('last_signed_in', $data ?? [], null);
         $this->setIfExists('created_on', $data ?? [], null);
+        $this->setIfExists('last_organization_sign_ins', $data ?? [], null);
         $this->setIfExists('organizations', $data ?? [], null);
         $this->setIfExists('identities', $data ?? [], null);
         $this->setIfExists('billing', $data ?? [], null);
@@ -775,6 +782,40 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
     }
 
     /**
+     * Gets last_organization_sign_ins
+     *
+     * @return \Kinde\KindeSDK\Model\UsersResponseUsersInnerLastOrganizationSignInsInner[]|null
+     */
+    public function getLastOrganizationSignIns()
+    {
+        return $this->container['last_organization_sign_ins'];
+    }
+
+    /**
+     * Sets last_organization_sign_ins
+     *
+     * @param \Kinde\KindeSDK\Model\UsersResponseUsersInnerLastOrganizationSignInsInner[]|null $last_organization_sign_ins Array of organization sign-in information for the user.
+     *
+     * @return self
+     */
+    public function setLastOrganizationSignIns($last_organization_sign_ins)
+    {
+        if (is_null($last_organization_sign_ins)) {
+            array_push($this->openAPINullablesSetToNull, 'last_organization_sign_ins');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('last_organization_sign_ins', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['last_organization_sign_ins'] = $last_organization_sign_ins;
+
+        return $this;
+    }
+
+    /**
      * Gets organizations
      *
      * @return string[]|null
@@ -804,7 +845,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets identities
      *
-     * @return \Kinde\KindeSDK\Model\UserIdentitiesInner[]|null
+     * @return \Kinde\KindeSDK\Model\UsersResponseUsersInnerIdentitiesInner[]|null
      */
     public function getIdentities()
     {
@@ -814,7 +855,7 @@ class UsersResponseUsersInner implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets identities
      *
-     * @param \Kinde\KindeSDK\Model\UserIdentitiesInner[]|null $identities Array of identities belonging to the user.
+     * @param \Kinde\KindeSDK\Model\UsersResponseUsersInnerIdentitiesInner[]|null $identities Array of identities belonging to the user.
      *
      * @return self
      */

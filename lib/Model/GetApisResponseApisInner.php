@@ -358,7 +358,7 @@ class GetApisResponseApisInner implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets name
      *
-     * @param string|null $name The API’s name.
+     * @param string|null $name The API's name.
      *
      * @return self
      */

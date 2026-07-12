@@ -62,6 +62,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'hashing_method' => 'string',
         'salt' => 'string',
         'salt_position' => 'string',
+        'iterations' => 'int',
+        'variant' => 'string',
         'is_temporary_password' => 'bool'
     ];
 
@@ -77,6 +79,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'hashing_method' => null,
         'salt' => null,
         'salt_position' => null,
+        'iterations' => null,
+        'variant' => null,
         'is_temporary_password' => null
     ];
 
@@ -90,6 +94,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'hashing_method' => false,
         'salt' => false,
         'salt_position' => false,
+        'iterations' => false,
+        'variant' => false,
         'is_temporary_password' => false
     ];
 
@@ -183,6 +189,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'hashing_method' => 'hashing_method',
         'salt' => 'salt',
         'salt_position' => 'salt_position',
+        'iterations' => 'iterations',
+        'variant' => 'variant',
         'is_temporary_password' => 'is_temporary_password'
     ];
 
@@ -196,6 +204,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'hashing_method' => 'setHashingMethod',
         'salt' => 'setSalt',
         'salt_position' => 'setSaltPosition',
+        'iterations' => 'setIterations',
+        'variant' => 'setVariant',
         'is_temporary_password' => 'setIsTemporaryPassword'
     ];
 
@@ -209,6 +219,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'hashing_method' => 'getHashingMethod',
         'salt' => 'getSalt',
         'salt_position' => 'getSaltPosition',
+        'iterations' => 'getIterations',
+        'variant' => 'getVariant',
         'is_temporary_password' => 'getIsTemporaryPassword'
     ];
 
@@ -256,7 +268,9 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     public const HASHING_METHOD_BCRYPT = 'bcrypt';
     public const HASHING_METHOD_CRYPT = 'crypt';
     public const HASHING_METHOD_MD5 = 'md5';
+    public const HASHING_METHOD_SHA256 = 'sha256';
     public const HASHING_METHOD_WORDPRESS = 'wordpress';
+    public const HASHING_METHOD_PBKDF2 = 'pbkdf2';
     public const SALT_POSITION_PREFIX = 'prefix';
     public const SALT_POSITION_SUFFIX = 'suffix';
 
@@ -271,7 +285,9 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
             self::HASHING_METHOD_BCRYPT,
             self::HASHING_METHOD_CRYPT,
             self::HASHING_METHOD_MD5,
+            self::HASHING_METHOD_SHA256,
             self::HASHING_METHOD_WORDPRESS,
+            self::HASHING_METHOD_PBKDF2,
         ];
     }
 
@@ -307,6 +323,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('hashing_method', $data ?? [], null);
         $this->setIfExists('salt', $data ?? [], null);
         $this->setIfExists('salt_position', $data ?? [], null);
+        $this->setIfExists('iterations', $data ?? [], null);
+        $this->setIfExists('variant', $data ?? [], null);
         $this->setIfExists('is_temporary_password', $data ?? [], null);
     }
 
@@ -450,7 +468,7 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets salt
      *
-     * @param string|null $salt Extra characters added to passwords to make them stronger. Not required for bcrypt.
+     * @param string|null $salt Extra characters added to passwords to make them stronger. Not required for bcrypt. Required for pbkdf2; provide the base64-encoded salt.
      *
      * @return self
      */
@@ -497,6 +515,60 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
             );
         }
         $this->container['salt_position'] = $salt_position;
+
+        return $this;
+    }
+
+    /**
+     * Gets iterations
+     *
+     * @return int|null
+     */
+    public function getIterations()
+    {
+        return $this->container['iterations'];
+    }
+
+    /**
+     * Sets iterations
+     *
+     * @param int|null $iterations The iteration count (factor) used to derive the hash. Optional for pbkdf2; when omitted, verification defaults to 24000 (the FusionAuth default factor).
+     *
+     * @return self
+     */
+    public function setIterations($iterations)
+    {
+        if (is_null($iterations)) {
+            throw new \InvalidArgumentException('non-nullable iterations cannot be null');
+        }
+        $this->container['iterations'] = $iterations;
+
+        return $this;
+    }
+
+    /**
+     * Gets variant
+     *
+     * @return string|null
+     */
+    public function getVariant()
+    {
+        return $this->container['variant'];
+    }
+
+    /**
+     * Sets variant
+     *
+     * @param string|null $variant The hashing variant. Required for pbkdf2 (e.g. salted-pbkdf2-hmac-sha256, salted-pbkdf2-hmac-sha256-512, salted-pbkdf2-hmac-sha512-512).
+     *
+     * @return self
+     */
+    public function setVariant($variant)
+    {
+        if (is_null($variant)) {
+            throw new \InvalidArgumentException('non-nullable variant cannot be null');
+        }
+        $this->container['variant'] = $variant;
 
         return $this;
     }

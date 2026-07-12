@@ -136,7 +136,7 @@ class BillingEntitlementsApi
      * @param  string|null $starting_after The ID of the billing entitlement to start after. (optional)
      * @param  string|null $ending_before The ID of the billing entitlement to end before. (optional)
      * @param  string|null $max_value When the maximum limit of an entitlement is null, this value is returned as the maximum limit (optional)
-     * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
+     * @param  string|null $expand Additional plan data to include in the response. Allowed value: \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -159,7 +159,7 @@ class BillingEntitlementsApi
      * @param  string|null $starting_after The ID of the billing entitlement to start after. (optional)
      * @param  string|null $ending_before The ID of the billing entitlement to end before. (optional)
      * @param  string|null $max_value When the maximum limit of an entitlement is null, this value is returned as the maximum limit (optional)
-     * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
+     * @param  string|null $expand Additional plan data to include in the response. Allowed value: \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
      * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
@@ -277,7 +277,7 @@ class BillingEntitlementsApi
      * @param  string|null $starting_after The ID of the billing entitlement to start after. (optional)
      * @param  string|null $ending_before The ID of the billing entitlement to end before. (optional)
      * @param  string|null $max_value When the maximum limit of an entitlement is null, this value is returned as the maximum limit (optional)
-     * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
+     * @param  string|null $expand Additional plan data to include in the response. Allowed value: \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -303,7 +303,7 @@ class BillingEntitlementsApi
      * @param  string|null $starting_after The ID of the billing entitlement to start after. (optional)
      * @param  string|null $ending_before The ID of the billing entitlement to end before. (optional)
      * @param  string|null $max_value When the maximum limit of an entitlement is null, this value is returned as the maximum limit (optional)
-     * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
+     * @param  string|null $expand Additional plan data to include in the response. Allowed value: \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -358,7 +358,7 @@ class BillingEntitlementsApi
      * @param  string|null $starting_after The ID of the billing entitlement to start after. (optional)
      * @param  string|null $ending_before The ID of the billing entitlement to end before. (optional)
      * @param  string|null $max_value When the maximum limit of an entitlement is null, this value is returned as the maximum limit (optional)
-     * @param  string|null $expand Specify additional plan data to retrieve. Use \&quot;plans\&quot;. (optional)
+     * @param  string|null $expand Additional plan data to include in the response. Allowed value: \&quot;plans\&quot;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBillingEntitlements'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException

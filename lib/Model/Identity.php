@@ -66,6 +66,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         'total_logins' => 'int',
         'name' => 'string',
         'email' => 'string',
+        'connection_id' => 'string',
         'is_primary' => 'bool'
     ];
 
@@ -85,6 +86,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         'total_logins' => null,
         'name' => null,
         'email' => null,
+        'connection_id' => null,
         'is_primary' => null
     ];
 
@@ -102,6 +104,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         'total_logins' => false,
         'name' => false,
         'email' => false,
+        'connection_id' => true,
         'is_primary' => true
     ];
 
@@ -199,6 +202,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         'total_logins' => 'total_logins',
         'name' => 'name',
         'email' => 'email',
+        'connection_id' => 'connection_id',
         'is_primary' => 'is_primary'
     ];
 
@@ -216,6 +220,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         'total_logins' => 'setTotalLogins',
         'name' => 'setName',
         'email' => 'setEmail',
+        'connection_id' => 'setConnectionId',
         'is_primary' => 'setIsPrimary'
     ];
 
@@ -233,6 +238,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         'total_logins' => 'getTotalLogins',
         'name' => 'getName',
         'email' => 'getEmail',
+        'connection_id' => 'getConnectionId',
         'is_primary' => 'getIsPrimary'
     ];
 
@@ -301,6 +307,7 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('total_logins', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('email', $data ?? [], null);
+        $this->setIfExists('connection_id', $data ?? [], null);
         $this->setIfExists('is_primary', $data ?? [], null);
     }
 
@@ -558,6 +565,40 @@ class Identity implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable email cannot be null');
         }
         $this->container['email'] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Gets connection_id
+     *
+     * @return string|null
+     */
+    public function getConnectionId()
+    {
+        return $this->container['connection_id'];
+    }
+
+    /**
+     * Sets connection_id
+     *
+     * @param string|null $connection_id The social or enterprise connection ID associated with the identity. Null for email, phone, username, and passkey identities.
+     *
+     * @return self
+     */
+    public function setConnectionId($connection_id)
+    {
+        if (is_null($connection_id)) {
+            array_push($this->openAPINullablesSetToNull, 'connection_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('connection_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['connection_id'] = $connection_id;
 
         return $this;
     }

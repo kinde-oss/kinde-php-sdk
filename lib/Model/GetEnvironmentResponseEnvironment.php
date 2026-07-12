@@ -62,6 +62,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'name' => 'string',
         'hotjar_site_id' => 'string',
         'google_analytics_tag' => 'string',
+        'contentsquare_tag_id' => 'string',
         'is_default' => 'bool',
         'is_live' => 'bool',
         'kinde_domain' => 'string',
@@ -98,6 +99,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'name' => null,
         'hotjar_site_id' => null,
         'google_analytics_tag' => null,
+        'contentsquare_tag_id' => null,
         'is_default' => null,
         'is_live' => null,
         'kinde_domain' => null,
@@ -132,6 +134,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'name' => false,
         'hotjar_site_id' => true,
         'google_analytics_tag' => true,
+        'contentsquare_tag_id' => true,
         'is_default' => false,
         'is_live' => false,
         'kinde_domain' => false,
@@ -246,6 +249,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'name' => 'name',
         'hotjar_site_id' => 'hotjar_site_id',
         'google_analytics_tag' => 'google_analytics_tag',
+        'contentsquare_tag_id' => 'contentsquare_tag_id',
         'is_default' => 'is_default',
         'is_live' => 'is_live',
         'kinde_domain' => 'kinde_domain',
@@ -280,6 +284,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'name' => 'setName',
         'hotjar_site_id' => 'setHotjarSiteId',
         'google_analytics_tag' => 'setGoogleAnalyticsTag',
+        'contentsquare_tag_id' => 'setContentsquareTagId',
         'is_default' => 'setIsDefault',
         'is_live' => 'setIsLive',
         'kinde_domain' => 'setKindeDomain',
@@ -314,6 +319,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         'name' => 'getName',
         'hotjar_site_id' => 'getHotjarSiteId',
         'google_analytics_tag' => 'getGoogleAnalyticsTag',
+        'contentsquare_tag_id' => 'getContentsquareTagId',
         'is_default' => 'getIsDefault',
         'is_live' => 'getIsLive',
         'kinde_domain' => 'getKindeDomain',
@@ -433,6 +439,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
         $this->setIfExists('name', $data ?? [], null);
         $this->setIfExists('hotjar_site_id', $data ?? [], null);
         $this->setIfExists('google_analytics_tag', $data ?? [], null);
+        $this->setIfExists('contentsquare_tag_id', $data ?? [], null);
         $this->setIfExists('is_default', $data ?? [], null);
         $this->setIfExists('is_live', $data ?? [], null);
         $this->setIfExists('kinde_domain', $data ?? [], null);
@@ -635,6 +642,40 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
             }
         }
         $this->container['google_analytics_tag'] = $google_analytics_tag;
+
+        return $this;
+    }
+
+    /**
+     * Gets contentsquare_tag_id
+     *
+     * @return string|null
+     */
+    public function getContentsquareTagId()
+    {
+        return $this->container['contentsquare_tag_id'];
+    }
+
+    /**
+     * Sets contentsquare_tag_id
+     *
+     * @param string|null $contentsquare_tag_id Your Contentsquare Tag ID.
+     *
+     * @return self
+     */
+    public function setContentsquareTagId($contentsquare_tag_id)
+    {
+        if (is_null($contentsquare_tag_id)) {
+            array_push($this->openAPINullablesSetToNull, 'contentsquare_tag_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('contentsquare_tag_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['contentsquare_tag_id'] = $contentsquare_tag_id;
 
         return $this;
     }
@@ -869,7 +910,7 @@ class GetEnvironmentResponseEnvironment implements ModelInterface, ArrayAccess, 
     /**
      * Sets favicon_fallback
      *
-     * @param string|null $favicon_fallback The favicon URL to be used as a fallback in browsers that don’t support SVG, add a PNG
+     * @param string|null $favicon_fallback The favicon URL to be used as a fallback in browsers that don't support SVG, add a PNG
      *
      * @return self
      */

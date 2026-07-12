@@ -66,7 +66,12 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_use_common_endpoint' => 'bool',
         'is_sync_user_profile_on_login' => 'bool',
         'is_retrieve_provider_user_groups' => 'bool',
-        'is_extended_attributes_required' => 'bool'
+        'is_extended_attributes_required' => 'bool',
+        'is_create_missing_user' => 'bool',
+        'is_force_show_sso_button' => 'bool',
+        'upstream_params' => 'array<string,mixed>',
+        'is_use_custom_domain' => 'bool',
+        'is_trusted' => 'bool'
     ];
 
     /**
@@ -84,7 +89,12 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_use_common_endpoint' => null,
         'is_sync_user_profile_on_login' => null,
         'is_retrieve_provider_user_groups' => null,
-        'is_extended_attributes_required' => null
+        'is_extended_attributes_required' => null,
+        'is_create_missing_user' => null,
+        'is_force_show_sso_button' => null,
+        'upstream_params' => null,
+        'is_use_custom_domain' => null,
+        'is_trusted' => null
     ];
 
     /**
@@ -100,7 +110,12 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_use_common_endpoint' => false,
         'is_sync_user_profile_on_login' => false,
         'is_retrieve_provider_user_groups' => false,
-        'is_extended_attributes_required' => false
+        'is_extended_attributes_required' => false,
+        'is_create_missing_user' => false,
+        'is_force_show_sso_button' => false,
+        'upstream_params' => false,
+        'is_use_custom_domain' => false,
+        'is_trusted' => false
     ];
 
     /**
@@ -196,7 +211,12 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_use_common_endpoint' => 'is_use_common_endpoint',
         'is_sync_user_profile_on_login' => 'is_sync_user_profile_on_login',
         'is_retrieve_provider_user_groups' => 'is_retrieve_provider_user_groups',
-        'is_extended_attributes_required' => 'is_extended_attributes_required'
+        'is_extended_attributes_required' => 'is_extended_attributes_required',
+        'is_create_missing_user' => 'is_create_missing_user',
+        'is_force_show_sso_button' => 'is_force_show_sso_button',
+        'upstream_params' => 'upstream_params',
+        'is_use_custom_domain' => 'is_use_custom_domain',
+        'is_trusted' => 'is_trusted'
     ];
 
     /**
@@ -212,7 +232,12 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_use_common_endpoint' => 'setIsUseCommonEndpoint',
         'is_sync_user_profile_on_login' => 'setIsSyncUserProfileOnLogin',
         'is_retrieve_provider_user_groups' => 'setIsRetrieveProviderUserGroups',
-        'is_extended_attributes_required' => 'setIsExtendedAttributesRequired'
+        'is_extended_attributes_required' => 'setIsExtendedAttributesRequired',
+        'is_create_missing_user' => 'setIsCreateMissingUser',
+        'is_force_show_sso_button' => 'setIsForceShowSsoButton',
+        'upstream_params' => 'setUpstreamParams',
+        'is_use_custom_domain' => 'setIsUseCustomDomain',
+        'is_trusted' => 'setIsTrusted'
     ];
 
     /**
@@ -228,7 +253,12 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_use_common_endpoint' => 'getIsUseCommonEndpoint',
         'is_sync_user_profile_on_login' => 'getIsSyncUserProfileOnLogin',
         'is_retrieve_provider_user_groups' => 'getIsRetrieveProviderUserGroups',
-        'is_extended_attributes_required' => 'getIsExtendedAttributesRequired'
+        'is_extended_attributes_required' => 'getIsExtendedAttributesRequired',
+        'is_create_missing_user' => 'getIsCreateMissingUser',
+        'is_force_show_sso_button' => 'getIsForceShowSsoButton',
+        'upstream_params' => 'getUpstreamParams',
+        'is_use_custom_domain' => 'getIsUseCustomDomain',
+        'is_trusted' => 'getIsTrusted'
     ];
 
     /**
@@ -296,6 +326,11 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         $this->setIfExists('is_sync_user_profile_on_login', $data ?? [], null);
         $this->setIfExists('is_retrieve_provider_user_groups', $data ?? [], null);
         $this->setIfExists('is_extended_attributes_required', $data ?? [], null);
+        $this->setIfExists('is_create_missing_user', $data ?? [], null);
+        $this->setIfExists('is_force_show_sso_button', $data ?? [], null);
+        $this->setIfExists('upstream_params', $data ?? [], null);
+        $this->setIfExists('is_use_custom_domain', $data ?? [], null);
+        $this->setIfExists('is_trusted', $data ?? [], null);
     }
 
     /**
@@ -552,6 +587,141 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable is_extended_attributes_required cannot be null');
         }
         $this->container['is_extended_attributes_required'] = $is_extended_attributes_required;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_create_missing_user
+     *
+     * @return bool|null
+     */
+    public function getIsCreateMissingUser()
+    {
+        return $this->container['is_create_missing_user'];
+    }
+
+    /**
+     * Sets is_create_missing_user
+     *
+     * @param bool|null $is_create_missing_user Create a user record in Kinde if the user signing in does not exist.
+     *
+     * @return self
+     */
+    public function setIsCreateMissingUser($is_create_missing_user)
+    {
+        if (is_null($is_create_missing_user)) {
+            throw new \InvalidArgumentException('non-nullable is_create_missing_user cannot be null');
+        }
+        $this->container['is_create_missing_user'] = $is_create_missing_user;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_force_show_sso_button
+     *
+     * @return bool|null
+     */
+    public function getIsForceShowSsoButton()
+    {
+        return $this->container['is_force_show_sso_button'];
+    }
+
+    /**
+     * Sets is_force_show_sso_button
+     *
+     * @param bool|null $is_force_show_sso_button Force showing the SSO button for this connection.
+     *
+     * @return self
+     */
+    public function setIsForceShowSsoButton($is_force_show_sso_button)
+    {
+        if (is_null($is_force_show_sso_button)) {
+            throw new \InvalidArgumentException('non-nullable is_force_show_sso_button cannot be null');
+        }
+        $this->container['is_force_show_sso_button'] = $is_force_show_sso_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets upstream_params
+     *
+     * @return array<string,mixed>|null
+     */
+    public function getUpstreamParams()
+    {
+        return $this->container['upstream_params'];
+    }
+
+    /**
+     * Sets upstream_params
+     *
+     * @param array<string,mixed>|null $upstream_params Additional upstream parameters to pass to the identity provider.
+     *
+     * @return self
+     */
+    public function setUpstreamParams($upstream_params)
+    {
+        if (is_null($upstream_params)) {
+            throw new \InvalidArgumentException('non-nullable upstream_params cannot be null');
+        }
+        $this->container['upstream_params'] = $upstream_params;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_use_custom_domain
+     *
+     * @return bool|null
+     */
+    public function getIsUseCustomDomain()
+    {
+        return $this->container['is_use_custom_domain'];
+    }
+
+    /**
+     * Sets is_use_custom_domain
+     *
+     * @param bool|null $is_use_custom_domain Use custom domain callback URL.
+     *
+     * @return self
+     */
+    public function setIsUseCustomDomain($is_use_custom_domain)
+    {
+        if (is_null($is_use_custom_domain)) {
+            throw new \InvalidArgumentException('non-nullable is_use_custom_domain cannot be null');
+        }
+        $this->container['is_use_custom_domain'] = $is_use_custom_domain;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_trusted
+     *
+     * @return bool|null
+     */
+    public function getIsTrusted()
+    {
+        return $this->container['is_trusted'];
+    }
+
+    /**
+     * Sets is_trusted
+     *
+     * @param bool|null $is_trusted Trust this connection for account merging.
+     *
+     * @return self
+     */
+    public function setIsTrusted($is_trusted)
+    {
+        if (is_null($is_trusted)) {
+            throw new \InvalidArgumentException('non-nullable is_trusted cannot be null');
+        }
+        $this->container['is_trusted'] = $is_trusted;
 
         return $this;
     }

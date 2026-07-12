@@ -61,7 +61,8 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'name' => 'string',
         'description' => 'string',
         'key' => 'string',
-        'is_default_role' => 'bool'
+        'is_default_role' => 'bool',
+        'assignment_permission_id' => 'string'
     ];
 
     /**
@@ -75,7 +76,8 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'name' => null,
         'description' => null,
         'key' => null,
-        'is_default_role' => null
+        'is_default_role' => null,
+        'assignment_permission_id' => 'uuid'
     ];
 
     /**
@@ -87,7 +89,8 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'name' => false,
         'description' => false,
         'key' => false,
-        'is_default_role' => false
+        'is_default_role' => false,
+        'assignment_permission_id' => true
     ];
 
     /**
@@ -179,7 +182,8 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'name' => 'name',
         'description' => 'description',
         'key' => 'key',
-        'is_default_role' => 'is_default_role'
+        'is_default_role' => 'is_default_role',
+        'assignment_permission_id' => 'assignment_permission_id'
     ];
 
     /**
@@ -191,7 +195,8 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'name' => 'setName',
         'description' => 'setDescription',
         'key' => 'setKey',
-        'is_default_role' => 'setIsDefaultRole'
+        'is_default_role' => 'setIsDefaultRole',
+        'assignment_permission_id' => 'setAssignmentPermissionId'
     ];
 
     /**
@@ -203,7 +208,8 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         'name' => 'getName',
         'description' => 'getDescription',
         'key' => 'getKey',
-        'is_default_role' => 'getIsDefaultRole'
+        'is_default_role' => 'getIsDefaultRole',
+        'assignment_permission_id' => 'getAssignmentPermissionId'
     ];
 
     /**
@@ -267,6 +273,7 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('key', $data ?? [], null);
         $this->setIfExists('is_default_role', $data ?? [], null);
+        $this->setIfExists('assignment_permission_id', $data ?? [], null);
     }
 
     /**
@@ -421,6 +428,40 @@ class UpdateRolesRequest implements ModelInterface, ArrayAccess, \JsonSerializab
             throw new \InvalidArgumentException('non-nullable is_default_role cannot be null');
         }
         $this->container['is_default_role'] = $is_default_role;
+
+        return $this;
+    }
+
+    /**
+     * Gets assignment_permission_id
+     *
+     * @return string|null
+     */
+    public function getAssignmentPermissionId()
+    {
+        return $this->container['assignment_permission_id'];
+    }
+
+    /**
+     * Sets assignment_permission_id
+     *
+     * @param string|null $assignment_permission_id The public ID of the permission required to assign this role to users. If null, no change to the assignment permission is made. If set to 'NO_PERMISSION_REQUIRED', no permission is required.
+     *
+     * @return self
+     */
+    public function setAssignmentPermissionId($assignment_permission_id)
+    {
+        if (is_null($assignment_permission_id)) {
+            array_push($this->openAPINullablesSetToNull, 'assignment_permission_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('assignment_permission_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['assignment_permission_id'] = $assignment_permission_id;
 
         return $this;
     }
