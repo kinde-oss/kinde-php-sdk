@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "codeigniter4/framework",
-            "version": "v4.7.3",
+            "version": "v4.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/framework.git",
-                "reference": "ab9bf33caa3ccc25b1a4652234d7d0eb1d1937de"
+                "reference": "67ead895b7491703e5e5bc17436778806192008f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/ab9bf33caa3ccc25b1a4652234d7d0eb1d1937de",
-                "reference": "ab9bf33caa3ccc25b1a4652234d7d0eb1d1937de",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/67ead895b7491703e5e5bc17436778806192008f",
+                "reference": "67ead895b7491703e5e5bc17436778806192008f",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
-            "time": "2026-05-22T11:21:33+00:00"
+            "time": "2026-07-07T09:23:35+00:00"
         },
         {
             "name": "firebase/php-jwt",
