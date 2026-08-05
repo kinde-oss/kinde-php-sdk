@@ -15,6 +15,9 @@ The Kinde PHP SDK provides two main clients:
 composer require kinde-oss/kinde-php-sdk
 ```
 
+> [!IMPORTANT]
+> `guzzlehttp/guzzle:^8.0` requires `guzzlehttp/psr7:^3.0`. If you are upgrading an existing application, update any direct `guzzlehttp/psr7` constraint to `^3.0` as part of the migration.
+
 ## Quick Start
 
 ### Environment Variables

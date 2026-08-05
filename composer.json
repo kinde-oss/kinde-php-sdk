@@ -23,7 +23,7 @@
     "ext-json": "*",
     "ext-mbstring": "*",
     "guzzlehttp/guzzle": "^8.0",
-    "guzzlehttp/psr7": "^1.7 || ^2.0 || ^3.0",
+    "guzzlehttp/psr7": "^3.0",
     "firebase/php-jwt": "^7.0"
   },
   "require-dev": {
