@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.5.1] - Since v2.5.0
+
+### Security
+
+- Updated `guzzlehttp/guzzle` to 7.15.3 in the lock file, resolving the security advisory affecting earlier 7.x releases. Consumers install Guzzle via their own `composer.json` resolution, but this ensures the SDK's development and CI environments run a patched version.
+
+### Maintenance
+
+- Updated development lock file dependencies: `laravel/framework` 13.24.0, `laravel/sail` 1.65.0, `phpunit/phpunit` 13.2.6, `friendsofphp/php-cs-fixer` 3.95.18, `nunomaduro/collision` 8.9.5, and `@openapitools/openapi-generator-cli` 2.40.1.
+
 ## [2.5.0] - Since v2.4.0
 
 ### Added
