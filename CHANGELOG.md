@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2.5.1] - Since v2.5.0
+## [2.6.0] - Since v2.5.0
+
+### Added
+
+- Regenerated the Management API client from the current Kinde API specification, adding endpoints for application access roles (`getApplicationAccessRoles`, `addApplicationAccessRole`, `removeApplicationAccessRole` on `ApplicationsApi`), organization role user counts (`getOrganizationRoleUsersCount`, `getOrganizationRoleActiveUsersCount` on `OrganizationsApi`), and billing customer creation for users (`createUserBillingCustomer` on `UsersApi`), along with the corresponding request/response models.
+- New properties on application update requests, including faceless auth, name collection, marketing consent, sign-in/sign-up page link toggles, SSO button, Gravatar fallback, and role-based access control settings.
 
 ### Security
 

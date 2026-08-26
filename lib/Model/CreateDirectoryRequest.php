@@ -328,12 +328,6 @@ class CreateDirectoryRequest implements ModelInterface, ArrayAccess, \JsonSerial
         if ($this->container['org_code'] === null) {
             $invalidProperties[] = "'org_code' can't be null";
         }
-        if ($this->container['directory_name'] === null) {
-            $invalidProperties[] = "'directory_name' can't be null";
-        }
-        if ($this->container['provider_code'] === null) {
-            $invalidProperties[] = "'provider_code' can't be null";
-        }
         $allowedValues = $this->getProviderCodeAllowableValues();
         if (!is_null($this->container['provider_code']) && !in_array($this->container['provider_code'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -388,7 +382,7 @@ class CreateDirectoryRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets directory_name
      *
-     * @return string
+     * @return string|null
      */
     public function getDirectoryName()
     {
@@ -398,7 +392,7 @@ class CreateDirectoryRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets directory_name
      *
-     * @param string $directory_name A descriptive name for the SCIM directory.
+     * @param string|null $directory_name An optional descriptive name for the SCIM directory.
      *
      * @return self
      */
@@ -415,7 +409,7 @@ class CreateDirectoryRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Gets provider_code
      *
-     * @return string
+     * @return string|null
      */
     public function getProviderCode()
     {
@@ -425,7 +419,7 @@ class CreateDirectoryRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets provider_code
      *
-     * @param string $provider_code The SCIM provider code to use for this directory.
+     * @param string|null $provider_code The SCIM provider code to use for this directory. When omitted, the provider is inferred from the organization enterprise authentication method. If the inferred (or explicit) provider is disabled or missing endpoint configuration, INVALID_PROVIDER is returned.
      *
      * @return self
      */

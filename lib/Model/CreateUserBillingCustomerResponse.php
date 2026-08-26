@@ -1,6 +1,6 @@
 <?php
 /**
- * UpdateUserRequest
+ * CreateUserBillingCustomerResponse
  *
  * PHP version 8.1
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * UpdateUserRequest Class Doc Comment
+ * CreateUserBillingCustomerResponse Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class CreateUserBillingCustomerResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       *
       * @var string
       */
-    protected static $openAPIModelName = 'updateUser_request';
+    protected static $openAPIModelName = 'create_user_billing_customer_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var string[]
       */
     protected static $openAPITypes = [
-        'given_name' => 'string',
-        'family_name' => 'string',
-        'picture' => 'string',
-        'is_suspended' => 'bool',
-        'is_password_reset_requested' => 'bool',
-        'provided_id' => 'string'
+        'message' => 'string',
+        'code' => 'string',
+        'billing_customer' => '\Kinde\KindeSDK\Model\CreateUserBillingCustomerResponseBillingCustomer'
     ];
 
     /**
@@ -74,12 +71,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'given_name' => null,
-        'family_name' => null,
-        'picture' => null,
-        'is_suspended' => null,
-        'is_password_reset_requested' => null,
-        'provided_id' => null
+        'message' => null,
+        'code' => null,
+        'billing_customer' => null
     ];
 
     /**
@@ -88,12 +82,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'given_name' => false,
-        'family_name' => false,
-        'picture' => false,
-        'is_suspended' => false,
-        'is_password_reset_requested' => false,
-        'provided_id' => false
+        'message' => false,
+        'code' => false,
+        'billing_customer' => false
     ];
 
     /**
@@ -182,12 +173,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $attributeMap = [
-        'given_name' => 'given_name',
-        'family_name' => 'family_name',
-        'picture' => 'picture',
-        'is_suspended' => 'is_suspended',
-        'is_password_reset_requested' => 'is_password_reset_requested',
-        'provided_id' => 'provided_id'
+        'message' => 'message',
+        'code' => 'code',
+        'billing_customer' => 'billing_customer'
     ];
 
     /**
@@ -196,12 +184,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $setters = [
-        'given_name' => 'setGivenName',
-        'family_name' => 'setFamilyName',
-        'picture' => 'setPicture',
-        'is_suspended' => 'setIsSuspended',
-        'is_password_reset_requested' => 'setIsPasswordResetRequested',
-        'provided_id' => 'setProvidedId'
+        'message' => 'setMessage',
+        'code' => 'setCode',
+        'billing_customer' => 'setBillingCustomer'
     ];
 
     /**
@@ -210,12 +195,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $getters = [
-        'given_name' => 'getGivenName',
-        'family_name' => 'getFamilyName',
-        'picture' => 'getPicture',
-        'is_suspended' => 'getIsSuspended',
-        'is_password_reset_requested' => 'getIsPasswordResetRequested',
-        'provided_id' => 'getProvidedId'
+        'message' => 'getMessage',
+        'code' => 'getCode',
+        'billing_customer' => 'getBillingCustomer'
     ];
 
     /**
@@ -275,12 +257,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('given_name', $data ?? [], null);
-        $this->setIfExists('family_name', $data ?? [], null);
-        $this->setIfExists('picture', $data ?? [], null);
-        $this->setIfExists('is_suspended', $data ?? [], null);
-        $this->setIfExists('is_password_reset_requested', $data ?? [], null);
-        $this->setIfExists('provided_id', $data ?? [], null);
+        $this->setIfExists('message', $data ?? [], null);
+        $this->setIfExists('code', $data ?? [], null);
+        $this->setIfExists('billing_customer', $data ?? [], null);
     }
 
     /**
@@ -326,163 +305,82 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
 
 
     /**
-     * Gets given_name
+     * Gets message
      *
      * @return string|null
      */
-    public function getGivenName()
+    public function getMessage()
     {
-        return $this->container['given_name'];
+        return $this->container['message'];
     }
 
     /**
-     * Sets given_name
+     * Sets message
      *
-     * @param string|null $given_name User's first name. If the user is the owner of a family billing customer, this update is also propagated to the corresponding billing customer details.
+     * @param string|null $message Response message.
      *
      * @return self
      */
-    public function setGivenName($given_name)
+    public function setMessage($message)
     {
-        if (is_null($given_name)) {
-            throw new \InvalidArgumentException('non-nullable given_name cannot be null');
+        if (is_null($message)) {
+            throw new \InvalidArgumentException('non-nullable message cannot be null');
         }
-        $this->container['given_name'] = $given_name;
+        $this->container['message'] = $message;
 
         return $this;
     }
 
     /**
-     * Gets family_name
+     * Gets code
      *
      * @return string|null
      */
-    public function getFamilyName()
+    public function getCode()
     {
-        return $this->container['family_name'];
+        return $this->container['code'];
     }
 
     /**
-     * Sets family_name
+     * Sets code
      *
-     * @param string|null $family_name User's last name. If the user is the owner of a family billing customer, this update is also propagated to the corresponding billing customer details.
+     * @param string|null $code Response code.
      *
      * @return self
      */
-    public function setFamilyName($family_name)
+    public function setCode($code)
     {
-        if (is_null($family_name)) {
-            throw new \InvalidArgumentException('non-nullable family_name cannot be null');
+        if (is_null($code)) {
+            throw new \InvalidArgumentException('non-nullable code cannot be null');
         }
-        $this->container['family_name'] = $family_name;
+        $this->container['code'] = $code;
 
         return $this;
     }
 
     /**
-     * Gets picture
+     * Gets billing_customer
      *
-     * @return string|null
+     * @return \Kinde\KindeSDK\Model\CreateUserBillingCustomerResponseBillingCustomer|null
      */
-    public function getPicture()
+    public function getBillingCustomer()
     {
-        return $this->container['picture'];
+        return $this->container['billing_customer'];
     }
 
     /**
-     * Sets picture
+     * Sets billing_customer
      *
-     * @param string|null $picture The user's profile picture.
+     * @param \Kinde\KindeSDK\Model\CreateUserBillingCustomerResponseBillingCustomer|null $billing_customer billing_customer
      *
      * @return self
      */
-    public function setPicture($picture)
+    public function setBillingCustomer($billing_customer)
     {
-        if (is_null($picture)) {
-            throw new \InvalidArgumentException('non-nullable picture cannot be null');
+        if (is_null($billing_customer)) {
+            throw new \InvalidArgumentException('non-nullable billing_customer cannot be null');
         }
-        $this->container['picture'] = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_suspended
-     *
-     * @return bool|null
-     */
-    public function getIsSuspended()
-    {
-        return $this->container['is_suspended'];
-    }
-
-    /**
-     * Sets is_suspended
-     *
-     * @param bool|null $is_suspended Whether the user is currently suspended or not.
-     *
-     * @return self
-     */
-    public function setIsSuspended($is_suspended)
-    {
-        if (is_null($is_suspended)) {
-            throw new \InvalidArgumentException('non-nullable is_suspended cannot be null');
-        }
-        $this->container['is_suspended'] = $is_suspended;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_password_reset_requested
-     *
-     * @return bool|null
-     */
-    public function getIsPasswordResetRequested()
-    {
-        return $this->container['is_password_reset_requested'];
-    }
-
-    /**
-     * Sets is_password_reset_requested
-     *
-     * @param bool|null $is_password_reset_requested Prompt the user to change their password on next sign in.
-     *
-     * @return self
-     */
-    public function setIsPasswordResetRequested($is_password_reset_requested)
-    {
-        if (is_null($is_password_reset_requested)) {
-            throw new \InvalidArgumentException('non-nullable is_password_reset_requested cannot be null');
-        }
-        $this->container['is_password_reset_requested'] = $is_password_reset_requested;
-
-        return $this;
-    }
-
-    /**
-     * Gets provided_id
-     *
-     * @return string|null
-     */
-    public function getProvidedId()
-    {
-        return $this->container['provided_id'];
-    }
-
-    /**
-     * Sets provided_id
-     *
-     * @param string|null $provided_id An external id to reference the user.
-     *
-     * @return self
-     */
-    public function setProvidedId($provided_id)
-    {
-        if (is_null($provided_id)) {
-            throw new \InvalidArgumentException('non-nullable provided_id cannot be null');
-        }
-        $this->container['provided_id'] = $provided_id;
+        $this->container['billing_customer'] = $billing_customer;
 
         return $this;
     }

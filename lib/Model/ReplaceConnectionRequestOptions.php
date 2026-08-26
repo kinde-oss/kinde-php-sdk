@@ -70,9 +70,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'is_extended_attributes_required' => 'bool',
         'is_create_missing_user' => 'bool',
         'is_force_show_sso_button' => 'bool',
+        'sso_button_display' => 'string',
         'upstream_params' => 'array<string,mixed>',
         'saml_entity_id' => 'string',
         'saml_idp_metadata_url' => 'string',
+        'saml_idp_metadata_xml' => 'string',
         'sign_request_algorithm' => 'string',
         'protocol_binding' => 'string',
         'name_id_format' => 'string',
@@ -104,9 +106,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'is_extended_attributes_required' => null,
         'is_create_missing_user' => null,
         'is_force_show_sso_button' => null,
+        'sso_button_display' => null,
         'upstream_params' => null,
         'saml_entity_id' => null,
         'saml_idp_metadata_url' => null,
+        'saml_idp_metadata_xml' => null,
         'sign_request_algorithm' => null,
         'protocol_binding' => null,
         'name_id_format' => null,
@@ -136,9 +140,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'is_extended_attributes_required' => false,
         'is_create_missing_user' => false,
         'is_force_show_sso_button' => false,
+        'sso_button_display' => false,
         'upstream_params' => false,
         'saml_entity_id' => false,
         'saml_idp_metadata_url' => false,
+        'saml_idp_metadata_xml' => false,
         'sign_request_algorithm' => false,
         'protocol_binding' => false,
         'name_id_format' => false,
@@ -248,9 +254,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'is_extended_attributes_required' => 'is_extended_attributes_required',
         'is_create_missing_user' => 'is_create_missing_user',
         'is_force_show_sso_button' => 'is_force_show_sso_button',
+        'sso_button_display' => 'sso_button_display',
         'upstream_params' => 'upstream_params',
         'saml_entity_id' => 'saml_entity_id',
         'saml_idp_metadata_url' => 'saml_idp_metadata_url',
+        'saml_idp_metadata_xml' => 'saml_idp_metadata_xml',
         'sign_request_algorithm' => 'sign_request_algorithm',
         'protocol_binding' => 'protocol_binding',
         'name_id_format' => 'name_id_format',
@@ -280,9 +288,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'is_extended_attributes_required' => 'setIsExtendedAttributesRequired',
         'is_create_missing_user' => 'setIsCreateMissingUser',
         'is_force_show_sso_button' => 'setIsForceShowSsoButton',
+        'sso_button_display' => 'setSsoButtonDisplay',
         'upstream_params' => 'setUpstreamParams',
         'saml_entity_id' => 'setSamlEntityId',
         'saml_idp_metadata_url' => 'setSamlIdpMetadataUrl',
+        'saml_idp_metadata_xml' => 'setSamlIdpMetadataXml',
         'sign_request_algorithm' => 'setSignRequestAlgorithm',
         'protocol_binding' => 'setProtocolBinding',
         'name_id_format' => 'setNameIdFormat',
@@ -312,9 +322,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         'is_extended_attributes_required' => 'getIsExtendedAttributesRequired',
         'is_create_missing_user' => 'getIsCreateMissingUser',
         'is_force_show_sso_button' => 'getIsForceShowSsoButton',
+        'sso_button_display' => 'getSsoButtonDisplay',
         'upstream_params' => 'getUpstreamParams',
         'saml_entity_id' => 'getSamlEntityId',
         'saml_idp_metadata_url' => 'getSamlIdpMetadataUrl',
+        'saml_idp_metadata_xml' => 'getSamlIdpMetadataXml',
         'sign_request_algorithm' => 'getSignRequestAlgorithm',
         'protocol_binding' => 'getProtocolBinding',
         'name_id_format' => 'getNameIdFormat',
@@ -367,6 +379,9 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         return self::$openAPIModelName;
     }
 
+    public const SSO_BUTTON_DISPLAY_AUTO = 'auto';
+    public const SSO_BUTTON_DISPLAY_SHOW = 'show';
+    public const SSO_BUTTON_DISPLAY_HIDE = 'hide';
     public const SIGN_REQUEST_ALGORITHM_RSA_SHA256 = 'RSA-SHA256';
     public const SIGN_REQUEST_ALGORITHM_RSA_SHA1 = 'RSA-SHA1';
     public const PROTOCOL_BINDING_HTTP_REDIRECT = 'HTTP-REDIRECT';
@@ -375,6 +390,20 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     public const NAME_ID_FORMAT_TRANSIENT = 'Transient';
     public const NAME_ID_FORMAT_EMAIL_ADDRESS = 'Email address';
     public const NAME_ID_FORMAT_UNSPECIFIED = 'Unspecified';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getSsoButtonDisplayAllowableValues()
+    {
+        return [
+            self::SSO_BUTTON_DISPLAY_AUTO,
+            self::SSO_BUTTON_DISPLAY_SHOW,
+            self::SSO_BUTTON_DISPLAY_HIDE,
+        ];
+    }
 
     /**
      * Gets allowable values of the enum
@@ -444,9 +473,11 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
         $this->setIfExists('is_extended_attributes_required', $data ?? [], null);
         $this->setIfExists('is_create_missing_user', $data ?? [], null);
         $this->setIfExists('is_force_show_sso_button', $data ?? [], null);
+        $this->setIfExists('sso_button_display', $data ?? [], null);
         $this->setIfExists('upstream_params', $data ?? [], null);
         $this->setIfExists('saml_entity_id', $data ?? [], null);
         $this->setIfExists('saml_idp_metadata_url', $data ?? [], null);
+        $this->setIfExists('saml_idp_metadata_xml', $data ?? [], null);
         $this->setIfExists('sign_request_algorithm', $data ?? [], null);
         $this->setIfExists('protocol_binding', $data ?? [], null);
         $this->setIfExists('name_id_format', $data ?? [], null);
@@ -484,6 +515,15 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getSsoButtonDisplayAllowableValues();
+        if (!is_null($this->container['sso_button_display']) && !in_array($this->container['sso_button_display'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'sso_button_display', must be one of '%s'",
+                $this->container['sso_button_display'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         $allowedValues = $this->getSignRequestAlgorithmAllowableValues();
         if (!is_null($this->container['sign_request_algorithm']) && !in_array($this->container['sign_request_algorithm'], $allowedValues, true)) {
@@ -828,6 +868,7 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
      * Gets is_force_show_sso_button
      *
      * @return bool|null
+     * @deprecated
      */
     public function getIsForceShowSsoButton()
     {
@@ -837,9 +878,10 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     /**
      * Sets is_force_show_sso_button
      *
-     * @param bool|null $is_force_show_sso_button Force showing the SSO button for this connection.
+     * @param bool|null $is_force_show_sso_button Deprecated - Use 'sso_button_display' instead. True maps to \"show\", false maps to \"auto\". Ignored when sso_button_display is also sent.
      *
      * @return self
+     * @deprecated
      */
     public function setIsForceShowSsoButton($is_force_show_sso_button)
     {
@@ -847,6 +889,43 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable is_force_show_sso_button cannot be null');
         }
         $this->container['is_force_show_sso_button'] = $is_force_show_sso_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets sso_button_display
+     *
+     * @return string|null
+     */
+    public function getSsoButtonDisplay()
+    {
+        return $this->container['sso_button_display'];
+    }
+
+    /**
+     * Sets sso_button_display
+     *
+     * @param string|null $sso_button_display Controls when the SSO sign-in button is shown for this connection. Replaces is_force_show_sso_button. \"auto\" shows the button unless a home realm domain is set, \"show\" always shows it, \"hide\" never shows it. Takes precedence over is_force_show_sso_button when both are sent.
+     *
+     * @return self
+     */
+    public function setSsoButtonDisplay($sso_button_display)
+    {
+        if (is_null($sso_button_display)) {
+            throw new \InvalidArgumentException('non-nullable sso_button_display cannot be null');
+        }
+        $allowedValues = $this->getSsoButtonDisplayAllowableValues();
+        if (!in_array($sso_button_display, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'sso_button_display', must be one of '%s'",
+                    $sso_button_display,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['sso_button_display'] = $sso_button_display;
 
         return $this;
     }
@@ -918,7 +997,7 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
     /**
      * Sets saml_idp_metadata_url
      *
-     * @param string|null $saml_idp_metadata_url URL for the IdP metadata.
+     * @param string|null $saml_idp_metadata_url URL for the IdP metadata. Optional if saml_idp_metadata_xml is provided.
      *
      * @return self
      */
@@ -928,6 +1007,33 @@ class ReplaceConnectionRequestOptions implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable saml_idp_metadata_url cannot be null');
         }
         $this->container['saml_idp_metadata_url'] = $saml_idp_metadata_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets saml_idp_metadata_xml
+     *
+     * @return string|null
+     */
+    public function getSamlIdpMetadataXml()
+    {
+        return $this->container['saml_idp_metadata_xml'];
+    }
+
+    /**
+     * Sets saml_idp_metadata_xml
+     *
+     * @param string|null $saml_idp_metadata_xml Raw IdP metadata XML. Use when the IdP does not host a metadata URL (e.g. Google Workspace). Takes precedence over saml_idp_metadata_url when both are set.
+     *
+     * @return self
+     */
+    public function setSamlIdpMetadataXml($saml_idp_metadata_xml)
+    {
+        if (is_null($saml_idp_metadata_xml)) {
+            throw new \InvalidArgumentException('non-nullable saml_idp_metadata_xml cannot be null');
+        }
+        $this->container['saml_idp_metadata_xml'] = $saml_idp_metadata_xml;
 
         return $this;
     }

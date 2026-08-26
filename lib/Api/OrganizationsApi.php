@@ -150,7 +150,13 @@ class OrganizationsApi
         'getOrganizationPropertyValues' => [
             'application/json',
         ],
+        'getOrganizationRoleActiveUsersCount' => [
+            'application/json',
+        ],
         'getOrganizationRoleUsers' => [
+            'application/json',
+        ],
+        'getOrganizationRoleUsersCount' => [
             'application/json',
         ],
         'getOrganizationUserPermissions' => [
@@ -8237,6 +8243,354 @@ class OrganizationsApi
     }
 
     /**
+     * Operation getOrganizationRoleActiveUsersCount
+     *
+     * Get organization role active users count
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  \DateTime $date_time_from Start of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded down to the nearest second before validation. (required)
+     * @param  \DateTime $date_time_to End of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded up to the nearest second before validation. The window must not exceed 3 days, so this must be earlier than &#x60;date_time_from&#x60; plus 3 days. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleActiveUsersCount'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetOrganizationRoleActiveUsersCountResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getOrganizationRoleActiveUsersCount($org_code, $role_id, $date_time_from, $date_time_to, string $contentType = self::contentTypes['getOrganizationRoleActiveUsersCount'][0])
+    {
+        list($response) = $this->getOrganizationRoleActiveUsersCountWithHttpInfo($org_code, $role_id, $date_time_from, $date_time_to, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getOrganizationRoleActiveUsersCountWithHttpInfo
+     *
+     * Get organization role active users count
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  \DateTime $date_time_from Start of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded down to the nearest second before validation. (required)
+     * @param  \DateTime $date_time_to End of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded up to the nearest second before validation. The window must not exceed 3 days, so this must be earlier than &#x60;date_time_from&#x60; plus 3 days. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleActiveUsersCount'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationRoleActiveUsersCountResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getOrganizationRoleActiveUsersCountWithHttpInfo($org_code, $role_id, $date_time_from, $date_time_to, string $contentType = self::contentTypes['getOrganizationRoleActiveUsersCount'][0])
+    {
+        $request = $this->getOrganizationRoleActiveUsersCountRequest($org_code, $role_id, $date_time_from, $date_time_to, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetOrganizationRoleActiveUsersCountResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetOrganizationRoleActiveUsersCountResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetOrganizationRoleActiveUsersCountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getOrganizationRoleActiveUsersCountAsync
+     *
+     * Get organization role active users count
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  \DateTime $date_time_from Start of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded down to the nearest second before validation. (required)
+     * @param  \DateTime $date_time_to End of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded up to the nearest second before validation. The window must not exceed 3 days, so this must be earlier than &#x60;date_time_from&#x60; plus 3 days. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleActiveUsersCount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationRoleActiveUsersCountAsync($org_code, $role_id, $date_time_from, $date_time_to, string $contentType = self::contentTypes['getOrganizationRoleActiveUsersCount'][0])
+    {
+        return $this->getOrganizationRoleActiveUsersCountAsyncWithHttpInfo($org_code, $role_id, $date_time_from, $date_time_to, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getOrganizationRoleActiveUsersCountAsyncWithHttpInfo
+     *
+     * Get organization role active users count
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  \DateTime $date_time_from Start of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded down to the nearest second before validation. (required)
+     * @param  \DateTime $date_time_to End of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded up to the nearest second before validation. The window must not exceed 3 days, so this must be earlier than &#x60;date_time_from&#x60; plus 3 days. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleActiveUsersCount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationRoleActiveUsersCountAsyncWithHttpInfo($org_code, $role_id, $date_time_from, $date_time_to, string $contentType = self::contentTypes['getOrganizationRoleActiveUsersCount'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationRoleActiveUsersCountResponse';
+        $request = $this->getOrganizationRoleActiveUsersCountRequest($org_code, $role_id, $date_time_from, $date_time_to, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getOrganizationRoleActiveUsersCount'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  \DateTime $date_time_from Start of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded down to the nearest second before validation. (required)
+     * @param  \DateTime $date_time_to End of the active period (inclusive), as an ISO 8601 datetime in UTC at second precision. Fractional seconds are accepted but rounded up to the nearest second before validation. The window must not exceed 3 days, so this must be earlier than &#x60;date_time_from&#x60; plus 3 days. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleActiveUsersCount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getOrganizationRoleActiveUsersCountRequest($org_code, $role_id, $date_time_from, $date_time_to, string $contentType = self::contentTypes['getOrganizationRoleActiveUsersCount'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling getOrganizationRoleActiveUsersCount'
+            );
+        }
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling getOrganizationRoleActiveUsersCount'
+            );
+        }
+
+        // verify the required parameter 'date_time_from' is set
+        if ($date_time_from === null || (is_array($date_time_from) && count($date_time_from) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $date_time_from when calling getOrganizationRoleActiveUsersCount'
+            );
+        }
+
+        // verify the required parameter 'date_time_to' is set
+        if ($date_time_to === null || (is_array($date_time_to) && count($date_time_to) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $date_time_to when calling getOrganizationRoleActiveUsersCount'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organizations/{org_code}/roles/{role_id}/active_users/count';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $date_time_from,
+            'date_time_from', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $date_time_to,
+            'date_time_to', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            true // required
+        ) ?? []);
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getOrganizationRoleUsers
      *
      * List organization role users
@@ -8495,6 +8849,312 @@ class OrganizationsApi
             true, // explode
             false // required
         ) ?? []);
+
+
+        // path params
+        if ($org_code !== null) {
+            $resourcePath = str_replace(
+                '{' . 'org_code' . '}',
+                ObjectSerializer::toPathValue($org_code),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersCount
+     *
+     * Count organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsersCount'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetOrganizationRoleUsersCountResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getOrganizationRoleUsersCount($org_code, $role_id, string $contentType = self::contentTypes['getOrganizationRoleUsersCount'][0])
+    {
+        list($response) = $this->getOrganizationRoleUsersCountWithHttpInfo($org_code, $role_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersCountWithHttpInfo
+     *
+     * Count organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsersCount'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetOrganizationRoleUsersCountResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getOrganizationRoleUsersCountWithHttpInfo($org_code, $role_id, string $contentType = self::contentTypes['getOrganizationRoleUsersCount'][0])
+    {
+        $request = $this->getOrganizationRoleUsersCountRequest($org_code, $role_id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersCountResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersCountResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersCountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersCountAsync
+     *
+     * Count organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsersCount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationRoleUsersCountAsync($org_code, $role_id, string $contentType = self::contentTypes['getOrganizationRoleUsersCount'][0])
+    {
+        return $this->getOrganizationRoleUsersCountAsyncWithHttpInfo($org_code, $role_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getOrganizationRoleUsersCountAsyncWithHttpInfo
+     *
+     * Count organization role users
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsersCount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getOrganizationRoleUsersCountAsyncWithHttpInfo($org_code, $role_id, string $contentType = self::contentTypes['getOrganizationRoleUsersCount'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetOrganizationRoleUsersCountResponse';
+        $request = $this->getOrganizationRoleUsersCountRequest($org_code, $role_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getOrganizationRoleUsersCount'
+     *
+     * @param  string $org_code The organization&#39;s code. (required)
+     * @param  string $role_id The role&#39;s public id. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getOrganizationRoleUsersCount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getOrganizationRoleUsersCountRequest($org_code, $role_id, string $contentType = self::contentTypes['getOrganizationRoleUsersCount'][0])
+    {
+
+        // verify the required parameter 'org_code' is set
+        if ($org_code === null || (is_array($org_code) && count($org_code) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $org_code when calling getOrganizationRoleUsersCount'
+            );
+        }
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling getOrganizationRoleUsersCount'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/organizations/{org_code}/roles/{role_id}/users/count';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
 
 
         // path params
