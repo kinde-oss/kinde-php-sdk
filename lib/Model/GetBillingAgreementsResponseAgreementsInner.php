@@ -62,6 +62,8 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         'plan_code' => 'string',
         'expires_on' => '\DateTime',
         'billing_group_id' => 'string',
+        'current_period_start' => '\DateTime',
+        'current_period_end' => '\DateTime',
         'entitlements' => '\Kinde\KindeSDK\Model\GetBillingAgreementsResponseAgreementsInnerEntitlementsInner[]'
     ];
 
@@ -77,6 +79,8 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         'plan_code' => null,
         'expires_on' => 'date-time',
         'billing_group_id' => null,
+        'current_period_start' => 'date-time',
+        'current_period_end' => 'date-time',
         'entitlements' => null
     ];
 
@@ -88,8 +92,10 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
     protected static array $openAPINullables = [
         'id' => false,
         'plan_code' => false,
-        'expires_on' => false,
-        'billing_group_id' => false,
+        'expires_on' => true,
+        'billing_group_id' => true,
+        'current_period_start' => true,
+        'current_period_end' => true,
         'entitlements' => false
     ];
 
@@ -183,6 +189,8 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         'plan_code' => 'plan_code',
         'expires_on' => 'expires_on',
         'billing_group_id' => 'billing_group_id',
+        'current_period_start' => 'current_period_start',
+        'current_period_end' => 'current_period_end',
         'entitlements' => 'entitlements'
     ];
 
@@ -196,6 +204,8 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         'plan_code' => 'setPlanCode',
         'expires_on' => 'setExpiresOn',
         'billing_group_id' => 'setBillingGroupId',
+        'current_period_start' => 'setCurrentPeriodStart',
+        'current_period_end' => 'setCurrentPeriodEnd',
         'entitlements' => 'setEntitlements'
     ];
 
@@ -209,6 +219,8 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         'plan_code' => 'getPlanCode',
         'expires_on' => 'getExpiresOn',
         'billing_group_id' => 'getBillingGroupId',
+        'current_period_start' => 'getCurrentPeriodStart',
+        'current_period_end' => 'getCurrentPeriodEnd',
         'entitlements' => 'getEntitlements'
     ];
 
@@ -273,6 +285,8 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
         $this->setIfExists('plan_code', $data ?? [], null);
         $this->setIfExists('expires_on', $data ?? [], null);
         $this->setIfExists('billing_group_id', $data ?? [], null);
+        $this->setIfExists('current_period_start', $data ?? [], null);
+        $this->setIfExists('current_period_end', $data ?? [], null);
         $this->setIfExists('entitlements', $data ?? [], null);
     }
 
@@ -392,7 +406,14 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
     public function setExpiresOn($expires_on)
     {
         if (is_null($expires_on)) {
-            throw new \InvalidArgumentException('non-nullable expires_on cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'expires_on');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('expires_on', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['expires_on'] = $expires_on;
 
@@ -419,9 +440,84 @@ class GetBillingAgreementsResponseAgreementsInner implements ModelInterface, Arr
     public function setBillingGroupId($billing_group_id)
     {
         if (is_null($billing_group_id)) {
-            throw new \InvalidArgumentException('non-nullable billing_group_id cannot be null');
+            array_push($this->openAPINullablesSetToNull, 'billing_group_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('billing_group_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
         }
         $this->container['billing_group_id'] = $billing_group_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets current_period_start
+     *
+     * @return \DateTime|null
+     */
+    public function getCurrentPeriodStart()
+    {
+        return $this->container['current_period_start'];
+    }
+
+    /**
+     * Sets current_period_start
+     *
+     * @param \DateTime|null $current_period_start The start date of the agreement's current billing period. Null when the agreement has no current billing cycle.
+     *
+     * @return self
+     */
+    public function setCurrentPeriodStart($current_period_start)
+    {
+        if (is_null($current_period_start)) {
+            array_push($this->openAPINullablesSetToNull, 'current_period_start');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('current_period_start', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['current_period_start'] = $current_period_start;
+
+        return $this;
+    }
+
+    /**
+     * Gets current_period_end
+     *
+     * @return \DateTime|null
+     */
+    public function getCurrentPeriodEnd()
+    {
+        return $this->container['current_period_end'];
+    }
+
+    /**
+     * Sets current_period_end
+     *
+     * @param \DateTime|null $current_period_end The end date of the agreement's current billing period (typically the next billing date). Null when the agreement has no current billing cycle; may be in the past if cycle roll or provider sync has lagged.
+     *
+     * @return self
+     */
+    public function setCurrentPeriodEnd($current_period_end)
+    {
+        if (is_null($current_period_end)) {
+            array_push($this->openAPINullablesSetToNull, 'current_period_end');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('current_period_end', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['current_period_end'] = $current_period_end;
 
         return $this;
     }

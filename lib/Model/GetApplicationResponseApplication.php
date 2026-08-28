@@ -65,7 +65,15 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         'client_secret' => 'string',
         'login_uri' => 'string',
         'homepage_uri' => 'string',
-        'has_cancel_button' => 'bool'
+        'has_cancel_button' => 'bool',
+        'is_access_control_enabled' => 'bool',
+        'is_allow_faceless_auth' => 'bool',
+        'is_ask_for_name' => 'bool',
+        'has_marketing_consent' => 'bool',
+        'has_sign_in_link_on_sign_up_page' => 'bool',
+        'has_register_link_on_sign_in_page' => 'bool',
+        'has_sign_in_with_sso_button' => 'bool',
+        'use_gravatar_fallback' => 'bool'
     ];
 
     /**
@@ -83,7 +91,15 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         'client_secret' => null,
         'login_uri' => null,
         'homepage_uri' => null,
-        'has_cancel_button' => null
+        'has_cancel_button' => null,
+        'is_access_control_enabled' => null,
+        'is_allow_faceless_auth' => null,
+        'is_ask_for_name' => null,
+        'has_marketing_consent' => null,
+        'has_sign_in_link_on_sign_up_page' => null,
+        'has_register_link_on_sign_in_page' => null,
+        'has_sign_in_with_sso_button' => null,
+        'use_gravatar_fallback' => null
     ];
 
     /**
@@ -99,7 +115,15 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         'client_secret' => false,
         'login_uri' => false,
         'homepage_uri' => false,
-        'has_cancel_button' => false
+        'has_cancel_button' => false,
+        'is_access_control_enabled' => false,
+        'is_allow_faceless_auth' => false,
+        'is_ask_for_name' => false,
+        'has_marketing_consent' => false,
+        'has_sign_in_link_on_sign_up_page' => false,
+        'has_register_link_on_sign_in_page' => false,
+        'has_sign_in_with_sso_button' => false,
+        'use_gravatar_fallback' => false
     ];
 
     /**
@@ -195,7 +219,15 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         'client_secret' => 'client_secret',
         'login_uri' => 'login_uri',
         'homepage_uri' => 'homepage_uri',
-        'has_cancel_button' => 'has_cancel_button'
+        'has_cancel_button' => 'has_cancel_button',
+        'is_access_control_enabled' => 'is_access_control_enabled',
+        'is_allow_faceless_auth' => 'is_allow_faceless_auth',
+        'is_ask_for_name' => 'is_ask_for_name',
+        'has_marketing_consent' => 'has_marketing_consent',
+        'has_sign_in_link_on_sign_up_page' => 'has_sign_in_link_on_sign_up_page',
+        'has_register_link_on_sign_in_page' => 'has_register_link_on_sign_in_page',
+        'has_sign_in_with_sso_button' => 'has_sign_in_with_sso_button',
+        'use_gravatar_fallback' => 'use_gravatar_fallback'
     ];
 
     /**
@@ -211,7 +243,15 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         'client_secret' => 'setClientSecret',
         'login_uri' => 'setLoginUri',
         'homepage_uri' => 'setHomepageUri',
-        'has_cancel_button' => 'setHasCancelButton'
+        'has_cancel_button' => 'setHasCancelButton',
+        'is_access_control_enabled' => 'setIsAccessControlEnabled',
+        'is_allow_faceless_auth' => 'setIsAllowFacelessAuth',
+        'is_ask_for_name' => 'setIsAskForName',
+        'has_marketing_consent' => 'setHasMarketingConsent',
+        'has_sign_in_link_on_sign_up_page' => 'setHasSignInLinkOnSignUpPage',
+        'has_register_link_on_sign_in_page' => 'setHasRegisterLinkOnSignInPage',
+        'has_sign_in_with_sso_button' => 'setHasSignInWithSsoButton',
+        'use_gravatar_fallback' => 'setUseGravatarFallback'
     ];
 
     /**
@@ -227,7 +267,15 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         'client_secret' => 'getClientSecret',
         'login_uri' => 'getLoginUri',
         'homepage_uri' => 'getHomepageUri',
-        'has_cancel_button' => 'getHasCancelButton'
+        'has_cancel_button' => 'getHasCancelButton',
+        'is_access_control_enabled' => 'getIsAccessControlEnabled',
+        'is_allow_faceless_auth' => 'getIsAllowFacelessAuth',
+        'is_ask_for_name' => 'getIsAskForName',
+        'has_marketing_consent' => 'getHasMarketingConsent',
+        'has_sign_in_link_on_sign_up_page' => 'getHasSignInLinkOnSignUpPage',
+        'has_register_link_on_sign_in_page' => 'getHasRegisterLinkOnSignInPage',
+        'has_sign_in_with_sso_button' => 'getHasSignInWithSsoButton',
+        'use_gravatar_fallback' => 'getUseGravatarFallback'
     ];
 
     /**
@@ -274,6 +322,7 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
     public const TYPE_M2M = 'm2m';
     public const TYPE_REG = 'reg';
     public const TYPE_SPA = 'spa';
+    public const TYPE_DEVICE = 'device';
 
     /**
      * Gets allowable values of the enum
@@ -286,6 +335,7 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
             self::TYPE_M2M,
             self::TYPE_REG,
             self::TYPE_SPA,
+            self::TYPE_DEVICE,
         ];
     }
 
@@ -312,6 +362,14 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
         $this->setIfExists('login_uri', $data ?? [], null);
         $this->setIfExists('homepage_uri', $data ?? [], null);
         $this->setIfExists('has_cancel_button', $data ?? [], null);
+        $this->setIfExists('is_access_control_enabled', $data ?? [], null);
+        $this->setIfExists('is_allow_faceless_auth', $data ?? [], null);
+        $this->setIfExists('is_ask_for_name', $data ?? [], null);
+        $this->setIfExists('has_marketing_consent', $data ?? [], null);
+        $this->setIfExists('has_sign_in_link_on_sign_up_page', $data ?? [], null);
+        $this->setIfExists('has_register_link_on_sign_in_page', $data ?? [], null);
+        $this->setIfExists('has_sign_in_with_sso_button', $data ?? [], null);
+        $this->setIfExists('use_gravatar_fallback', $data ?? [], null);
     }
 
     /**
@@ -587,6 +645,222 @@ class GetApplicationResponseApplication implements ModelInterface, ArrayAccess, 
             throw new \InvalidArgumentException('non-nullable has_cancel_button cannot be null');
         }
         $this->container['has_cancel_button'] = $has_cancel_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_access_control_enabled
+     *
+     * @return bool|null
+     */
+    public function getIsAccessControlEnabled()
+    {
+        return $this->container['is_access_control_enabled'];
+    }
+
+    /**
+     * Sets is_access_control_enabled
+     *
+     * @param bool|null $is_access_control_enabled Whether role-based access control is enforced for the application. Always false for application types that do not support connections.
+     *
+     * @return self
+     */
+    public function setIsAccessControlEnabled($is_access_control_enabled)
+    {
+        if (is_null($is_access_control_enabled)) {
+            throw new \InvalidArgumentException('non-nullable is_access_control_enabled cannot be null');
+        }
+        $this->container['is_access_control_enabled'] = $is_access_control_enabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_allow_faceless_auth
+     *
+     * @return bool|null
+     */
+    public function getIsAllowFacelessAuth()
+    {
+        return $this->container['is_allow_faceless_auth'];
+    }
+
+    /**
+     * Sets is_allow_faceless_auth
+     *
+     * @param bool|null $is_allow_faceless_auth Bypass Kinde's sign up and sign in screens and use your own design.
+     *
+     * @return self
+     */
+    public function setIsAllowFacelessAuth($is_allow_faceless_auth)
+    {
+        if (is_null($is_allow_faceless_auth)) {
+            throw new \InvalidArgumentException('non-nullable is_allow_faceless_auth cannot be null');
+        }
+        $this->container['is_allow_faceless_auth'] = $is_allow_faceless_auth;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_ask_for_name
+     *
+     * @return bool|null
+     */
+    public function getIsAskForName()
+    {
+        return $this->container['is_ask_for_name'];
+    }
+
+    /**
+     * Sets is_ask_for_name
+     *
+     * @param bool|null $is_ask_for_name Show fields to collect name details from users signing up with email or phone.
+     *
+     * @return self
+     */
+    public function setIsAskForName($is_ask_for_name)
+    {
+        if (is_null($is_ask_for_name)) {
+            throw new \InvalidArgumentException('non-nullable is_ask_for_name cannot be null');
+        }
+        $this->container['is_ask_for_name'] = $is_ask_for_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets has_marketing_consent
+     *
+     * @return bool|null
+     */
+    public function getHasMarketingConsent()
+    {
+        return $this->container['has_marketing_consent'];
+    }
+
+    /**
+     * Sets has_marketing_consent
+     *
+     * @param bool|null $has_marketing_consent Show a marketing consent checkbox on the sign-up page.
+     *
+     * @return self
+     */
+    public function setHasMarketingConsent($has_marketing_consent)
+    {
+        if (is_null($has_marketing_consent)) {
+            throw new \InvalidArgumentException('non-nullable has_marketing_consent cannot be null');
+        }
+        $this->container['has_marketing_consent'] = $has_marketing_consent;
+
+        return $this;
+    }
+
+    /**
+     * Gets has_sign_in_link_on_sign_up_page
+     *
+     * @return bool|null
+     */
+    public function getHasSignInLinkOnSignUpPage()
+    {
+        return $this->container['has_sign_in_link_on_sign_up_page'];
+    }
+
+    /**
+     * Sets has_sign_in_link_on_sign_up_page
+     *
+     * @param bool|null $has_sign_in_link_on_sign_up_page Allow users to switch to the login page from the sign-up page.
+     *
+     * @return self
+     */
+    public function setHasSignInLinkOnSignUpPage($has_sign_in_link_on_sign_up_page)
+    {
+        if (is_null($has_sign_in_link_on_sign_up_page)) {
+            throw new \InvalidArgumentException('non-nullable has_sign_in_link_on_sign_up_page cannot be null');
+        }
+        $this->container['has_sign_in_link_on_sign_up_page'] = $has_sign_in_link_on_sign_up_page;
+
+        return $this;
+    }
+
+    /**
+     * Gets has_register_link_on_sign_in_page
+     *
+     * @return bool|null
+     */
+    public function getHasRegisterLinkOnSignInPage()
+    {
+        return $this->container['has_register_link_on_sign_in_page'];
+    }
+
+    /**
+     * Sets has_register_link_on_sign_in_page
+     *
+     * @param bool|null $has_register_link_on_sign_in_page Allow users to switch to the register page from the sign-in page.
+     *
+     * @return self
+     */
+    public function setHasRegisterLinkOnSignInPage($has_register_link_on_sign_in_page)
+    {
+        if (is_null($has_register_link_on_sign_in_page)) {
+            throw new \InvalidArgumentException('non-nullable has_register_link_on_sign_in_page cannot be null');
+        }
+        $this->container['has_register_link_on_sign_in_page'] = $has_register_link_on_sign_in_page;
+
+        return $this;
+    }
+
+    /**
+     * Gets has_sign_in_with_sso_button
+     *
+     * @return bool|null
+     */
+    public function getHasSignInWithSsoButton()
+    {
+        return $this->container['has_sign_in_with_sso_button'];
+    }
+
+    /**
+     * Sets has_sign_in_with_sso_button
+     *
+     * @param bool|null $has_sign_in_with_sso_button When home realm discovery is configured, users see a button to prompt them to use their work email.
+     *
+     * @return self
+     */
+    public function setHasSignInWithSsoButton($has_sign_in_with_sso_button)
+    {
+        if (is_null($has_sign_in_with_sso_button)) {
+            throw new \InvalidArgumentException('non-nullable has_sign_in_with_sso_button cannot be null');
+        }
+        $this->container['has_sign_in_with_sso_button'] = $has_sign_in_with_sso_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets use_gravatar_fallback
+     *
+     * @return bool|null
+     */
+    public function getUseGravatarFallback()
+    {
+        return $this->container['use_gravatar_fallback'];
+    }
+
+    /**
+     * Sets use_gravatar_fallback
+     *
+     * @param bool|null $use_gravatar_fallback Use a backup image if a profile picture is not available.
+     *
+     * @return self
+     */
+    public function setUseGravatarFallback($use_gravatar_fallback)
+    {
+        if (is_null($use_gravatar_fallback)) {
+            throw new \InvalidArgumentException('non-nullable use_gravatar_fallback cannot be null');
+        }
+        $this->container['use_gravatar_fallback'] = $use_gravatar_fallback;
 
         return $this;
     }

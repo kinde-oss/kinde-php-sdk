@@ -78,6 +78,9 @@ class UsersApi
         'createUser' => [
             'application/json',
         ],
+        'createUserBillingCustomer' => [
+            'application/json',
+        ],
         'createUserIdentity' => [
             'application/json',
         ],
@@ -433,6 +436,339 @@ class UsersApi
                 $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($create_user_request));
             } else {
                 $httpBody = $create_user_request;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation createUserBillingCustomer
+     *
+     * Create user billing customer
+     *
+     * @param  string $user_id The user&#39;s ID. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateUserBillingCustomerRequest $create_user_billing_customer_request Billing customer details. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserBillingCustomer'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\CreateUserBillingCustomerResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function createUserBillingCustomer($user_id, $create_user_billing_customer_request, string $contentType = self::contentTypes['createUserBillingCustomer'][0])
+    {
+        list($response) = $this->createUserBillingCustomerWithHttpInfo($user_id, $create_user_billing_customer_request, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation createUserBillingCustomerWithHttpInfo
+     *
+     * Create user billing customer
+     *
+     * @param  string $user_id The user&#39;s ID. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateUserBillingCustomerRequest $create_user_billing_customer_request Billing customer details. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserBillingCustomer'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\CreateUserBillingCustomerResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createUserBillingCustomerWithHttpInfo($user_id, $create_user_billing_customer_request, string $contentType = self::contentTypes['createUserBillingCustomer'][0])
+    {
+        $request = $this->createUserBillingCustomerRequest($user_id, $create_user_billing_customer_request, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\CreateUserBillingCustomerResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\CreateUserBillingCustomerResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\CreateUserBillingCustomerResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createUserBillingCustomerAsync
+     *
+     * Create user billing customer
+     *
+     * @param  string $user_id The user&#39;s ID. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateUserBillingCustomerRequest $create_user_billing_customer_request Billing customer details. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserBillingCustomer'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createUserBillingCustomerAsync($user_id, $create_user_billing_customer_request, string $contentType = self::contentTypes['createUserBillingCustomer'][0])
+    {
+        return $this->createUserBillingCustomerAsyncWithHttpInfo($user_id, $create_user_billing_customer_request, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createUserBillingCustomerAsyncWithHttpInfo
+     *
+     * Create user billing customer
+     *
+     * @param  string $user_id The user&#39;s ID. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateUserBillingCustomerRequest $create_user_billing_customer_request Billing customer details. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserBillingCustomer'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createUserBillingCustomerAsyncWithHttpInfo($user_id, $create_user_billing_customer_request, string $contentType = self::contentTypes['createUserBillingCustomer'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\CreateUserBillingCustomerResponse';
+        $request = $this->createUserBillingCustomerRequest($user_id, $create_user_billing_customer_request, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createUserBillingCustomer'
+     *
+     * @param  string $user_id The user&#39;s ID. (required)
+     * @param  \Kinde\KindeSDK\Model\CreateUserBillingCustomerRequest $create_user_billing_customer_request Billing customer details. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createUserBillingCustomer'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function createUserBillingCustomerRequest($user_id, $create_user_billing_customer_request, string $contentType = self::contentTypes['createUserBillingCustomer'][0])
+    {
+
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null || (is_array($user_id) && count($user_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $user_id when calling createUserBillingCustomer'
+            );
+        }
+
+        // verify the required parameter 'create_user_billing_customer_request' is set
+        if ($create_user_billing_customer_request === null || (is_array($create_user_billing_customer_request) && count($create_user_billing_customer_request) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $create_user_billing_customer_request when calling createUserBillingCustomer'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/users/{user_id}/billing_customer';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'user_id' . '}',
+                ObjectSerializer::toPathValue($user_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', 'application/json; charset=utf-8', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($create_user_billing_customer_request)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($create_user_billing_customer_request));
+            } else {
+                $httpBody = $create_user_billing_customer_request;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {

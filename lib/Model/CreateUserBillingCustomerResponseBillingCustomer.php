@@ -1,6 +1,6 @@
 <?php
 /**
- * UpdateUserRequest
+ * CreateUserBillingCustomerResponseBillingCustomer
  *
  * PHP version 8.1
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * UpdateUserRequest Class Doc Comment
+ * CreateUserBillingCustomerResponseBillingCustomer Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class CreateUserBillingCustomerResponseBillingCustomer implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       *
       * @var string
       */
-    protected static $openAPIModelName = 'updateUser_request';
+    protected static $openAPIModelName = 'create_user_billing_customer_response_billing_customer';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var string[]
       */
     protected static $openAPITypes = [
-        'given_name' => 'string',
-        'family_name' => 'string',
-        'picture' => 'string',
-        'is_suspended' => 'bool',
-        'is_password_reset_requested' => 'bool',
-        'provided_id' => 'string'
+        'id' => 'string',
+        'agreement_id' => 'string'
     ];
 
     /**
@@ -74,12 +70,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'given_name' => null,
-        'family_name' => null,
-        'picture' => null,
-        'is_suspended' => null,
-        'is_password_reset_requested' => null,
-        'provided_id' => null
+        'id' => null,
+        'agreement_id' => null
     ];
 
     /**
@@ -88,12 +80,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'given_name' => false,
-        'family_name' => false,
-        'picture' => false,
-        'is_suspended' => false,
-        'is_password_reset_requested' => false,
-        'provided_id' => false
+        'id' => false,
+        'agreement_id' => false
     ];
 
     /**
@@ -182,12 +170,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $attributeMap = [
-        'given_name' => 'given_name',
-        'family_name' => 'family_name',
-        'picture' => 'picture',
-        'is_suspended' => 'is_suspended',
-        'is_password_reset_requested' => 'is_password_reset_requested',
-        'provided_id' => 'provided_id'
+        'id' => 'id',
+        'agreement_id' => 'agreement_id'
     ];
 
     /**
@@ -196,12 +180,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $setters = [
-        'given_name' => 'setGivenName',
-        'family_name' => 'setFamilyName',
-        'picture' => 'setPicture',
-        'is_suspended' => 'setIsSuspended',
-        'is_password_reset_requested' => 'setIsPasswordResetRequested',
-        'provided_id' => 'setProvidedId'
+        'id' => 'setId',
+        'agreement_id' => 'setAgreementId'
     ];
 
     /**
@@ -210,12 +190,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $getters = [
-        'given_name' => 'getGivenName',
-        'family_name' => 'getFamilyName',
-        'picture' => 'getPicture',
-        'is_suspended' => 'getIsSuspended',
-        'is_password_reset_requested' => 'getIsPasswordResetRequested',
-        'provided_id' => 'getProvidedId'
+        'id' => 'getId',
+        'agreement_id' => 'getAgreementId'
     ];
 
     /**
@@ -275,12 +251,8 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('given_name', $data ?? [], null);
-        $this->setIfExists('family_name', $data ?? [], null);
-        $this->setIfExists('picture', $data ?? [], null);
-        $this->setIfExists('is_suspended', $data ?? [], null);
-        $this->setIfExists('is_password_reset_requested', $data ?? [], null);
-        $this->setIfExists('provided_id', $data ?? [], null);
+        $this->setIfExists('id', $data ?? [], null);
+        $this->setIfExists('agreement_id', $data ?? [], null);
     }
 
     /**
@@ -326,163 +298,55 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
 
 
     /**
-     * Gets given_name
+     * Gets id
      *
      * @return string|null
      */
-    public function getGivenName()
+    public function getId()
     {
-        return $this->container['given_name'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets given_name
+     * Sets id
      *
-     * @param string|null $given_name User's first name. If the user is the owner of a family billing customer, this update is also propagated to the corresponding billing customer details.
+     * @param string|null $id The billing customer id.
      *
      * @return self
      */
-    public function setGivenName($given_name)
+    public function setId($id)
     {
-        if (is_null($given_name)) {
-            throw new \InvalidArgumentException('non-nullable given_name cannot be null');
+        if (is_null($id)) {
+            throw new \InvalidArgumentException('non-nullable id cannot be null');
         }
-        $this->container['given_name'] = $given_name;
+        $this->container['id'] = $id;
 
         return $this;
     }
 
     /**
-     * Gets family_name
+     * Gets agreement_id
      *
      * @return string|null
      */
-    public function getFamilyName()
+    public function getAgreementId()
     {
-        return $this->container['family_name'];
+        return $this->container['agreement_id'];
     }
 
     /**
-     * Sets family_name
+     * Sets agreement_id
      *
-     * @param string|null $family_name User's last name. If the user is the owner of a family billing customer, this update is also propagated to the corresponding billing customer details.
+     * @param string|null $agreement_id The billing agreement id created for the assigned plan.
      *
      * @return self
      */
-    public function setFamilyName($family_name)
+    public function setAgreementId($agreement_id)
     {
-        if (is_null($family_name)) {
-            throw new \InvalidArgumentException('non-nullable family_name cannot be null');
+        if (is_null($agreement_id)) {
+            throw new \InvalidArgumentException('non-nullable agreement_id cannot be null');
         }
-        $this->container['family_name'] = $family_name;
-
-        return $this;
-    }
-
-    /**
-     * Gets picture
-     *
-     * @return string|null
-     */
-    public function getPicture()
-    {
-        return $this->container['picture'];
-    }
-
-    /**
-     * Sets picture
-     *
-     * @param string|null $picture The user's profile picture.
-     *
-     * @return self
-     */
-    public function setPicture($picture)
-    {
-        if (is_null($picture)) {
-            throw new \InvalidArgumentException('non-nullable picture cannot be null');
-        }
-        $this->container['picture'] = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_suspended
-     *
-     * @return bool|null
-     */
-    public function getIsSuspended()
-    {
-        return $this->container['is_suspended'];
-    }
-
-    /**
-     * Sets is_suspended
-     *
-     * @param bool|null $is_suspended Whether the user is currently suspended or not.
-     *
-     * @return self
-     */
-    public function setIsSuspended($is_suspended)
-    {
-        if (is_null($is_suspended)) {
-            throw new \InvalidArgumentException('non-nullable is_suspended cannot be null');
-        }
-        $this->container['is_suspended'] = $is_suspended;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_password_reset_requested
-     *
-     * @return bool|null
-     */
-    public function getIsPasswordResetRequested()
-    {
-        return $this->container['is_password_reset_requested'];
-    }
-
-    /**
-     * Sets is_password_reset_requested
-     *
-     * @param bool|null $is_password_reset_requested Prompt the user to change their password on next sign in.
-     *
-     * @return self
-     */
-    public function setIsPasswordResetRequested($is_password_reset_requested)
-    {
-        if (is_null($is_password_reset_requested)) {
-            throw new \InvalidArgumentException('non-nullable is_password_reset_requested cannot be null');
-        }
-        $this->container['is_password_reset_requested'] = $is_password_reset_requested;
-
-        return $this;
-    }
-
-    /**
-     * Gets provided_id
-     *
-     * @return string|null
-     */
-    public function getProvidedId()
-    {
-        return $this->container['provided_id'];
-    }
-
-    /**
-     * Sets provided_id
-     *
-     * @param string|null $provided_id An external id to reference the user.
-     *
-     * @return self
-     */
-    public function setProvidedId($provided_id)
-    {
-        if (is_null($provided_id)) {
-            throw new \InvalidArgumentException('non-nullable provided_id cannot be null');
-        }
-        $this->container['provided_id'] = $provided_id;
+        $this->container['agreement_id'] = $agreement_id;
 
         return $this;
     }

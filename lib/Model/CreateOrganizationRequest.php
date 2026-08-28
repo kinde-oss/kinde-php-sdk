@@ -940,7 +940,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets is_create_billing_customer
      *
-     * @param bool|null $is_create_billing_customer If a billing customer is also created for this organization
+     * @param bool|null $is_create_billing_customer If an organization billing customer is also created for this organization
      *
      * @return self
      */
@@ -967,7 +967,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets billing_email
      *
-     * @param string|null $billing_email The email address used for billing purposes for the organization
+     * @param string|null $billing_email The email address used for billing purposes for the organization. Required when is_create_billing_customer is true
      *
      * @return self
      */
@@ -994,7 +994,7 @@ class CreateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets billing_plan_code
      *
-     * @param string|null $billing_plan_code The billing plan to put the customer on. If not specified, the default plan is used
+     * @param string|null $billing_plan_code Code of a published organization billing plan to assign to the new billing customer. If omitted, the default organization plan is used. User plans and unpublished plans are rejected.
      *
      * @return self
      */

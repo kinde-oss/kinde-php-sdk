@@ -62,6 +62,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'home_realm_domains' => 'string[]',
         'saml_entity_id' => 'string',
         'saml_idp_metadata_url' => 'string',
+        'saml_idp_metadata_xml' => 'string',
         'saml_sign_in_url' => 'string',
         'sign_request_algorithm' => 'string',
         'protocol_binding' => 'string',
@@ -72,6 +73,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'saml_last_name_key_attr' => 'string',
         'is_create_missing_user' => 'bool',
         'is_force_show_sso_button' => 'bool',
+        'sso_button_display' => 'string',
         'upstream_params' => 'array<string,mixed>',
         'saml_signing_certificate' => 'string',
         'saml_signing_private_key' => 'string',
@@ -90,6 +92,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'home_realm_domains' => null,
         'saml_entity_id' => null,
         'saml_idp_metadata_url' => null,
+        'saml_idp_metadata_xml' => null,
         'saml_sign_in_url' => null,
         'sign_request_algorithm' => null,
         'protocol_binding' => null,
@@ -100,6 +103,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'saml_last_name_key_attr' => null,
         'is_create_missing_user' => null,
         'is_force_show_sso_button' => null,
+        'sso_button_display' => null,
         'upstream_params' => null,
         'saml_signing_certificate' => null,
         'saml_signing_private_key' => null,
@@ -116,6 +120,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'home_realm_domains' => false,
         'saml_entity_id' => false,
         'saml_idp_metadata_url' => false,
+        'saml_idp_metadata_xml' => false,
         'saml_sign_in_url' => false,
         'sign_request_algorithm' => false,
         'protocol_binding' => false,
@@ -126,6 +131,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'saml_last_name_key_attr' => false,
         'is_create_missing_user' => false,
         'is_force_show_sso_button' => false,
+        'sso_button_display' => false,
         'upstream_params' => false,
         'saml_signing_certificate' => false,
         'saml_signing_private_key' => false,
@@ -222,6 +228,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'home_realm_domains' => 'home_realm_domains',
         'saml_entity_id' => 'saml_entity_id',
         'saml_idp_metadata_url' => 'saml_idp_metadata_url',
+        'saml_idp_metadata_xml' => 'saml_idp_metadata_xml',
         'saml_sign_in_url' => 'saml_sign_in_url',
         'sign_request_algorithm' => 'sign_request_algorithm',
         'protocol_binding' => 'protocol_binding',
@@ -232,6 +239,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'saml_last_name_key_attr' => 'saml_last_name_key_attr',
         'is_create_missing_user' => 'is_create_missing_user',
         'is_force_show_sso_button' => 'is_force_show_sso_button',
+        'sso_button_display' => 'sso_button_display',
         'upstream_params' => 'upstream_params',
         'saml_signing_certificate' => 'saml_signing_certificate',
         'saml_signing_private_key' => 'saml_signing_private_key',
@@ -248,6 +256,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'home_realm_domains' => 'setHomeRealmDomains',
         'saml_entity_id' => 'setSamlEntityId',
         'saml_idp_metadata_url' => 'setSamlIdpMetadataUrl',
+        'saml_idp_metadata_xml' => 'setSamlIdpMetadataXml',
         'saml_sign_in_url' => 'setSamlSignInUrl',
         'sign_request_algorithm' => 'setSignRequestAlgorithm',
         'protocol_binding' => 'setProtocolBinding',
@@ -258,6 +267,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'saml_last_name_key_attr' => 'setSamlLastNameKeyAttr',
         'is_create_missing_user' => 'setIsCreateMissingUser',
         'is_force_show_sso_button' => 'setIsForceShowSsoButton',
+        'sso_button_display' => 'setSsoButtonDisplay',
         'upstream_params' => 'setUpstreamParams',
         'saml_signing_certificate' => 'setSamlSigningCertificate',
         'saml_signing_private_key' => 'setSamlSigningPrivateKey',
@@ -274,6 +284,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'home_realm_domains' => 'getHomeRealmDomains',
         'saml_entity_id' => 'getSamlEntityId',
         'saml_idp_metadata_url' => 'getSamlIdpMetadataUrl',
+        'saml_idp_metadata_xml' => 'getSamlIdpMetadataXml',
         'saml_sign_in_url' => 'getSamlSignInUrl',
         'sign_request_algorithm' => 'getSignRequestAlgorithm',
         'protocol_binding' => 'getProtocolBinding',
@@ -284,6 +295,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         'saml_last_name_key_attr' => 'getSamlLastNameKeyAttr',
         'is_create_missing_user' => 'getIsCreateMissingUser',
         'is_force_show_sso_button' => 'getIsForceShowSsoButton',
+        'sso_button_display' => 'getSsoButtonDisplay',
         'upstream_params' => 'getUpstreamParams',
         'saml_signing_certificate' => 'getSamlSigningCertificate',
         'saml_signing_private_key' => 'getSamlSigningPrivateKey',
@@ -340,6 +352,9 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
     public const NAME_ID_FORMAT_TRANSIENT = 'Transient';
     public const NAME_ID_FORMAT_EMAIL_ADDRESS = 'Email address';
     public const NAME_ID_FORMAT_UNSPECIFIED = 'Unspecified';
+    public const SSO_BUTTON_DISPLAY_AUTO = 'auto';
+    public const SSO_BUTTON_DISPLAY_SHOW = 'show';
+    public const SSO_BUTTON_DISPLAY_HIDE = 'hide';
 
     /**
      * Gets allowable values of the enum
@@ -383,6 +398,20 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
     }
 
     /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getSsoButtonDisplayAllowableValues()
+    {
+        return [
+            self::SSO_BUTTON_DISPLAY_AUTO,
+            self::SSO_BUTTON_DISPLAY_SHOW,
+            self::SSO_BUTTON_DISPLAY_HIDE,
+        ];
+    }
+
+    /**
      * Associative array for storing property values
      *
      * @var mixed[]
@@ -400,6 +429,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         $this->setIfExists('home_realm_domains', $data ?? [], null);
         $this->setIfExists('saml_entity_id', $data ?? [], null);
         $this->setIfExists('saml_idp_metadata_url', $data ?? [], null);
+        $this->setIfExists('saml_idp_metadata_xml', $data ?? [], null);
         $this->setIfExists('saml_sign_in_url', $data ?? [], null);
         $this->setIfExists('sign_request_algorithm', $data ?? [], null);
         $this->setIfExists('protocol_binding', $data ?? [], null);
@@ -410,6 +440,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
         $this->setIfExists('saml_last_name_key_attr', $data ?? [], null);
         $this->setIfExists('is_create_missing_user', $data ?? [], null);
         $this->setIfExists('is_force_show_sso_button', $data ?? [], null);
+        $this->setIfExists('sso_button_display', $data ?? [], null);
         $this->setIfExists('upstream_params', $data ?? [], null);
         $this->setIfExists('saml_signing_certificate', $data ?? [], null);
         $this->setIfExists('saml_signing_private_key', $data ?? [], null);
@@ -467,6 +498,15 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
             $invalidProperties[] = sprintf(
                 "invalid value '%s' for 'name_id_format', must be one of '%s'",
                 $this->container['name_id_format'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getSsoButtonDisplayAllowableValues();
+        if (!is_null($this->container['sso_button_display']) && !in_array($this->container['sso_button_display'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'sso_button_display', must be one of '%s'",
+                $this->container['sso_button_display'],
                 implode("', '", $allowedValues)
             );
         }
@@ -553,7 +593,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
     /**
      * Sets saml_idp_metadata_url
      *
-     * @param string|null $saml_idp_metadata_url URL for the IdP metadata.
+     * @param string|null $saml_idp_metadata_url URL for the IdP metadata. Optional if saml_idp_metadata_xml is provided.
      *
      * @return self
      */
@@ -563,6 +603,33 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable saml_idp_metadata_url cannot be null');
         }
         $this->container['saml_idp_metadata_url'] = $saml_idp_metadata_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets saml_idp_metadata_xml
+     *
+     * @return string|null
+     */
+    public function getSamlIdpMetadataXml()
+    {
+        return $this->container['saml_idp_metadata_xml'];
+    }
+
+    /**
+     * Sets saml_idp_metadata_xml
+     *
+     * @param string|null $saml_idp_metadata_xml Raw IdP metadata XML. Use when the IdP does not host a metadata URL (e.g. Google Workspace). Takes precedence over saml_idp_metadata_url when both are set.
+     *
+     * @return self
+     */
+    public function setSamlIdpMetadataXml($saml_idp_metadata_xml)
+    {
+        if (is_null($saml_idp_metadata_xml)) {
+            throw new \InvalidArgumentException('non-nullable saml_idp_metadata_xml cannot be null');
+        }
+        $this->container['saml_idp_metadata_xml'] = $saml_idp_metadata_xml;
 
         return $this;
     }
@@ -844,6 +911,7 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
      * Gets is_force_show_sso_button
      *
      * @return bool|null
+     * @deprecated
      */
     public function getIsForceShowSsoButton()
     {
@@ -853,9 +921,10 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
     /**
      * Sets is_force_show_sso_button
      *
-     * @param bool|null $is_force_show_sso_button Force showing the SSO button for this connection.
+     * @param bool|null $is_force_show_sso_button Deprecated - Use 'sso_button_display' instead. True maps to \"show\", false maps to \"auto\". Ignored when sso_button_display is also sent.
      *
      * @return self
+     * @deprecated
      */
     public function setIsForceShowSsoButton($is_force_show_sso_button)
     {
@@ -863,6 +932,43 @@ class UpdateConnectionRequestOptionsOneOf1 implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable is_force_show_sso_button cannot be null');
         }
         $this->container['is_force_show_sso_button'] = $is_force_show_sso_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets sso_button_display
+     *
+     * @return string|null
+     */
+    public function getSsoButtonDisplay()
+    {
+        return $this->container['sso_button_display'];
+    }
+
+    /**
+     * Sets sso_button_display
+     *
+     * @param string|null $sso_button_display Controls when the SSO sign-in button is shown for this connection. Replaces is_force_show_sso_button. \"auto\" shows the button unless a home realm domain is set, \"show\" always shows it, \"hide\" never shows it. Takes precedence over is_force_show_sso_button when both are sent.
+     *
+     * @return self
+     */
+    public function setSsoButtonDisplay($sso_button_display)
+    {
+        if (is_null($sso_button_display)) {
+            throw new \InvalidArgumentException('non-nullable sso_button_display cannot be null');
+        }
+        $allowedValues = $this->getSsoButtonDisplayAllowableValues();
+        if (!in_array($sso_button_display, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'sso_button_display', must be one of '%s'",
+                    $sso_button_display,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['sso_button_display'] = $sso_button_display;
 
         return $this;
     }

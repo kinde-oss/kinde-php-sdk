@@ -75,6 +75,9 @@ class ApplicationsApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'addApplicationAccessRole' => [
+            'application/json',
+        ],
         'createApplication' => [
             'application/json',
         ],
@@ -87,6 +90,9 @@ class ApplicationsApi
         'getApplication' => [
             'application/json',
         ],
+        'getApplicationAccessRoles' => [
+            'application/json',
+        ],
         'getApplicationConnections' => [
             'application/json',
         ],
@@ -94,6 +100,9 @@ class ApplicationsApi
             'application/json',
         ],
         'getApplications' => [
+            'application/json',
+        ],
+        'removeApplicationAccessRole' => [
             'application/json',
         ],
         'removeConnection' => [
@@ -154,6 +163,340 @@ class ApplicationsApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation addApplicationAccessRole
+     *
+     * Add application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function addApplicationAccessRole($application_id, $role_id, string $contentType = self::contentTypes['addApplicationAccessRole'][0])
+    {
+        list($response) = $this->addApplicationAccessRoleWithHttpInfo($application_id, $role_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation addApplicationAccessRoleWithHttpInfo
+     *
+     * Add application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function addApplicationAccessRoleWithHttpInfo($application_id, $role_id, string $contentType = self::contentTypes['addApplicationAccessRole'][0])
+    {
+        $request = $this->addApplicationAccessRoleRequest($application_id, $role_id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\SuccessResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation addApplicationAccessRoleAsync
+     *
+     * Add application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function addApplicationAccessRoleAsync($application_id, $role_id, string $contentType = self::contentTypes['addApplicationAccessRole'][0])
+    {
+        return $this->addApplicationAccessRoleAsyncWithHttpInfo($application_id, $role_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation addApplicationAccessRoleAsyncWithHttpInfo
+     *
+     * Add application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function addApplicationAccessRoleAsyncWithHttpInfo($application_id, $role_id, string $contentType = self::contentTypes['addApplicationAccessRole'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
+        $request = $this->addApplicationAccessRoleRequest($application_id, $role_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'addApplicationAccessRole'
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['addApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function addApplicationAccessRoleRequest($application_id, $role_id, string $contentType = self::contentTypes['addApplicationAccessRole'][0])
+    {
+
+        // verify the required parameter 'application_id' is set
+        if ($application_id === null || (is_array($application_id) && count($application_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $application_id when calling addApplicationAccessRole'
+            );
+        }
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling addApplicationAccessRole'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/applications/{application_id}/access_roles/{role_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($application_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'application_id' . '}',
+                ObjectSerializer::toPathValue($application_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -1364,6 +1707,365 @@ class ApplicationsApi
     }
 
     /**
+     * Operation getApplicationAccessRoles
+     *
+     * Get application access roles
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $starting_after The ID of the role to start after. (optional)
+     * @param  string|null $ending_before The ID of the role to end before. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationAccessRoles'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\GetApplicationAccessRolesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function getApplicationAccessRoles($application_id, $page_size = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getApplicationAccessRoles'][0])
+    {
+        list($response) = $this->getApplicationAccessRolesWithHttpInfo($application_id, $page_size, $starting_after, $ending_before, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getApplicationAccessRolesWithHttpInfo
+     *
+     * Get application access roles
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $starting_after The ID of the role to start after. (optional)
+     * @param  string|null $ending_before The ID of the role to end before. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationAccessRoles'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\GetApplicationAccessRolesResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getApplicationAccessRolesWithHttpInfo($application_id, $page_size = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getApplicationAccessRoles'][0])
+    {
+        $request = $this->getApplicationAccessRolesRequest($application_id, $page_size, $starting_after, $ending_before, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\GetApplicationAccessRolesResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\GetApplicationAccessRolesResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\GetApplicationAccessRolesResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getApplicationAccessRolesAsync
+     *
+     * Get application access roles
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $starting_after The ID of the role to start after. (optional)
+     * @param  string|null $ending_before The ID of the role to end before. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationAccessRoles'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getApplicationAccessRolesAsync($application_id, $page_size = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getApplicationAccessRoles'][0])
+    {
+        return $this->getApplicationAccessRolesAsyncWithHttpInfo($application_id, $page_size, $starting_after, $ending_before, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getApplicationAccessRolesAsyncWithHttpInfo
+     *
+     * Get application access roles
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $starting_after The ID of the role to start after. (optional)
+     * @param  string|null $ending_before The ID of the role to end before. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationAccessRoles'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getApplicationAccessRolesAsyncWithHttpInfo($application_id, $page_size = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getApplicationAccessRoles'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\GetApplicationAccessRolesResponse';
+        $request = $this->getApplicationAccessRolesRequest($application_id, $page_size, $starting_after, $ending_before, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getApplicationAccessRoles'
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  int|null $page_size Number of results per page. Defaults to 10 if parameter not sent. (optional)
+     * @param  string|null $starting_after The ID of the role to start after. (optional)
+     * @param  string|null $ending_before The ID of the role to end before. (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getApplicationAccessRoles'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getApplicationAccessRolesRequest($application_id, $page_size = null, $starting_after = null, $ending_before = null, string $contentType = self::contentTypes['getApplicationAccessRoles'][0])
+    {
+
+        // verify the required parameter 'application_id' is set
+        if ($application_id === null || (is_array($application_id) && count($application_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $application_id when calling getApplicationAccessRoles'
+            );
+        }
+
+
+
+
+
+        $resourcePath = '/api/v1/applications/{application_id}/access_roles';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $page_size,
+            'page_size', // param base name
+            'integer', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $starting_after,
+            'starting_after', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $ending_before,
+            'ending_before', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+
+
+        // path params
+        if ($application_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'application_id' . '}',
+                ObjectSerializer::toPathValue($application_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getApplicationConnections
      *
      * Get connections
@@ -2324,6 +3026,340 @@ class ApplicationsApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation removeApplicationAccessRole
+     *
+     * Remove application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse
+     */
+    public function removeApplicationAccessRole($application_id, $role_id, string $contentType = self::contentTypes['removeApplicationAccessRole'][0])
+    {
+        list($response) = $this->removeApplicationAccessRoleWithHttpInfo($application_id, $role_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation removeApplicationAccessRoleWithHttpInfo
+     *
+     * Remove application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \Kinde\KindeSDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \Kinde\KindeSDK\Model\SuccessResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse|\Kinde\KindeSDK\Model\ErrorResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function removeApplicationAccessRoleWithHttpInfo($application_id, $role_id, string $contentType = self::contentTypes['removeApplicationAccessRole'][0])
+    {
+        $request = $this->removeApplicationAccessRoleRequest($application_id, $role_id, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 403:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+                case 429:
+                    return $this->handleResponseWithDataType(
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\Kinde\KindeSDK\Model\SuccessResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\SuccessResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 429:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Kinde\KindeSDK\Model\ErrorResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation removeApplicationAccessRoleAsync
+     *
+     * Remove application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function removeApplicationAccessRoleAsync($application_id, $role_id, string $contentType = self::contentTypes['removeApplicationAccessRole'][0])
+    {
+        return $this->removeApplicationAccessRoleAsyncWithHttpInfo($application_id, $role_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation removeApplicationAccessRoleAsyncWithHttpInfo
+     *
+     * Remove application access role
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function removeApplicationAccessRoleAsyncWithHttpInfo($application_id, $role_id, string $contentType = self::contentTypes['removeApplicationAccessRole'][0])
+    {
+        $returnType = '\Kinde\KindeSDK\Model\SuccessResponse';
+        $request = $this->removeApplicationAccessRoleRequest($application_id, $role_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'removeApplicationAccessRole'
+     *
+     * @param  string $application_id The identifier/client ID for the application. (required)
+     * @param  string $role_id The identifier for the role. (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['removeApplicationAccessRole'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function removeApplicationAccessRoleRequest($application_id, $role_id, string $contentType = self::contentTypes['removeApplicationAccessRole'][0])
+    {
+
+        // verify the required parameter 'application_id' is set
+        if ($application_id === null || (is_array($application_id) && count($application_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $application_id when calling removeApplicationAccessRole'
+            );
+        }
+
+        // verify the required parameter 'role_id' is set
+        if ($role_id === null || (is_array($role_id) && count($role_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $role_id when calling removeApplicationAccessRole'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/applications/{application_id}/access_roles/{role_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($application_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'application_id' . '}',
+                ObjectSerializer::toPathValue($application_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($role_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'role_id' . '}',
+                ObjectSerializer::toPathValue($role_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

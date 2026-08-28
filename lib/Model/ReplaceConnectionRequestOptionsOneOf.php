@@ -69,6 +69,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_extended_attributes_required' => 'bool',
         'is_create_missing_user' => 'bool',
         'is_force_show_sso_button' => 'bool',
+        'sso_button_display' => 'string',
         'upstream_params' => 'array<string,mixed>',
         'is_use_custom_domain' => 'bool',
         'is_trusted' => 'bool'
@@ -92,6 +93,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_extended_attributes_required' => null,
         'is_create_missing_user' => null,
         'is_force_show_sso_button' => null,
+        'sso_button_display' => null,
         'upstream_params' => null,
         'is_use_custom_domain' => null,
         'is_trusted' => null
@@ -113,6 +115,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_extended_attributes_required' => false,
         'is_create_missing_user' => false,
         'is_force_show_sso_button' => false,
+        'sso_button_display' => false,
         'upstream_params' => false,
         'is_use_custom_domain' => false,
         'is_trusted' => false
@@ -214,6 +217,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_extended_attributes_required' => 'is_extended_attributes_required',
         'is_create_missing_user' => 'is_create_missing_user',
         'is_force_show_sso_button' => 'is_force_show_sso_button',
+        'sso_button_display' => 'sso_button_display',
         'upstream_params' => 'upstream_params',
         'is_use_custom_domain' => 'is_use_custom_domain',
         'is_trusted' => 'is_trusted'
@@ -235,6 +239,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_extended_attributes_required' => 'setIsExtendedAttributesRequired',
         'is_create_missing_user' => 'setIsCreateMissingUser',
         'is_force_show_sso_button' => 'setIsForceShowSsoButton',
+        'sso_button_display' => 'setSsoButtonDisplay',
         'upstream_params' => 'setUpstreamParams',
         'is_use_custom_domain' => 'setIsUseCustomDomain',
         'is_trusted' => 'setIsTrusted'
@@ -256,6 +261,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         'is_extended_attributes_required' => 'getIsExtendedAttributesRequired',
         'is_create_missing_user' => 'getIsCreateMissingUser',
         'is_force_show_sso_button' => 'getIsForceShowSsoButton',
+        'sso_button_display' => 'getSsoButtonDisplay',
         'upstream_params' => 'getUpstreamParams',
         'is_use_custom_domain' => 'getIsUseCustomDomain',
         'is_trusted' => 'getIsTrusted'
@@ -302,6 +308,23 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         return self::$openAPIModelName;
     }
 
+    public const SSO_BUTTON_DISPLAY_AUTO = 'auto';
+    public const SSO_BUTTON_DISPLAY_SHOW = 'show';
+    public const SSO_BUTTON_DISPLAY_HIDE = 'hide';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getSsoButtonDisplayAllowableValues()
+    {
+        return [
+            self::SSO_BUTTON_DISPLAY_AUTO,
+            self::SSO_BUTTON_DISPLAY_SHOW,
+            self::SSO_BUTTON_DISPLAY_HIDE,
+        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -328,6 +351,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
         $this->setIfExists('is_extended_attributes_required', $data ?? [], null);
         $this->setIfExists('is_create_missing_user', $data ?? [], null);
         $this->setIfExists('is_force_show_sso_button', $data ?? [], null);
+        $this->setIfExists('sso_button_display', $data ?? [], null);
         $this->setIfExists('upstream_params', $data ?? [], null);
         $this->setIfExists('is_use_custom_domain', $data ?? [], null);
         $this->setIfExists('is_trusted', $data ?? [], null);
@@ -359,6 +383,15 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getSsoButtonDisplayAllowableValues();
+        if (!is_null($this->container['sso_button_display']) && !in_array($this->container['sso_button_display'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'sso_button_display', must be one of '%s'",
+                $this->container['sso_button_display'],
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -622,6 +655,7 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
      * Gets is_force_show_sso_button
      *
      * @return bool|null
+     * @deprecated
      */
     public function getIsForceShowSsoButton()
     {
@@ -631,9 +665,10 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
     /**
      * Sets is_force_show_sso_button
      *
-     * @param bool|null $is_force_show_sso_button Force showing the SSO button for this connection.
+     * @param bool|null $is_force_show_sso_button Deprecated - Use 'sso_button_display' instead. True maps to \"show\", false maps to \"auto\". Ignored when sso_button_display is also sent.
      *
      * @return self
+     * @deprecated
      */
     public function setIsForceShowSsoButton($is_force_show_sso_button)
     {
@@ -641,6 +676,43 @@ class ReplaceConnectionRequestOptionsOneOf implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable is_force_show_sso_button cannot be null');
         }
         $this->container['is_force_show_sso_button'] = $is_force_show_sso_button;
+
+        return $this;
+    }
+
+    /**
+     * Gets sso_button_display
+     *
+     * @return string|null
+     */
+    public function getSsoButtonDisplay()
+    {
+        return $this->container['sso_button_display'];
+    }
+
+    /**
+     * Sets sso_button_display
+     *
+     * @param string|null $sso_button_display Controls when the SSO sign-in button is shown for this connection. Replaces is_force_show_sso_button. \"auto\" shows the button unless a home realm domain is set, \"show\" always shows it, \"hide\" never shows it. Takes precedence over is_force_show_sso_button when both are sent.
+     *
+     * @return self
+     */
+    public function setSsoButtonDisplay($sso_button_display)
+    {
+        if (is_null($sso_button_display)) {
+            throw new \InvalidArgumentException('non-nullable sso_button_display cannot be null');
+        }
+        $allowedValues = $this->getSsoButtonDisplayAllowableValues();
+        if (!in_array($sso_button_display, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'sso_button_display', must be one of '%s'",
+                    $sso_button_display,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['sso_button_display'] = $sso_button_display;
 
         return $this;
     }

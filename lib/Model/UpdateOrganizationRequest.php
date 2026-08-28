@@ -469,7 +469,7 @@ class UpdateOrganizationRequest implements ModelInterface, ArrayAccess, \JsonSer
     /**
      * Sets name
      *
-     * @param string|null $name The organization's name.
+     * @param string|null $name The organization's name. If the organization is a billing customer, this update is also propagated to the corresponding billing customer details.
      *
      * @return self
      */

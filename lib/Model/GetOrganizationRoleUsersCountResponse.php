@@ -1,6 +1,6 @@
 <?php
 /**
- * UpdateUserRequest
+ * GetOrganizationRoleUsersCountResponse
  *
  * PHP version 8.1
  *
@@ -33,7 +33,7 @@ use \ArrayAccess;
 use \Kinde\KindeSDK\ObjectSerializer;
 
 /**
- * UpdateUserRequest Class Doc Comment
+ * GetOrganizationRoleUsersCountResponse Class Doc Comment
  *
  * @category Class
  * @package  Kinde\KindeSDK
@@ -41,7 +41,7 @@ use \Kinde\KindeSDK\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetOrganizationRoleUsersCountResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +50,7 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       *
       * @var string
       */
-    protected static $openAPIModelName = 'updateUser_request';
+    protected static $openAPIModelName = 'get_organization_role_users_count_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,12 +58,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var string[]
       */
     protected static $openAPITypes = [
-        'given_name' => 'string',
-        'family_name' => 'string',
-        'picture' => 'string',
-        'is_suspended' => 'bool',
-        'is_password_reset_requested' => 'bool',
-        'provided_id' => 'string'
+        'code' => 'string',
+        'message' => 'string',
+        'count' => 'int'
     ];
 
     /**
@@ -74,12 +71,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'given_name' => null,
-        'family_name' => null,
-        'picture' => null,
-        'is_suspended' => null,
-        'is_password_reset_requested' => null,
-        'provided_id' => null
+        'code' => null,
+        'message' => null,
+        'count' => null
     ];
 
     /**
@@ -88,12 +82,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'given_name' => false,
-        'family_name' => false,
-        'picture' => false,
-        'is_suspended' => false,
-        'is_password_reset_requested' => false,
-        'provided_id' => false
+        'code' => false,
+        'message' => false,
+        'count' => false
     ];
 
     /**
@@ -182,12 +173,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $attributeMap = [
-        'given_name' => 'given_name',
-        'family_name' => 'family_name',
-        'picture' => 'picture',
-        'is_suspended' => 'is_suspended',
-        'is_password_reset_requested' => 'is_password_reset_requested',
-        'provided_id' => 'provided_id'
+        'code' => 'code',
+        'message' => 'message',
+        'count' => 'count'
     ];
 
     /**
@@ -196,12 +184,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $setters = [
-        'given_name' => 'setGivenName',
-        'family_name' => 'setFamilyName',
-        'picture' => 'setPicture',
-        'is_suspended' => 'setIsSuspended',
-        'is_password_reset_requested' => 'setIsPasswordResetRequested',
-        'provided_id' => 'setProvidedId'
+        'code' => 'setCode',
+        'message' => 'setMessage',
+        'count' => 'setCount'
     ];
 
     /**
@@ -210,12 +195,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      * @var string[]
      */
     protected static $getters = [
-        'given_name' => 'getGivenName',
-        'family_name' => 'getFamilyName',
-        'picture' => 'getPicture',
-        'is_suspended' => 'getIsSuspended',
-        'is_password_reset_requested' => 'getIsPasswordResetRequested',
-        'provided_id' => 'getProvidedId'
+        'code' => 'getCode',
+        'message' => 'getMessage',
+        'count' => 'getCount'
     ];
 
     /**
@@ -275,12 +257,9 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('given_name', $data ?? [], null);
-        $this->setIfExists('family_name', $data ?? [], null);
-        $this->setIfExists('picture', $data ?? [], null);
-        $this->setIfExists('is_suspended', $data ?? [], null);
-        $this->setIfExists('is_password_reset_requested', $data ?? [], null);
-        $this->setIfExists('provided_id', $data ?? [], null);
+        $this->setIfExists('code', $data ?? [], null);
+        $this->setIfExists('message', $data ?? [], null);
+        $this->setIfExists('count', $data ?? [], null);
     }
 
     /**
@@ -326,163 +305,82 @@ class UpdateUserRequest implements ModelInterface, ArrayAccess, \JsonSerializabl
 
 
     /**
-     * Gets given_name
+     * Gets code
      *
      * @return string|null
      */
-    public function getGivenName()
+    public function getCode()
     {
-        return $this->container['given_name'];
+        return $this->container['code'];
     }
 
     /**
-     * Sets given_name
+     * Sets code
      *
-     * @param string|null $given_name User's first name. If the user is the owner of a family billing customer, this update is also propagated to the corresponding billing customer details.
+     * @param string|null $code Response code.
      *
      * @return self
      */
-    public function setGivenName($given_name)
+    public function setCode($code)
     {
-        if (is_null($given_name)) {
-            throw new \InvalidArgumentException('non-nullable given_name cannot be null');
+        if (is_null($code)) {
+            throw new \InvalidArgumentException('non-nullable code cannot be null');
         }
-        $this->container['given_name'] = $given_name;
+        $this->container['code'] = $code;
 
         return $this;
     }
 
     /**
-     * Gets family_name
+     * Gets message
      *
      * @return string|null
      */
-    public function getFamilyName()
+    public function getMessage()
     {
-        return $this->container['family_name'];
+        return $this->container['message'];
     }
 
     /**
-     * Sets family_name
+     * Sets message
      *
-     * @param string|null $family_name User's last name. If the user is the owner of a family billing customer, this update is also propagated to the corresponding billing customer details.
+     * @param string|null $message Response message.
      *
      * @return self
      */
-    public function setFamilyName($family_name)
+    public function setMessage($message)
     {
-        if (is_null($family_name)) {
-            throw new \InvalidArgumentException('non-nullable family_name cannot be null');
+        if (is_null($message)) {
+            throw new \InvalidArgumentException('non-nullable message cannot be null');
         }
-        $this->container['family_name'] = $family_name;
+        $this->container['message'] = $message;
 
         return $this;
     }
 
     /**
-     * Gets picture
+     * Gets count
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getPicture()
+    public function getCount()
     {
-        return $this->container['picture'];
+        return $this->container['count'];
     }
 
     /**
-     * Sets picture
+     * Sets count
      *
-     * @param string|null $picture The user's profile picture.
+     * @param int|null $count The number of users with the specified role in the organization.
      *
      * @return self
      */
-    public function setPicture($picture)
+    public function setCount($count)
     {
-        if (is_null($picture)) {
-            throw new \InvalidArgumentException('non-nullable picture cannot be null');
+        if (is_null($count)) {
+            throw new \InvalidArgumentException('non-nullable count cannot be null');
         }
-        $this->container['picture'] = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_suspended
-     *
-     * @return bool|null
-     */
-    public function getIsSuspended()
-    {
-        return $this->container['is_suspended'];
-    }
-
-    /**
-     * Sets is_suspended
-     *
-     * @param bool|null $is_suspended Whether the user is currently suspended or not.
-     *
-     * @return self
-     */
-    public function setIsSuspended($is_suspended)
-    {
-        if (is_null($is_suspended)) {
-            throw new \InvalidArgumentException('non-nullable is_suspended cannot be null');
-        }
-        $this->container['is_suspended'] = $is_suspended;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_password_reset_requested
-     *
-     * @return bool|null
-     */
-    public function getIsPasswordResetRequested()
-    {
-        return $this->container['is_password_reset_requested'];
-    }
-
-    /**
-     * Sets is_password_reset_requested
-     *
-     * @param bool|null $is_password_reset_requested Prompt the user to change their password on next sign in.
-     *
-     * @return self
-     */
-    public function setIsPasswordResetRequested($is_password_reset_requested)
-    {
-        if (is_null($is_password_reset_requested)) {
-            throw new \InvalidArgumentException('non-nullable is_password_reset_requested cannot be null');
-        }
-        $this->container['is_password_reset_requested'] = $is_password_reset_requested;
-
-        return $this;
-    }
-
-    /**
-     * Gets provided_id
-     *
-     * @return string|null
-     */
-    public function getProvidedId()
-    {
-        return $this->container['provided_id'];
-    }
-
-    /**
-     * Sets provided_id
-     *
-     * @param string|null $provided_id An external id to reference the user.
-     *
-     * @return self
-     */
-    public function setProvidedId($provided_id)
-    {
-        if (is_null($provided_id)) {
-            throw new \InvalidArgumentException('non-nullable provided_id cannot be null');
-        }
-        $this->container['provided_id'] = $provided_id;
+        $this->container['count'] = $count;
 
         return $this;
     }

@@ -64,6 +64,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'salt_position' => 'string',
         'iterations' => 'int',
         'variant' => 'string',
+        'signer_key' => 'string',
+        'salt_separator' => 'string',
+        'rounds' => 'int',
+        'mem_cost' => 'int',
         'is_temporary_password' => 'bool'
     ];
 
@@ -81,6 +85,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'salt_position' => null,
         'iterations' => null,
         'variant' => null,
+        'signer_key' => null,
+        'salt_separator' => null,
+        'rounds' => null,
+        'mem_cost' => null,
         'is_temporary_password' => null
     ];
 
@@ -96,6 +104,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'salt_position' => false,
         'iterations' => false,
         'variant' => false,
+        'signer_key' => false,
+        'salt_separator' => false,
+        'rounds' => false,
+        'mem_cost' => false,
         'is_temporary_password' => false
     ];
 
@@ -191,6 +203,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'salt_position' => 'salt_position',
         'iterations' => 'iterations',
         'variant' => 'variant',
+        'signer_key' => 'signer_key',
+        'salt_separator' => 'salt_separator',
+        'rounds' => 'rounds',
+        'mem_cost' => 'mem_cost',
         'is_temporary_password' => 'is_temporary_password'
     ];
 
@@ -206,6 +222,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'salt_position' => 'setSaltPosition',
         'iterations' => 'setIterations',
         'variant' => 'setVariant',
+        'signer_key' => 'setSignerKey',
+        'salt_separator' => 'setSaltSeparator',
+        'rounds' => 'setRounds',
+        'mem_cost' => 'setMemCost',
         'is_temporary_password' => 'setIsTemporaryPassword'
     ];
 
@@ -221,6 +241,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         'salt_position' => 'getSaltPosition',
         'iterations' => 'getIterations',
         'variant' => 'getVariant',
+        'signer_key' => 'getSignerKey',
+        'salt_separator' => 'getSaltSeparator',
+        'rounds' => 'getRounds',
+        'mem_cost' => 'getMemCost',
         'is_temporary_password' => 'getIsTemporaryPassword'
     ];
 
@@ -271,6 +295,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     public const HASHING_METHOD_SHA256 = 'sha256';
     public const HASHING_METHOD_WORDPRESS = 'wordpress';
     public const HASHING_METHOD_PBKDF2 = 'pbkdf2';
+    public const HASHING_METHOD_FIREBASE_SCRYPT = 'firebase-scrypt';
+    public const HASHING_METHOD_ASPNET_IDENTITY_V2 = 'aspnet-identity-v2';
     public const SALT_POSITION_PREFIX = 'prefix';
     public const SALT_POSITION_SUFFIX = 'suffix';
 
@@ -288,6 +314,8 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
             self::HASHING_METHOD_SHA256,
             self::HASHING_METHOD_WORDPRESS,
             self::HASHING_METHOD_PBKDF2,
+            self::HASHING_METHOD_FIREBASE_SCRYPT,
+            self::HASHING_METHOD_ASPNET_IDENTITY_V2,
         ];
     }
 
@@ -325,6 +353,10 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('salt_position', $data ?? [], null);
         $this->setIfExists('iterations', $data ?? [], null);
         $this->setIfExists('variant', $data ?? [], null);
+        $this->setIfExists('signer_key', $data ?? [], null);
+        $this->setIfExists('salt_separator', $data ?? [], null);
+        $this->setIfExists('rounds', $data ?? [], null);
+        $this->setIfExists('mem_cost', $data ?? [], null);
         $this->setIfExists('is_temporary_password', $data ?? [], null);
     }
 
@@ -404,7 +436,7 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets hashed_password
      *
-     * @param string $hashed_password The hashed password.
+     * @param string $hashed_password The hashed password. For aspnet-identity-v2, provide the base64-encoded AspNetUsers.PasswordHash value as-is.
      *
      * @return self
      */
@@ -468,7 +500,7 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets salt
      *
-     * @param string|null $salt Extra characters added to passwords to make them stronger. Not required for bcrypt. Required for pbkdf2; provide the base64-encoded salt.
+     * @param string|null $salt Extra characters added to passwords to make them stronger. Not required for bcrypt. Required for pbkdf2; provide the base64-encoded salt. Required for firebase-scrypt; provide the base64-encoded per-user salt. Not used for aspnet-identity-v2 (the salt is embedded in the hash); do not provide salt, salt_position, iterations, or variant with aspnet-identity-v2.
      *
      * @return self
      */
@@ -532,7 +564,7 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets iterations
      *
-     * @param int|null $iterations The iteration count (factor) used to derive the hash. Optional for pbkdf2; when omitted, verification defaults to 24000 (the FusionAuth default factor).
+     * @param int|null $iterations The iteration count (factor) used to derive the hash. Optional for pbkdf2; when omitted, verification defaults to 24000 (the FusionAuth default factor). Rejected for firebase-scrypt.
      *
      * @return self
      */
@@ -559,7 +591,7 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets variant
      *
-     * @param string|null $variant The hashing variant. Required for pbkdf2 (e.g. salted-pbkdf2-hmac-sha256, salted-pbkdf2-hmac-sha256-512, salted-pbkdf2-hmac-sha512-512).
+     * @param string|null $variant The hashing variant. Required for pbkdf2 (e.g. salted-pbkdf2-hmac-sha256, salted-pbkdf2-hmac-sha256-512, salted-pbkdf2-hmac-sha512-512). Rejected for firebase-scrypt.
      *
      * @return self
      */
@@ -569,6 +601,114 @@ class SetUserPasswordRequest implements ModelInterface, ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable variant cannot be null');
         }
         $this->container['variant'] = $variant;
+
+        return $this;
+    }
+
+    /**
+     * Gets signer_key
+     *
+     * @return string|null
+     */
+    public function getSignerKey()
+    {
+        return $this->container['signer_key'];
+    }
+
+    /**
+     * Sets signer_key
+     *
+     * @param string|null $signer_key The base64-encoded signer key from the Firebase project's password hash parameters. Required for firebase-scrypt; rejected for other hashing methods.
+     *
+     * @return self
+     */
+    public function setSignerKey($signer_key)
+    {
+        if (is_null($signer_key)) {
+            throw new \InvalidArgumentException('non-nullable signer_key cannot be null');
+        }
+        $this->container['signer_key'] = $signer_key;
+
+        return $this;
+    }
+
+    /**
+     * Gets salt_separator
+     *
+     * @return string|null
+     */
+    public function getSaltSeparator()
+    {
+        return $this->container['salt_separator'];
+    }
+
+    /**
+     * Sets salt_separator
+     *
+     * @param string|null $salt_separator The base64-encoded salt separator from the Firebase project's password hash parameters. Required for firebase-scrypt; rejected for other hashing methods.
+     *
+     * @return self
+     */
+    public function setSaltSeparator($salt_separator)
+    {
+        if (is_null($salt_separator)) {
+            throw new \InvalidArgumentException('non-nullable salt_separator cannot be null');
+        }
+        $this->container['salt_separator'] = $salt_separator;
+
+        return $this;
+    }
+
+    /**
+     * Gets rounds
+     *
+     * @return int|null
+     */
+    public function getRounds()
+    {
+        return $this->container['rounds'];
+    }
+
+    /**
+     * Sets rounds
+     *
+     * @param int|null $rounds The scrypt rounds from the Firebase project's password hash parameters (1-16). Required for firebase-scrypt; rejected for other hashing methods.
+     *
+     * @return self
+     */
+    public function setRounds($rounds)
+    {
+        if (is_null($rounds)) {
+            throw new \InvalidArgumentException('non-nullable rounds cannot be null');
+        }
+        $this->container['rounds'] = $rounds;
+
+        return $this;
+    }
+
+    /**
+     * Gets mem_cost
+     *
+     * @return int|null
+     */
+    public function getMemCost()
+    {
+        return $this->container['mem_cost'];
+    }
+
+    /**
+     * Sets mem_cost
+     *
+     * @param int|null $mem_cost The scrypt memory cost from the Firebase project's password hash parameters (1-20). Required for firebase-scrypt; rejected for other hashing methods.
+     *
+     * @return self
+     */
+    public function setMemCost($mem_cost)
+    {
+        if (is_null($mem_cost)) {
+            throw new \InvalidArgumentException('non-nullable mem_cost cannot be null');
+        }
+        $this->container['mem_cost'] = $mem_cost;
 
         return $this;
     }
