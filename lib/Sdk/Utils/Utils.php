@@ -167,6 +167,16 @@ class Utils
             if (!in_array($key, $keysAvailable)) {
                 throw new InvalidArgumentException("Please provide correct additional, $key");
             }
+            if ($key === 'acr_values') {
+                $additionalParameters[$key] = StepUp::normalizeAcrValues($additionalParameters[$key]);
+            } elseif ($key === 'max_age') {
+                // Never send an unset max_age
+                if ($additionalParameters[$key] === null) {
+                    unset($additionalParameters[$key]);
+                    continue;
+                }
+                $additionalParameters[$key] = StepUp::normalizeMaxAge($additionalParameters[$key]);
+            }
             if (gettype($additionalParameters[$key]) != $additionalParametersValid[$key]) {
                 throw new InvalidArgumentException("Please supply a valid $key. Expected: $additionalParametersValid[$key]");
             }

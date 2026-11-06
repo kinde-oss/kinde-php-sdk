@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\OAuthException;
+use Kinde\KindeSDK\Sdk\Exceptions\LoginRequiredException;
+use Kinde\KindeSDK\Sdk\Exceptions\UnmetAuthenticationRequirementsException;
 use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -88,8 +90,11 @@ class KindeAuthController extends AbstractController
                 // If no reauth_state, just return to login
                 return $this->redirectToRoute('kinde_login');
             }
-            // For other errors, redirect to home
-            return $this->redirectToRoute('home');
+            // getToken() validates the state and raises the step-up errors below
+            if (!in_array($errorParam, [UnmetAuthenticationRequirementsException::ERROR_CODE, LoginRequiredException::ERROR_CODE], true)) {
+                // For other errors, redirect to home
+                return $this->redirectToRoute('home');
+            }
         }
 
         try {
@@ -109,6 +114,9 @@ class KindeAuthController extends AbstractController
                 return $this->redirectToRoute('dashboard');
             }
             $this->addFlash('error', 'Authentication failed');
+            return $this->redirectToRoute('home');
+        } catch (UnmetAuthenticationRequirementsException $e) {
+            $this->addFlash('error', 'The extra verification could not be completed: ' . $e->getMessage());
             return $this->redirectToRoute('home');
         } catch (OAuthException $e) {
             $this->addFlash('error', $e->getMessage());

@@ -5,6 +5,8 @@ namespace Kinde\KindeSDK\Frameworks\CodeIgniter;
 use CodeIgniter\Controller;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\OAuthException;
+use Kinde\KindeSDK\Sdk\Exceptions\LoginRequiredException;
+use Kinde\KindeSDK\Sdk\Exceptions\UnmetAuthenticationRequirementsException;
 use Exception;
 
 class KindeAuthController extends Controller
@@ -93,9 +95,12 @@ class KindeAuthController extends Controller
                 // If no reauth_state, just return to login
                 return redirect()->to('/auth/login');
             }
-            // For other errors, redirect to home with error
-            session()->setFlashdata('error', $errorParam);
-            return redirect()->to('/');
+            // getToken() validates the state and raises the step-up errors below
+            if (!in_array($errorParam, [UnmetAuthenticationRequirementsException::ERROR_CODE, LoginRequiredException::ERROR_CODE], true)) {
+                // For other errors, redirect to home with error
+                session()->setFlashdata('error', $errorParam);
+                return redirect()->to('/');
+            }
         }
 
         try {
@@ -111,6 +116,8 @@ class KindeAuthController extends Controller
                 session()->setFlashdata('success', 'Successfully logged in!');
                 return redirect()->to('/dashboard');
             }
+        } catch (UnmetAuthenticationRequirementsException $e) {
+            session()->setFlashdata('error', 'The extra verification could not be completed: ' . $e->getMessage());
         } catch (OAuthException $e) {
             session()->setFlashdata('error', 'Authentication failed: ' . $e->getMessage());
         } catch (Exception $e) {

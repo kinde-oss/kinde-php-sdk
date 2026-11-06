@@ -28,6 +28,7 @@ class TestableKindeClientSDK extends KindeClientSDK
     private ?array $mockFeatureFlags = null;
     private ?array $mockApiFeatureFlags = null;
     private ?array $mockEntitlements = null;
+    private ?array $mockOpenIdConfiguration = null;
 
     /**
      * Exceptions to throw (for error handling tests).
@@ -147,6 +148,18 @@ class TestableKindeClientSDK extends KindeClientSDK
     public function setMockEntitlements(array $entitlements): self
     {
         $this->mockEntitlements = $entitlements;
+        return $this;
+    }
+
+    /**
+     * Set mock OpenID discovery document.
+     *
+     * @param array $configuration Discovery document
+     * @return self
+     */
+    public function setMockOpenIdConfiguration(array $configuration): self
+    {
+        $this->mockOpenIdConfiguration = $configuration;
         return $this;
     }
 
@@ -424,6 +437,7 @@ class TestableKindeClientSDK extends KindeClientSDK
         $this->mockFeatureFlags = null;
         $this->mockApiFeatureFlags = null;
         $this->mockEntitlements = null;
+        $this->mockOpenIdConfiguration = null;
         $this->rolesException = null;
         $this->permissionsException = null;
         $this->featureFlagsException = null;
@@ -458,6 +472,17 @@ class TestableKindeClientSDK extends KindeClientSDK
             return $this->mockApiFeatureFlags;
         }
         return [];
+    }
+
+    /**
+     * Mock OpenID discovery document fetch.
+     *
+     * @return array
+     */
+    protected function fetchOpenIdConfiguration(): array
+    {
+        $this->recordMethodCall('fetchOpenIdConfiguration');
+        return $this->mockOpenIdConfiguration ?? [];
     }
 
     /**

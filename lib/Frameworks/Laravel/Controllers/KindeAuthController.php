@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\OAuthException;
+use Kinde\KindeSDK\Sdk\Exceptions\LoginRequiredException;
+use Kinde\KindeSDK\Sdk\Exceptions\UnmetAuthenticationRequirementsException;
 use Inertia\Inertia;
 use Inertia\Response;
 use Exception;
@@ -77,8 +79,11 @@ class KindeAuthController extends Controller
                 // Fallback return (unreachable due to exit() above, but included for code completeness)
                 return redirect()->route('home');
             }
-            // For other errors, redirect to home
-            return redirect()->route('home');
+            // getToken() validates the state and raises the step-up errors below
+            if (!in_array($errorParam, [UnmetAuthenticationRequirementsException::ERROR_CODE, LoginRequiredException::ERROR_CODE], true)) {
+                // For other errors, redirect to home
+                return redirect()->route('home');
+            }
         }
         
         try {
@@ -98,6 +103,9 @@ class KindeAuthController extends Controller
                 return redirect()->intended(route('dashboard'))
                     ->with('success', 'Successfully logged in!');
             }
+        } catch (UnmetAuthenticationRequirementsException $e) {
+            return redirect()->route('home')
+                ->withErrors(['auth' => 'The extra verification could not be completed: ' . $e->getMessage()]);
         } catch (OAuthException $e) {
             return redirect()->route('home')
                 ->withErrors(['auth' => 'Authentication failed: ' . $e->getMessage()]);
