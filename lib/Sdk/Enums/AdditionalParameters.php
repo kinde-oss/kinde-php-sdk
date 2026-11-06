@@ -21,6 +21,9 @@ class AdditionalParameters
         'pricing_table_key' => 'string',
         'prompt' => 'string',
         'redirect_uri' => 'string',
-        'invitation_code' => 'string'
+        'invitation_code' => 'string',
+        // Step-up: also accept array (acr_values) and int (max_age), normalized to string
+        'acr_values' => 'string',
+        'max_age' => 'string'
     ];
 }
