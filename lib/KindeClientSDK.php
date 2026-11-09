@@ -4,6 +4,7 @@ namespace Kinde\KindeSDK;
 
 use Exception;
 use InvalidArgumentException;
+use LogicException;
 use GuzzleHttp\Client;
 use Kinde\KindeSDK\Sdk\OAuth2\PKCE;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
@@ -95,7 +96,7 @@ class KindeClientSDK
     /**
      * @var array|null Cached OpenID discovery document.
      */
-    private ?array $openIdConfiguration = null;
+    protected ?array $openIdConfiguration = null;
 
 
     function __construct(
@@ -267,14 +268,25 @@ class KindeClientSDK
      * @return void
      *
      * @throws InvalidArgumentException When the parameters are invalid or the grant type is client_credentials.
+     * @throws LogicException           When output has already started, so the redirect cannot be sent.
      */
     public function stepUp($acrValues = AcrValues::MFA, $maxAge = null, array $additionalParameters = [])
     {
-        $this->getUserFlow()->authenticate($this, $this->buildStepUpParameters($acrValues, $maxAge, $additionalParameters));
+        // Never return without redirecting, or the protected action would run without the step-up
+        if (headers_sent($file, $line)) {
+            throw new LogicException(
+                "Cannot redirect for step-up: output already started at $file:$line. " .
+                'Use getStepUpUrl() and redirect with your framework instead.'
+            );
+        }
+        header('Location: ' . $this->getStepUpUrl($acrValues, $maxAge, $additionalParameters));
+        exit();
     }
 
     /**
-     * Retrieves the step-up authorization URL without redirecting.
+     * Prepares a step-up request and returns its URL without redirecting.
+     * Each call stores a new state (and PKCE verifier), replacing any login in progress,
+     * so call it when you redirect rather than to render a link.
      *
      * @param string|string[]|null $acrValues            Required context (AcrValues::MFA or AcrValues::PHR), or null.
      * @param int|null             $maxAge               Maximum age of the last authentication, in seconds (optional).
@@ -313,20 +325,24 @@ class KindeClientSDK
      */
     private function buildStepUpParameters($acrValues, $maxAge, array $additionalParameters): array
     {
-        // Kinde cannot collect a factor without showing a screen
-        $prompt = $additionalParameters['prompt'] ?? null;
-        if (is_string($prompt) && strtolower(trim($prompt)) === AdditionalParameters::PROMPT_NONE) {
-            throw new InvalidArgumentException('Step-up authentication cannot use prompt=none');
-        }
         if ($acrValues !== null) {
-            // Kinde silently ignores unrecognised values, which would skip the step-up.
-            StepUp::requiredAcr($acrValues);
             $additionalParameters['acr_values'] = StepUp::normalizeAcrValues($acrValues);
         }
         if ($maxAge !== null) {
             $additionalParameters['max_age'] = StepUp::normalizeMaxAge($maxAge);
         }
-        if (empty($additionalParameters['acr_values']) && !isset($additionalParameters['max_age'])) {
+
+        // Check what will be sent, including parameters set on the client
+        $effectiveParameters = array_merge($this->additionalParameters, $additionalParameters);
+
+        // Kinde cannot collect a factor without showing a screen
+        $prompt = $effectiveParameters['prompt'] ?? null;
+        if (is_string($prompt) && strtolower(trim($prompt)) === AdditionalParameters::PROMPT_NONE) {
+            throw new InvalidArgumentException('Step-up authentication cannot use prompt=none');
+        }
+        // Kinde silently ignores unrecognised values, which would skip the step-up
+        $requiredAcr = StepUp::requiredAcr($effectiveParameters['acr_values'] ?? null);
+        if ($requiredAcr === null && !isset($effectiveParameters['max_age'])) {
             throw new InvalidArgumentException('Step-up authentication requires acr_values, max_age, or both');
         }
 
@@ -362,6 +378,7 @@ class KindeClientSDK
      *
      * @param string|string[]|null $acrValues Required context (AcrValues::MFA or AcrValues::PHR), or null.
      * @param int|null             $maxAge    Maximum age of the last authentication, in seconds (optional).
+     *                                        0 is almost never met; use a short window such as 60 instead.
      * @param string               $tokenType The type of token to read (optional, defaults to TokenType::ID_TOKEN).
      * @return bool True if the user is authenticated and meets the requirement
      *
@@ -473,8 +490,9 @@ class KindeClientSDK
         parse_str($urlComponents['query'] ?? "", $params);
         $stateServer = $params['state'] ?? null;
 
-        // Exchange the code of a pending request (e.g. step-up) even when already authenticated
-        if (!$this->isPendingAuthorizationResponse($stateServer) && $this->isAuthenticated) {
+        // Exchange the code of a pending request (e.g. step-up) even when already authenticated,
+        // and never report an error callback as a success
+        if (empty($params['error']) && !$this->isPendingAuthorizationResponse($stateServer) && $this->isAuthenticated) {
             $token = $this->storage->getToken(false);
             if (!empty($token)) {
                 return $token;
@@ -822,6 +840,29 @@ class KindeClientSDK
      */
     private function fetchToken($formParams)
     {
+        $token = $this->requestToken($formParams);
+        $this->storage->setToken($token);
+        $tokenDecode = json_decode($token, false);
+
+        // Cleaning (only once the authorization code is used, so a refresh keeps a pending step-up)
+        if (isset($formParams['code'])) {
+            $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
+            $this->storage->removeItem(StorageEnums::STATE);
+        }
+        return $tokenDecode;
+    }
+
+    /**
+     * Sends a request to the token endpoint.
+     *
+     * @param array $formParams The form parameters to be sent in the request.
+     *
+     * @throws GuzzleException If an error occurs during the HTTP request.
+     *
+     * @return string The raw token response.
+     */
+    protected function requestToken(array $formParams): string
+    {
         $client = new Client();
 
         $response =
@@ -832,14 +873,7 @@ class KindeClientSDK
                 ]
             ]);
 
-        $token = $response->getBody()->getContents();
-        $this->storage->setToken($token);
-        $tokenDecode = json_decode($token, false);
-
-        // Cleaning
-        $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
-        $this->storage->removeItem(StorageEnums::STATE);
-        return $tokenDecode;
+        return $response->getBody()->getContents();
     }
 
     /**
@@ -1034,15 +1068,13 @@ class KindeClientSDK
     /**
      * Checks the authentication state against the provided state from the server.
      *
-     * @param string $stateServer The state received from the server.
+     * @param mixed $stateServer The state received from the server.
      *
      * @throws OAuthException If the authentication state is empty or does not match the provided state.
      */
-    private function checkStateAuthentication(string $stateServer)
+    private function checkStateAuthentication($stateServer)
     {
-        $storageOAuthState = $this->storage->getState();
-
-        if (empty($storageOAuthState) || $stateServer != $storageOAuthState) {
+        if (!$this->isPendingAuthorizationResponse($stateServer)) {
             throw new OAuthException("Authentication failed because it tries to validate state");
         }
     }

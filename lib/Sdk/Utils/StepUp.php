@@ -22,14 +22,17 @@ class StepUp
         'urn:okta:loa:2fa:any' => AcrValues::MFA,
     ];
 
+    // Seconds an auth_time may be ahead of this server's clock
+    private const CLOCK_SKEW = 60;
+
     /**
      * Normalizes acr_values to a space-separated string.
      *
      * @param string|string[] $acrValues A space-separated string or an array of strings.
      *
-     * @return string The normalized acr_values.
      *
      * @throws InvalidArgumentException If the value is empty or not a string or array of strings.
+     * @return string The normalized acr_values.
      */
     public static function normalizeAcrValues($acrValues): string
     {
@@ -59,9 +62,9 @@ class StepUp
      *
      * @param int|string $maxAge A non-negative whole number of seconds.
      *
-     * @return string The normalized max_age.
      *
      * @throws InvalidArgumentException If the value is not a non-negative whole number.
+     * @return string The normalized max_age.
      */
     public static function normalizeMaxAge($maxAge): string
     {
@@ -80,9 +83,9 @@ class StepUp
      *
      * @param string|string[]|null $acrValues The requested context(s).
      *
-     * @return string|null mfa, phr, or null when nothing is requested.
      *
      * @throws InvalidArgumentException If values are given but none is recognized.
+     * @return string|null mfa, phr, or null when nothing is requested.
      */
     public static function requiredAcr($acrValues): ?string
     {
@@ -143,7 +146,9 @@ class StepUp
         }
 
         $now = $now ?? time();
-        return ($now - (int) $authTime) <= $maxAge;
+        $age = $now - (int) $authTime;
+        // A future auth_time beyond clock skew is invalid, not "very recent"
+        return $age >= -self::CLOCK_SKEW && $age <= $maxAge;
     }
 
     /**

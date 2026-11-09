@@ -29,6 +29,7 @@ class TestableKindeClientSDK extends KindeClientSDK
     private ?array $mockApiFeatureFlags = null;
     private ?array $mockEntitlements = null;
     private ?array $mockOpenIdConfiguration = null;
+    private array $mockTokenResponses = [];
 
     /**
      * Exceptions to throw (for error handling tests).
@@ -160,6 +161,18 @@ class TestableKindeClientSDK extends KindeClientSDK
     public function setMockOpenIdConfiguration(array $configuration): self
     {
         $this->mockOpenIdConfiguration = $configuration;
+        return $this;
+    }
+
+    /**
+     * Queue a token endpoint response.
+     *
+     * @param array $response Token response
+     * @return self
+     */
+    public function addMockTokenResponse(array $response): self
+    {
+        $this->mockTokenResponses[] = $response;
         return $this;
     }
 
@@ -438,6 +451,8 @@ class TestableKindeClientSDK extends KindeClientSDK
         $this->mockApiFeatureFlags = null;
         $this->mockEntitlements = null;
         $this->mockOpenIdConfiguration = null;
+        $this->openIdConfiguration = null;
+        $this->mockTokenResponses = [];
         $this->rolesException = null;
         $this->permissionsException = null;
         $this->featureFlagsException = null;
@@ -483,6 +498,21 @@ class TestableKindeClientSDK extends KindeClientSDK
     {
         $this->recordMethodCall('fetchOpenIdConfiguration');
         return $this->mockOpenIdConfiguration ?? [];
+    }
+
+    /**
+     * Mock token endpoint request.
+     *
+     * @param array $formParams Form parameters
+     * @return string
+     */
+    protected function requestToken(array $formParams): string
+    {
+        $this->recordMethodCall('requestToken', $formParams);
+        if (empty($this->mockTokenResponses)) {
+            throw new Exception('No mock token response');
+        }
+        return json_encode(array_shift($this->mockTokenResponses));
     }
 
     /**

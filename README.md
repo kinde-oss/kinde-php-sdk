@@ -199,8 +199,11 @@ use Kinde\KindeSDK\Sdk\Exceptions\UnmetAuthenticationRequirementsException;
 
 // Before a sensitive operation: require MFA within the last 5 minutes
 if (!$kindeClient->hasAuthenticationContext(AcrValues::MFA, 300)) {
-    $kindeClient->stepUp(AcrValues::MFA, 300); // redirects; use getStepUpUrl() to build your own redirect
+    $kindeClient->stepUp(AcrValues::MFA, 300); // redirects and exits; throws if output has already started
 }
+
+// In a framework, return a redirect response instead so the session is saved, e.g. in Laravel:
+// return redirect()->away($kindeClient->getStepUpUrl(AcrValues::MFA, 300));
 
 // In your callback, as for a normal login. Stepped-up tokens replace the stored ones.
 try {
@@ -216,6 +219,8 @@ $kindeClient->getAuthenticationContext(); // ['acr' => 'mfa', 'amr' => ['pwd', '
 ```
 
 - `AcrValues::MFA` requires a second factor; `AcrValues::PHR` requires a phishing-resistant factor (a passkey) and also meets an `mfa` requirement. An absent `acr` means a single-factor login.
+- `stepUp($acr, 0)` forces a fresh verification, but don't check `hasAuthenticationContext($acr, 0)`: it is almost never met, so the user would be sent back to Kinde on every request. Use a short window such as 60 seconds.
+- `getStepUpUrl()` stores a new state each time it is called, replacing any login in progress, so call it when you redirect rather than to render a link.
 - `acr_values` and `max_age` can also be passed to `login()` as additional parameters. `stepUp()` rejects `prompt=none`, because Kinde can't collect a factor without a screen.
 - A `login_required` error from a `prompt=none` request throws `LoginRequiredException`, with the same `getErrorDescription()` and `getState()`.
 - The Laravel, Symfony and CodeIgniter callback controllers show an unmet step-up as a flash error and keep the user signed in.
@@ -225,7 +230,7 @@ Left to your app:
 
 - **Unsupported environments.** Check `$kindeClient->isStepUpSupported()` before you rely on step-up. If it is false, Kinde ignores `acr_values` and `max_age`; send `prompt=login` to force a fresh sign-in. `stepUp()` does not fall back for you.
 - **`auth_time` on unsupported environments.** `getAuthenticationContext()` returns the token's `auth_time` as is, without a discovery request. On those environments it may be the token's issue time, so don't use it for recency.
-- **Returning the user.** `stepUp()` doesn't remember where the user was. Store the URL before calling it, e.g. in Laravel `session()->put('url.intended', url()->current())`, which the built-in callback redirects to.
+- **Returning the user.** The SDK doesn't remember where the user was. In Laravel, call `session()->put('url.intended', url()->current())` and return `redirect()->away($kindeClient->getStepUpUrl(...))`; the built-in callback redirects to the intended URL. Don't use `stepUp()` there: it exits before Laravel saves the session.
 
 **Protecting an API.** Check the claims of the verified access token on every request with `StepUp::satisfies($claims, AcrValues::MFA)`, and return the RFC 9470 `insufficient_user_authentication` challenge when it is not met. Don't rely on the client to have requested the context.
 

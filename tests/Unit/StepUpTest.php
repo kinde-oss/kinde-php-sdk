@@ -4,7 +4,9 @@ namespace Kinde\KindeSDK\Tests\Unit;
 
 use InvalidArgumentException;
 use Kinde\KindeSDK\Sdk\Enums\AcrValues;
+use Kinde\KindeSDK\OAuthException;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
+use Kinde\KindeSDK\Sdk\Enums\StorageEnums;
 use Kinde\KindeSDK\Sdk\Exceptions\CallbackErrorException;
 use Kinde\KindeSDK\Sdk\Exceptions\LoginRequiredException;
 use Kinde\KindeSDK\Sdk\Exceptions\UnmetAuthenticationRequirementsException;
@@ -13,6 +15,7 @@ use Kinde\KindeSDK\Sdk\Storage\Storage;
 use Kinde\KindeSDK\Sdk\Utils\StepUp;
 use Kinde\KindeSDK\Sdk\Utils\Utils;
 use Kinde\KindeSDK\Tests\Support\KindeTestCase;
+use Kinde\KindeSDK\Tests\Support\MockTokenGenerator;
 use Kinde\KindeSDK\Tests\Support\TestableKindeClientSDK;
 
 /**
@@ -53,6 +56,18 @@ class StepUpTest extends KindeTestCase
         $_SERVER['REQUEST_URI'] = '/callback?' . http_build_query($query);
     }
 
+    private function createTestableClient(string $grantType = GrantType::authorizationCode): TestableKindeClientSDK
+    {
+        return new TestableKindeClientSDK(
+            self::TEST_DOMAIN,
+            self::TEST_REDIRECT_URI,
+            self::TEST_CLIENT_ID,
+            self::TEST_CLIENT_SECRET,
+            $grantType,
+            self::TEST_LOGOUT_REDIRECT_URI
+        );
+    }
+
     // =========================================================================
     // StepUp helpers
     // =========================================================================
@@ -82,6 +97,8 @@ class StepUpTest extends KindeTestCase
         $this->assertTrue(StepUp::satisfies(['acr' => 'phr'], AcrValues::MFA), 'phr meets mfa');
         $this->assertFalse(StepUp::satisfies([], AcrValues::MFA), 'absent acr does not meet mfa');
         $this->assertTrue(StepUp::satisfies([], null), 'absent acr is fine when nothing is required');
+        $this->assertTrue(StepUp::satisfies(['auth_time' => $now + 30], null, 300, $now), 'within clock skew');
+        $this->assertFalse(StepUp::satisfies(['auth_time' => $now + 3600], null, 300, $now), 'future auth_time');
     }
 
     public function testAdditionalParametersNormalizeStepUpValues(): void
@@ -131,15 +148,18 @@ class StepUpTest extends KindeTestCase
     public function testStepUpRejectsInvalidRequests(): void
     {
         $cases = [
-            'neither acr_values nor max_age' => [null, null, []],
-            'fractional max_age' => [AcrValues::MFA, 1.5, []],
-            'negative max_age' => [AcrValues::MFA, -1, []],
-            'prompt=none' => [AcrValues::MFA, null, ['prompt' => 'none']],
+            'neither acr_values nor max_age' => [null, null, [], []],
+            'fractional max_age' => [AcrValues::MFA, 1.5, [], []],
+            'negative max_age' => [AcrValues::MFA, -1, [], []],
+            'prompt=none' => [AcrValues::MFA, null, ['prompt' => 'none'], []],
+            'prompt=none on the client' => [AcrValues::MFA, null, [], ['prompt' => 'none']],
+            'unrecognised acr_values parameter' => [null, 300, ['acr_values' => 'mfaa'], []],
         ];
 
-        foreach ($cases as $name => [$acrValues, $maxAge, $additionalParameters]) {
+        foreach ($cases as $name => [$acrValues, $maxAge, $additionalParameters, $clientParameters]) {
             try {
-                $this->createClient()->getStepUpUrl($acrValues, $maxAge, $additionalParameters);
+                $this->createClient(['additionalParameters' => $clientParameters])
+                    ->getStepUpUrl($acrValues, $maxAge, $additionalParameters);
                 $this->fail("Expected $name to be rejected");
             } catch (InvalidArgumentException $e) {
                 $this->addToAssertionCount(1);
@@ -247,6 +267,70 @@ class StepUpTest extends KindeTestCase
         $client->getToken();
     }
 
+    public function testSuccessfulStepUpCallbackReplacesTokens(): void
+    {
+        foreach ([GrantType::authorizationCode, GrantType::PKCE] as $grantType) {
+            $this->setMockToken([], ['amr' => ['pwd'], 'auth_time' => time() - 600]);
+            $client = $this->createTestableClient($grantType);
+            $state = $this->queryOf($client->getStepUpUrl(AcrValues::MFA))['state'];
+            $steppedUp = MockTokenGenerator::createTokenResponse([], ['acr' => 'mfa', 'auth_time' => time()]);
+            $client->addMockTokenResponse($steppedUp);
+            $this->simulateCallback(['code' => 'step_up_code', 'state' => $state]);
+
+            $client->getToken();
+
+            $request = $client->getMethodCalls('requestToken')[0];
+            $this->assertSame('step_up_code', $request['code']);
+            if ($grantType === GrantType::PKCE) {
+                $this->assertNotEmpty($request['code_verifier'] ?? null);
+            }
+            $this->assertSame($steppedUp['access_token'], Storage::getAccessToken());
+            $this->assertTrue($client->hasAuthenticationContext(AcrValues::MFA, 300));
+            $this->assertEmpty(Storage::getState());
+        }
+    }
+
+    public function testRefreshDuringStepUpKeepsPendingRequest(): void
+    {
+        // Signed in with an expired access token, so the next check refreshes it
+        $_COOKIE['kinde_' . StorageEnums::TOKEN] = json_encode(['access_token' => '', 'refresh_token' => 'old_refresh_token']);
+        $client = $this->createTestableClient();
+        $state = $this->queryOf($client->getStepUpUrl(AcrValues::MFA))['state'];
+        $client->addMockTokenResponse(MockTokenGenerator::createTokenResponse());
+        $this->assertTrue($client->isAuthenticated);
+
+        $steppedUp = MockTokenGenerator::createTokenResponse([], ['acr' => 'mfa', 'auth_time' => time()]);
+        $client->addMockTokenResponse($steppedUp);
+        $this->simulateCallback(['code' => 'step_up_code', 'state' => $state]);
+        $client->getToken();
+
+        $requests = $client->getMethodCalls('requestToken');
+        $this->assertSame('refresh_token', $requests[0]['grant_type']);
+        $this->assertSame('step_up_code', $requests[1]['code'] ?? null);
+        $this->assertSame($steppedUp['access_token'], Storage::getAccessToken());
+    }
+
+    public function testErrorCallbackWithStaleStateIsNotASuccess(): void
+    {
+        $this->setMockToken();
+        $client = $this->createClient();
+        $staleState = $this->queryOf($client->getStepUpUrl(AcrValues::MFA))['state'];
+        $client->getStepUpUrl(AcrValues::MFA); // a second tab replaces the state
+        $this->simulateCallback(['error' => 'unmet_authentication_requirements', 'state' => $staleState]);
+
+        $this->expectException(OAuthException::class);
+        $this->expectExceptionMessage('validate state');
+        $client->getToken();
+    }
+
+    public function testCallbackWithNonStringStateFailsValidation(): void
+    {
+        $this->simulateCallback(['code' => 'code', 'state' => ['not', 'a', 'string']]);
+
+        $this->expectException(OAuthException::class);
+        $this->createClient()->getToken();
+    }
+
     public function testRevisitedCallbackReturnsStoredTokenWhenAuthenticated(): void
     {
         $this->setMockToken();
@@ -259,26 +343,15 @@ class StepUpTest extends KindeTestCase
     // Discovery
     // =========================================================================
 
-    private function createTestableClient(array $openIdConfiguration): TestableKindeClientSDK
-    {
-        return (new TestableKindeClientSDK(
-            self::TEST_DOMAIN,
-            self::TEST_REDIRECT_URI,
-            self::TEST_CLIENT_ID,
-            self::TEST_CLIENT_SECRET,
-            GrantType::authorizationCode,
-            self::TEST_LOGOUT_REDIRECT_URI
-        ))->setMockOpenIdConfiguration($openIdConfiguration);
-    }
-
     public function testIsStepUpSupported(): void
     {
-        $client = $this->createTestableClient(['acr_values_supported' => ['mfa', 'phr']]);
+        $client = $this->createTestableClient()->setMockOpenIdConfiguration(['acr_values_supported' => ['mfa', 'phr']]);
 
         $this->assertTrue($client->isStepUpSupported());
         $this->assertTrue($client->isStepUpSupported());
         $this->assertSame(1, $client->getMethodCallCount('fetchOpenIdConfiguration'));
 
-        $this->assertFalse($this->createTestableClient(['issuer' => self::TEST_DOMAIN])->isStepUpSupported());
+        $client->reset()->setMockOpenIdConfiguration(['issuer' => self::TEST_DOMAIN]);
+        $this->assertFalse($client->isStepUpSupported());
     }
 }
