@@ -228,9 +228,9 @@ $kindeClient->getAuthenticationContext(); // ['acr' => 'mfa', 'amr' => ['pwd', '
 
 Left to your app:
 
-- **Unsupported environments.** Check `$kindeClient->isStepUpSupported()` before you rely on step-up. If it is false, Kinde ignores `acr_values` and `max_age`; send `prompt=login` to force a fresh sign-in. `stepUp()` does not fall back for you.
+- **Unsupported environments.** Check `$kindeClient->isStepUpSupported()` before you rely on step-up. If it is false, Kinde ignores `acr_values` and `max_age`; send `prompt=login` to force a fresh sign-in. `stepUp()` does not fall back for you. Each client instance fetches the discovery document once and throws if it can't, so cache the result in your app, e.g. `Cache::remember('kinde_step_up_supported', 3600, fn () => $kindeClient->isStepUpSupported())`.
 - **`auth_time` on unsupported environments.** `getAuthenticationContext()` returns the token's `auth_time` as is, without a discovery request. On those environments it may be the token's issue time, so don't use it for recency.
-- **Returning the user.** The SDK doesn't remember where the user was. In Laravel, call `session()->put('url.intended', url()->current())` and return `redirect()->away($kindeClient->getStepUpUrl(...))`; the built-in callback redirects to the intended URL. Don't use `stepUp()` there: it exits before Laravel saves the session.
+- **Returning the user.** The SDK doesn't remember where the user was. In Laravel, call `session()->put('url.intended', url()->full())` and return `redirect()->away($kindeClient->getStepUpUrl(...))`; the built-in callback redirects to the intended URL. Don't use `stepUp()` there: it exits before Laravel saves the session. If a form POST needs step-up, return the user to the form page (not the POST endpoint) and have them submit again.
 
 **Protecting an API.** Check the claims of the verified access token on every request with `StepUp::satisfies($claims, AcrValues::MFA)`, and return the RFC 9470 `insufficient_user_authentication` challenge when it is not met. Don't rely on the client to have requested the context.
 

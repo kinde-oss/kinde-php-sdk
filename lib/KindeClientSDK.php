@@ -406,6 +406,7 @@ class KindeClientSDK
 
     /**
      * Checks if the Kinde environment supports step-up authentication (acr_values_supported in discovery).
+     * The discovery document is fetched once per instance; cache the result across requests in your app.
      *
      * @return bool True if step-up authentication is supported
      *

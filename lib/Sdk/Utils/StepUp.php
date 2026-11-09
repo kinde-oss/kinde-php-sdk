@@ -22,9 +22,6 @@ class StepUp
         'urn:okta:loa:2fa:any' => AcrValues::MFA,
     ];
 
-    // Seconds an auth_time may be ahead of this server's clock
-    private const CLOCK_SKEW = 60;
-
     /**
      * Normalizes acr_values to a space-separated string.
      *
@@ -147,8 +144,8 @@ class StepUp
 
         $now = $now ?? time();
         $age = $now - (int) $authTime;
-        // A future auth_time beyond clock skew is invalid, not "very recent"
-        return $age >= -self::CLOCK_SKEW && $age <= $maxAge;
+        // A future auth_time is invalid, not "very recent" (token verification already rejects a future iat)
+        return $age >= 0 && $age <= $maxAge;
     }
 
     /**

@@ -97,8 +97,7 @@ class StepUpTest extends KindeTestCase
         $this->assertTrue(StepUp::satisfies(['acr' => 'phr'], AcrValues::MFA), 'phr meets mfa');
         $this->assertFalse(StepUp::satisfies([], AcrValues::MFA), 'absent acr does not meet mfa');
         $this->assertTrue(StepUp::satisfies([], null), 'absent acr is fine when nothing is required');
-        $this->assertTrue(StepUp::satisfies(['auth_time' => $now + 30], null, 300, $now), 'within clock skew');
-        $this->assertFalse(StepUp::satisfies(['auth_time' => $now + 3600], null, 300, $now), 'future auth_time');
+        $this->assertFalse(StepUp::satisfies(['auth_time' => $now + 30], null, 300, $now), 'future auth_time');
     }
 
     public function testAdditionalParametersNormalizeStepUpValues(): void
