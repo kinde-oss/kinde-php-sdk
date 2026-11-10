@@ -151,6 +151,7 @@ class StepUpTest extends KindeTestCase
             'fractional max_age' => [AcrValues::MFA, 1.5, [], []],
             'negative max_age' => [AcrValues::MFA, -1, [], []],
             'prompt=none' => [AcrValues::MFA, null, ['prompt' => 'none'], []],
+            'none in a prompt list' => [AcrValues::MFA, null, ['prompt' => 'login none'], []],
             'prompt=none on the client' => [AcrValues::MFA, null, [], ['prompt' => 'none']],
             'unrecognised acr_values parameter' => [null, 300, ['acr_values' => 'mfaa'], []],
         ];

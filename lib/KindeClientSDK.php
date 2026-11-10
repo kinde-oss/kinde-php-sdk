@@ -337,7 +337,7 @@ class KindeClientSDK
 
         // Kinde cannot collect a factor without showing a screen
         $prompt = $effectiveParameters['prompt'] ?? null;
-        if (is_string($prompt) && strtolower(trim($prompt)) === AdditionalParameters::PROMPT_NONE) {
+        if (is_string($prompt) && in_array(AdditionalParameters::PROMPT_NONE, preg_split('/\s+/', strtolower($prompt)), true)) {
             throw new InvalidArgumentException('Step-up authentication cannot use prompt=none');
         }
         // Kinde silently ignores unrecognised values, which would skip the step-up
