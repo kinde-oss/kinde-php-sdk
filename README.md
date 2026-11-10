@@ -199,6 +199,10 @@ use Kinde\KindeSDK\Sdk\Exceptions\UnmetAuthenticationRequirementsException;
 
 // Before a sensitive operation: require MFA within the last 5 minutes
 if (!$kindeClient->hasAuthenticationContext(AcrValues::MFA, 300)) {
+    if (!$kindeClient->isStepUpSupported()) {
+        // Kinde would ignore the request, so the check could never pass
+        throw new RuntimeException('Step-up authentication is not available');
+    }
     $kindeClient->stepUp(AcrValues::MFA, 300); // redirects and exits; throws if output has already started
 }
 
@@ -223,12 +227,13 @@ $kindeClient->getAuthenticationContext(); // ['acr' => 'mfa', 'amr' => ['pwd', '
 - `getStepUpUrl()` stores a new state each time it is called, replacing any login in progress, so call it when you redirect rather than to render a link.
 - `acr_values` and `max_age` can also be passed to `login()` as additional parameters. `stepUp()` rejects `prompt=none`, because Kinde can't collect a factor without a screen.
 - A `login_required` error from a `prompt=none` request throws `LoginRequiredException`, with the same `getErrorDescription()` and `getState()`.
+- `getToken()` now throws when the URL has an `error` parameter, even if the user is signed in, so call it only on your callback route.
 - The Laravel, Symfony and CodeIgniter callback controllers show an unmet step-up as a flash error and keep the user signed in.
 - `acr: "mfa"` does not assert that the two factors are independent of one another. See the [Kinde step-up documentation](https://docs.kinde.com/developer-tools/about/using-kinde-without-an-sdk/#step-up-authentication).
 
 Left to your app:
 
-- **Unsupported environments.** Check `$kindeClient->isStepUpSupported()` before you rely on step-up. If it is false, Kinde ignores `acr_values` and `max_age`, so no token will meet an `mfa` or `phr` requirement: deny the action rather than treating a sign-in as MFA. Sending `prompt=login` forces a fresh sign-in, which only proves the user signed in recently. `stepUp()` does not fall back for you. Each client instance fetches the discovery document once and throws if it can't, so cache the result per Kinde domain in your app (for example with Laravel's cache).
+- **Unsupported environments.** If `isStepUpSupported()` is false, Kinde ignores `acr_values` and `max_age`, so no token will meet an `mfa` or `phr` requirement: deny the action rather than treating a sign-in as MFA. Sending `prompt=login` forces a fresh sign-in, which only proves the user signed in recently. `stepUp()` does not fall back for you. Each client instance fetches the discovery document once and throws if it can't, so cache the result per Kinde domain in your app (for example with Laravel's cache).
 - **`auth_time` on unsupported environments.** `getAuthenticationContext()` returns the token's `auth_time` as is, without a discovery request. On those environments it may be the token's issue time, so don't use it for recency.
 - **Returning the user.** The SDK doesn't remember where the user was. In Laravel, call `session()->put('url.intended', url()->full())` and return `redirect()->away($kindeClient->getStepUpUrl(...))`; the built-in callback redirects to the intended URL. Don't use `stepUp()` there: it exits before Laravel saves the session. If a form POST needs step-up, return the user to the form page (not the POST endpoint) and have them submit again.
 

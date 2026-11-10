@@ -326,7 +326,7 @@ class KindeClientSDK
     private function buildStepUpParameters($acrValues, $maxAge, array $additionalParameters): array
     {
         if ($acrValues !== null) {
-            $additionalParameters['acr_values'] = StepUp::normalizeAcrValues($acrValues);
+            $additionalParameters['acr_values'] = strtolower(StepUp::normalizeAcrValues($acrValues));
         }
         if ($maxAge !== null) {
             $additionalParameters['max_age'] = StepUp::normalizeMaxAge($maxAge);
@@ -448,13 +448,26 @@ class KindeClientSDK
 
     /**
      * Retrieves the verified claims from the specified token type.
+     * Returns no claims if the ID token belongs to a different user than the access token.
      *
      * @throws Exception If the token is missing.
      */
     private function getAuthenticationClaims(string $tokenType): array
     {
         $claims = $this->getClaims($tokenType);
-        return is_array($claims) ? $claims : [];
+        if (!is_array($claims)) {
+            return [];
+        }
+
+        if ($tokenType === TokenType::ID_TOKEN) {
+            $accessClaims = $this->getClaims(TokenType::ACCESS_TOKEN);
+            $sub = $claims['sub'] ?? null;
+            if (!is_string($sub) || $sub === '' || !is_array($accessClaims) || $sub !== ($accessClaims['sub'] ?? null)) {
+                return [];
+            }
+        }
+
+        return $claims;
     }
 
     /**
@@ -511,7 +524,7 @@ class KindeClientSDK
 
         $this->checkStateAuthentication($stateServer);
 
-        $error = $params['error'] ?? '';
+        $error = is_string($params['error'] ?? null) ? $params['error'] : '';
         if (!empty($error)) {
             $errorDescription = is_string($params['error_description'] ?? null) ? $params['error_description'] : '';
             $msg = !empty($errorDescription) ? $errorDescription : $error;

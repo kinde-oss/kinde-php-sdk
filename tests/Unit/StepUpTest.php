@@ -123,6 +123,7 @@ class StepUpTest extends KindeTestCase
         $this->assertSame('mfa', $query['acr_values']);
         $this->assertSame('300', $query['max_age']);
         $this->assertSame(Storage::getState(), $query['state']);
+        $this->assertSame('mfa', $this->queryOf($this->createClient()->getStepUpUrl('MFA'))['acr_values']);
     }
 
     public function testGetStepUpUrlWithPkce(): void
@@ -218,6 +219,13 @@ class StepUpTest extends KindeTestCase
         $this->assertFalse($this->createClient()->hasAuthenticationContext(AcrValues::MFA));
 
         $this->setMockToken([], ['amr' => ['pwd'], 'auth_time' => time()]);
+        $this->assertFalse($this->createClient()->hasAuthenticationContext(AcrValues::MFA));
+    }
+
+    public function testHasAuthenticationContextFalseWhenIdTokenIsAnotherUsers(): void
+    {
+        $this->setMockToken([], ['sub' => 'kp_other_user_id', 'acr' => 'mfa', 'auth_time' => time()]);
+
         $this->assertFalse($this->createClient()->hasAuthenticationContext(AcrValues::MFA));
     }
 
@@ -329,6 +337,16 @@ class StepUpTest extends KindeTestCase
 
         $this->expectException(OAuthException::class);
         $this->createClient()->getToken();
+    }
+
+    public function testCallbackWithNonStringErrorThrowsCatchableException(): void
+    {
+        $client = $this->createClient();
+        $state = $this->queryOf($client->getStepUpUrl(AcrValues::MFA))['state'];
+        $this->simulateCallback(['error' => ['x'], 'state' => $state]);
+
+        $this->expectException(InvalidArgumentException::class);
+        $client->getToken();
     }
 
     public function testRevisitedCallbackReturnsStoredTokenWhenAuthenticated(): void
