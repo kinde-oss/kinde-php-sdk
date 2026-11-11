@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.7.0] - Since v2.6.0
+
+### Added
+
+- Step-up authentication (RFC 9470). `KindeClientSDK` adds `stepUp()`, `getStepUpUrl()`, `hasAuthenticationContext()`, `getAuthenticationContext()` and `isStepUpSupported()`, and `acr_values` and `max_age` can be passed to `login()`. `StepUp::satisfies()` checks the claims of a verified access token, and `AcrValues` holds the `mfa` and `phr` values. See the README for usage.
+- `UnmetAuthenticationRequirementsException` and `LoginRequiredException`, thrown by `getToken()` when Kinde returns `unmet_authentication_requirements` or `login_required`. The Laravel, Symfony and CodeIgniter callback controllers show an unmet step-up as a flash error and keep the user signed in.
+- Support for `guzzlehttp/guzzle` 8 and `guzzlehttp/psr7` 3. Guzzle 7 and psr7 1 and 2 remain supported.
+- Regenerated the Management and Frontend API clients with openapi-generator 7.27.0 from the current Kinde API specifications, adding `BillingOneTimePurchasesApi`, passkey models for the Frontend API, and new request/response models and properties.
+- `KindeManagementClient` now exposes `billingOneTimePurchases`, `apiKeys` and `directories`.
+
+### Changed
+
+- `getToken()` now throws when the callback URL has an `error` parameter, even if the user is already signed in, so call it only on your callback route.
+- Optional `page_size` query parameters set to `0` are now sent instead of dropped.
+- Generated `oneOf` variant classes are numbered by position, so `ReplaceConnectionRequestOptionsOneOf` and `ReplaceConnectionRequestOptionsOneOf1` now hold different variants. No endpoint takes them as a parameter.
+- The `Configuration` host variable is now named `subdomain` (was `businessName`) and defaults to `app`.
+- `ObjectSerializer::toFormValue()` has been removed. Multipart form data is now built by `FormDataProcessor`.
+- Added `symfony/polyfill-php81` as a runtime dependency.
+
+### Fixed
+
+- Management API calls to webhooks, properties, property categories, connections and other endpoints failed with `406 INVALID_ACCEPT_HEADER`. The `Accept` header no longer includes `charset=utf-8`.
+
+### Maintenance
+
+- Updated dependencies: `firebase/php-jwt` 7.2.1, `guzzlehttp/guzzle` 8.3.1 and `guzzlehttp/psr7` 3.2.0 in the lock file, `phpunit/phpunit` 13.4.6, `friendsofphp/php-cs-fixer` 3.95.30 and `@openapitools/openapi-generator-cli` 2.42.1.
+
 ## [2.6.0] - Since v2.5.0
 
 ### Added
