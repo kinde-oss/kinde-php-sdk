@@ -535,7 +535,7 @@ class Configuration
                 "variables" => [
                     "subdomain" => [
                         "description" => "The subdomain generated for your business on Kinde.",
-                        "default_value" => "your_kinde_subdomain",
+                        "default_value" => "app",
                     ]
                 ]
             ]
