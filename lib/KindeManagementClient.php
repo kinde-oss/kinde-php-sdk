@@ -16,6 +16,7 @@ use Kinde\KindeSDK\Api\BusinessApi;
 use Kinde\KindeSDK\Api\BillingAgreementsApi;
 use Kinde\KindeSDK\Api\BillingEntitlementsApi;
 use Kinde\KindeSDK\Api\BillingMeterUsageApi;
+use Kinde\KindeSDK\Api\BillingOneTimePurchasesApi;
 use Kinde\KindeSDK\Api\WebhooksApi;
 use Kinde\KindeSDK\Api\CallbacksApi;
 use Kinde\KindeSDK\Api\APIsApi;
@@ -27,6 +28,8 @@ use Kinde\KindeSDK\Api\PropertyCategoriesApi;
 use Kinde\KindeSDK\Api\PropertiesApi;
 use Kinde\KindeSDK\Api\IdentitiesApi;
 use Kinde\KindeSDK\Api\MFAApi;
+use Kinde\KindeSDK\Api\APIKeysApi;
+use Kinde\KindeSDK\Api\DirectoriesApi;
 use Kinde\KindeSDK\Configuration;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Kinde\KindeSDK\Sdk\Storage\Storage;
@@ -142,6 +145,11 @@ class KindeManagementClient
     public BillingMeterUsageApi $billingMeterUsage;
 
     /**
+     * @var BillingOneTimePurchasesApi
+     */
+    public BillingOneTimePurchasesApi $billingOneTimePurchases;
+
+    /**
      * @var WebhooksApi
      */
     public WebhooksApi $webhooks;
@@ -195,6 +203,16 @@ class KindeManagementClient
      * @var MFAApi
      */
     public MFAApi $mfa;
+
+    /**
+     * @var APIKeysApi
+     */
+    public APIKeysApi $apiKeys;
+
+    /**
+     * @var DirectoriesApi
+     */
+    public DirectoriesApi $directories;
 
     /**
      * Constructor
@@ -353,6 +371,7 @@ class KindeManagementClient
         $this->billingAgreements = new BillingAgreementsApi(null, $this->config);
         $this->billingEntitlements = new BillingEntitlementsApi(null, $this->config);
         $this->billingMeterUsage = new BillingMeterUsageApi(null, $this->config);
+        $this->billingOneTimePurchases = new BillingOneTimePurchasesApi(null, $this->config);
         $this->webhooks = new WebhooksApi(null, $this->config);
         $this->callbacks = new CallbacksApi(null, $this->config);
         $this->apis = new APIsApi(null, $this->config);
@@ -364,6 +383,8 @@ class KindeManagementClient
         $this->properties = new PropertiesApi(null, $this->config);
         $this->identities = new IdentitiesApi(null, $this->config);
         $this->mfa = new MFAApi(null, $this->config);
+        $this->apiKeys = new APIKeysApi(null, $this->config);
+        $this->directories = new DirectoriesApi(null, $this->config);
     }
 
     /**
