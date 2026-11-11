@@ -76,6 +76,10 @@ class HeaderSelector
         # filter out empty entries
         $accept = array_filter($accept);
 
+        $accept = array_values(array_unique(array_map(function ($header) {
+            return preg_replace('~^application/json\s*;\s*charset=utf-8$~i', 'application/json', trim($header));
+        }, $accept)));
+
         if (count($accept) === 0) {
             return null;
         }
