@@ -29,6 +29,23 @@ class PKCE
      */
     public function authenticate(KindeClientSDK $clientSDK, array $additionalParameters = [])
     {
+        $url = $this->buildAuthorizationUrl($clientSDK, $additionalParameters);
+        if (!headers_sent()) {
+            header('Location: ' . $url);
+            exit();
+        }
+    }
+
+    /**
+     * Prepares an authorization request (stores the state and code verifier) and returns its URL without redirecting.
+     *
+     * @param KindeClientSDK $clientSDK           The Kinde client SDK instance.
+     * @param array          $additionalParameters An associative array of additional parameters (optional).
+     *
+     * @return string The authorization URL.
+     */
+    public function buildAuthorizationUrl(KindeClientSDK $clientSDK, array $additionalParameters = []): string
+    {
         $this->storage->removeItem(StorageEnums::CODE_VERIFIER);
         $challenge = Utils::generateChallenge();
         $state = $challenge['state'];
@@ -52,9 +69,6 @@ class PKCE
         $searchParams = array_merge($searchParams, $mergedAdditionalParameters);
         $this->storage->setCodeVerifier($challenge['codeVerifier']);
 
-        if (!headers_sent()) {
-            header('Location: ' . $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams));
-            exit();
-        }
+        return $clientSDK->authorizationEndpoint . '?' . http_build_query($searchParams);
     }
 }
