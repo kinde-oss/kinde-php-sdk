@@ -35,6 +35,8 @@ tags:
     x-displayName: Applications
   - name: Billing Entitlements
     x-displayName: Billing Entitlements
+  - name: Billing One-time Purchases
+    x-displayName: Billing One-time Purchases
   - name: Billing Agreements
     x-displayName: Billing Agreements
   - name: Billing Meter Usage
@@ -729,7 +731,7 @@ paths:
         Delete an API scope you previously created.
 
         <div>
-          <code>delete:apis_scopes</code>
+          <code>delete:api_scopes</code>
         </div>
       responses:
         '200':
@@ -789,6 +791,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/authorize_app_api_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
+  /api/v1/apis/{api_id}/applications/{application_id}/scopes:
+    servers: []
+    get:
+      tags:
+        - APIs
+      operationId: getAPIApplicationScopes
+      summary: Get API application scopes
+      parameters:
+        - name: api_id
+          in: path
+          description: API ID
+          required: true
+          schema:
+            type: string
+            nullable: false
+            example: 838f208d006a482dbd8cdb79a9889f68
+        - name: application_id
+          in: path
+          description: Application ID
+          required: true
+          schema:
+            type: string
+            nullable: false
+            example: 7643b487c97545aab79257fd13a1085a
+      description: |
+        Retrieve the scopes of an API that an application has been granted. The application must be authorized to use the API.
+
+        <div>
+          <code>read:api_application_scopes</code>
+        </div>
+      responses:
+        '200':
+          description: API application scopes successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_api_application_scopes_response'
         '400':
           $ref: '#/components/responses/bad_request'
         '403':
@@ -880,7 +927,7 @@ paths:
         Delete an API application scope you previously created.
 
         <div>
-          <code>delete:apis_application_scopes</code>
+          <code>delete:api_application_scopes</code>
         </div>
       responses:
         '200':
@@ -1582,7 +1629,7 @@ paths:
                   oneOf:
                     - type: string
                     - type: boolean
-                  description: The new value for the property
+                  description: The new value for the property. Send an empty string to unset the property, so it reads back as not set.
                   example: Some new value
               required:
                 - value
@@ -1664,6 +1711,234 @@ paths:
           $ref: '#/components/responses/too_many_requests'
       security:
         - kindeBearerAuth: []
+  /api/v1/applications/{application_id}/native_apps:
+    servers: []
+    parameters:
+      - $ref: '#/components/parameters/application_id'
+    get:
+      tags:
+        - Applications
+      operationId: getApplicationNativeApps
+      summary: List native apps
+      description: |
+        Returns the iOS and Android apps registered for an application, and whether
+        native (browserless) passkey sign-in is enabled for it. Registered Android apps
+        are listed in the domain's `/.well-known/assetlinks.json` and iOS apps in its
+        `/.well-known/apple-app-site-association`.
+
+        <div>
+          <code>read:application_native_apps</code>
+        </div>
+      responses:
+        '200':
+          description: Native apps successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: OK
+                  message:
+                    type: string
+                    example: Success
+                  native_sign_in:
+                    type: object
+                    properties:
+                      is_enabled:
+                        type: boolean
+                        description: Whether the application may use the authorization challenge endpoint.
+                        example: false
+                      passkey_requirement:
+                        type: string
+                        description: Which passkeys native sign-in accepts. `device_bound` refuses synced passkeys. Browser sign-in is unaffected.
+                        enum:
+                          - any
+                          - device_bound
+                        example: any
+                      is_passkey_mfa_exempt:
+                        type: boolean
+                        description: Whether native sign-ins with a user-verified passkey skip MFA, including MFA an organization requires. Browser sign-in is unaffected.
+                        example: false
+                  native_apps:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/application_native_app'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
+    post:
+      tags:
+        - Applications
+      operationId: createApplicationNativeApp
+      summary: Register a native app
+      description: |
+        Registers an Android app (package name and SHA-256 signing-certificate
+        fingerprints) or an iOS app (Team ID and bundle ID) for an application, so it
+        can use passkeys for the domain without a browser.
+
+        By default an application can register up to 10 native apps, iOS and Android together.
+        Registering more returns `NATIVE_APP_LIMIT_REACHED`.
+
+        <div>
+          <code>create:application_native_apps</code>
+        </div>
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - platform
+              properties:
+                platform:
+                  type: string
+                  enum:
+                    - android
+                    - ios
+                package_name:
+                  type: string
+                  description: Android only. The application id.
+                  example: com.example.app
+                sha256_cert_fingerprints:
+                  type: array
+                  description: Android only. 1 to 10 SHA-256 signing-certificate fingerprints, usually the upload key and the Play App Signing key. Colons between bytes are optional; fingerprints are stored and returned uppercase and colon-separated.
+                  items:
+                    type: string
+                    example: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
+                team_id:
+                  type: string
+                  description: iOS only. The 10-character Apple Team ID.
+                  example: ABCDE12345
+                bundle_id:
+                  type: string
+                  description: iOS only. The bundle identifier.
+                  example: com.example.app
+      responses:
+        '201':
+          description: Native app successfully registered.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: NATIVE_APP_CREATED
+                  message:
+                    type: string
+                    example: Native app registered
+                  native_app:
+                    $ref: '#/components/schemas/application_native_app'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
+  /api/v1/applications/{application_id}/native_apps/{native_app_id}:
+    servers: []
+    parameters:
+      - $ref: '#/components/parameters/application_id'
+      - name: native_app_id
+        in: path
+        description: The identifier of the native app.
+        required: true
+        schema:
+          type: integer
+    delete:
+      tags:
+        - Applications
+      operationId: deleteApplicationNativeApp
+      summary: Remove a native app
+      description: |
+        Removes a registered native app from an application.
+
+        <div>
+          <code>delete:application_native_apps</code>
+        </div>
+      responses:
+        '200':
+          description: Native app successfully removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
+  /api/v1/applications/{application_id}/native_sign_in:
+    servers: []
+    parameters:
+      - $ref: '#/components/parameters/application_id'
+    put:
+      tags:
+        - Applications
+      operationId: updateApplicationNativeSignIn
+      summary: Turn native sign-in on or off
+      description: |
+        Enables or disables native (browserless) passkey sign-in through the
+        authorization challenge endpoint, sets which passkeys it accepts, and whether
+        native passkey sign-ins skip MFA. Only
+        available for front-end and mobile (public) applications. Omitted fields are
+        left unchanged.
+
+        <div>
+          <code>update:application_native_apps</code>
+        </div>
+
+        A request that sends `is_passkey_mfa_exempt`, whatever its value, also requires
+        the `update:mfa` and `update:organization_mfa` scopes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_enabled:
+                  type: boolean
+                  example: true
+                passkey_requirement:
+                  type: string
+                  description: Which passkeys native sign-in accepts. `device_bound` refuses synced passkeys (Google Password Manager, iCloud Keychain). Browser sign-in is unaffected.
+                  enum:
+                    - any
+                    - device_bound
+                  example: device_bound
+                is_passkey_mfa_exempt:
+                  type: boolean
+                  description: Skip MFA for native sign-ins with a passkey the user unlocked with biometrics or a PIN, including MFA an organization requires. Presence-only passkeys still go through MFA, a pre-MFA workflow can still require it, and browser sign-in is unaffected. Sending it, whatever the value, also requires the `update:mfa` and `update:organization_mfa` scopes; without them the request is refused with `SCOPE_MISSING`.
+                  example: true
+      responses:
+        '200':
+          description: Native sign-in settings successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
   /api/v1/billing/entitlements:
     servers: []
     get:
@@ -1732,6 +2007,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_billing_entitlements_response'
+        '400':
+          description: Invalid request.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+  /api/v1/billing/one_time_purchases:
+    servers: []
+    get:
+      tags:
+        - Billing One-time Purchases
+      operationId: getBillingOneTimePurchases
+      x-scope: read:billing_one_time_purchases
+      description: |
+        Returns the current one-time purchases a billing customer has. A
+        purchase is current when it is paid, belongs to an active
+        agreement, and has not expired (`expires_on` is null or in the
+        future). Pending, failed, void, and expired purchases are omitted.
+
+        Changing plan (`POST /api/v1/billing/agreements`) or cancelling
+        the agreement (`DELETE /api/v1/billing/agreements/{agreement_id}`)
+        leaves those purchases on the previous agreement. They are no
+        longer current, so they do not appear in this list.
+
+        Each item is one purchase row. Repeat buys of the same feature are
+        separate items. Pass `feature_totals=true` for per-feature
+        aggregates across all current purchases matching the filters,
+        not just the current page. Metered totals include
+        `current_billing_cycle_usage` (this billing period) and
+        `usage_since_first_purchased` (the ingest-order lifetime
+        total for that agreement and feature).
+
+        <div>
+          <code>read:billing_one_time_purchases</code>
+        </div>
+      summary: Get billing one-time purchases
+      parameters:
+        - name: page_size
+          in: query
+          required: false
+          description: Number of results per page. Defaults to 10 if parameter not sent.
+          schema:
+            type: integer
+            nullable: true
+        - name: starting_after
+          in: query
+          required: false
+          description: The ID of the one-time purchase to start after.
+          schema:
+            type: string
+            nullable: true
+        - name: ending_before
+          in: query
+          required: false
+          description: The ID of the one-time purchase to end before.
+          schema:
+            type: string
+            nullable: true
+        - name: customer_id
+          in: query
+          description: The ID of the billing customer to retrieve one-time purchases for
+          required: true
+          schema:
+            type: string
+            nullable: false
+          example: customer_0195ac80a14c2ca2cec97d026d864de0
+        - name: feature_code
+          in: query
+          required: false
+          description: The feature code to filter by purchases of that feature only
+          schema:
+            type: string
+            nullable: true
+        - name: feature_totals
+          in: query
+          required: false
+          description: |
+            When true, include feature_totals aggregated from every current purchase that matches the filters. Defaults to false. The property is omitted when false.
+          schema:
+            type: boolean
+            nullable: true
+            default: false
+      responses:
+        '200':
+          description: Billing one-time purchases successfully retrieved.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/get_billing_one_time_purchases_response'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_billing_one_time_purchases_response'
         '400':
           description: Invalid request.
           content:
@@ -1841,7 +2224,17 @@ paths:
         - Billing Agreements
       operationId: createBillingAgreement
       description: |
-        Creates a new billing agreement based on the plan code passed, and cancels the customer's existing agreements
+        Creates a new billing agreement based on the plan code passed, and cancels the customer's existing agreements. Existing agreements are cancelled even if they belong to a different billing group. The new plan must be the same customer type as the customer (organization or user).
+
+        Changing plan starts a new subscription. One-time purchases stay
+        on the previous agreement and are no longer current. Buying the
+        same item on the new plan is a new purchase. This does not refund
+        what was already paid.
+
+        `plan_version` selects a published version of `plan_code`. When it
+        is omitted, the latest version is assigned. Posting the customer's
+        current plan_code does not change their version. `plan_version` is
+        required to move them onto a different published version.
 
         <div>
           <code>create:billing_agreements</code>
@@ -1863,9 +2256,15 @@ paths:
                   type: string
                   example: customer_0195ac80a14c2ca2cec97d026d864de0
                 plan_code:
-                  description: The code of the billing plan the new agreement will be based on
+                  description: The code of the billing plan the new agreement will be based on. The plan can be in a different billing group from the customer's current agreement, but it must match the customer type (organization or user).
                   type: string
                   example: pro
+                plan_version:
+                  description: |
+                    Published version number to assign. Omit it to assign the latest version. Posting the customer's current plan_code does not move them onto a newer version. Name a different published version to do that. Unknown versions, and versions that were never published, return PLAN_VERSION_NOT_FOUND.
+                  type: integer
+                  nullable: true
+                  example: 2
                 is_invoice_now:
                   type: boolean
                   description: Generate a final invoice for any un-invoiced metered usage.
@@ -1874,6 +2273,11 @@ paths:
                   type: boolean
                   description: Generate a proration invoice item that credits remaining unused features.
                   example: true
+                skip_trial:
+                  type: boolean
+                  description: |
+                    When true, the new agreement starts paid even if the plan has a trial. Omit it, or send false, to apply the plan's trial. A repeat trial is not refused unless this is true. Self-serve portal signups are separate and do not start a second trial.
+                  example: false
       responses:
         '200':
           description: Billing agreement successfully changed
@@ -1889,15 +2293,329 @@ paths:
           $ref: '#/components/responses/too_many_requests'
       security:
         - kindeBearerAuth: []
+  /api/v1/billing/agreements/{agreement_id}:
+    servers: []
+    delete:
+      tags:
+        - Billing Agreements
+      operationId: deleteBillingAgreement
+      x-scope: delete:billing_agreements
+      description: |
+        Cancels a billing agreement. The same action as Cancel plan in
+        the self-serve portal and on the admin billing page.
+
+        When the cancellation takes effect is decided by `cancel_at`, or,
+        when it is omitted, by the cancellation timing of the plan version
+        the customer agreed to:
+
+        - `immediately` expires the agreement in Kinde (sets `expires_on`)
+          and cancels the linked billing-provider subscription when one
+          exists. The response code is `AGREEMENT_DELETED`.
+        - `min_period_end` and `max_period_end` schedule the cancellation
+          for the end of the earliest or the latest billing period of the
+          subscription's charges. The agreement stays active, and the
+          customer keeps their entitlements, until `cancels_on`, which the
+          response returns with code `AGREEMENT_CANCELLATION_SCHEDULED`.
+          The scheduled cancellation can be taken back with
+          `DELETE /api/v1/billing/agreements/{agreement_id}/cancellation`
+          until then. Without a provider subscription the end of the
+          current billing cycle is used; with no known period end, or
+          one that has already passed or is less than 15 minutes away,
+          the agreement is cancelled immediately.
+
+        A scheduled cancellation is idempotent: a further request for
+        the same agreement without `cancel_at`, or with a deferred value,
+        answers `AGREEMENT_CANCELLATION_SCHEDULED` with the existing
+        `cancels_on` before any other check and runs no workflow.
+        `cancel_at=immediately` on a scheduled agreement ends it now.
+
+        One-time purchases stay on this agreement. Once it expires they
+        are no longer current and do not appear on GET one-time
+        purchases; for a scheduled cancellation that happens on
+        `cancels_on`. This does not refund what was already paid.
+
+        Proration on cancellation follows the environment billing
+        settings for both immediate and scheduled cancellations.
+        Invoice-now applies to immediate cancellations only: a scheduled
+        cancellation always receives the final period invoice, usage
+        included, at the effective date. Neither can be overridden on
+        this request.
+
+        If a live `user:plan_cancellation_request` workflow is attached,
+        it runs first. A deny response returns HTTP 400 with
+        `PLAN_CANCELLATION_BLOCKED_BY_WORKFLOW` and the agreement is not
+        cancelled.
+
+        <div>
+          <code>delete:billing_agreements</code>
+        </div>
+      summary: Cancel billing agreement
+      parameters:
+        - name: agreement_id
+          in: path
+          description: The ID of the billing agreement to cancel.
+          required: true
+          schema:
+            type: string
+            nullable: false
+          example: agreement_0195ac80a14c2ca2cec97d026d864de0
+        - name: cancel_at
+          in: query
+          required: false
+          description: |
+            When the cancellation takes effect. Defaults to the
+            cancellation timing of the plan version the customer agreed
+            to.
+          schema:
+            type: string
+            nullable: true
+            enum:
+              - immediately
+              - min_period_end
+              - max_period_end
+          example: min_period_end
+      responses:
+        '200':
+          description: Billing agreement successfully cancelled, or its cancellation scheduled.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Billing agreement cancellation scheduled
+                  code:
+                    type: string
+                    description: '`AGREEMENT_DELETED` for an immediate cancellation, `AGREEMENT_CANCELLATION_SCHEDULED` for a scheduled one.'
+                    example: AGREEMENT_CANCELLATION_SCHEDULED
+                  cancels_on:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: When a scheduled cancellation takes effect. Absent for an immediate cancellation.
+                    example: '2026-11-27T12:53:57+00:00'
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Billing agreement cancellation scheduled
+                  code:
+                    type: string
+                    description: '`AGREEMENT_DELETED` for an immediate cancellation, `AGREEMENT_CANCELLATION_SCHEDULED` for a scheduled one.'
+                    example: AGREEMENT_CANCELLATION_SCHEDULED
+                  cancels_on:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: When a scheduled cancellation takes effect. Absent for an immediate cancellation.
+                    example: '2026-11-27T12:53:57+00:00'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
+  /api/v1/billing/agreements/{agreement_id}/cancellation:
+    servers: []
+    delete:
+      tags:
+        - Billing Agreements
+      operationId: revertBillingAgreementCancellation
+      x-scope: update:billing_agreements
+      description: |
+        Takes back a scheduled cancellation of a billing agreement. The
+        agreement stays active and the linked billing-provider
+        subscription is no longer set to cancel. The same action as Keep
+        plan in the self-serve portal and on the admin billing page.
+
+        Only a cancellation that has not taken effect yet can be reverted.
+        An agreement that has already expired returns HTTP 400 with
+        `AGREEMENT_ALREADY_CANCELLED`; one with no scheduled cancellation
+        returns `AGREEMENT_NOT_SCHEDULED_FOR_CANCELLATION`.
+
+        <div>
+          <code>update:billing_agreements</code>
+        </div>
+      summary: Revert a scheduled billing agreement cancellation
+      parameters:
+        - name: agreement_id
+          in: path
+          description: The ID of the billing agreement whose scheduled cancellation to revert.
+          required: true
+          schema:
+            type: string
+            nullable: false
+          example: agreement_0195ac80a14c2ca2cec97d026d864de0
+      responses:
+        '200':
+          description: Scheduled cancellation successfully reverted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
   /api/v1/billing/meter_usage:
     servers: []
+    get:
+      tags:
+        - Billing Meter Usage
+      operationId: getBillingMeterUsage
+      x-scope: read:meter_usage
+      summary: Get billing meter usage
+      description: |
+        Returns meter usage records for one billing agreement and feature.
+
+        By default only records in the customer's current billing cycle
+        are returned. Pass `all_cycles=true` to page every record for
+        that meter.
+
+        The response includes the same grant snapshot as POST
+        (`units_granted`, `current_usage`, and
+        `expiration_policy_code` when the grant is a one-time
+        purchase). `current_usage` is the grant-relative running
+        total after every accepted record — not the page sum. For
+        never-expires one-time features that is the lifetime total
+        (ingest-order absolute/delta). For cycle-end one-time
+        features and plan-metered entitlements that is the current
+        billing cycle total. Grant fields are omitted when there is
+        no current grant. `units_granted` is also omitted when the
+        grant is unlimited; an unlimited one-time grant still
+        returns `expiration_policy_code`. `customer_agreement_id`
+        and `feature_code` are on the response, not repeated on each
+        record.
+
+        <div>
+          <code>read:meter_usage</code>
+        </div>
+      parameters:
+        - name: page_size
+          in: query
+          required: false
+          description: |
+            Number of results per page. Defaults to the API page size limit if parameter not sent. Must be between 1 and that limit.
+          schema:
+            type: integer
+            nullable: true
+            default: 500
+        - name: starting_after
+          in: query
+          required: false
+          description: The ID of the meter usage record to start after.
+          schema:
+            type: string
+            nullable: true
+        - name: ending_before
+          in: query
+          required: false
+          description: The ID of the meter usage record to end before.
+          schema:
+            type: string
+            nullable: true
+        - name: customer_agreement_id
+          in: query
+          required: true
+          description: The billing agreement to retrieve meter usage for
+          schema:
+            type: string
+            nullable: false
+          example: agreement_0195ac80a14c2ca2cec97d026d864de0
+        - name: feature_code
+          in: query
+          required: true
+          description: The feature code to retrieve meter usage for
+          schema:
+            type: string
+            nullable: false
+          example: extra_api_calls
+        - name: all_cycles
+          in: query
+          required: false
+          description: |
+            When true, include usage records from every billing cycle. Defaults to false (current cycle only). The grant snapshot stays grant-relative and is not the listed page.
+          schema:
+            type: boolean
+            nullable: true
+            default: false
+      responses:
+        '200':
+          description: Billing meter usage successfully retrieved.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/get_billing_meter_usage_response'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_billing_meter_usage_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
     post:
       tags:
         - Billing Meter Usage
       operationId: createMeterUsageRecord
       summary: Create meter usage record
       description: |
-        Create a new meter usage record
+        Create a new meter usage record against a billing agreement
+        and feature.
+
+        Metered one-time features can receive usage after the customer
+        has completed their first purchase of that feature.
+
+        `meter_type_code` chooses how this record updates the running
+        total. The caller is responsible for sending the correct type
+        and value. `meter_usage_timestamp` is stored on the record
+        (and, for plan-metered entitlements, sent to the billing
+        provider). It does not choose a billing cycle, does not
+        insert the record in timestamp order, and does not change
+        the running-total arithmetic.
+
+        Running-total rules:
+
+        - `absolute` (default): replaces the running total with
+          `meter_value`.
+        - `delta`: adds `meter_value` to the last calculated running
+          total.
+
+        Which running total is updated:
+
+        - Plan-metered entitlements, and one-time features that expire
+          at the end of the current billing cycle: the current
+          billing cycle total. A new cycle starts at 0.
+        - One-time features that never expire: a lifetime total for
+          that agreement and feature. Every accepted record updates
+          it, including records whose `meter_usage_timestamp` is
+          before the first paid purchase. This total does not reset
+          when the billing cycle rolls.
+
+        The response includes the created record `id` and a grant
+        snapshot (`units_granted`, `current_usage`, and
+        `expiration_policy_code` when the grant is a one-time
+        purchase) so the caller can tell whether usage has exceeded
+        the grant without a follow-up GET. `current_usage` is that
+        grant-relative running total after this record. Grant fields
+        are omitted when there is no current grant. `units_granted`
+        is also omitted when the grant is unlimited; an unlimited
+        one-time grant still returns `expiration_policy_code`.
 
         <div>
           <code>create:meter_usage</code>
@@ -1923,20 +2641,24 @@ paths:
                   type: string
                   example: pro_gym
                 meter_value:
-                  description: The value of usage to record
-                  type: string
-                  example: pro_gym
+                  description: |
+                    The value of usage to record. Must be greater than zero. For absolute this becomes the new running total. For delta this is added to the last calculated running total.
+                  type: integer
+                  example: 200
                 meter_usage_timestamp:
                   type: string
                   format: date-time
-                  description: The date and time the usage needs to be recorded for (defaults to current date/time)
+                  description: |
+                    When this event happened. Defaults to the current date and time. Stored on the record and, for plan-metered entitlements, sent to the billing provider. Not used to choose a billing cycle, to order this record against earlier ones, or to calculate the running total. A timestamp in the past still replaces (absolute) or adds to (delta) the last calculated total.
                   example: '2024-11-18T13:32:03+11'
                 meter_type_code:
                   type: string
                   enum:
                     - absolute
                     - delta
-                  description: Absolutes overrides the current usage
+                  default: absolute
+                  description: |
+                    How this record updates the running total. `absolute` replaces the last calculated total with `meter_value`. `delta` adds `meter_value` to the last calculated total. The caller is responsible for sending the correct type. See the operation description for which total is updated (current billing cycle vs never-expires lifetime).
       responses:
         '200':
           description: Meter usage record successfully created.
@@ -2171,12 +2893,12 @@ paths:
       tags:
         - Callbacks
       operationId: addRedirectCallbackURLs
-      x-scope: create:applications_redirect_uris
+      x-scope: create:application_redirect_uris
       description: |
         Add additional redirect callback URLs.
 
         <div>
-          <code>create:applications_redirect_uris</code>
+          <code>create:application_redirect_uris</code>
         </div>
       summary: Add Redirect Callback URLs
       parameters:
@@ -2239,7 +2961,7 @@ paths:
         Replace all redirect callback URLs.
 
         <div>
-          <code>update:applications_redirect_uris</code>
+          <code>update:application_redirect_uris</code>
         </div>
       summary: Replace Redirect Callback URLs
       parameters:
@@ -2295,7 +3017,7 @@ paths:
         Delete callback URLs.
 
         <div>
-          <code>delete:applications_redirect_uris</code>
+          <code>delete:application_redirect_uris</code>
         </div>
       summary: Delete Callback URLs
       parameters:
@@ -2833,6 +3555,7 @@ paths:
                   nullable: true
                   example: org_80581732fbe
                 options:
+                  description: Connection options for the strategy. For SAML and Microsoft Entra ID (OAuth 2.0) strategies, an option not listed for the strategy is rejected with INVALID_OPTIONS.
                   oneOf:
                     - type: object
                       description: Social connection options (e.g., Google SSO).
@@ -2851,8 +3574,21 @@ paths:
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address on the first sign-in through the connection, and creates or merges the user only once it is verified; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory). Home realm never sends users to a social connection, so a passkey sign-in has nothing to skip here. Defaults to false.
+                          example: false
                     - type: object
                       description: Azure AD connection options.
                       properties:
@@ -2926,8 +3662,21 @@ paths:
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address before it merges with an existing user, and before it creates a new user when is_strict_mode is false; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory), and a passkey sign-in is not sent to this connection by home realm for a user who has signed in with this connection before (for a connection an organization owns, also only for its members); anyone else signs in through the connection once. A passkey sign-in does not contact the identity provider, so disabling a user there does not stop it; remove the user's passkeys in Kinde as well. Defaults to false.
+                          example: false
                     - type: object
                       description: SAML connection options (e.g., Cloudflare SAML).
                       properties:
@@ -3032,6 +3781,10 @@ paths:
                             -----BEGIN PRIVATE KEY-----
                             MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCy5+KLjTzF6tvl
                             -----END PRIVATE KEY-----
+                        is_enable_idp_initiated_sso:
+                          type: boolean
+                          description: Accept unsolicited sign-in requests sent to Kinde by the IdP (IdP-initiated SSO). When enabled, any sign-in request that passes this connection's connection_id also skips the Kinde sign-in screen and goes straight to the IdP. Defaults to false.
+                          example: false
                         is_auto_join_organization_enabled:
                           type: boolean
                           description: Users automatically join organization when using this connection.
@@ -3042,8 +3795,25 @@ paths:
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address before it merges with an existing user, and before it creates a new user when is_strict_mode is false; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory), and a passkey sign-in is not sent to this connection by home realm for a user who has signed in with this connection before (for a connection an organization owns, also only for its members); anyone else signs in through the connection once. A passkey sign-in does not contact the identity provider, so disabling a user there does not stop it; remove the user's passkeys in Kinde as well. Defaults to false.
+                          example: false
+                        is_enable_login_hint:
+                          type: boolean
+                          description: Send the user's email address to the IdP as login_hint, so the IdP can skip account selection when the user is signed in to more than one account. On a sign-in that starts at Kinde, this is the email address the application sent as login_hint, and it is not sent when the user signs in with a different email address. On an IdP-initiated sign-in, it is the email address from the SAML response. It applies whether or not IdP-initiated SSO is enabled for the connection. Defaults to false.
+                          example: false
       responses:
         '201':
           description: Connection successfully created.
@@ -3138,7 +3908,13 @@ paths:
                     - 20bbffaa4c5e492a962273039d4ae18b
                   items:
                     type: string
+                organization_code:
+                  description: Enterprise connections only - the code for the organization that manages this connection. Omit to leave ownership unchanged, or send an empty string to clear it.
+                  type: string
+                  nullable: true
+                  example: org_80581732fbe
                 options:
+                  description: Connection options for the strategy. For SAML and Microsoft Entra ID (OAuth 2.0) strategies, an option not listed for the strategy is rejected with INVALID_OPTIONS.
                   oneOf:
                     - type: object
                       description: Social connection options (e.g., Google SSO).
@@ -3157,8 +3933,21 @@ paths:
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address on the first sign-in through the connection, and creates or merges the user only once it is verified; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory). Home realm never sends users to a social connection, so a passkey sign-in has nothing to skip here. When omitted, the current value is kept.
+                          example: false
                     - type: object
                       description: Azure AD connection options.
                       properties:
@@ -3226,10 +4015,27 @@ paths:
                           type: boolean
                           description: Use custom domain callback URL.
                           example: true
+                        is_auto_join_organization_enabled:
+                          type: boolean
+                          description: Users automatically join the organization that owns this connection when they sign in through it. Stored on any enterprise connection, but only takes effect once the connection has an owning organization.
+                          example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address before it merges with an existing user, and before it creates a new user when is_strict_mode is false; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory), and a passkey sign-in is not sent to this connection by home realm for a user who has signed in with this connection before (for a connection an organization owns, also only for its members); anyone else signs in through the connection once. A passkey sign-in does not contact the identity provider, so disabling a user there does not stop it; remove the user's passkeys in Kinde as well. When omitted, the current value is kept.
+                          example: false
                     - type: object
                       description: SAML connection options (e.g., Cloudflare SAML).
                       properties:
@@ -3334,14 +4140,39 @@ paths:
                             -----BEGIN PRIVATE KEY-----
                             MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCy5+KLjTzF6tvl
                             -----END PRIVATE KEY-----
+                        is_enable_idp_initiated_sso:
+                          type: boolean
+                          description: Accept unsolicited sign-in requests sent to Kinde by the IdP (IdP-initiated SSO). When enabled, any sign-in request that passes this connection's connection_id also skips the Kinde sign-in screen and goes straight to the IdP. When omitted, the current value is kept.
+                          example: false
                         is_use_custom_domain:
                           type: boolean
                           description: Use custom domain callback URL.
                           example: true
+                        is_auto_join_organization_enabled:
+                          type: boolean
+                          description: Users automatically join the organization that owns this connection when they sign in through it. Stored on any enterprise connection, but only takes effect once the connection has an owning organization.
+                          example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address before it merges with an existing user, and before it creates a new user when is_strict_mode is false; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory), and a passkey sign-in is not sent to this connection by home realm for a user who has signed in with this connection before (for a connection an organization owns, also only for its members); anyone else signs in through the connection once. A passkey sign-in does not contact the identity provider, so disabling a user there does not stop it; remove the user's passkeys in Kinde as well. When omitted, the current value is kept.
+                          example: false
+                        is_enable_login_hint:
+                          type: boolean
+                          description: Send the user's email address to the IdP as login_hint, so the IdP can skip account selection when the user is signed in to more than one account. On a sign-in that starts at Kinde, this is the email address the application sent as login_hint, and it is not sent when the user signs in with a different email address. On an IdP-initiated sign-in, it is the email address from the SAML response. It applies whether or not IdP-initiated SSO is enabled for the connection. When omitted, the current value is kept.
+                          example: false
       responses:
         '200':
           description: Connection successfully updated.
@@ -3404,6 +4235,7 @@ paths:
                     - c647dbe20f5944e28af97c9184fded22
                     - 20bbffaa4c5e492a962273039d4ae18b
                 options:
+                  description: Connection options for the strategy. For SAML and Microsoft Entra ID (OAuth 2.0) strategies, an option not listed for the strategy is rejected with INVALID_OPTIONS.
                   oneOf:
                     - type: object
                       description: Social connection options (e.g., Google SSO).
@@ -3422,8 +4254,21 @@ paths:
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address on the first sign-in through the connection, and creates or merges the user only once it is verified; trust merges immediately.
+                          example: validate
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory). Home realm never sends users to a social connection, so a passkey sign-in has nothing to skip here. When omitted, the current value is kept.
+                          example: false
                     - type: object
                       description: Azure AD connection options.
                       properties:
@@ -3493,8 +4338,25 @@ paths:
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address before it merges with an existing user, and before it creates a new user when is_strict_mode is false; trust merges immediately.
+                          example: validate
+                        is_auto_join_organization_enabled:
+                          type: boolean
+                          description: Users automatically join the organization that owns this connection when they sign in through it. Stored on any enterprise connection, but only takes effect once the connection has an owning organization. When omitted, the current value is kept.
+                          example: true
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory), and a passkey sign-in is not sent to this connection by home realm for a user who has signed in with this connection before (for a connection an organization owns, also only for its members); anyone else signs in through the connection once. A passkey sign-in does not contact the identity provider, so disabling a user there does not stop it; remove the user's passkeys in Kinde as well. When omitted, the current value is kept.
+                          example: false
                     - type: object
                       description: SAML connection options (e.g., Cloudflare SAML).
                       properties:
@@ -3595,14 +4457,39 @@ paths:
                             -----BEGIN PRIVATE KEY-----
                             MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCy5+KLjTzF6tvl
                             -----END PRIVATE KEY-----
+                        is_enable_idp_initiated_sso:
+                          type: boolean
+                          description: Accept unsolicited sign-in requests sent to Kinde by the IdP (IdP-initiated SSO). When enabled, any sign-in request that passes this connection's connection_id also skips the Kinde sign-in screen and goes straight to the IdP. When omitted, the current value is kept.
+                          example: false
                         is_use_custom_domain:
                           type: boolean
                           description: Use custom domain callback URL.
                           example: true
                         is_trusted:
                           type: boolean
-                          description: Trust this connection for account merging.
+                          deprecated: true
+                          description: Deprecated. Use trust_mode instead. true maps to trust_mode trust, false to none. Ignored when trust_mode is also sent. On update, a stored mode is kept unless this flag contradicts it (false clears trust, true sets trust). Echoing false does not clear validate.
                           example: true
+                        trust_mode:
+                          type: string
+                          enum:
+                            - none
+                            - validate
+                            - trust
+                          description: How email addresses from this connection are trusted for account merging. none never merges on email alone; validate sends a one-time code to the address before it merges with an existing user, and before it creates a new user when is_strict_mode is false; trust merges immediately.
+                          example: validate
+                        is_auto_join_organization_enabled:
+                          type: boolean
+                          description: Users automatically join the organization that owns this connection when they sign in through it. Stored on any enterprise connection, but only takes effect once the connection has an owning organization. When omitted, the current value is kept.
+                          example: true
+                        is_passkey_allowed:
+                          type: boolean
+                          description: Allow passkeys for users of this connection. When true, users are offered passkey setup after signing in with this connection (required when the passkey policy is mandatory), and a passkey sign-in is not sent to this connection by home realm for a user who has signed in with this connection before (for a connection an organization owns, also only for its members); anyone else signs in through the connection once. A passkey sign-in does not contact the identity provider, so disabling a user there does not stop it; remove the user's passkeys in Kinde as well. When omitted, the current value is kept.
+                          example: false
+                        is_enable_login_hint:
+                          type: boolean
+                          description: Send the user's email address to the IdP as login_hint, so the IdP can skip account selection when the user is signed in to more than one account. On a sign-in that starts at Kinde, this is the email address the application sent as login_hint, and it is not sent when the user signs in with a different email address. On an IdP-initiated sign-in, it is the email address from the SAML response. It applies whether or not IdP-initiated SSO is enabled for the connection. When omitted, the current value is kept.
+                          example: false
       responses:
         '200':
           description: Connection successfully updated
@@ -3714,7 +4601,7 @@ paths:
           <code>create:scim_directories</code>
         </div>
       externalDocs:
-        url: https://docs.kinde.com/developer-tools/scim-provisioning/
+        url: https://docs.kinde.com/authenticate/enterprise-connections/scim-directory-sync/
         description: SCIM Provisioning
       requestBody:
         required: true
@@ -3832,7 +4719,23 @@ paths:
                         message: Provider directory endpoint is not configured
                         field: provider_code
         '403':
-          $ref: '#/components/responses/forbidden'
+          description: |
+            Unauthorized - invalid credentials, or the business plan does not allow
+            another SCIM directory.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+              examples:
+                plan_limit_reached:
+                  summary: SCIM directories are not included in the plan
+                  description: |
+                    SCIM directories are a Scale plan feature. Scale includes three; each
+                    additional directory is charged monthly rather than refused.
+                  value:
+                    errors:
+                      - code: PLAN_LIMIT_REACHED
+                        message: SCIM directory sync is not available on your current plan. Please upgrade to Scale to provision users from your identity provider.
         '409':
           description: Conflict - Directory already exists.
           content:
@@ -3999,6 +4902,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/delete_directory_response'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+              examples:
+                directory_id_required:
+                  summary: Directory ID required
+                  value:
+                    errors:
+                      - code: DIRECTORY_ID_REQUIRED
+                        message: Directory ID is required
+                        field: directory_id
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '404':
+          description: Directory not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+              examples:
+                directory_not_found:
+                  summary: Directory not found
+                  value:
+                    errors:
+                      - code: DIRECTORY_NOT_FOUND
+                        message: Directory not found
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
+  /api/v1/directories/{directory_id}/rotate_secret:
+    servers: []
+    parameters:
+      - name: directory_id
+        in: path
+        description: The directory's ID.
+        required: true
+        schema:
+          type: string
+          example: directory_0192b1941f125645fa15bf28a662a0b3
+    post:
+      tags:
+        - Directories
+      operationId: rotateDirectorySecret
+      summary: Rotate SCIM directory secret token
+      description: |
+        Rotate the SCIM directory bearer token. The previous token stops working immediately.
+
+        <div>
+          <code>update:scim_directories</code>
+        </div>
+      responses:
+        '200':
+          description: SCIM directory secret token successfully rotated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rotate_directory_secret_response'
         '400':
           description: Invalid request.
           content:
@@ -4680,6 +5644,10 @@ paths:
       description: |
         Update feature flag.
 
+        While the flag has overrides in this environment, a change to its type or
+        override level is refused with `DELETE_NOT_ALLOWED`. Remove the overrides
+        first.
+
         <div>
           <code>update:feature_flags</code>
         </div>
@@ -4758,6 +5726,75 @@ paths:
           description: Request was throttled.
       security:
         - kindeBearerAuth: []
+  /api/v1/identities:
+    servers: []
+    get:
+      tags:
+        - Identities
+      operationId: getIdentities
+      x-scope: read:identities
+      description: |
+        Find identities by their exact value and return the user each one belongs to.
+
+        Use this to resolve a user from any of their identities, including email
+        addresses that are not their primary one. Exactly one of `email`, `phone` or
+        `username` must be supplied, and the value is matched in full - this endpoint
+        does not do partial or fuzzy matching.
+
+        Email, phone and username identities are unique across the environment and are
+        always searched. Social and enterprise identities are keyed on the ID the
+        provider issued rather than on the email address, so they are only searched
+        when `connection_id` names the connection to look in.
+
+        <div>
+          <code>read:identities</code>
+        </div>
+      summary: Get identities
+      parameters:
+        - name: email
+          in: query
+          description: The email address to find. Matched in full, and case-insensitively.
+          schema:
+            type: string
+            nullable: true
+        - name: phone
+          in: query
+          description: The phone number to find, in E.164 format. Matched in full.
+          schema:
+            type: string
+            nullable: true
+        - name: username
+          in: query
+          description: The username to find. Matched in full, and case-insensitively.
+          schema:
+            type: string
+            nullable: true
+        - name: connection_id
+          in: query
+          description: |
+            Also search the social or enterprise identities on this connection for the
+            given email. Can only be combined with `email`.
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Identities successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identities_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/identities_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
   /api/v1/identities/{identity_id}:
     servers: []
     get:
@@ -4819,6 +5856,8 @@ paths:
       description: |
         Update identity by ID.
 
+        Identities cannot be updated on a user managed by directory sync (`USER_MANAGED_BY_DIRECTORY_SYNC`); user and role changes must be made in the upstream identity provider.
+
         <div>
           <code>update:identities</code>
         </div>
@@ -4874,6 +5913,8 @@ paths:
       x-scope: delete:identities
       description: |
         Delete identity by ID.
+
+        Identities cannot be deleted from a user managed by directory sync (`USER_MANAGED_BY_DIRECTORY_SYNC`); user and role changes must be made in the upstream identity provider.
 
         <div>
           <code>delete:identities</code>
@@ -5599,6 +6640,8 @@ paths:
       description: |
         Delete an organization.
 
+        Deletion is refused when a billing customer linked to the organization has agreements. Billing customers with no agreements are removed with the organization.
+
         <div>
           <code>delete:organizations</code>
         </div>
@@ -5710,6 +6753,10 @@ paths:
       description: |
         Add existing users to an organization.
 
+        Every key in `roles` must be a business-wide role key, or the key of one of this organization's own roles while organization-managed roles are available on the business's plan. Any other key fails the whole request with `INVALID_ROLES` instead of being skipped.
+
+        Users cannot be added to organizations that are managed by directory sync (`ORGANIZATION_MANAGED_BY_DIRECTORY_SYNC`); user and role changes for those organizations must be made in the upstream identity provider.
+
         <div>
           <code>create:organization_users</code>
         </div>
@@ -5740,7 +6787,7 @@ paths:
                         type: string
                         example: kp_057ee6debc624c70947b6ba512908c35
                       roles:
-                        description: Role keys to assign to the user.
+                        description: Role keys to assign to the user. Business-wide role keys, or this organization's own role keys while organization-managed roles are available on the business's plan; any other key fails the request with `INVALID_ROLES`.
                         type: array
                         items:
                           type: string
@@ -5772,6 +6819,10 @@ paths:
       operationId: UpdateOrganizationUsers
       description: |
         Update users that belong to an organization.
+
+        `roles` replaces the user's roles. Every key in it must be a business-wide role key, or the key of one of this organization's own roles while organization-managed roles are available on the business's plan. Any other key fails the whole request with `INVALID_ROLES` instead of being skipped. Below that plan the user's organization-managed role assignments are kept but not issued in tokens; they cannot be named in `roles` until the plan is upgraded, and replacing `roles` does not remove them.
+
+        Users in organizations managed by directory sync cannot be updated (`ORGANIZATION_MANAGED_BY_DIRECTORY_SYNC`); user and role changes for those organizations must be made in the upstream identity provider.
 
         <div>
           <code>update:organization_users</code>
@@ -5807,7 +6858,7 @@ paths:
                         type: string
                         example: delete
                       roles:
-                        description: Role keys to assign to the user.
+                        description: Role keys to assign to the user. Business-wide role keys, or this organization's own role keys while organization-managed roles are available on the business's plan; any other key fails the request with `INVALID_ROLES`.
                         type: array
                         items:
                           type: string
@@ -5885,6 +6936,8 @@ paths:
       description: |
         Add role to an organization user.
 
+        Roles cannot be added to users in organizations managed by directory sync (`ORGANIZATION_MANAGED_BY_DIRECTORY_SYNC`); user and role changes for those organizations must be made in the upstream identity provider.
+
         <div>
           <code>create:organization_user_roles</code>
         </div>
@@ -5940,6 +6993,8 @@ paths:
       description: |
         Delete role for an organization user.
 
+        Roles cannot be removed from users in organizations managed by directory sync (`ORGANIZATION_MANAGED_BY_DIRECTORY_SYNC`); user and role changes for those organizations must be made in the upstream identity provider.
+
         <div>
           <code>delete:organization_user_roles</code>
         </div>
@@ -5978,6 +7033,638 @@ paths:
                 $ref: '#/components/schemas/success_response'
         '400':
           description: Error creating user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+  /api/v1/organizations/{org_code}/roles:
+    servers: []
+    get:
+      tags:
+        - Organizations
+      operationId: GetOrganizationRoles
+      x-scope: read:organization_roles
+      description: |
+        List the roles an organization has created for itself. Business-wide roles are not included; use the roles endpoints for those.
+
+        Organization-managed roles are roles an organization owns. They can only be assigned to members of that organization, they hold only the permissions the business marks as `is_organization_role_assignable`, and they are available on the Scale plan. If the business moves off Scale they stay stored but stop appearing in tokens and permission checks.
+
+        <div>
+          <code>read:organization_roles</code>
+        </div>
+      summary: List organization-managed roles
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: sort
+          in: query
+          description: Field and order to sort the result by.
+          schema:
+            type: string
+            nullable: true
+            enum:
+              - name_asc
+              - name_desc
+              - key_asc
+              - key_desc
+        - name: page_size
+          in: query
+          description: Number of results per page. Defaults to 10, at most 500.
+          schema:
+            type: integer
+            nullable: true
+        - name: next_token
+          in: query
+          description: A string to get the next page of results if there are more results.
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Organization roles successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_organization_roles_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/get_organization_roles_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+    post:
+      tags:
+        - Organizations
+      operationId: CreateOrganizationRole
+      x-scope: create:organization_roles
+      description: |
+        Create a role that belongs to an organization. An organization can have up to 100 roles of its own.
+
+        Organization-managed roles are roles an organization owns. They can only be assigned to members of that organization, they hold only the permissions the business marks as `is_organization_role_assignable`, and they are available on the Scale plan. If the business moves off Scale they stay stored but stop appearing in tokens and permission checks.
+
+        <div>
+          <code>create:organization_roles</code>
+        </div>
+      summary: Create organization-managed role
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      requestBody:
+        description: Role details.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - key
+              properties:
+                name:
+                  description: The role's name.
+                  type: string
+                description:
+                  description: The role's description.
+                  type: string
+                key:
+                  description: The role identifier to use in code. Unique within the organization, and never the same as a business-wide role's key.
+                  type: string
+                permissions:
+                  description: The IDs of the permissions the role grants. Only business-wide permissions marked `is_organization_role_assignable`, and the organization's own permissions, can be used.
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Role successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_roles_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/create_roles_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials, organization-managed roles are not available on the business's plan (`PLAN_LIMIT_REACHED`), or not on this business (`ORGANIZATION_ROLES_UNAVAILABLE`).
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+  /api/v1/organizations/{org_code}/roles/{role_id}:
+    servers: []
+    get:
+      tags:
+        - Organizations
+      operationId: GetOrganizationRole
+      x-scope: read:organization_roles
+      description: |
+        Get a role the organization owns, with its permissions.
+
+        <div>
+          <code>read:organization_roles</code>
+        </div>
+      summary: Get organization-managed role
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: role_id
+          in: path
+          description: The role's ID.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      responses:
+        '200':
+          description: Role successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_organization_role_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/get_organization_role_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+    patch:
+      tags:
+        - Organizations
+      operationId: UpdateOrganizationRole
+      x-scope: update:organization_roles
+      description: |
+        Update a role the organization owns. Fields you leave out are not changed. The key cannot be changed after creation.
+
+        <div>
+          <code>update:organization_roles</code>
+        </div>
+      summary: Update organization-managed role
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: role_id
+          in: path
+          description: The role's ID.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      requestBody:
+        description: Role details.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: The role's name.
+                  type: string
+                description:
+                  description: The role's description.
+                  type: string
+                permissions:
+                  description: The IDs of the permissions the role grants, replacing its current set. Omit to leave them unchanged. Only business-wide permissions marked `is_organization_role_assignable`, and the organization's own permissions, can be used.
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Role successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials, organization-managed roles are not available on the business's plan (`PLAN_LIMIT_REACHED`), or not on this business (`ORGANIZATION_ROLES_UNAVAILABLE`).
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+    delete:
+      tags:
+        - Organizations
+      operationId: DeleteOrganizationRole
+      x-scope: delete:organization_roles
+      description: |
+        Delete a role the organization owns. Members who hold it lose it. This works on any plan, so roles made while on Scale can be cleaned up after a downgrade.
+
+        <div>
+          <code>delete:organization_roles</code>
+        </div>
+      summary: Delete organization-managed role
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: role_id
+          in: path
+          description: The role's ID.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      responses:
+        '200':
+          description: Role successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+  /api/v1/organizations/{org_code}/permissions:
+    servers: []
+    get:
+      tags:
+        - Organizations
+      operationId: GetOrganizationPermissions
+      x-scope: read:organization_roles
+      description: |
+        List the permissions an organization has defined for itself. Business-wide permissions are not included; use the permissions endpoints for those.
+
+        Organization-managed permissions are permissions an organization defines for itself. Only that organization's own roles can hold them, they appear in tokens through those roles, and they are available on the Scale plan alongside organization-managed roles (they use the same scopes). If the business moves off Scale they stay stored but stop appearing in tokens. They are not available on the Kinde business.
+
+        <div>
+          <code>read:organization_roles</code>
+        </div>
+      summary: List organization-managed permissions
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: sort
+          in: query
+          description: Field and order to sort the result by. Defaults to key_asc.
+          schema:
+            type: string
+            nullable: true
+            enum:
+              - name_asc
+              - name_desc
+              - key_asc
+              - key_desc
+        - name: page_size
+          in: query
+          description: Number of results per page. Defaults to 10, at most 500.
+          schema:
+            type: integer
+            nullable: true
+        - name: next_token
+          in: query
+          description: A string to get the next page of results if there are more results.
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Organization permissions successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_organization_permissions_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/get_organization_permissions_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+    post:
+      tags:
+        - Organizations
+      operationId: CreateOrganizationPermission
+      x-scope: create:organization_roles
+      description: |
+        Define a permission that belongs to an organization. An organization can have up to 100 permissions of its own.
+
+        Organization-managed permissions are permissions an organization defines for itself. Only that organization's own roles can hold them, they appear in tokens through those roles, and they are available on the Scale plan alongside organization-managed roles (they use the same scopes). If the business moves off Scale they stay stored but stop appearing in tokens. They are not available on the Kinde business.
+
+        <div>
+          <code>create:organization_roles</code>
+        </div>
+      summary: Create organization-managed permission
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      requestBody:
+        description: Permission details.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - key
+              properties:
+                name:
+                  description: The permission's name (at most 64 characters).
+                  type: string
+                description:
+                  description: The permission's description (at most 255 characters).
+                  type: string
+                key:
+                  description: The permission identifier to use in code (at most 64 characters). Unique within the organization, and never the same as a business-wide permission's key.
+                  type: string
+      responses:
+        '201':
+          description: Permission successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials, organization-managed permissions are not available on the business's plan (`PLAN_LIMIT_REACHED`), or not available on this business at all (`ORGANIZATION_PERMISSIONS_UNAVAILABLE`).
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+  /api/v1/organizations/{org_code}/permissions/{permission_id}:
+    servers: []
+    get:
+      tags:
+        - Organizations
+      operationId: GetOrganizationPermission
+      x-scope: read:organization_roles
+      description: |
+        Get a permission the organization owns.
+
+        <div>
+          <code>read:organization_roles</code>
+        </div>
+      summary: Get organization-managed permission
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: permission_id
+          in: path
+          description: The permission's ID.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      responses:
+        '200':
+          description: Permission successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_organization_permission_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/get_organization_permission_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials.
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+    patch:
+      tags:
+        - Organizations
+      operationId: UpdateOrganizationPermission
+      x-scope: update:organization_roles
+      description: |
+        Update a permission the organization owns. Fields you leave out are not changed. The key cannot be changed after creation.
+
+        <div>
+          <code>update:organization_roles</code>
+        </div>
+      summary: Update organization-managed permission
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: permission_id
+          in: path
+          description: The permission's ID.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      requestBody:
+        description: Permission details.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: The permission's name (at most 64 characters).
+                  type: string
+                description:
+                  description: The permission's description (at most 255 characters).
+                  type: string
+      responses:
+        '200':
+          description: Permission successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: Invalid credentials, organization-managed permissions are not available on the business's plan (`PLAN_LIMIT_REACHED`), or not available on this business at all (`ORGANIZATION_PERMISSIONS_UNAVAILABLE`).
+        '429':
+          description: Request was throttled.
+      security:
+        - kindeBearerAuth: []
+    delete:
+      tags:
+        - Organizations
+      operationId: DeleteOrganizationPermission
+      x-scope: delete:organization_roles
+      description: |
+        Delete a permission the organization owns. The organization's roles that hold it lose it. This works on any plan.
+
+        <div>
+          <code>delete:organization_roles</code>
+        </div>
+      summary: Delete organization-managed permission
+      parameters:
+        - name: org_code
+          in: path
+          description: The organization's code.
+          required: true
+          schema:
+            type: string
+            nullable: false
+        - name: permission_id
+          in: path
+          description: The permission's ID.
+          required: true
+          schema:
+            type: string
+            nullable: false
+      responses:
+        '200':
+          description: Permission successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response'
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/success_response'
+        '400':
+          description: Bad request.
           content:
             application/json:
               schema:
@@ -6371,6 +8058,8 @@ paths:
       operationId: RemoveOrganizationUser
       description: |
         Remove user from an organization.
+
+        Users cannot be removed from organizations that are managed by directory sync (`ORGANIZATION_MANAGED_BY_DIRECTORY_SYNC`); user and role changes for those organizations must be made in the upstream identity provider.
 
         <div>
           <code>delete:organization_users</code>
@@ -6887,7 +8576,7 @@ paths:
             type: string
         - name: value
           in: query
-          description: The new property value
+          description: The new property value. Send an empty string to unset the property, so it reads back as not set.
           required: true
           schema:
             type: string
@@ -6989,7 +8678,7 @@ paths:
               type: object
               properties:
                 properties:
-                  description: Property keys and values
+                  description: Property keys and values. Set a value to an empty string or null to unset it.
                   type: object
                   nullable: false
               required:
@@ -7021,6 +8710,66 @@ paths:
         - kindeBearerAuth: []
   /api/v1/organizations/{org_code}/mfa:
     servers: []
+    get:
+      tags:
+        - Organizations
+      operationId: GetOrganizationMFA
+      x-scope: read:organization_mfa
+      summary: Get Organization MFA Configuration
+      description: |
+        Get the MFA configuration for an organization, including the enterprise connections exempt from organization MFA.
+
+        <div>
+          <code>read:organization_mfa</code>
+        </div>
+      parameters:
+        - name: org_code
+          in: path
+          description: The identifier for the organization
+          required: true
+          schema:
+            type: string
+            nullable: false
+            example: org_1ccfb819462
+      responses:
+        '200':
+          description: Organization MFA configuration successfully retrieved.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/success_response'
+                  - type: object
+                    properties:
+                      is_mfa_enforced:
+                        type: boolean
+                        description: Whether sign-in requires organization MFA. True when the organization has advanced organizations enabled and at least one MFA factor.
+                      enabled_factors:
+                        type: array
+                        description: The MFA methods enabled for this organization.
+                        items:
+                          type: string
+                          enum:
+                            - mfa:email
+                            - mfa:sms
+                            - mfa:authenticator_app
+                      is_recovery_codes_enabled:
+                        type: boolean
+                        description: Whether recovery codes are shown to users during MFA setup for this organization.
+                      exempt_enterprise_connections:
+                        type: array
+                        description: IDs of the enterprise connections whose users are not required to use MFA for this organization.
+                        items:
+                          type: string
+                          example: conn_0192c16abb53b44277e597d31877ba5b
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '403':
+          $ref: '#/components/responses/forbidden'
+        '429':
+          $ref: '#/components/responses/too_many_requests'
+      security:
+        - kindeBearerAuth: []
     put:
       tags:
         - Organizations
@@ -7058,9 +8807,15 @@ paths:
                       - mfa:sms
                       - mfa:authenticator_app
                 is_recovery_codes_enabled:
-                  description: Determines whether recovery codes are shown to users during MFA setup for this specific organization. This overrides the environment-level setting.
+                  description: Determines whether recovery codes are shown to users during MFA setup for this specific organization. This overrides the environment-level setting. Omit the field to keep the current setting. An organization that has never set it uses the environment-level setting.
                   type: boolean
-                  default: true
+                exempt_enterprise_connections:
+                  description: |
+                    IDs of the enterprise connections whose users are not required to use MFA for this organization. The list replaces the saved exemptions, so include every connection to keep exempt. Send an empty array to remove all exemptions. Omit the field, or send null, to leave the saved exemptions unchanged. Requires the advanced organizations plan entitlement.
+                  type: array
+                  items:
+                    type: string
+                    example: conn_0192c16abb53b44277e597d31877ba5b
               required:
                 - enabled_factors
       responses:
@@ -7765,6 +9520,9 @@ paths:
                 key:
                   description: The permission identifier to use in code.
                   type: string
+                is_organization_role_assignable:
+                  description: Whether organizations can put this permission into roles of their own (organization-managed roles, Scale plan). Turning this off removes the permission from every organization-managed role that holds it.
+                  type: boolean
       responses:
         '201':
           description: Permission successfully created
@@ -7836,6 +9594,9 @@ paths:
                 key:
                   description: The permission identifier to use in code.
                   type: string
+                is_organization_role_assignable:
+                  description: Whether organizations can put this permission into roles of their own (organization-managed roles, Scale plan). Turning this off removes the permission from every organization-managed role that holds it.
+                  type: boolean
       responses:
         '200':
           description: Permission successfully updated
@@ -8025,6 +9786,7 @@ paths:
                   enum:
                     - single_line_text
                     - multi_line_text
+                    - boolean
                   nullable: false
                 context:
                   description: The context that the property applies to.
@@ -8624,12 +10386,12 @@ paths:
       tags:
         - Roles
       operationId: GetRoleScopes
-      x-scope: read:role_scopes
+      x-scope: read:role_permissions
       description: |
         Get scopes for a role.
 
         <div>
-          <code>read:role_scopes</code>
+          <code>read:role_permissions</code>
         </div>
       summary: Get role scopes
       parameters:
@@ -8669,12 +10431,12 @@ paths:
       tags:
         - Roles
       operationId: AddRoleScope
-      x-scope: create:role_scopes
+      x-scope: update:role_permissions
       description: |
         Add scope to role.
 
         <div>
-          <code>create:role_scopes</code>
+          <code>update:role_permissions</code>
         </div>
       summary: Add role scope
       parameters:
@@ -8719,12 +10481,12 @@ paths:
       tags:
         - Roles
       operationId: DeleteRoleScope
-      x-scope: delete:role_scopes
+      x-scope: delete:role_permissions
       description: |
         Delete scope from role.
 
         <div>
-          <code>delete:role_scopes</code>
+          <code>delete:role_permissions</code>
         </div>
       summary: Delete role scope
       parameters:
@@ -9740,6 +11502,8 @@ paths:
         Creates a user record and optionally zero or more identities for the user. An example identity could be the email
         address of the user.
 
+        Users cannot be created in an organization managed by directory sync (`ORGANIZATION_MANAGED_BY_DIRECTORY_SYNC`); user and role changes for those organizations must be made in the upstream identity provider. If `organization_code` is omitted, this also applies to the default registration organization.
+
         <div>
           <code>create:users</code>
         </div>
@@ -9766,7 +11530,7 @@ paths:
                       type: string
                       description: The user's profile picture.
                 organization_code:
-                  description: The unique code associated with the organization you want the user to join.
+                  description: The unique code associated with the organization you want the user to join. If omitted, the user is added to the default registration organization when that setting is enabled.
                   type: string
                 provided_id:
                   description: An external id to reference the user.
@@ -9848,6 +11612,8 @@ paths:
         owner of a family billing customer, the change is also propagated to
         the corresponding billing customer details.
 
+        Users managed by directory sync cannot be updated (`USER_MANAGED_BY_DIRECTORY_SYNC`); user and role changes must be made in the upstream identity provider.
+
         <div>
           <code>update:users</code>
         </div>
@@ -9913,6 +11679,8 @@ paths:
       operationId: deleteUser
       description: |
         Delete a user record.
+
+        Users managed by directory sync cannot be deleted (`USER_MANAGED_BY_DIRECTORY_SYNC`); user and role changes must be made in the upstream identity provider.
 
         <div>
           <code>delete:users</code>
@@ -10034,7 +11802,7 @@ paths:
             type: string
         - name: value
           in: query
-          description: The new property value
+          description: The new property value. Send an empty string to unset the property, so it reads back as not set.
           required: true
           schema:
             type: string
@@ -10136,7 +11904,7 @@ paths:
               type: object
               properties:
                 properties:
-                  description: Property keys and values
+                  description: Property keys and values. Set a value to an empty string or null to unset it.
                   type: object
                   nullable: false
               required:
@@ -10174,6 +11942,8 @@ paths:
       operationId: SetUserPassword
       description: |
         Set user password.
+
+        Passwords cannot be set on a user managed by directory sync (`USER_MANAGED_BY_DIRECTORY_SYNC`); user and role changes must be made in the upstream identity provider.
 
         <div>
           <code>update:user_passwords</code>
@@ -10332,6 +12102,10 @@ paths:
       description: |
         Creates an identity for a user.
 
+        Identities cannot be added to a user managed by directory sync (`USER_MANAGED_BY_DIRECTORY_SYNC`); user and role changes must be made in the upstream identity provider.
+
+        Adding an `enterprise` identity pre-provisions the user for that connection and replaces all of their other identities. A user with an enterprise identity cannot be given any other identity (`CANNOT_ADD_ENTERPRISE_USER_IDENTITY`).
+
         <div>
           <code>create:user_identities</code>
         </div>
@@ -10354,7 +12128,14 @@ paths:
               properties:
                 value:
                   type: string
-                  description: The email address, social identity, or username of the user.
+                  description: |
+                    The identity value, which depends on the type.
+
+                    - `email`: the email address.
+                    - `username`: the username.
+                    - `phone`: the phone number, with `phone_country_id`.
+                    - `social`: the user's ID with the social provider.
+                    - `enterprise`: an email-formatted value that is compared, ignoring case, with what the identity provider sends at sign-in. For Microsoft Entra ID OAuth 2.0 connections, use the user principal name (UPN), which can differ from the user's mailbox address. A connection owned by an organization also matches the email address Entra sends, for users who are already members of that organization. For Microsoft Entra ID WS-Federation connections, use the email address Entra sends for the user, or their UPN if it sends none. For other enterprise connections, use the email the user signs in with, or the email the identity provider returns.
                   example: sally@example.com
                 type:
                   type: string
@@ -10996,6 +12777,32 @@ components:
           schema:
             $ref: '#/components/schemas/error_response'
   schemas:
+    application_native_app:
+      type: object
+      description: An iOS or Android app registered for an application. Android apps carry package_name and sha256_cert_fingerprints; iOS apps carry team_id and bundle_id.
+      properties:
+        id:
+          type: integer
+          example: 1
+        platform:
+          type: string
+          enum:
+            - android
+            - ios
+        package_name:
+          type: string
+          example: com.example.app
+        sha256_cert_fingerprints:
+          type: array
+          items:
+            type: string
+            example: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
+        team_id:
+          type: string
+          example: ABCDE12345
+        bundle_id:
+          type: string
+          example: com.example.app
     success_response:
       type: object
       properties:
@@ -11369,6 +13176,36 @@ components:
                     description: Whether or not the application is authorized to access the API
                     example: true
                     nullable: true
+    get_api_application_scopes_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        scopes:
+          type: array
+          nullable: true
+          description: The scopes the application has been granted for the API, or null if it has none.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique ID of the API scope.
+                example: api_scope_01939128c3d7193ae87c4755213c07c6
+              key:
+                type: string
+                description: The scope's reference key.
+                example: read:logs
+              description:
+                type: string
+                description: Explanation of the scope's purpose.
+                example: Read logs scope
     get_api_scopes_response:
       type: object
       properties:
@@ -11486,7 +13323,7 @@ components:
           nullable: true
         failed_sign_ins:
           type: integer
-          description: Number of consecutive failed user sign ins.
+          description: Total number of failed user sign-in attempts.
           nullable: true
         last_signed_in:
           type: string
@@ -11593,7 +13430,7 @@ components:
                 nullable: true
               failed_sign_ins:
                 type: integer
-                description: Number of consecutive failed user sign ins.
+                description: Total number of failed user sign-in attempts.
                 nullable: true
               last_signed_in:
                 type: string
@@ -11706,7 +13543,7 @@ components:
                 example: 1
               failed_sign_ins:
                 type: integer
-                description: Number of consecutive failed user sign ins.
+                description: Total number of failed user sign-in attempts.
                 nullable: true
                 example: 0
               last_signed_in:
@@ -11786,6 +13623,25 @@ components:
               description: The billing customer id if the organization was created with the is_create_billing_customer as true
               type: string
               example: customer_1245adbc6789
+            agreement_id:
+              description: The billing agreement id if the organization was created with is_create_billing_customer as true
+              type: string
+              example: agreement_a1234b
+            plan_version:
+              description: The published version number assigned with that agreement
+              type: integer
+              nullable: true
+              example: 1
+            plan_code:
+              description: The published version's code. This can differ from billing_plan_code on the request after a draft edit.
+              type: string
+              nullable: true
+              example: pro
+            plan_name:
+              description: The published version's name. A draft rename is not returned.
+              type: string
+              nullable: true
+              example: Pro
     create_user_billing_customer_response:
       type: object
       properties:
@@ -11808,6 +13664,21 @@ components:
               description: The billing agreement id created for the assigned plan.
               type: string
               example: agreement_a1234b
+            plan_version:
+              description: The published version number assigned with that agreement.
+              type: integer
+              nullable: true
+              example: 1
+            plan_code:
+              description: The published version's code. This can differ from the plan code on the request after a draft edit.
+              type: string
+              nullable: true
+              example: pro
+            plan_name:
+              description: The published version's name. A draft rename is not returned.
+              type: string
+              nullable: true
+              example: Pro
     user_identity:
       type: object
       properties:
@@ -11863,6 +13734,26 @@ components:
         has_more:
           description: Whether more records exist.
           type: boolean
+    identities_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+        message:
+          type: string
+          description: Response message.
+        identities:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/identity'
+              - type: object
+                properties:
+                  user_id:
+                    type: string
+                    description: The unique ID of the user the identity belongs to.
+                    example: kp_0ba7c433e5d648cf992621ce99d42817
     get_user_sessions_response:
       type: object
       properties:
@@ -12718,6 +14609,11 @@ components:
           type: string
         name:
           type: string
+        context:
+          type: string
+          nullable: true
+          description: What the category's properties apply to, `usr` for users, `org` for organizations or `app` for applications.
+          example: usr
     connection:
       type: object
       properties:
@@ -12775,7 +14671,8 @@ components:
           example: email
         is_confirmed:
           type: boolean
-          description: Whether the identity is confirmed
+          description: Whether the identity is confirmed. Null for identity types that do not record confirmation, such as username.
+          nullable: true
           example: true
         created_on:
           type: string
@@ -12783,7 +14680,8 @@ components:
           example: '2025-01-01T00:00:00Z'
         last_login_on:
           type: string
-          description: Date of last login in ISO 8601 format
+          description: Date of last login in ISO 8601 format. Null if the identity has never been used to sign in.
+          nullable: true
           example: '2025-01-05T00:00:00Z'
         total_logins:
           type: integer
@@ -12794,7 +14692,8 @@ components:
           example: sally@example.com
         email:
           type: string
-          description: The associated email of the identity
+          description: The associated email of the identity. Null for phone and username identities.
+          nullable: true
           example: sally@example.com
         connection_id:
           type: string
@@ -12821,6 +14720,21 @@ components:
           type: string
         is_kinde_property:
           type: boolean
+        type:
+          type: string
+          nullable: true
+          description: The property type, for example `single_line_text`, `multi_line_text` or `boolean`.
+          example: single_line_text
+        context:
+          type: string
+          nullable: true
+          description: What the property applies to, `usr` for users, `org` for organizations or `app` for applications.
+          example: usr
+        category_id:
+          type: string
+          nullable: true
+          description: The ID of the category the property belongs to.
+          example: cat_0192b1941f125645fa15bf28a662a0b3
     property_value:
       type: object
       properties:
@@ -13410,6 +15324,11 @@ components:
           type: array
           items:
             type: string
+        users_blocked:
+          type: array
+          description: Users that were not added because directory sync manages them in another organization. A directory-managed user belongs only to the organization their directory owns.
+          items:
+            type: string
     update_role_permissions_response:
       type: object
       properties:
@@ -13461,6 +15380,12 @@ components:
             example: kp_057ee6debc624c70947b6ba512908c35
         users_removed:
           type: array
+          items:
+            type: string
+            example: kp_057ee6debc624c70947b6ba512908c35
+        users_blocked:
+          type: array
+          description: Users that were not added because directory sync manages them in another organization. A directory-managed user belongs only to the organization their directory owns.
           items:
             type: string
             example: kp_057ee6debc624c70947b6ba512908c35
@@ -13608,10 +15533,16 @@ components:
       properties:
         id:
           type: string
+          description: The application's ID, which is also its client ID.
+          example: 3b0b5c6c8fcc464fab397f4969b5f482
         name:
           type: string
+          description: The application's name.
+          example: My M2M app
         type:
           type: string
+          description: The display name of the application type. GET /api/v1/applications/{application_id} returns the type's code instead, for example `m2m`.
+          example: Machine to machine (M2M)
     get_applications_response:
       type: object
       properties:
@@ -13708,6 +15639,9 @@ components:
         description:
           type: string
           description: The permission's description.
+        is_organization_role_assignable:
+          type: boolean
+          description: Whether organizations can put this permission into roles of their own. Only these permissions can be used in organization-managed roles.
     scopes:
       type: object
       properties:
@@ -13918,6 +15852,140 @@ components:
           type: string
           format: date-time
           description: End of the active period that was used (inclusive), in UTC at second precision after any rounding.
+    organization_role:
+      type: object
+      description: A role an organization owns. It can only be assigned to members of that organization.
+      properties:
+        id:
+          type: string
+          description: The role's ID.
+          example: 01929904-316d-bb2c-069f-99dfea4ac394
+        key:
+          type: string
+          description: The role identifier to use in code. Unique within the organization, and never the same as a business-wide role's key.
+          example: billing_approver
+        name:
+          type: string
+          description: The role's name.
+          example: Billing approver
+        description:
+          type: string
+          nullable: true
+          description: The role's description.
+          example: Can approve invoices.
+        permissions:
+          type: array
+          description: The permissions the role grants.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The permission's ID.
+              key:
+                type: string
+                description: The permission identifier to use in code.
+              name:
+                type: string
+                description: The permission's name.
+        created_on:
+          type: string
+          format: date-time
+          description: When the role was created.
+    get_organization_roles_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/organization_role'
+        has_more:
+          type: boolean
+          description: Whether more roles are available after this page.
+        next_token:
+          type: string
+          nullable: true
+          description: Pass as `next_token` to get the next page. Null on the last page.
+    get_organization_role_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        role:
+          $ref: '#/components/schemas/organization_role'
+    organization_permission:
+      type: object
+      description: A permission an organization owns. Only that organization's own roles can hold it.
+      properties:
+        id:
+          type: string
+          description: The permission's ID.
+          example: 01929904-316d-bb2c-069f-99dfea4ac394
+        key:
+          type: string
+          description: The permission identifier to use in code. Unique within the organization, and never the same as a business-wide permission's key.
+          example: approve:invoices
+        name:
+          type: string
+          description: The permission's name.
+          example: Approve invoices
+        description:
+          type: string
+          nullable: true
+          description: The permission's description.
+        created_on:
+          type: string
+          format: date-time
+          description: When the permission was created.
+    get_organization_permissions_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/organization_permission'
+        has_more:
+          type: boolean
+          description: Whether more permissions are available after this page.
+        next_token:
+          type: string
+          nullable: true
+          description: Pass as `next_token` to get the next page. Null on the last page.
+    get_organization_permission_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        permission:
+          $ref: '#/components/schemas/organization_permission'
     role_scopes_response:
       type: object
       properties:
@@ -14045,10 +16113,167 @@ components:
               code:
                 type: string
                 description: The plan code the billing customer is subscribed to
+              name:
+                type: string
+                nullable: true
+                description: The published version's name
+                example: Pro
+              plan_version:
+                type: integer
+                nullable: true
+                description: |
+                  Published version number on this agreement. Null when the agreement has no plan version.
+                example: 2
+              plan_is_latest:
+                type: boolean
+                nullable: true
+                description: |
+                  Whether this agreement is on the latest published version of its plan. Null when the agreement has no plan version.
+                example: true
               subscribed_on:
                 type: string
                 format: date-time
                 example: '2024-11-18T13:32:03+11'
+    get_billing_one_time_purchases_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        has_more:
+          description: Whether more records exist.
+          type: boolean
+        one_time_purchases:
+          type: array
+          description: A list of current one-time purchases
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The friendly id of the one-time purchase
+                example: one_off_purchase_0195ac80a14e8d71f42b98e75d3c61ad
+              agreement_id:
+                type: string
+                description: The friendly id of the billing agreement the purchase belongs to
+                example: agreement_0195ac80a14c2ca2cec97d026d864de0
+              feature_code:
+                type: string
+                description: The feature code of the purchased one-time feature
+                example: extra_api_calls
+              feature_name:
+                type: string
+                description: The feature name of the purchased one-time feature
+                example: Extra API calls
+              units_granted:
+                type: integer
+                nullable: true
+                description: |
+                  The number of units granted by this purchase. Null when the purchase grants unlimited usage.
+                example: 1000
+              amount:
+                type: number
+                description: The amount paid for this purchase, in major currency units
+                example: 25
+              currency_code:
+                type: string
+                description: The ISO currency code of the amount paid
+                example: AUD
+              purchased_on:
+                type: string
+                format: date-time
+                description: When the purchase was paid
+                example: '2026-09-11T08:00:00Z'
+              expires_on:
+                type: string
+                format: date-time
+                nullable: true
+                description: When the purchase expires. Null when the purchase never expires.
+                example: '2026-10-06T12:53:57Z'
+              expiration_policy_code:
+                type: string
+                description: The expiration policy captured at purchase time
+                example: none
+                enum:
+                  - none
+                  - end_of_current_billing_cycle
+              is_metered:
+                type: boolean
+                description: Whether usage is reported against this purchased feature
+        feature_totals:
+          type: array
+          description: |
+            Per-feature totals for all current purchases matching the filters. Present only when feature_totals=true.
+          items:
+            type: object
+            properties:
+              agreement_id:
+                type: string
+                description: The friendly id of the billing agreement the purchases belong to
+                example: agreement_0195ac80a14c2ca2cec97d026d864de0
+              feature_code:
+                type: string
+                description: The feature code of the purchased one-time feature
+                example: extra_api_calls
+              feature_name:
+                type: string
+                description: The feature name of the purchased one-time feature
+                example: Extra API calls
+              units_granted:
+                type: integer
+                nullable: true
+                description: |
+                  The sum of units granted by current purchases of this feature. Null when any current purchase grants unlimited usage.
+                example: 4800
+              amount:
+                type: number
+                description: The sum of amounts paid for current purchases of this feature, in major currency units
+                example: 128
+              currency_code:
+                type: string
+                description: The ISO currency code of the aggregated amount
+                example: AUD
+              purchase_count:
+                type: integer
+                description: The number of current purchases included in this total
+                example: 3
+              last_purchased_on:
+                type: string
+                format: date-time
+                description: When this feature was last purchased
+                example: '2026-09-11T08:10:58Z'
+              expires_on:
+                type: string
+                format: date-time
+                nullable: true
+                description: |
+                  Expiry from the latest current purchase of this feature. Null when that purchase never expires.
+                example: '2026-10-06T12:53:57Z'
+              expiration_policy_code:
+                type: string
+                description: The expiration policy from the latest current purchase of this feature
+                example: none
+                enum:
+                  - none
+                  - end_of_current_billing_cycle
+              is_metered:
+                type: boolean
+                description: Whether usage is reported against this purchased feature
+              current_billing_cycle_usage:
+                type: integer
+                description: |
+                  The current billing cycle running total for this agreement and feature. Present only on metered features when the agreement has a current cycle. Same ingest-order absolute/delta rules as POST meter_usage, scoped to the current cycle. Resets when a new cycle starts.
+                example: 80
+              usage_since_first_purchased:
+                type: integer
+                description: |
+                  The ingest-order lifetime running total for this agreement and feature. Absolute replaces it; delta adds to it. Includes every accepted record on the meter, including those reported before the first paid purchase. Does not reset when the billing cycle rolls. Present only on metered features. Comparable to units_granted on this total. Same number as current_usage on GET/POST meter_usage when the latest current purchase never expires.
+                example: 50
     get_billing_agreements_response:
       type: object
       properties:
@@ -14076,6 +16301,18 @@ components:
               plan_code:
                 type: string
                 description: The plan code the billing customer is subscribed to
+              plan_version:
+                type: integer
+                nullable: true
+                description: |
+                  Published version number on this agreement. Null when the agreement has no plan version.
+                example: 2
+              plan_is_latest:
+                type: boolean
+                nullable: true
+                description: |
+                  Whether this agreement is on the latest published version of its plan. Null when the agreement has no plan version.
+                example: false
               expires_on:
                 type: string
                 format: date-time
@@ -14103,7 +16340,8 @@ components:
                 example: '2026-09-06T12:53:57Z'
               entitlements:
                 type: array
-                description: A list of billing entitlements that is part of this agreement
+                description: |
+                  A list of billing entitlements that is part of this agreement. Empty when the agreement's plan has no features.
                 items:
                   type: object
                   properties:
@@ -14126,6 +16364,102 @@ components:
           type: string
           description: Response code.
           example: OK
+        id:
+          type: string
+          description: The friendly id of the created meter usage record
+          example: kbmu_0195ac80a14e8d71f42b98e75d3c61ad
+        units_granted:
+          type: integer
+          description: |
+            Units currently granted for this agreement and feature. For one-time features this is the sum of current paid purchases. For plan-metered entitlements this is the entitlement or plan limit. Omitted when there is no current grant, and when the grant is unlimited (any current one-time purchase has a null unit grant, or the entitlement has no numeric cap). An unlimited one-time grant still returns expiration_policy_code.
+          example: 4800
+        expiration_policy_code:
+          type: string
+          description: |
+            Expiration policy of the latest current one-time purchase of this feature. Omitted for plan-metered entitlements and when there is no current one-time grant.
+          example: none
+          enum:
+            - none
+            - end_of_current_billing_cycle
+        current_usage:
+          type: integer
+          description: |
+            Usage against the current grant after this record is included. For end_of_current_billing_cycle one-time features and plan-metered entitlements this is the current billing cycle running total (resets each cycle). For none it is the ingest-order lifetime total for this agreement and feature, including records reported before the first paid purchase. Absolute replaces that total; delta adds to it. meter_usage_timestamp does not change the arithmetic. Omitted when there is no current grant.
+          example: 50
+    get_billing_meter_usage_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: OK
+        message:
+          type: string
+          description: Response message.
+          example: Success
+        has_more:
+          description: Whether more records exist.
+          type: boolean
+        customer_agreement_id:
+          type: string
+          description: The billing agreement this page is scoped to.
+          example: agreement_0195ac80a14c2ca2cec97d026d864de0
+        feature_code:
+          type: string
+          description: The feature this page is scoped to.
+          example: extra_api_calls
+        units_granted:
+          type: integer
+          description: |
+            Units currently granted for this agreement and feature. For one-time features this is the sum of current paid purchases. For plan-metered entitlements this is the entitlement or plan limit. Omitted when there is no current grant, and when the grant is unlimited (any current one-time purchase has a null unit grant, or the entitlement has no numeric cap). An unlimited one-time grant still returns expiration_policy_code. Not limited to the current page.
+          example: 4800
+        expiration_policy_code:
+          type: string
+          description: |
+            Expiration policy of the latest current one-time purchase of this feature. Omitted for plan-metered entitlements and when there is no current one-time grant.
+          example: none
+          enum:
+            - none
+            - end_of_current_billing_cycle
+        current_usage:
+          type: integer
+          description: |
+            Usage against the current grant. For end_of_current_billing_cycle one-time features and plan-metered entitlements this is the current billing cycle running total (resets each cycle). For none it is the ingest-order lifetime total for this agreement and feature, including records reported before the first paid purchase. Absolute replaces that total; delta adds to it. Not limited to the current page. Omitted when there is no current grant.
+          example: 50
+        meter_usages:
+          type: array
+          description: A list of meter usage records
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The friendly id of the meter usage record
+                example: kbmu_0195ac80a14e8d71f42b98e75d3c61ad
+              meter_value:
+                type: integer
+                description: The value recorded on this usage row
+                example: 200
+              meter_type_code:
+                type: string
+                description: |
+                  How this record updated the running total. `absolute` replaced it with meter_value. `delta` added meter_value to the last calculated total.
+                example: delta
+                enum:
+                  - absolute
+                  - delta
+              meter_usage_timestamp:
+                type: string
+                format: date-time
+                description: |
+                  When this event happened, as supplied by the caller (or the server time if omitted). Stored only. Not used to calculate the running total.
+                example: '2026-09-11T08:10:58Z'
+              current_cycle_absolute_usage:
+                type: integer
+                nullable: true
+                description: |
+                  The current-billing-cycle running total after and including this record, using the same ingest-order absolute/delta rules as POST. Independent of the never-expires lifetime total.
+                example: 1200
     get_api_keys_response:
       type: object
       properties:
@@ -14465,6 +16799,19 @@ components:
           type: string
           description: The ID of the deleted SCIM directory.
           example: directory_0192b1941f125645fa15bf28a662a0b3
+    rotate_directory_secret_response:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Response code.
+          example: DIRECTORY_SECRET_ROTATED
+        message:
+          type: string
+          description: Response message.
+          example: SCIM directory secret token rotated successfully
+        directory:
+          $ref: '#/components/schemas/directory'
     directory:
       type: object
       properties:
