@@ -188,6 +188,7 @@ The `KindeClientSDK` provides OAuth authentication features:
 - Portal redirects
 - **Entitlements** - Access user billing entitlements and feature limits
 - **Step-up authentication** - Require MFA, a passkey or a recent sign-in for sensitive operations (RFC 9470)
+- **AI agents and MCP** - Accept tokens Kinde issues to AI agents, and sign agents in with CIMD or DCR
 
 ### Step-up authentication
 
@@ -238,6 +239,161 @@ Left to your app:
 - **Returning the user.** The SDK doesn't remember where the user was. In Laravel, call `session()->put('url.intended', url()->full())` and return `redirect()->away($kindeClient->getStepUpUrl(...))`; the built-in callback redirects to the intended URL. Don't use `stepUp()` there: it exits before Laravel saves the session. If a form POST needs step-up, return the user to the form page (not the POST endpoint) and have them submit again.
 
 **Protecting an API.** Check the claims of the verified access token on every request with `StepUp::satisfies($claims, AcrValues::MFA)`, and return the RFC 9470 `insufficient_user_authentication` challenge when it is not met. Don't rely on the client to have requested the context.
+
+### AI agents and MCP
+
+Let AI agents (Claude, ChatGPT, your own) call your API or MCP server on a user's behalf. Kinde signs the user in and issues the agent an access token for your resource. Agents identify themselves with a **Client ID Metadata Document** (CIMD, preferred: the URL of a JSON file on the agent's domain is its client ID) or **Dynamic Client Registration** (DCR, the fallback for agents that can't host a document).
+
+**In Kinde:** create an application of type **AI agents and MCP** and set its **Resource URL** to the exact URL agents call, for example `https://api.example.com/mcp`. To accept CIMD agents, add their bare domains (up to 10, such as `claude.ai`) to **Trusted agent hosts**. This application has no callback URLs, and it is separate from the application your users sign in to. DCR requires the `dcr_application` feature for your business.
+
+```bash
+KINDE_DOMAIN=https://example.kinde.com
+KINDE_AGENTS_CLIENT_ID=<AI agents and MCP application client ID>
+KINDE_AGENTS_CLIENT_SECRET=<its client secret>
+KINDE_AGENTS_RESOURCE_URL=https://api.example.com/mcp
+KINDE_AGENTS_VERIFICATION=introspection   # or jwt, or jwt+introspection
+KINDE_AGENTS_SCOPES=                      # optional scopes to advertise (offline, profile, email)
+KINDE_AGENTS_RESOURCE_NAME=               # optional display name
+```
+
+#### Protecting an API or MCP server
+
+`KindeAgentAuth` verifies the token's issuer, audience (your Resource URL), expiry and signature or introspection result, and answers with the challenge agents need to find Kinde. Don't use `Utils::parseJWT()` for agent tokens: it doesn't check the issuer or audience.
+
+```php
+use Kinde\KindeSDK\Sdk\Agents\KindeAgentAuth;
+use Kinde\KindeSDK\Sdk\Agents\KindeAgentAuthOptions;
+
+$auth = new KindeAgentAuth(KindeAgentAuthOptions::fromEnvironment());
+
+$context = KindeAgentAuth::requirePermissions(
+    $auth->verifyAuthorizationHeader($_SERVER['HTTP_AUTHORIZATION'] ?? null),
+    'read:orders'
+);
+if (!$context->isAuthenticated()) {
+    http_response_code(KindeAgentAuth::statusCode($context)); // 401, 403 or 503
+    foreach ($auth->challengeHeaders($context) as $name => $value) {
+        header("$name: $value");
+    }
+    echo json_encode(KindeAgentAuth::errorBody($context));
+    exit;
+}
+$context->getSubject();      // the user the agent acts for
+$context->getClientId();     // the agent
+$context->hasPermission('write:orders');
+```
+
+Serve the discovery documents agents read first, with `KindeAgentAuth::metadataHeaders()` (CORS for browser-based agents):
+
+- `$auth->metadata()` at every path in `$auth->getOptions()->getProtectedResourceMetadataPaths()`: the RFC 9728 path-suffixed form (`/.well-known/oauth-protected-resource/mcp`) and the root form.
+- `$auth->authorizationServerMetadata()` at `/.well-known/oauth-authorization-server`, for agents that skip `authorization_servers`.
+
+Answer `OPTIONS` on those paths with 204 and `KindeAgentAuth::preflightHeaders()`.
+
+- **Verification modes.** `introspection` (default) asks Kinde about every token, so revocations take effect at once; it needs the client secret. `jwt` verifies the signature locally against Kinde's JWKS and is faster, but a revoked token stays valid until it expires. `jwt+introspection` verifies locally, then introspects. In jwt modes, pass a PSR-16 cache (`psr/simple-cache`) as the fourth constructor argument to share the JWKS between requests. The cookie-based JWKS cache used for user sign-in doesn't suit a stateless API.
+- **Failures.** A missing or invalid token is 401 with a `WWW-Authenticate` challenge pointing at your metadata. A missing permission is a plain 403 with no challenge. If Kinde can't be reached, or rejects the application's credentials, the result is 503, never 401, so agents don't discard valid tokens.
+- **Revoking.** `$auth->revokeToken($token)` cuts an agent off. Kinde revokes both tokens of the pair.
+
+#### Laravel
+
+Register `KindeServiceProvider` and publish the config. The `agents` section of `config/kinde.php` reads the variables above. When `resource_url` is set, the provider serves the discovery documents and their preflights. Set `KINDE_AGENTS_SERVE_AS_METADATA=false` if your app already serves `/.well-known/oauth-authorization-server`.
+
+```php
+Route::get('/api/orders', [OrderController::class, 'index'])->middleware('kinde.agent');
+Route::post('/api/orders', [OrderController::class, 'store'])->middleware('kinde.agent:write:orders'); // required permissions
+
+// In the controller
+$context = $request->attributes->get('kinde_agent'); // KindeAuthContext
+```
+
+#### Symfony
+
+Register `KindeAgentAuth` as a service (for example with the `KindeAgentAuthOptions::fromEnvironment()` factory), autoconfigure `KindeAgentAuthSubscriber` and `KindeAgentMetadataController`, and import the controller's routes (Symfony 6.2+):
+
+```yaml
+# config/routes/kinde_agents.yaml
+kinde_agents:
+    resource: Kinde\KindeSDK\Frameworks\Symfony\KindeAgentMetadataController
+    type: attribute
+```
+
+```php
+use Kinde\KindeSDK\Frameworks\Symfony\RequireAgentAuth;
+
+#[RequireAgentAuth(permissions: ['write:orders'])]
+public function store(Request $request): Response
+{
+    $context = $request->attributes->get('kinde_agent'); // KindeAuthContext
+}
+```
+
+#### CodeIgniter
+
+Register the filter in `app/Config/Filters.php` and apply it to routes. `KindeAgentAuthFilter` reads the environment variables above. The routes for `KindeAgentMetadataController` are in its docblock.
+
+```php
+public array $aliases = ['kinde-agent' => \Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAgentAuthFilter::class];
+
+$routes->post('api/orders', 'Orders::store', ['filter' => 'kinde-agent:write:orders']);
+
+// In the controller
+$context = \Kinde\KindeSDK\Frameworks\CodeIgniter\KindeAgentAuthFilter::context();
+```
+
+#### MCP servers (mcp/sdk)
+
+With the official MCP PHP SDK (`mcp/sdk`, PHP 8.2+), plug `KindeMcpTokenValidator` into the HTTP transport's middleware:
+
+```php
+use Kinde\KindeSDK\Sdk\Agents\Mcp\KindeMcpTokenValidator;
+use Mcp\Server\Transport\Http\Middleware\AuthorizationMiddleware;
+use Mcp\Server\Transport\Http\Middleware\ProtectedResourceMetadataMiddleware;
+
+$metadata = KindeMcpTokenValidator::metadata($auth);
+$middleware = [
+    new ProtectedResourceMetadataMiddleware($metadata),
+    new AuthorizationMiddleware(new KindeMcpTokenValidator($auth), $metadata),
+];
+```
+
+Check permissions inside each tool, and answer with a tool error rather than an authorization failure:
+
+```php
+$kinde = KindeAuthContext::fromClaims($context->getAccessToken()->getClaims());
+if (!$kinde->hasPermission('read:docs')) {
+    return new CallToolResult([new TextContent("You don't have permission to read docs.")], true);
+}
+```
+
+#### Building an agent
+
+`KindeAgentClient` signs a user in to a Kinde AI agents and MCP application with the authorization code flow and PKCE, and keeps the tokens fresh in an `AgentStore` (`FileAgentStore`, or your own backed by a database or cache).
+
+```php
+use Kinde\KindeSDK\Sdk\Agents\Client\FileAgentStore;
+use Kinde\KindeSDK\Sdk\Agents\Client\KindeAgentClient;
+use Kinde\KindeSDK\Sdk\Agents\Client\KindeAgentClientOptions;
+
+$client = new KindeAgentClient(new KindeAgentClientOptions([
+    'domain' => 'https://example.kinde.com',
+    'agent_application_id' => '<AI agents and MCP application client ID>',
+    'redirect_uri' => 'https://agent.example.com/callback',
+    'cimd_client_id' => 'https://agent.example.com/oauth/client.json', // omit to use DCR
+    'resource_url' => 'https://api.example.com/mcp',
+    'scopes' => ['offline'],
+    'session_key' => $userId, // keeps each user's tokens apart
+]), new FileAgentStore('/var/lib/my-agent'));
+
+header('Location: ' . $client->createAuthorizationRequest()->url); // start sign-in
+$client->handleCallback($_GET);                                     // on redirect_uri
+$token = $client->getAccessToken(); // refreshed when needed; null means sign in again
+$client->disconnect();              // revoke and forget
+```
+
+- **CIMD.** Serve the document at `cimd_client_id`, on a host in the application's Trusted agent hosts, with `ClientMetadataDocument::build($clientId, $clientName, $redirectUris)` and `ClientMetadataDocument::RESPONSE_HEADERS`. Laravel serves it from `kinde.agents.client_metadata`, Symfony has `KindeClientMetadataController`, and CodeIgniter has `KindeAgentMetadataController::clientMetadata` (from `KINDE_AGENTS_CLIENT_METADATA_URL`, `KINDE_AGENTS_CLIENT_NAME` and `KINDE_AGENTS_REDIRECT_URIS`). Redirect URIs must be https on the document's host, or http loopback.
+- **DCR.** Without `cimd_client_id` or `client_id`, the client registers itself and stores the registration. Kinde registrations expire after 30 days; the client registers again before then, and when Kinde rejects the client.
+- **Scopes.** Kinde accepts `offline`, `profile` and `email`. `openid` is refused: agent tokens are access tokens only.
+- **Starting from the resource.** `AgentOAuth::discoverFromResource()` follows a 401 `WWW-Authenticate` challenge or the protected resource metadata to the authorization server. `AgentOAuth` also exposes each step (`register`, `createAuthorizationRequest`, `exchangeCode`, `refresh`, `revoke`) for stateless use.
 
 ## Documentation
 

@@ -102,4 +102,38 @@ return [
         'default_sub_nav' => 'profile',
         'default_return_url' => '/dashboard',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | AI Agent Authentication (resource server)
+    |--------------------------------------------------------------------------
+    |
+    | Accept access tokens issued to AI agents by a Kinde "AI agents and MCP"
+    | application. client_id and client_secret belong to that application, not
+    | the one users sign in with. resource_url must equal the application's
+    | Resource URL exactly. verification: introspection, jwt or
+    | jwt+introspection.
+    |
+    */
+
+    'agents' => [
+        'domain' => env('KINDE_DOMAIN'),
+        'client_id' => env('KINDE_AGENTS_CLIENT_ID'),
+        'client_secret' => env('KINDE_AGENTS_CLIENT_SECRET'),
+        'resource_url' => env('KINDE_AGENTS_RESOURCE_URL'),
+        'verification' => env('KINDE_AGENTS_VERIFICATION', 'introspection'),
+        'scopes_supported' => env('KINDE_AGENTS_SCOPES', ''),
+        'resource_name' => env('KINDE_AGENTS_RESOURCE_NAME'),
+        // Mirror /.well-known/oauth-authorization-server on this origin for agents that skip
+        // authorization_servers. Disable if your app already serves that path.
+        'serve_authorization_server_metadata' => env('KINDE_AGENTS_SERVE_AS_METADATA', true),
+
+        // When this app is itself an agent using CIMD: the document is served at the path of
+        // client_id, whose host must be in the Kinde application's Trusted agent hosts.
+        'client_metadata' => [
+            'client_id' => env('KINDE_AGENTS_CLIENT_METADATA_URL'),
+            'client_name' => env('KINDE_AGENTS_CLIENT_NAME'),
+            'redirect_uris' => env('KINDE_AGENTS_REDIRECT_URIS', ''),
+        ],
+    ],
 ]; 

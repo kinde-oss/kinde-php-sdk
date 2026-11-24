@@ -31,6 +31,10 @@
     "phpunit/phpunit": "<13.5.0",
     "friendsofphp/php-cs-fixer": "^3.5"
   },
+  "suggest": {
+    "mcp/sdk": "Validates Kinde agent tokens in MCP servers via Kinde\\KindeSDK\\Sdk\\Agents\\Mcp\\KindeMcpTokenValidator (PHP 8.2+)",
+    "psr/simple-cache": "Shares the Kinde JWKS between requests when verifying agent tokens in jwt mode"
+  },
   "autoload": {
     "psr-4": {
       "Kinde\\KindeSDK\\": "lib/"

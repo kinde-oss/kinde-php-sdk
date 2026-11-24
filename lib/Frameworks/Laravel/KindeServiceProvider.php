@@ -4,8 +4,12 @@ namespace Kinde\KindeSDK\Frameworks\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Kinde\KindeSDK\Frameworks\Laravel\Controllers\KindeAgentMetadataController;
+use Kinde\KindeSDK\Frameworks\Laravel\Middleware\KindeAgentAuthMiddleware;
 use Kinde\KindeSDK\KindeClientSDK;
 use Kinde\KindeSDK\KindeManagementClient;
+use Kinde\KindeSDK\Sdk\Agents\KindeAgentAuth;
+use Kinde\KindeSDK\Sdk\Agents\KindeAgentAuthOptions;
 use Kinde\KindeSDK\Sdk\Enums\GrantType;
 use Inertia\Inertia;
 
@@ -65,6 +69,11 @@ class KindeServiceProvider extends ServiceProvider
                 accessToken: $config['management_access_token'] ?? null
             );
         });
+
+        // Resource server for tokens issued to AI agents (separate "AI agents and MCP" application)
+        $this->app->singleton(KindeAgentAuth::class, function ($app) {
+            return new KindeAgentAuth(KindeAgentAuthOptions::fromArray(config('kinde.agents', [])));
+        });
     }
 
     /**
@@ -79,9 +88,41 @@ class KindeServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../../routes/auth.php');
         $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'kinde');
 
+        $this->app['router']->aliasMiddleware('kinde.agent', KindeAgentAuthMiddleware::class);
+        $this->registerAgentMetadataRoute();
+
         // Share Kinde data with Inertia if Inertia is available
         if (class_exists(Inertia::class)) {
             $this->shareKindeDataWithInertia();
+        }
+    }
+
+    /**
+     * Registers the agent discovery routes: the protected resource metadata (path-suffixed and
+     * root forms) and the authorization server metadata mirror when a resource is configured, and
+     * the Client ID Metadata Document when this app is itself an agent with a CIMD URL.
+     */
+    protected function registerAgentMetadataRoute(): void
+    {
+        $agents = config('kinde.agents', []);
+
+        if (!empty($agents['resource_url'])) {
+            $routes = array_fill_keys(
+                KindeAgentAuthOptions::fromArray($agents)->getProtectedResourceMetadataPaths(),
+                'protectedResource'
+            );
+            if (($agents['serve_authorization_server_metadata'] ?? true) !== false) {
+                $routes['/.well-known/oauth-authorization-server'] = 'authorizationServer';
+            }
+            foreach ($routes as $path => $action) {
+                Route::get($path, [KindeAgentMetadataController::class, $action]);
+                Route::options($path, [KindeAgentMetadataController::class, 'preflight']);
+            }
+        }
+
+        $clientId = $agents['client_metadata']['client_id'] ?? null;
+        if (!empty($clientId)) {
+            Route::get((string) parse_url($clientId, PHP_URL_PATH), [KindeAgentMetadataController::class, 'clientMetadata']);
         }
     }
 
