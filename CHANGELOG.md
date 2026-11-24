@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+
+- AI agent authentication for Kinde "AI agents and MCP" applications, with Client ID Metadata Documents (CIMD) and Dynamic Client Registration (DCR). See "AI agents and MCP" in the README.
+  - `KindeAgentAuth` verifies agent access tokens by introspection, JWT (checking issuer and audience) or both, checks Kinde permissions, revokes tokens, and builds the RFC 9728 protected resource metadata, the authorization server metadata mirror and the `WWW-Authenticate` challenges.
+  - `KindeAgentClient` and `AgentOAuth` sign agents in with the authorization code flow and PKCE, using CIMD, DCR or a pre-registered client, and keep tokens fresh in an `AgentStore`. `ClientMetadataDocument` builds and validates the CIMD document.
+  - `KindeMcpTokenValidator` plugs Kinde into the official MCP PHP SDK (`mcp/sdk`, PHP 8.2+).
+  - Laravel: the `kinde.agent` middleware, discovery and CIMD routes, and an `agents` section in `config/kinde.php`. Symfony: `#[RequireAgentAuth]`, `KindeAgentAuthSubscriber`, `KindeAgentMetadataController` and `KindeClientMetadataController`. CodeIgniter: `KindeAgentAuthFilter` and `KindeAgentMetadataController`.
+
 ## [2.7.0] - Since v2.6.0
 
 ### Added
